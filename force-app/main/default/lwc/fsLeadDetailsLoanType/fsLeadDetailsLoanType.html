@@ -1,0 +1,16 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+        <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+            <template if:true={fieldsContent}>
+                <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}>
+                </c-generic-edit-pages-l-w-c><br />
+                <div class="slds-align_absolute-center slds-m-around_x-small">
+                    <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave}></lightning-button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

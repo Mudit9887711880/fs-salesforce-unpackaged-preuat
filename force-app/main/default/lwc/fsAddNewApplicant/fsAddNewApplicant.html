@@ -1,0 +1,40 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+        class="slds-modal slds-fade-in-open slds-modal_large">
+        <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                onclick={handleCancel}>
+                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                </lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">New Applicant</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <c-fs-o-c-r onocrevent={handleOCREvent} onchangecustomertype={handleCustomerType}
+                    onverificationevent={handleVerificationValue} ongetocrtable={handleOCRTable}
+                    ongetocrdoc={getOCRDocs}>
+                </c-fs-o-c-r>
+                <div if:true={showCustomerInfoForm}>
+                    <c-fs-loan-applicant-information application-id={applicationId} prelogin-id={preloginId}
+                        loan-data={loanData} customer-type-value={customerTypeValue}
+                        verification-type-value={verificationTypeValue} is-buttons-hide=true>
+                    </c-fs-loan-applicant-information>
+                    <!--  onhideocrtable={hideOCRTable} oncallocrtable={hideOCRTable}  ongetpreloginid={testmethod}
+                        onappname={testmethod} ongetapplicationid={testmethod}  -->
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave}
+                    disabled={isCustomerForm}></lightning-button>
+                <lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

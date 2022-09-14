@@ -1,0 +1,12 @@
+<template>
+    <lightning-card>
+     
+      <div class="slds-m-horizontal_medium">
+        <iframe  style="width:100%; min-height:580px;overflow: auto;"  src={siteURL} ></iframe>
+      </div>
+      <p slot="footer">
+          <lightning-button  label="Save as File" name="SavePdf" variant="brand" class="slds-m-horizontal_xx-small" onclick={SaveFile}></lightning-button>
+          <lightning-button  label="Close" name="Close" variant="neutral" onclick={closeQuickAction} class="slds-m-horizontal_xx-small"></lightning-button>       
+       </p>
+    </lightning-card>
+</template>

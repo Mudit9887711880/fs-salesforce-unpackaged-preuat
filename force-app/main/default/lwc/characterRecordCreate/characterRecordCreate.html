@@ -1,0 +1,205 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={highmarkSpinner}></lightning-spinner>
+	<!-- <div class="slds-box slds-box_small">
+			<template if:true={highmarkTableData}>
+				<c-generic-data-table-l-w-c result={highmarkTableData} btns={rowAction}
+					onselected={handleSelectedHighmark}>
+				</c-generic-data-table-l-w-c>
+			</template>
+		</div> -->
+	<!-- Delete Popup -->
+	<template if:true={showDeleteModal}>
+		<c-fs-delete-l-w-c delete-from="Process Credit" object-api-name="Loan_Details__c" rec-id={recordIdtoDelete}
+			show-modal={showDeleteModal} onmodaldelete={handlemodalactions} onmodalcancel={handlemodalactions}>
+		</c-fs-delete-l-w-c>
+	</template>
+
+	<template if:true={highmarkpcTableData}>
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open ">
+			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+				<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; {stageName} - Highmark Data </span>
+			</h3>
+			<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+				<template if:true={highmarkpcTableData}>
+					<c-generic-data-table-l-w-c result={highmarkpcTableData} btns={rowAction}
+						onselected={handleSelectedHighmark}>
+					</c-generic-data-table-l-w-c>
+				</template>
+			</div>
+		</div>
+	</template>
+	<div class="slds-var-m-top_medium slds-float_right slds-m-top_x-small slds-m-bottom_x-small">
+		<lightning-button variant="brand" label="Add Highmark Obligations" id="highmark-add-btn"
+			onclick={handlehighmarkObligations}>
+		</lightning-button>
+	</div>
+	<br><br><br>
+
+	<template if:true={showForm}>
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+				<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; {stageName} </span>
+			</h3>
+			<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+
+				<lightning-record-edit-form object-api-name="Loan_Details__c" record-id={repaymentId}
+					onsuccess={handleBureauSuccess} onsubmit={handleBureauSubmit}>
+					<lightning-layout multiple-rows>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-combobox name="Customer Info" label="Select Applicant"
+								placeholder="Select an Option" options={customerOptions} onchange={handleFormValues}
+								value={customerName} class="highmarkCustomer">
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Loan_Applicant__c" variant="label-stacked"
+								value={loanApplicantId} class="highmark">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Bureau_Highmark__c" value={bureauHighmarkId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Type_of_Loan__c" variant="label-stacked"
+								class="highmark" disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Loan_Amt__c" variant="label-stacked" class="highmark"
+							 disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="O_S__c" variant="label-stacked" class="highmark"
+							 disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Overdue_Amt__c" variant="label-stacked" class="highmark"
+							 disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Obligations__c" variant="label-stacked" class="highmark"
+							 disabled={isBureau}>	
+							</lightning-input-field>
+						</lightning-layout-item>
+					
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Type__c" variant="label-stacked" class="highmark"
+								disabled="true">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Ownership__c" variant="label-stacked" class="highmark"
+							 disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Highmark_Score__c" variant="label-stacked"  
+								class="highmark"  disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+					 
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Current_DPD__c" variant="label-stacked" 
+								class="highmark"  disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Max_DPD__c" variant="label-stacked"  
+								class="highmark"  disabled={isBureau}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="To_be_considerd_for_DBR__c" variant="label-stacked"
+								value={considerValue} onchange={handleFormValues} required class="highmark">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+							medium-device-size="2" large-device-size="2">
+							<lightning-input-field field-name="Remarks__c" variant="label-stacked" required={isRequired}
+								class="highmark"  >
+							</lightning-input-field>
+								
+						</lightning-layout-item>
+						
+
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<div class="slds-var-m-top_medium slds-align_absolute-center slds-var-m-bottom_large">
+								<lightning-button variant="brand" type="submit" label="Save"
+									id="highmark-repayment-btn">
+								</lightning-button>
+								<lightning-button class="slds-m-left--small" variant="neutral" type="submit"
+									label="Cancel" onclick={onCancel}>
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+
+					</lightning-layout>
+				</lightning-record-edit-form>
+			</div>
+		</div>
+	</template>
+
+	<template if:true={showoverallRemarks}>
+	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+			<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; {stageName} </span>
+		</h3>
+		<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+			<lightning-record-edit-form id="recordViewForm" record-id={recordId} record-type-id={characterRecordTypeId}
+				object-api-name="Character__c" onsubmit={handlecharacterSubmit} onsuccess={handleCharacterSuccess}>
+				<lightning-layout multiple-rows>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+						medium-device-size="6" large-device-size="6" style="display:none;">
+						<lightning-input-field field-name="Section_Type__c" variant="label-stacked"
+							value="Repayment Behaviour Detail">
+						</lightning-input-field>
+					</lightning-layout-item>
+					 
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+						medium-device-size="6" large-device-size="6" style="display:none;">
+						<lightning-input-field field-name="Verification__c" variant="label-stacked"
+							value={verificationId}>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="4"
+						medium-device-size="4" large-device-size="4">
+						<lightning-input-field field-name="Overall_Remarks_Highmark_Obligations__c"
+							variant="label-stacked" required class="highmark">
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+						medium-device-size="12" large-device-size="12">
+						<div class="slds-var-m-top_medium slds-align_absolute-center slds-var-m-bottom_large">
+							<lightning-button variant="brand" type="submit" label="Save" id="character-btn">
+							</lightning-button>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+			</lightning-record-edit-form>
+		</div>
+	</div>
+	</template>
+
+
+
+</template>

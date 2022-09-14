@@ -1,0 +1,32 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <template if:true={tableData}>
+        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+            <template if:true={fieldsContent}>
+                <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}></c-generic-edit-pages-l-w-c><br/>
+                <div class="slds-align_absolute-center slds-m-around_x-small">
+                    <lightning-button variant="brand" label="Update" title="Sace" onclick={handleSave}></lightning-button>
+                    <lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </template>
+            <c-fs-title-section title="List Of Applicants"></c-fs-title-section>
+            <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={loanRowActions} onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
+            </div>
+        </div>
+    </template>
+    <!-- Delete Popup -->
+        <template if:true={showDeletePopup}>
+            <c-fs-delete-l-w-c delete-from="Lead Details Screen" object-api-name="Loan_Applicant__c"
+                show-modal={showDeletePopup} rec-id={loanAppId} onmodaldelete={handlemodalactions}
+                onmodalcancel={handlemodalactions}>
+            </c-fs-delete-l-w-c>
+        </template>
+
+        <!--Mobile Verification -->
+        <template if:true={showMobileVerification}>
+            <c-fs-mobile-verification-l-w-c onreloaddatatable={reloadDataTable}></c-fs-mobile-verification-l-w-c>
+        </template>
+</template>

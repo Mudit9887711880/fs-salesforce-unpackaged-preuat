@@ -1,0 +1,76 @@
+<template>
+	<template if:true={isSpinnerActive}>
+		<c-fs-spinner></c-fs-spinner>
+	</template>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c if:true={applicationName} headericon="standard:asset_audit" stagename="FIV-B"
+		appno={applicationName} businessdate={todaysDate} lastlogindate={lastLoginDate} btns={btns} onrowselectionevent={rowselectionevent}>
+	</c-fs-page-container-l-w-c>
+	   
+	<!--PAGE HEADER-->
+	   
+	<!--CONTENT-->
+	<article class="slds-card">
+		<div class="slds-card__body slds-card__body_inner">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<lightning-tab label="Cashflow" title="Cashflow" value="Cashflow" onactive={handleActive}>
+					<div class="slds-scrollable_y">
+						<c-fs-fiv_-b_-cashflow all-loan-applicant={allLoanApplicant}
+							all-applicant-data={allApplicantData} application-id={applicationId}
+							verification-status={verificationStatus} row-action={rowAction}>
+						</c-fs-fiv_-b_-cashflow>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Collateral" title="Collateral" value="Collateral" onactive={handleActive}>
+					<div class="slds-scrollable_y">
+						<c-fs-fiv_-b_-collateral all-loan-applicant={allLoanApplicant}
+							all-applicant-data={allApplicantData} application-id={applicationId}
+							verification-status={verificationStatus}>
+						</c-fs-fiv_-b_-collateral>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Character" title="Character" value="Character" onactive={handleActive}>
+					<div class="slds-scrollable_y">
+						<c-fs-fiv_-b_-character all-loan-applicant={allLoanApplicant}
+							all-applicant-data={allApplicantData} application-id={applicationId} row-action={rowAction}
+							verification-status={verificationStatus}> 
+						</c-fs-fiv_-b_-character>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Document Upload" title="Document Upload" value="Document Upload"
+					onactive={handleActive}>
+					<div class="slds-scrollable_y">
+						<c-fs-generic-upload-documents stage-name="FIV - B" application-id={applicationId} record-type-id={recordTypeId} onrequireddocument={handleRequiredDocument}>
+						</c-fs-generic-upload-documents>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Summary" title="Summary" value="Summary" onactive={handleActive}>
+					<div class="slds-scrollable_y">
+						<c-fs-f-i-v_-b_-summary record-id={recordId} application-id={applicationId} tni={localTNI} tpv={localTPV}
+							staff-loan={staffLoan} risk-document={riskDocument} pre-login-owner-name={preLoginOwnerName}
+							verification-status={verificationStatus} dbr={DBR}></c-fs-f-i-v_-b_-summary>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Error Info" value="Error" if:true={showErrorTab} onactive={handleActive}
+					show-error-indicator style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+			</lightning-tabset>      
+		</div>
+	</article>
+	<div class="slds-p-vertical_large"></div>
+	<!--CONTENT-->
+	   
+	<!--FOOTER-->
+    <div class="slds-docked-form-footer">
+		<button type="button" class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+		<button type="button" class="slds-button slds-button_brand" onclick={handleSubmit} disabled={verificationStatus}>Submit</button>
+	</div>
+	<!--FOOTER-->
+</template>

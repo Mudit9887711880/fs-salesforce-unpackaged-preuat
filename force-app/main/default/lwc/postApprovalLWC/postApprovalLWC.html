@@ -1,0 +1,98 @@
+<template>
+	<c-fs-page-container-l-w-c headericon="standard:asset_audit" stagename="Post Approval" appno={applicationName}
+		businessdate={todaysDate1} lastlogindate={lastLoginDate} btns={button} onrowselectionevent={rowselectionevent}>
+	</c-fs-page-container-l-w-c>
+	<article class="slds-card">
+		<div class="slds-card__body slds-card__body_inner">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<lightning-tab label="MOD" value="Upload_Document" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<c-fs-generic-upload-documents application-id={recordId} stage-name="Post Approval" record-type-id={}>
+						</c-fs-generic-upload-documents>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Underwriting Grid">
+					<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+						aria-label="Example table of Opportunities with vertical borders">
+						<thead>
+							<tr>
+								<th class="slds-size_3-of-10" scope="col">
+									<div class="slds-truncate" title="Task done by">Task done by</div>
+								</th>
+								<th class="slds-size_3-of-10" scope="col">
+									<div class="slds-truncate" title="Decisioned by">Decisioned by</div>
+								</th>
+								<th class="slds-size_3-of-10" scope="col">
+									<div class="slds-truncate" title="Decision">Decision</div>
+								</th>
+								<th class="slds-size_3-of-10" scope="col">
+									<div class="slds-truncate" title="Remark during Submission">Remark during Submission
+									</div>
+								</th>
+								<th class="slds-size_3-of-10" scope="col">
+									<div class="slds-truncate" title="Recommend Date">Recommend Date</div>
+								</th>
+								<th class="slds-size_3-of-10" scope="col">
+									<div class="slds-truncate" title="Recommended loan amount">Recommended loan amount
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={postApp} for:item="post">
+								<tr class="slds-hint-parent" key={post.ID}>
+									<td class="slds-size_3-of-10">
+										<div class="td-currency" title="Approval Credit/ Process Credit">{post.stage}
+										</div>
+									</td>
+									<td class="slds-size_3-of-10">
+										<div class="td-currency" title="User Name">{post.userName}</div>
+									</td>
+									<td class="slds-size_3-of-10">
+										<div class="td-currency" title="">{post.decision}</div>
+									</td>
+									<td class="slds-size_3-of-10">
+										<div class="td-currency" title="">{post.remarks}</div>
+									</td>
+									<td class="slds-size_3-of-10">
+										<div class="td-currency" title="">
+											<lightning-formatted-date-time value={post.recDate}>
+											</lightning-formatted-date-time>
+										</div>
+									</td>
+									<td class="slds-size_3-of-10">
+										<div class="td-currency" title="">{post.recLoanAmnt}</div>
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>&nbsp;&nbsp;
+					<div class="slds-text-align_right"> 
+						<button type="button" class="slds-button slds-button_brand" onclick={handleLoanSanction}
+                    >Loan Sanction Letter</button>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Error" value="Error" if:true={showErrorTab} onactive={handleActive}
+					show-error-indicator style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:280px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+				<div class="slds-docked-form-footer">
+					<button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+                    onclick={handleMODSubmit}>Submit</button>
+				</div>
+			</lightning-tabset>
+		</div>
+	</article>
+	<!--SendBack-->
+	<template if:true={openSendBack}>
+		<c-fs-send-back show-modal={openSendBack} stage-from="Post Approval" application-id={recordId}
+		oncloseclick={handleSendBackClose} onsubmitclick={handleSendBackSubmit}></c-fs-send-back>
+	</template>
+	<!--SendBack-->
+</template>

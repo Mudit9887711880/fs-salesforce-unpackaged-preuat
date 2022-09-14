@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>        
+        <targetConfig targets = "lightning__RecordPage">
+            <property label="Object API Name" name="objectName" type="String" description="Specify the API Name of Object"/>
+            <property label="Field API Name" name="fieldName" type="String" description="Specify the API Name of Field"/>
+            <property label="Multi-Select Picklist" name="isMultiSelect" type="Boolean" description="Indicates if picklist is multi-select" default="false"/>
+            <property label="Required" name="isRequired" type="Boolean" description="To make this field required set global constant to True, by default it is False"/>
+            <property label="Record Id" name="recordId" type="String" description="To populate the field with default value specify the recordId"/>
+            <property label="Selected Value" name="selectedValue" type="String" description="Use to update the record with the selected value in this field"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

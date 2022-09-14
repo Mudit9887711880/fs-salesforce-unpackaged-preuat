@@ -1,0 +1,8 @@
+<template>
+    <c-fee-creation-screen-2 record-id={recordId} ongetfeechangeevent={getRecFeeCodeChange}></c-fee-creation-screen-2>
+    <template if:false={stage}>
+        <c-fee-creation-type-insurance-new record-id={recordId}></c-fee-creation-type-insurance-new>
+    </template>
+    <c-prelogin-receipt-screen application-id={recordId} pre-log-in-id={preLogInId} app-name={appName}
+        primary-applicant-name={primaryApplicantName} stage-name={stageName}></c-prelogin-receipt-screen>
+</template>

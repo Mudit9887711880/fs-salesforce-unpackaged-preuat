@@ -1,0 +1,275 @@
+<!-- ####### -->
+<template>
+	<lightning-card class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large" title="Fee Creation">
+		<div class=" slds-scrollable" style=" max-height: 350px; overflow: scroll; padding-bottom: 13px;">
+			<div if:true={isLoaded}>
+				<c-fs-spinner></c-fs-spinner>
+			</div>
+			<template if:true={feeList}>
+				<template if:true={feeCreation}>
+					<div if:false={isLoaded}>
+						<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+							<thead>
+								<tr class="fixed-content">
+									<th class="slds-size_2-of-10" style="width:10px">
+										<div class="slds-truncate" title="SN No.">SN No.</div>
+									</th>
+									<th class="slds-size_3-of-10">
+										<div class="slds-truncate" title="Fee Code">Fee Code</div>
+									</th>
+									<th class="slds-size_1-of-10">
+										<div class="slds-truncate" title="Fee Amount"> Fee Amount </div>
+									</th>
+									<th class="slds-size_1-of-10">
+										<div class="slds-truncate" title="Tax Amount"> Tax Amount </div>
+									</th>
+									<th class="slds-size_1-of-10">
+										<div class="slds-truncate" title="Total Fee"> Total Fee </div>
+									</th>
+									<th class="slds-size_1-of-10">
+										<div class="slds-truncate" title="Fee Collection"> Fee Collection </div>
+									</th>
+									<th class="slds-size_3-of-10">
+										<div class="slds-truncate" title="Type"> Type </div>
+									</th>
+									<th class="slds-size_3-of-10">
+										<div class="slds-truncate" title="Stage Due"> Stage Due </div>
+									</th>
+									<th class="slds-size_3-of-10">
+										<div class="slds-truncate" title="Applicable on"> Applicable on </div>
+									</th>
+									<th class="slds-size_3-of-10">
+										<div class="slds-truncate" title="Repayment Type"> Repayment Type </div>
+									</th>
+									<th class="slds-size_3-of-10">
+										<div class="slds-truncate" title="Description"> Description </div>
+									</th>
+									<th class="slds-size_1-of-10" scope="col">
+										<div class="slds-truncate" title="Action">Action</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template for:each={feeCreation} for:item="feeLine">
+									<tr key={feeLine.Id}>
+										<template if:false={feeLine.isnewRow}>
+
+											<td class="slds-size_2-of-10" data-id="1">
+												<div>{feeLine.sRNumnber}
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="2">
+												<div class="td-currency">{feeLine.feeCode}
+												</div>
+											</td>
+											<td class="slds-size_1-of-10" data-id="7">
+												<template if:false={feeLine.modifiable}>
+													<div class="td-currency">{feeLine.feeAmount}</div>
+												</template>
+												<template if:true={feeLine.modifiable}>
+													<lightning-input disabled={feeLine.isFeeCollected} type="number"
+														value={feeLine.feeAmount} name="feeAmountGet"
+														id={feeLine.sRNumnber} onchange={updateAmount}
+														placeholder="Enter Amount"></lightning-input>
+												</template>
+											</td>
+											<td class="slds-size_1-of-10" data-id="8">
+												<div class="td-currency">{feeLine.taxAmount}
+												</div>
+											</td>
+											<td class="slds-size_1-of-10" data-id="9">
+												<div class="td-currency">{feeLine.totalFee}
+												</div>
+											</td>
+											<td class="slds-size_1-of-10" data-id="10">
+												<div class="td-currency">{feeLine.feeCollection}
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="3">
+												<div class="td-currency">{feeLine.type}
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="4">
+												<div class="td-currency">{feeLine.stageDue}
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="5">
+												<div class="td-currency">
+													<!--<lightning-combobox
+                                            value={feeLine.applicableOn}
+                                            options={options}
+                                            name="applicableOn"
+                                            id={feeLine.sRNumnber}
+                                            onchange={updateValue}
+                                        ></lightning-combobox>-->
+													{feeLine.applicableOn}
+												</div>
+											</td>
+											<td class="slds-size_4-of-10" style="width:auto" data-id="6">
+												<div class="td-currency ">
+													<lightning-combobox options={lstOptions} dropdown-alignment="auto"
+														value={feeLine.repaymentType} disabled={feeLine.isFeeCollected}
+														name="repaymentType" id={feeLine.sRNumnber}
+														onchange={handleRepaymentValueChange}></lightning-combobox>
+												</div>
+												<!--div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right" role="none">
+                                        <template for:each={feeLine.repaymentType} for:item="serecord">
+                                            <span key={serecord.key}>
+                                            <! <lightning-pill label={serecord.key} name={serecord.key} onremove={handleRemove} id={feeLine.sRNumnber}>
+                                                </lightning-pill> >
+                                            </span>
+                                        </template>
+                                    </div-->
+												<!-- <div class="td-currency"> 
+                                         <select class="slds-select" id="select-02" >
+                                        <option value="none" selected disabled hidden>Select an Option</option>
+                                        <template for:each = {lstOptions} for:item="listViewItem">
+                                           <option key={listViewItem.key} value={listViewItem.key}>{listViewItem.value}</option>
+                                        </template>
+                                   </select>
+                                    </div> -->
+											</td>
+
+											<td class="slds-size_3-of-10" data-id="11">
+												<div class="td-currency">{feeLine.description}
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" if:false={feeLine.showAdd}></td>
+											<td class="slds-size_3-of-10" data-id="12" if:true={feeLine.showAdd}>
+												<div class="slds-align_absolute-right" style="margin-bottom:-1.2rem">
+													<lightning-button-icon name='add' variant="brand"
+														icon-name="utility:add" onclick={createFeeCreationRecordRow}>
+													</lightning-button-icon>
+													<!-- <button class="fetch-btn" data-row-index={indexVar} onclick={createFeeCreationRecordRow} name ='add'>+</button> -->
+													<!-- <lightning-button label ='remove' variant="brand" icon-name="utility:zoomout" alternative-text="Remove" title="Remove" onclick={createFeeCreationRecordRow}>
+                                     </lightning-button> -->
+												</div>
+											</td>
+										</template>
+										<template if:true={feeLine.isnewRow}>
+											<td class="slds-size_2-of-10" data-id="1">
+												<div>{feeLine.sRNumnber}</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="2">
+												<div class="td-currency-fee">
+													
+													<lightning-combobox value={feeLine.feeCode}
+														dropdown-alignment="auto" options={existingFeeCodeOption}
+														name="feeCode" id={feeLine.sRNumnber} onchange={updateFeeValue}
+														data-id="Controlling Picklist Type"></lightning-combobox>
+													
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="7">
+												<div class="td-currency">
+													<lightning-input type="number" value={feeLine.feeAmount}
+														name="feeAmount" id={feeLine.sRNumnber} onchange={updateAmount}
+														placeholder="Enter Amount"></lightning-input>
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="8">
+												<div class="td-currency">
+													<lightning-input type="number" value={feeLine.taxAmount}
+														name="taxAmount" id={feeLine.sRNumnber} onchange={updateAmount}
+														placeholder="Enter Amount" disabled="true"></lightning-input>
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="9">
+												<div class="td-currency">
+													<lightning-input type="number" value={feeLine.totalFee}
+														name="totalFee" id={feeLine.sRNumnber} onchange={updateAmount}
+														placeholder="Enter Amount" disabled="true"></lightning-input>
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="10">
+												<div class="td-currency">
+													<lightning-input type="number" value={feeLine.feeCollection}
+														name="feeCollection" id={feeLine.sRNumnber}
+														onchange={updateAmount} placeholder="Enter Amount"
+														disabled="true"></lightning-input>
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="3">
+												<div class="td-currency">{feeLine.type}
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="4">
+												<div class="td-currency">
+													<!-- <lightning-combobox
+                                            value={feeLine.stageDue}
+                                            options={stageDueOptions}
+                                            name="stageDue"
+                                            id={feeLine.sRNumnber}
+                                            onchange={updateValue}
+                                        ></lightning-combobox> -->
+													{feeLine.stageDue}
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="5">
+												<div class="td-currency">
+													<lightning-combobox value={feeLine.applicableOn}
+														dropdown-alignment="auto" options={options} name="applicableOn"
+														id={feeLine.sRNumnber} onchange={updateValue}>
+													</lightning-combobox>
+												</div>
+											</td>
+											<td class="slds-size_4-of-10" data-id="6" style="width:auto">
+												<div class="td-currency">
+													<lightning-combobox options={lstOptions} dropdown-alignment="auto"
+														value={feeLine.repaymentType} name="repaymentType"
+														id={feeLine.sRNumnber} onchange={updateValue}>
+													</lightning-combobox>
+												</div>
+												<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right"
+													role="none">
+													<template for:each={feeLine.repaymentType} for:item="serecord">
+														<span key={serecord.key}>
+                                            <!-- <lightning-pill label={serecord.key} name={serecord.key} onremove={handleRemove} id={feeLine.sRNumnber}>
+                                                </lightning-pill> -->
+                                            </span>
+													</template>
+												</div>
+											</td>
+											<td class="slds-size_3-of-10" data-id="11">
+												<div class="td-currency">
+													<lightning-input type="text" value={feeLine.description}
+														name="description" id={feeLine.sRNumnber} onchange={updateValue}
+														placeholder="Enter Description"></lightning-input>
+												</div>
+											</td>
+											<td class="slds-size_1-of-10" data-id="12">
+												<div style="margin-bottom:-1rem">
+													<template if:true={feeLine.showAdd}>
+														<span class="slds-align_absolute-right" >&nbsp;&nbsp; 
+                                    
+                                    <lightning-button-icon variant='brand' name ='add' icon-name="utility:add" disabled={isSave} onclick={createFeeCreationRecordRow} data-id ={feeLine.sRNumnber} ></lightning-button-icon>
+                                    <!-- <button class="fetch-btn" onclick={createFeeCreationRecordRow} name ='add' data-id ={feeLine.sRNumnber}>+</button> -->
+                                    </span>
+													</template>&nbsp;&nbsp;
+													<span>
+                                    <!-- <lightning-button name ='remove'  variant="neutral" class="slds-p-around_xxx-small" icon-name="utility:delete" alternative-text="Remove" title="Remove" onclick={createFeeCreationRecordRow} data-id ={feeLine.sRNumnber}> -->
+                                        <!-- <button class="fetch-btn" onclick={createFeeCreationRecordRow} name ='remove' data-id ={feeLine.sRNumnber}>-</button> -->
+                                        <lightning-button-icon icon-name="utility:delete" alternative-text="Remove" name = "remove"  onclick={createFeeCreationRecordRow} data-id ={feeLine.sRNumnber}></lightning-button-icon>
+                                     <!-- </lightning-button> -->
+                                    </span>
+												</div>
+											</td>
+										</template>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+						<div slot="footer" class="feeCreationFooter">
+							<lightning-button variant="brand" label="Save" class="slds-m-left_x-small"
+								onclick={handleSave}></lightning-button>
+						</div>
+					</div>
+				</template>
+			</template>
+			<template if:false={feeCreation}>
+				No records to display
+			</template>
+
+		</div>
+	</lightning-card>
+</template>

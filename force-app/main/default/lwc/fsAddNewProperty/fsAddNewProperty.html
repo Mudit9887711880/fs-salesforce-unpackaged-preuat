@@ -1,0 +1,49 @@
+<template>
+    <!--<template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>-->
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+        class="slds-modal slds-fade-in-open slds-modal_large">
+        <div class="slds-modal__container">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                onclick={handleCancel}>
+                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                </lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <div class="slds-modal__header">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add New Property</h1>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <template if:true={isSpinnerActive}>
+                    <lightning-spinner alternative-text="Loading" size="medium" class="spinnerClass"></lightning-spinner>
+                </template>
+                <template if:true={propertyAllData}>
+                    <div
+                        class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+                        <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+                            <span class="slds-truncate" title="Section Title">Select Applicant</span>
+                        </h3>
+                        <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+                            <c-generic-data-table-l-w-c data-id="propOwner" result={propertyAllData}
+                                onrowselectionevent={handleSelectedApplicant}>
+                            </c-generic-data-table-l-w-c>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={showPropEditForm}>
+                    <div
+                        class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+                        <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={handleFormValueChange}>
+                        </c-generic-edit-pages-l-w-c><br />
+                    </div>
+                </template>
+            </div>
+            <div class="slds-modal__footer">
+                <lightning-button variant="brand" label="Save" title="Save" onclick={handleSave} disabled={isEditFormActive}></lightning-button>
+                <lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

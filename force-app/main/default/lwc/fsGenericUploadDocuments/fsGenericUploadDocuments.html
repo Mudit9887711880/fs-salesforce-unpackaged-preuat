@@ -1,0 +1,125 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <lightning-tabset variant="scoped" active-tab-value={tabName}>
+        <lightning-tab label="Upload" title="Upload" value="Upload" onactive={handleActive}>
+            <div class="slds-scrollable_y">
+                <c-fs-child-upload-document is-agreement-execution={isAgreementExecution} stage-name={stageName} application-id={applicationId}
+                    record-type-id={recordTypeId}>
+                </c-fs-child-upload-document>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="View Documents" title="View Documents" value="View Documents" onactive={handleActive}>
+            <div class="slds-scrollable_y">
+                <!--
+                    Used For Document View
+                    Start Here
+                -->
+                <div class="c-container" if:true={uploadedDocData}>
+                    <c-fs-title-section title="Required Documents" class="slds-p-vertical_xx-small">
+                    </c-fs-title-section>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+                        <thead>
+                            <tr class="th">
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Document Name">Document Name</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Uploaded By">Uploaded By</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Document Family">View Document</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="No Of Pages">No Of Pages</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Remarks">Remarks</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Stage">Stage</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={uploadedDocData} for:item="item" for:index="indexVar">
+                                <tr key={item.key} class="slds-hint-parent">
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="slds-truncate" title="Document Name">{item.Document_Name__c}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="td-currency" title="Uploaded By">{item.Owner.Name}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="2">
+                                        <div class="td-currency" title="View Document">
+                                            <lightning-icon style="cursor: pointer;" data-index={item.ContentDocumentId}
+                                                size="xx-small" icon-name="action:preview" alternative-text="Preview"
+                                                title="Preview" onclick={viewDocument}></lightning-icon>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="td-currency" title="No Of Pages">{item.Number_of_Pages__c}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="td-currency" title="Remarks">{item.Remarks__c}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="td-currency" title="Stage">{item.Uploaded_From__c}</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <br />
+                    <c-fs-title-section title="Additional Documents" class="slds-p-vertical_xx-small">
+                    </c-fs-title-section>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+                        <thead>
+                            <tr class="th">
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Document Name">Document Name</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Description">Description</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Owner">Owner</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="View Document">View Document</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={addtionalDocuments} for:item="item" for:index="indexVar">
+                                <tr key={item.key} class="slds-hint-parent">
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="slds-truncate" title=" Name">{item.Title}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="td-currency" title="Description">{item.Remarks__c}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="td-currency" title="Description">{item.Owner.Name}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="2">
+                                        <div class="td-currency" title="View Document">
+                                            <lightning-icon style="cursor: pointer;" data-index={item.ContentDocumentId}
+                                                size="xx-small" icon-name="action:preview" alternative-text="Preview"
+                                                title="Preview" onclick={viewDocument}></lightning-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+                <!--
+                    Used For Document View
+                    End Here
+                -->
+            </div>
+        </lightning-tab>
+    </lightning-tabset>
+</template>

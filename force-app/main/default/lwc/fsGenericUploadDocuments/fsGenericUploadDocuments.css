@@ -1,0 +1,134 @@
+.cursorStyle{
+    cursor: pointer;
+}
+
+.tableStyle{
+    table-layout: fixed;
+    width: 100%;
+}
+
+.tdStyle{
+    /* display: inline-block; */
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+.thStyle{
+    width: 24%;
+}
+
+.statusWitdh{
+    width: 15%;
+}
+
+.guidanceStyle{
+    white-space: pre-wrap !important;
+    white-space: -moz-pre-wrap !important; 
+    white-space: -pre-wrap !important; 
+    white-space: -o-pre-wrap !important; 
+    word-wrap: break-word !important;
+}
+
+.td{
+    white-space: pre-wrap !important;
+    white-space: -moz-pre-wrap !important; 
+    white-space: -pre-wrap !important; 
+    white-space: -o-pre-wrap !important; 
+    word-wrap: break-word !important;
+} 
+
+.curreny-sum-insured {
+    /*position: absolute;
+    left: .6em;
+    z-index: 2;*/
+    position: absolute;
+    left: 0.6em;
+    z-index: 2;
+    height: 30px;
+    padding-top: 6px;
+}
+.sum-insured-field {
+    /*padding-left: 1.4em;
+    border: none;
+    border-radius: 4px;
+    min-width: 80px; max-width: 480px; width:auto;*/
+    padding-left: 1.4em;
+    height: 30px;
+    border-radius: 4px;
+    min-width: 60px;
+    max-width: 480px;
+    width: auto;
+    border-width: 0.1px;
+}
+.sum-insured-field.error{border:solid 1px red ;}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+.field{
+    padding: 5px;
+    border: 1px solid #dce4ec;
+    border-radius: 2px;
+  }
+  .td-repayment{
+    white-space: normal;
+    width: 250px !important; max-width: 480px; width:auto;
+  }
+  .td-currency{
+    
+    white-space: normal;
+    min-width: 180px; max-width: 480px; width:auto;
+  }
+  .td-upload{
+    white-space: normal;
+    min-width: 280px; max-width: 480px; width:auto;
+  }
+  .scaled-down button {
+    transform: scale(0.75);
+}
+.fetch-btn{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 150px;
+    border-color: rgb(1, 118, 211);
+    color: rgb(1, 118, 211);
+    border-radius: 6px;
+    background: none;
+    height: 33px;
+}
+.fetch-btn:hover, .fetch-btn:focus{
+    background: #ddd;
+}
+.th{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.editable-grid-cell::after {
+    content: "\F303";
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    font-weight: 900;
+    z-index: -1; /* this will set it in background so when user click onit you will get cell-click event as if user would normally click on cell */
+
+}
+.editable-grid-cell2::before {
+    content: "\F303";
+    font-family: "Font Awesome 5 Free";
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    font-weight: 1500;
+    z-index: -1; /* this will set it in background so when user click onit you will get cell-click event as if user would normally click on cell */
+}
+
+.table-insurance-detail .addbutton{display: none;}
+.table-insurance-detail tbody tr:last-child .addbutton{display: block;}
