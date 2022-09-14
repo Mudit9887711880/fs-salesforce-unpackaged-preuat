@@ -1,0 +1,375 @@
+<template>
+	<template if:true={showCollateralForm}>
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open "
+			style="padding-bottom:20px;">
+			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+				<span class="slds-truncate" title="Section Title"> &nbsp;&nbsp; {sectiontitle}</span>
+			</h3>
+			<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+
+				<lightning-record-edit-form object-api-name="Property__c" record-id={recordId}
+					record-type-id={propertyRecordTypeId} onsuccess={handlepropertySuccess}
+					onsubmit={handlepropertySubmit} onerror={handleerror}>
+					<lightning-layout multiple-rows>
+						<template if:true={isGeneralDetails}>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Property_Detail_AC_Check__c" value={propertyaccheck}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Property__c" value={parentPropertyId}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="FIVC_PC_Relationship__c" variant="label-stacked"
+									value={relationshipId}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Application__c" value={applicationId}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Login__c" value={loginId} variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Title_Deed_Number__c" variant="label-stacked"
+									required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Document_Type__c" variant="label-stacked" required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Month__c" variant="label-stacked"
+									style="display:none;" value={deedMonth}>
+								</lightning-input-field>
+								<lightning-input type="text" variant="standard" name="Month__c" label="Month" required
+									max-length="2" value={deedMonth} onchange={handleFormValidation}
+									pattern="[0-9]{1,2}" message-when-pattern-mismatch="Only numbers are allowed.">
+								</lightning-input>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field disabled="true" field-name="Title_Deed_Year__c"
+									variant="label-stacked" value={deedYear} style="display:none;">
+								</lightning-input-field>
+								<lightning-input type="text" variant="standard" name="Title_Deed_Year__c"
+									label="Title Deed Year" required max-length="4" value={deedYear}
+									onchange={handleFormValidation} pattern="[0-9]{1,4}"
+									message-when-pattern-mismatch="Only numbers are allowed.">
+								</lightning-input>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Land_Ownership__c" variant="label-stacked" required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Building_Ownership__c" variant="label-stacked"
+									required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Property_Surrounding__c" variant="label-stacked"
+									required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Type_Of_Property__c" variant="label-stacked"
+									required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Mortgage_property_distance_from_branch__c"
+									value={fivCAutoPopFieldsInternal.mortgage_property_distance} variant="label-stacked"
+									required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<label class="slds-form-element__label" for="form-element-05">
+									<abbr class="slds-required" title="required">* </abbr>Mortgage property and Living
+									property are same?</label>
+								<lightning-input-field field-name="Mortgage_property_Living_property_are__c"
+									value={fivCAutoPopFieldsInternal.mortagage_and_living_property}
+									variant="label-hidden" onchange={handleFormValidation} required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<template if:true={showThis}>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+									medium-device-size="2" large-device-size="2">
+									<lightning-input-field field-name="Person_residing_at_Mortgage_property__c"
+										value={fivCAutoPopFieldsInternal.person_at_mortgage} variant="label-stacked">
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+									medium-device-size="2" large-device-size="2">
+									<lightning-input-field disabled="true" value={distanceFromBranch}
+										style="display:none;" field-name="Living_property_Distance_from_Branch__c"
+										variant="label-stacked">
+									</lightning-input-field>
+									<lightning-input type="text" variant="standard"
+										name="Living_property_Distance_from_Branch__c"
+										label="Living property Distance from Branch" max-length="3"
+										value={distanceFromBranch} onchange={handleFormValidation} pattern="[0-9]{1,3}"
+										message-when-pattern-mismatch="Only numbers are allowed.">
+									</lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+									medium-device-size="2" large-device-size="2">
+									<lightning-input-field field-name="Is_living_property_is_own_property__c"
+										value={fivCAutoPopFieldsInternal.is_living_is_own} variant="label-stacked">
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+									medium-device-size="2" large-device-size="2">
+									<lightning-input-field field-name="Pincode__c"
+										value={fivCAutoPopFieldsInternal.living_pincode} variant="label-stacked">
+									</lightning-input-field>
+								</lightning-layout-item>
+							</template>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Landmark__c" variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Overall_Remarks__c" variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+						</template>
+
+						<template if:true={isLandAreaAndValuation}>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Land_Area_AC_Check__c" value={landareaaccheck}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Property__c" value={parentPropertyId}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="FIVC_PC_Relationship__c" value={relationshipId}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Application__c" value={applicationId}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Login__c" value={loginId} variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Pathway_Available__c" variant="label-stacked"
+									onchange={handleFormValidation} required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<template if:true={showpathRemarks}>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+									medium-device-size="2" large-device-size="2">
+									<label class="slds-form-element__label" for="form-element-05">
+									<abbr class="slds-required" title="required">* </abbr>Pathway Remarks</label>
+									<lightning-input-field field-name="Remarks__c" variant="label-hidden" required>
+									</lightning-input-field>
+								</lightning-layout-item>
+							</template>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<label class="slds-form-element__label" for="form-element-01">
+										<abbr class="slds-required" title="required">* </abbr>Boundries as per document
+                                    and physical inspection are same?</label>
+								<lightning-input-field field-name="Boundaries_As_Per_Inspection_Are_Same__c"
+									variant="label-hidden" onchange={handleFormValidation} required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<template if:true={showBoundaries}>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+									medium-device-size="2" large-device-size="2"><label class="slds-form-element__label" for="form-element-05">
+									<abbr class="slds-required" title="required">* </abbr>Boundries Remarks</label>
+									<lightning-input-field field-name="Boundries_Remarks__c" variant="label-hidden"
+										required>
+									</lightning-input-field>
+								</lightning-layout-item>
+							</template>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Mortgage_Property_Area__c" variant="label-stacked"
+									required onchange={handleFormValidation}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Mortgage_Property_Remarks__c" variant="label-stacked"
+									required={mortgageRemarks}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<label class="slds-form-element__label" for="form-element-01">
+										<abbr class="slds-required" title="required">* </abbr>Land Area To Be Considered (in Sq ft)</label>
+								<lightning-input-field field-name="Land_Area_Sq_Ft__c" variant="label-hidden"
+									onchange={handleFormValidation} data-id="land_Area" value={landValues.Land_Area}
+									required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<label class="slds-form-element__label" for="form-element-01">
+										<abbr class="slds-required" title="required">* </abbr>Land area Remarks</label>
+								<lightning-input-field field-name="Land_area_valuation_remarks__c"
+									variant="label-hidden" required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<label class="slds-form-element__label" for="form-element-01">
+										<abbr class="slds-required" title="required">* </abbr>Market Value Per(SqFt)</label>
+								<lightning-input-field field-name="Valuation_Market_Value_Per_SqFt__c"
+									variant="label-hidden" data-id="market_Value" onchange={handleFormValidation}
+									value={landValues.Market_Value} required>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+
+								<lightning-input-field field-name="Final_Land_Value__c" variant="label-stacked"
+									value={finalLandValue} required>
+								</lightning-input-field>
+							</lightning-layout-item>
+
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Overall_Land_Remarks__c" variant="label-stacked"
+									required>
+								</lightning-input-field>
+							</lightning-layout-item>
+
+						</template>
+						<template if:true={isBuildingAreaAndValuation}>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Building_Area_AC_Check__c"
+									value={buildingareaaccheck} variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Property__c" value={parentPropertyId}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Application__c" value={applicationId}
+									variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2" style="display:none;">
+								<lightning-input-field field-name="Login__c" value={loginId} variant="label-stacked">
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Building_Floor__c" variant="label-stacked" required
+									disabled={disabledAll}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Building_Area_Sq_Ft__c" variant="label-stacked"
+									value={buildingValues.Building_Area} data-id="building-area"
+									onchange={handleFormValidation} required disabled={disabledAll}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Building_Value_per_Sq_ft__c" variant="label-stacked"
+									value={buildingValues.Building_Value} data-id="building-value"
+									onchange={handleFormValidation} required disabled={disabledAll}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Building_Value__c" variant="label-stacked"
+									value={buildingValue} disabled={disabledAll}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<label class="slds-form-element__label" for="form-element-01">	<abbr class="slds-required" title="required">* </abbr>Building Age (in years)</label>
+								<lightning-input-field field-name="Building_Age__c" variant="label-hidden" required
+									disabled={disabledAll}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<lightning-input-field field-name="Building_Type__c" variant="label-stacked" required
+									disabled={disabledAll}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+								medium-device-size="2" large-device-size="2">
+								<label class="slds-form-element__label" for="form-element-01">	<abbr class="slds-required" title="required">* </abbr>Building Remarks</label>
+								<lightning-input-field field-name="Building_Constructed_with_Remarks__c"
+									variant="label-hidden" disabled={disabledAll} required>
+								</lightning-input-field>
+							</lightning-layout-item>
+						</template>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<div class="slds-var-m-top_medium slds-align_absolute-center">
+								<template if:false={disabledAll}>
+									<lightning-button variant="brand" type="submit" label="Update" id="property-btn">
+									</lightning-button> &nbsp;
+								</template>
+								<template if:true={isAc}>
+									<lightning-button variant="neutral" type="submit" label="Cancel" id="property-btn1"
+										onclick={handleCancel}>
+									</lightning-button>
+								</template>
+							</div>
+
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-record-edit-form>
+			</div>
+		</div>
+	</template>
+	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open "
+		style="padding-bottom:20px;" if:true={isCollateralData}>
+		<c-generic-data-table-l-w-c if:true={collateralTable} result={collateralTable} btns={rowAction}
+			onselected={handleSelectedPropertyRow}>
+		</c-generic-data-table-l-w-c>
+	</div>
+</template>

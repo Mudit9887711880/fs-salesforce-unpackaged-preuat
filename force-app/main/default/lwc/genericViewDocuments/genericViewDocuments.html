@@ -1,0 +1,36 @@
+<template>    
+    <div class="slds-scrollable_y slds-scrollable_x" style="height:100%;">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th >
+                    <th scope="col">
+                        <div class="slds-truncate" title="Type">Type</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Uploaded On">Uploaded On</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={files} for:item="file">
+                    <tr class="slds-hint-parent" key={file.fileName}>
+                        <td data-label="Name" scope="row">
+                            <div class="slds-truncate" title={file.fileName}>
+                                <a href="javascript:void(0)"  data-id={file.parentId} onclick={navigateToFiles}>{file.fileName}</a>
+                            </div>
+                        </td>
+                        <td scope="row" data-label="Type">
+                            <div class="slds-truncate" title={file.category}>{file.category}</div>
+                        </td>
+                        <td scope="row" data-label="Type">
+                            <div class="slds-truncate">{file.createdDate}</div>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>            
+        </table>
+    </div>    
+</template>

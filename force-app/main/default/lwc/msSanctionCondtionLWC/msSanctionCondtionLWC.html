@@ -1,0 +1,92 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={sanctionSpinner}></lightning-spinner>
+	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
+		style="padding-bottom:20px;">
+		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+			<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; Sanction Condition</span>
+		</h3>
+		<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+			<lightning-record-edit-form object-api-name="Sanction_Condition__c" record-id={sanctionId}
+				onsuccess={handleSanctionSuccess} onsubmit={handleSanctionSubmit}>
+				<lightning-layout multiple-rows>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+						medium-device-size="2" large-device-size="2">
+						<lightning-combobox name="Sanction Condition" label="Sanction Condition" value={value}
+							options={sanctionOptions} onchange={handleChange} data-id="sanction" required="true">
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+						medium-device-size="2" large-device-size="2" style="display:none;">
+						<lightning-input-field field-name="MsSanctionCondition__c" variant="label-stacked"
+							value={msSanctionCondition} required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+						medium-device-size="2" large-device-size="2" style="display:none;">
+						<lightning-input-field field-name="Created_From__c" variant="label-stacked" value={calledFrom}
+							required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+						medium-device-size="2" large-device-size="2" style="display:none;">
+						<lightning-input-field field-name="Other_Condition__c" variant="label-stacked"
+							value={othercondition} class="Sanction" required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
+						medium-device-size="2" large-device-size="2" style="display:none;">
+						<lightning-input-field field-name="Application__c" variant="label-stacked" value={recordId}
+							required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+						medium-device-size="4" large-device-size="2">
+						<lightning-input-field field-name="Print_In_Sanction_Letter__c" class="Sanction"
+							variant="label-stacked" required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+						medium-device-size="4" large-device-size="2">
+						<lightning-input-field field-name="Remark__c" class="Sanction" variant="label-stacked" required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+						medium-device-size="12" large-device-size="12">
+						<div class="slds-var-m-top_medium slds-align_absolute-center">
+							<lightning-button variant="brand" type="submit" label="Save" id="Sanction-btn">
+							</lightning-button>
+							<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
+								onclick={handleReset}>
+							</lightning-button>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+			</lightning-record-edit-form>
+		</div>
+	</div>
+
+	<template if:true={sanctionTableData}>
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
+			style="padding-bottom:20px;">
+			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+				<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; List of Sanction Conditions</span>
+			</h3>
+			<template if:true={sanctionTableData}>
+				<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+					<c-generic-data-table-l-w-c if:true={sanctionTableData} result={sanctionTableData} btns={btnsAction}
+						onselected={handleSelectedSanction}>
+					</c-generic-data-table-l-w-c>
+				</div>
+			</template>
+		</div>
+	</template>
+
+	<!-- Delete Popup -->
+	<template if:true={showDeleteModal}>
+		<c-fs-delete-l-w-c delete-from="Process Credit" object-api-name="Sanction_Condition__c"
+			rec-id={recordIdtoDelete} show-modal={showDeleteModal} onmodaldelete={handlemodalactions}
+			onmodalcancel={handlemodalactions}>
+		</c-fs-delete-l-w-c>
+	</template>
+
+</template>

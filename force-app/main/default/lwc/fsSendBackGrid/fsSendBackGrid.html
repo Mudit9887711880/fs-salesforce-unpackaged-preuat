@@ -1,0 +1,29 @@
+<template>
+	<template if:true={notes}>
+		<div class="slds-box slds-theme_default">
+			<template if:true={isSendBackAvailable}>
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+					<thead>
+						<th>Module(From) - Module(To)</th>
+						<th>Send Back Remarks</th>
+						<th>Send Back Date</th>
+					</thead>
+					<tbody>
+						<template for:each={notes} for:item="note">
+							<tr key={note.Id}>
+								<td data-label="Title" scope="row">{note.Title}</td>
+								<td class="slds-cell-wrap" data-label="Body" scope="row">{note.Body}</td>
+								<td data-label="Date" scope="row">
+									<lightning-formatted-date-time value={note.CreatedDate}></lightning-formatted-date-time>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</template>
+			<template if:false={isSendBackAvailable}>
+				<div class="slds-align_absolute-center"><span><b>No send back available till now</b></span></div>
+			</template>
+		</div>
+	</template>
+</template>

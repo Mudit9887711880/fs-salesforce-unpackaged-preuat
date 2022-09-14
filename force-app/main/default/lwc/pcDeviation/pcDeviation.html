@@ -1,0 +1,158 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={deviationSpinner}></lightning-spinner>
+	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+			<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; System Deviations </span>
+		</h3>
+		<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+			<template if:true={systemdeviationTableData}>
+				<c-generic-data-table-l-w-c result={systemdeviationTableData} btns={rowAction}
+					onselected={handleSelectedDeviation}>
+				</c-generic-data-table-l-w-c>
+			</template>
+		</div>
+	</div>
+
+	<div if:true={showEditForm} class="slds-box slds-box_xx-small" padding-bottom="10px">
+		<lightning-record-edit-form object-api-name="TR_Deviation__c" record-id={deviationId}
+			onsuccess={handleDeviationSuccess} onsubmit={handleDeviationSubmit}>
+			<lightning-layout multiple-rows>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Deviation_Code__c" variant="label-stacked" disabled="true">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Applicable_for__c" variant="label-stacked">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Deviation_Type__c" variant="label-stacked" disabled="true">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Decistion__c" variant="label-stacked">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Remark__c" variant="label-stacked" >
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Mitigants__c" variant="label-stacked">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<!-- Save Button-->
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+					medium-device-size="12" large-device-size="12">
+					<div class="slds-var-m-top_medium slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Update" id="deviation-btn">
+						</lightning-button>
+						<lightning-button variant="neutral" class="slds-m-left_small" label="Cancel" onclick={onCancel}
+							data-id="cancel-btn-edit">
+						</lightning-button>
+					</div>
+				</lightning-layout-item>
+			</lightning-layout>
+		</lightning-record-edit-form>
+	</div>
+
+	<div class="slds-var-m-top_medium slds-align_absolute-center slds-m-top_x-small slds-m-bottom_x-small">
+		<lightning-button variant="brand" label="Raise Deviation" id="deviation-raise-btn"
+			onclick={handleraiseDeviation}>
+		</lightning-button>
+	</div>
+
+	<div if:true={showNewForm} class="slds-box slds-box_xx-small" padding-bottom="10px">
+		<lightning-record-edit-form object-api-name="TR_Deviation__c" record-id="" onsuccess={handleDeviationSuccess}
+			onsubmit={handleDeviationSubmit}>
+			<lightning-layout multiple-rows>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-combobox name="Deviation Codes" label="Deviation Code" placeholder="Select Value"
+						options={codeOptions} onchange={handleChange} class="DevCode" required>
+					</lightning-combobox>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input name="Description" label="Description" value={description} disabled="true">
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Applicable_for__c" variant="label-stacked" value={applicablefor}
+						disabled="true">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2" style="display:none">
+					<lightning-input-field field-name="Application__c" variant="label-stacked" value={applicationId}>
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2" style="display:none">
+					<lightning-input-field field-name="Deviation_Code__c" variant="label-stacked" value={devCode}>
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Deviation_Type__c" variant="label-stacked" disabled="true">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Decistion__c" variant="label-stacked" class="deviation">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2" >
+					<lightning-input-field field-name="Remark__c" variant="label-stacked" class="deviation">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Mitigants__c" variant="label-stacked" class="deviation">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<!-- Save Button-->
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+					medium-device-size="12" large-device-size="12">
+					<div class="slds-var-m-top_medium slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="deviation1-btn">
+						</lightning-button>
+						<lightning-button variant="neutral" class="slds-m-left_small" label="Cancel" onclick={onCancel}
+							data-id="cancel-btn-new">
+						</lightning-button>
+					</div>
+				</lightning-layout-item>
+			</lightning-layout>
+		</lightning-record-edit-form>
+	</div>
+
+	<div if:true={userdeviationTableData}
+		class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+			<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; Manual Deviations </span>
+		</h3>
+		<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+			<template if:true={userdeviationTableData}>
+				<c-generic-data-table-l-w-c result={userdeviationTableData} btns={pcrowAction}
+					onselected={handleSelectedDeviation}>
+				</c-generic-data-table-l-w-c>
+			</template>
+		</div>
+	</div>
+
+	<!-- Delete Popup -->
+	<template if:true={showDeleteModal}>
+		<c-fs-delete-l-w-c delete-from="Process Credit" object-api-name="TR_Deviation__c" rec-id={recordIdtoDelete}
+			show-modal={showDeleteModal} onmodaldelete={handlemodalactions} onmodalcancel={handlemodalactions}>
+		</c-fs-delete-l-w-c>
+	</template>
+
+</template>

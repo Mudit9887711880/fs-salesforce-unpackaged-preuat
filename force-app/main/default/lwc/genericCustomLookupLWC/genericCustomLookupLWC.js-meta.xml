@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>        
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>        
+        <targetConfig targets="lightning__RecordPage">
+            <property name="lookupLabel" label="Lookup Label" type="String" description="Field is Required"/>
+            <property name="objectApiName" label="Object API Name" type="String" description="Field is Required. Write object Api name. like - Account, customobject__c"/>
+            <property name="keyFieldAPI" label="Field Api(value will be returned)" type="String" description="Field is Required. Field API which will be set when user select value, for eg - ID, ExternalID"/>
+            <property name="searchField" label="Search Field API" type="String" description="Field is Required. This field is used to set the label of returned value after search ex - Name"/>
+            <property name="isRequired" label="Required" type="Boolean" description="Set Global constant True or False, By default it is false."/>
+            <property name="predefinedId" label="Selected Record Id" type="String" description="Set Record Id that will be pre populate on the component."/>
+            <property name="selectedRecordId" label="Selected Record Value" type="String"/>
+        </targetConfig>
+ </targetConfigs>
+</LightningComponentBundle>

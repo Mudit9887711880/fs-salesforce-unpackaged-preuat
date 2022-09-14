@@ -1,0 +1,1176 @@
+<!--
+  @author            : 
+  @group             : TechMatrix Consulting
+  @description       : 
+  @created on        : 
+  @last modified on  : 22-08-2022
+  @last modified by  : Karan Singh Soni
+-->
+<template>
+
+	<!--<lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>-->
+	<template if:true={showExceptionUser}>
+		<template if:true={showData}>
+			<!--PAGE HEADER-->
+			<c-fs-page-container-l-w-c headericon="standard:asset_audit" stagename={apptStageName} appno={apptName}
+				businessdate={todaysDate} lastlogindate={lastLoginDate} btns={btns}
+				onrowselectionevent={handleHeaderButton}>
+			</c-fs-page-container-l-w-c>
+		</template>
+	</template>
+	<lightning-card>
+
+		<lightning-layout>
+			<!--<template if:true={isApplicantFlag}>
+					<lightning-layout-item size="3" padding="horizontal-small" style="overflow: initial;">
+						<lightning-combobox name="Loan Applicants" label="Select Applicant Name"
+							value={slcdLoanApptName} placeholder="None" options={listLoanApptName}
+							onchange={handleComboBoxChange}>
+						</lightning-combobox>
+					</lightning-layout-item>
+				</template>-->
+			<!--	<lightning-layout-item class="slds-align_absolute-center">
+					<lightning-button variant="brand" label=' Check Dedupe ' name="DedupeAPI"
+						onclick={callDedupeApiBtnClick} disabled={dedupeCriteriaFlag}></lightning-button>
+				</lightning-layout-item>-->
+
+		</lightning-layout>
+
+		<!--starting of applicant Name Tab functioanlity -->
+
+		<div>
+			<template if:false={showExceptionUser}>
+				<div style="display:flex;justify-content: flex-end; margin-top:-10px; margin-bottom:7px;">
+					<lightning-button variant="brand" label=' Check Dedupe ' name="DedupeAPI"
+						onclick={callDedupeApiBtnClick} disabled={dedupeCriteriaFlag}>
+					</lightning-button>
+				</div>
+			</template>
+			<template if:true={showDedupeResult}>
+				<lightning-tabset variant="scoped" active-tab-value={exceptionUserLoanApptName}>
+					<template for:each={listLoanApptName} for:item="loanAppt">
+						<lightning-tab key={loanAppt.Applicant_Name__c} label={loanAppt.Applicant_Name__c}
+							value={loanAppt.Applicant_Name__c} onactive={handleActive}>
+							<template if:true={activeTab}>
+
+
+
+								<template if:true={onchangeExceptionDedupe}>
+									<table
+										class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+										aria-labelledby="element-with-table-label other-element-with-table-label">
+										<thead>
+											<tr class="slds-line-height_reset">
+												<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+													<div title="Customer Number">
+														<b>Customer Number</b>
+													</div>
+												</th>
+												<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+													<div title="Source" class="slds-m-right_xx-large">
+														<b>Source</b>
+													</div>
+												</th>
+												<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+													<div title="Loan Details">
+														<b>Loan Details</b>
+													</div>
+												</th>
+												<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+													<div title="Yes or No">
+														<b>Yes or No</b>
+													</div>
+												</th>
+												<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+													<div title="Yes or No">
+														<b>Action</b>
+													</div>
+												</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<template for:each={onchangeExceptionDedupe} for:item="dedupeRec"
+												for:index="index">
+												<tr key={dedupeRec.Id} class="slds-hint-parent">
+													<td style="font-weight: bold">
+														<lightning-button variant="base"
+															label={dedupeRec.CustomerNumber} name="CustomerNumber"
+															data-id={index} onclick={handleLoandDetailBtnClick}
+															class="slds-m-left_x-small"></lightning-button>
+													</td>
+													<td style="font-weight: bold" class="slds-m-right_xx-large">
+														{dedupeRec.Source}
+													</td>
+													<td style="font-weight: bold">
+														<lightning-button variant="base" label="Loan Details"
+															name="DedupeloanDetails" data-id={index}
+															data-rec={nondedupeRec} onclick={handleDedupeChild}
+															class="slds-m-left_x-small"></lightning-button>
+													</td>
+
+													<td style="font-weight: bold; margin:0; padding:0;">
+														<template if:true={showdropdown}>
+															<lightning-combobox name="dedupeYesNo" label=""
+																value={dedupeRec.YesNo} placeholder="None"
+																disabled={isYesNoDisable} options={dedupeAnswerOpts}
+																onchange={handleDedupeComboBoxChange}>
+															</lightning-combobox>
+														</template>
+														<template if:true={showtext}>
+															<lightning-input style="width:200px;" type="text"
+																value={yesNoVal} disabled></lightning-input>
+														</template>
+													</td>
+													<td>
+
+
+														<lightning-button-icon variant="brand" onclick={saveDedupeData}
+															if:true={dedupeListSizeFlag} id={contactId}
+															icon-name="utility:save" alternative-text="Save"
+															class="slds-m-left_xx-small" title="Save">
+														</lightning-button-icon>
+
+														<!--<lightning-button variant="brand" label="Save" onclick={saveDedupeData}
+										id={contactId} if:true={dedupeListSizeFlag}></lightning-button>-->
+													</td>
+
+
+												</tr>
+											</template>
+
+										</tbody>
+									</table>
+								</template>
+								<template if:false={showExceptionUser}>
+									<template if:true={exceptionUserLoanApptName}>
+										<template if:true={hasDedupeRecord}>
+
+											<span class="slds-align_absolute-center slds-m-top_medium" style="color:red;">{showButtonLabel}</span>
+										</template>
+
+										<!--	<lightning-button variant="destructive-text" if:true={hasDedupeRecord} label={showButtonLabel} class="slds-align_absolute-center slds-m-top_medium"></lightning-button>-->
+									</template>
+								</template>
+							</template>
+						</lightning-tab>
+					</template>
+				</lightning-tabset>
+			</template>
+		</div>
+
+
+
+
+		<!--ending of applicant Name Tab functioanlity -->
+
+
+		<!--  layout to show dedupe detail when dedupe record assign to Dedupe Exception User. -->
+		<!--	<lightning-layout>
+				<template if:true={isdedupeDone}>
+					<table
+						class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+						aria-labelledby="element-with-table-label other-element-with-table-label">
+						<thead>
+							<tr class="slds-line-height_reset">
+								<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+									<div title="Customer Number">
+										<b>Customer Number</b>
+									</div>
+								</th>
+								<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+									<div title="Source">
+										<b>Source</b>
+									</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<template for:each={saveDedupeDetailList} for:item="dedupeRec">
+								<tr key={dedupeRec.Id} class="slds-hint-parent">
+									<td style="font-weight: bold">
+										{dedupeRec.CIF_Id__c}
+									</td>
+									<td style="font-weight: bold">
+										{dedupeRec.Source__c}
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</template>
+
+			</lightning-layout>-->
+
+
+
+		<!--- html for dedupe exception user -->
+		<!--<template if:true={showExceptionUser}>
+			<lightning-layout>
+				<lightning-layout-item size="3" padding="horizontal-small" style="overflow: initial;">
+					<lightning-combobox name="Loan Applicants" label="Select Applicant Name" value={slcdLoanApptName}
+						placeholder="None" options={listExceptionUserDedupe} onchange={handleExcptionComboBoxChange}>
+					</lightning-combobox>
+				</lightning-layout-item>
+			</lightning-layout>
+
+
+			<template if:true={onchangeExceptionDedupe}>
+				<table
+					class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+					aria-labelledby="element-with-table-label other-element-with-table-label">
+					<thead>
+						<tr class="slds-line-height_reset">
+							<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+								<div title="Customer Number">
+									<b>Customer Number</b>
+								</div>
+							</th>
+							<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+								<div title="Source" class="slds-m-right_xx-large">
+									<b>Source</b>
+								</div>
+							</th>
+							<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+								<div title="Loan Details">
+									<b>Loan Details</b>
+								</div>
+							</th>
+							<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+								<div title="Yes or No">
+									<b>Yes or No</b>
+								</div>
+							</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<template for:each={onchangeExceptionDedupe} for:item="nondedupeRec" for:index="index">
+							<tr key={nondedupeRec.Id} class="slds-hint-parent">
+								<td style="font-weight: bold">
+									<lightning-button variant="base" label={nondedupeRec.CustomerNumber}
+										name="CustomerNumber" onclick={handleLoandDetailBtnClick} data-id={index}
+										class="slds-m-left_x-small"></lightning-button>
+								</td>
+								<td class="slds-m-right_xx-large" style="font-weight: bold">
+									{nondedupeRec.Source}
+								</td>
+								<td style="font-weight: bold">
+									<lightning-button variant="base" label="Loan Details" name="DedupeloanDetails"
+										data-id={index} data-rec={nondedupeRec} onclick={handleDedupeChild}
+										class="slds-m-left_x-small"></lightning-button>
+								</td>
+								<td style="font-weight: bold">
+									<lightning-combobox name="dedupeYesNo" label="" value={nondedupeRec.YesNo}
+										placeholder="None" onchange={handleDedupeComboBoxChange}
+										options={dedupeAnswerOpts} disabled={isYesNoDisable}>
+									</lightning-combobox>
+								</td>
+							</tr>
+						</template>
+
+					</tbody>
+				</table>
+			</template>
+			
+			<template if:true={showLoanDetailModal}>
+
+				<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+					class="slds-modal slds-fade-in-open slds-modal_large">
+					<div class="slds-modal__container">
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+							<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Loan Details</h2>
+						</header>
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+							<table
+								class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+								aria-labelledby="element-with-table-label other-element-with-table-label">
+								<thead>
+									<tr class="slds-line-height_reset">
+
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Application Number">
+												<b>Application Number</b>
+											</div>
+										</th>
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Application Status">
+												<b>Application Status</b>
+											</div>
+										</th>
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Lan Status">
+												<b>Lan Status</b>
+											</div>
+										</th>
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Lan">
+												<b>Lan</b>
+											</div>
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<template for:each={nondedupechildloanval} for:item="nondedupeLoanRec"
+										for:index="index">
+										<tr key={nondedupeLoanRec.Id} class="slds-hint-parent">
+											<td style="font-weight: bold">
+												{nondedupeLoanRec.Application_Number__c}
+											</td>
+											<td style="font-weight: bold">
+												{nondedupeLoanRec.Application_Status__c}
+											</td>
+											<td style="font-weight: bold">
+												{nondedupeLoanRec.Lan_Status__c}
+											</td>
+											<td style="font-weight: bold">
+												{nondedupeLoanRec.Lan__c}
+											</td>
+										</tr>
+									</template>
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+
+		</template>-->
+
+		<!---end of html for dedupeexception user -->
+
+
+
+		<!--  Dedupe Record Table-->
+		<!--<template if:true={activeTab}>
+		<template if:true={onchangeExceptionDedupe}>
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+				aria-labelledby="element-with-table-label other-element-with-table-label">
+				<thead>
+					<tr class="slds-line-height_reset">
+						<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+							<div title="Customer Number">
+								<b>Customer Number</b>
+							</div>
+						</th>
+						<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+							<div title="Source">
+								<b>Source</b>
+							</div>
+						</th>
+						<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+							<div title="Loan Details">
+								<b>Loan Details</b>
+							</div>
+						</th>
+						<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+							<div title="Yes or No">
+								<b>Yes or No</b>
+							</div>
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<template for:each={onchangeExceptionDedupe} for:item="dedupeRec" for:index="index">
+						<tr key={dedupeRec.Id} class="slds-hint-parent">
+							<td style="font-weight: bold">
+								<lightning-button variant="base" label={dedupeRec.CustomerNumber} name="CustomerNumber"
+									data-id={index} onclick={handleLoandDetailBtnClick}
+									class="slds-m-left_x-small"></lightning-button>
+							</td>
+							<td style="font-weight: bold">
+								{dedupeRec.Source}
+							</td>
+							<td style="font-weight: bold">
+								<lightning-button variant="base" label="Loan Details" name="DedupeloanDetails"
+									data-id={index} data-rec={nondedupeRec} onclick={handleDedupeChild}
+									class="slds-m-left_x-small"></lightning-button>
+							</td>
+							<td style="font-weight: bold">
+								<lightning-combobox name="dedupeYesNo" label="" value={dedupeRec.YesNo}
+									placeholder="None" options={dedupeAnswerOpts} onchange={handleDedupeComboBoxChange}
+									disabled={isYesNoDisable}>
+								</lightning-combobox>
+							</td>
+						</tr>
+					</template>
+
+				</tbody>
+			</table>
+		</template>
+		</template>-->
+		<!-- Field Comparison table-->
+
+		<!--- -----------------------modal popup for the table----------------- --->
+		<template if:true={showModal}>
+
+			<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-027"
+				class="slds-modal slds-fade-in-open slds-modal_large">
+				<div class="slds-modal__container">
+					<!-- Modal/Popup Box LWC header here -->
+					<header class="slds-modal__header">
+						<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+						<h2 id="modal-heading-038" class="slds-text-heading_medium slds-hyphenate">Loan Details</h2>
+					</header>
+					<!-- Modal/Popup Box LWC body starts here -->
+					<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-111">
+
+						<table
+							class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+							aria-labelledby="element-with-table-label other-element-with-table-label">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">
+
+										<div class="slds-truncate" title="Field">
+											<b>Field</b>
+										</div>
+									</th>
+									<th class="" scope="col">
+
+										<div class="slds-truncate" title="New Applicant">
+											<b>New Applicant</b>
+										</div>
+									</th>
+									<th class="" scope="col">
+
+										<div class="slds-truncate" title="Existing Applicant">
+											<b>Existing Applicant</b>
+										</div>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<template for:each={cifDedupeData} for:item="Rec">
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>CASE ID</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>Loan Account Number</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{lanId}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{lanId}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>Customer ID</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.Customer_Rel_Id__c}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.Customer_Rel_Id__c}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Branch Name</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{branchName}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{branchName}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>Application ID</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.loanapptName}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.loanapptName}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>First Name</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.appName}
+
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.Name}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>Last Name</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.appName}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.lastName}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>DOB</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.Date_Of_Birth__c}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.dob}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Adhar</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{apptadhar}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.adhar}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Pan</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{apptpan}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.pan}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Driving Licence</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{apptdriving}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.dl}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Voter ID</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{apptvoterId}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.voterId}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Passport ID</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{apptpasport}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.passport}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Ration Card</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{apptpan}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.Pan_Number__c}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>Residence Address</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.resAddrss}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.resaddr}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Residence Pincode</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.pincode}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.pincode}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>Land Line</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.apptMobile}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.mobile}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Mobile Number</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.apptMobile}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.mobile}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Match Source</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.source}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.source}
+										</td>
+
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Decision</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+
+										<td size="4" padding="horizontal-small">
+											<b>Remarks</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+									</tr>
+									<tr key={Rec.Id} class="slds-hint-parent">
+										<td size="4" padding="horizontal-small">
+											<b>Match Details</b>
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+										<td size="4" padding="horizontal-small">
+											{Rec.CIF_Id__c}
+										</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+
+
+
+
+
+		<!--- -----------------------modal popup for the table----------------- --->
+		<!--<template if:true={showFieldComparisonTable}>
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+				<thead>
+					<tr class="slds-line-height_reset">
+						<th class="" scope="col">
+
+							<div class="slds-truncate" title="Field">
+								<b>Field</b>
+							</div>
+						</th>
+						<th class="" scope="col">
+
+							<div class="slds-truncate" title="New Applicant">
+								<b>New Applicant</b>
+							</div>
+						</th>
+						<th class="" scope="col">
+
+							<div class="slds-truncate" title="Existing Applicant">
+								<b>Existing Applicant</b>
+							</div>
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<template for:each={cifDedupeData} for:item="Rec">
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>CASE ID</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>Loan Account Number</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>Customer ID</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Customer_Rel_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Customer_Rel_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Branch Name</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Customer_Rel_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Customer_Rel_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>Application ID</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Applicant_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Applicant_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>First Name</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Name}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.appName}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>Last Name</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Last_Name__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Last_Name__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>DOB</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Date_Of_Birth__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Date_Of_Birth__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Adhar</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Aadhaar_Number__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Aadhaar_Number__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Pan</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Pan_Number__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Pan_Number__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Driving Licence</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Driving_License__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Driving_License__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Voter ID</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Voter_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Voter_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Passport ID</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Passport__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Passport__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Ration Card</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Pan_Number__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Pan_Number__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>Residence Address</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Address_Line_1__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Address_Line_1__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Residence Pincode</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Pincode__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Pincode__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>Land Line</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Mobile_Number__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Mobile_Number__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Mobile Number</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Mobile_Number__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Mobile_Number__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Match Source</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Source__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.Source__c}
+							</td>
+
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Decision</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+
+							<td size="4" padding="horizontal-small">
+								<b>Remarks</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+						</tr>
+						<tr key={Rec.Id} class="slds-hint-parent">
+							<td size="4" padding="horizontal-small">
+								<b>Match Details</b>
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+							<td size="4" padding="horizontal-small">
+								{Rec.CIF_Id__c}
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+			</template>-->
+		<!-- </template> -->
+
+
+
+
+		<!--  <table
+                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+                    aria-labelledby="element-with-table-label other-element-with-table-label" style="width:60%">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-heading_small slds-cell-wrap" scope="col">
+                                <div title="Field">
+                                    <b>Field</b>
+                                </div>
+                            </th>
+                            <th class="slds-text-heading_small slds-cell-wrap" scope="col">
+                                <div title="New Applicant">
+                                    <b>New Applicant</b>
+                                </div>
+                            </th>
+                            <th class="slds-text-heading_small slds-cell-wrap" scope="col">
+                                <div title="Existing Applicant">
+                                    <b>Existing Applicant</b>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <template for:each={arrSlcdLoanApptFieldComparison} for:item="fieldCompRec" for:index="index">
+                            <tr key={dedupeRec.Id} class="slds-hint-parent">
+                                <td style="font-weight: bold">
+                                    <lightning-button variant="base" label={dedupeRec.CustomerNumber}
+                                        name="CustomerNumber" data-target-id={index} onclick={handleLoandDetailBtnClick}
+                                        class="slds-m-left_x-small"></lightning-button>
+                                </td>
+                                
+                            </tr>
+                        </template>
+
+                    </tbody>
+                </table>-->
+
+
+		<!-- Field Comparison table END-->
+		<!--  END of Dedupe Record Table-->
+
+		<!--  Loan Details Modal -->
+		<template if:true={nondedupechildloanval}>
+			<template if:true={showLoanDetailModal}>
+
+				<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-02"
+					class="slds-modal slds-fade-in-open slds-modal_large">
+					<div class="slds-modal__container">
+						<!-- Modal/Popup Box LWC header here -->
+						<header class="slds-modal__header">
+							<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+							<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Loan Details</h2>
+						</header>
+						<!-- Modal/Popup Box LWC body starts here -->
+						<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+
+							<table
+								class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-p-around_large"
+								aria-labelledby="element-with-table-label other-element-with-table-label">
+								<thead>
+									<tr class="slds-line-height_reset">
+
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Application Number">
+												<b>Application Number</b>
+											</div>
+										</th>
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Application Status">
+												<b>Application Status</b>
+											</div>
+										</th>
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Lan Status">
+												<b>Lan Status</b>
+											</div>
+										</th>
+										<th class="slds-text-heading_small slds-cell-wrap" scope="col">
+											<div title="Lan">
+												<b>Lan</b>
+											</div>
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<template for:each={nondedupechildloanval} for:item="dedupeLoanRec"
+										for:index="index">
+										<tr key={dedupeLoanRec.Id} class="slds-hint-parent">
+											<td style="font-weight: bold">
+												{dedupeLoanRec.Application_Number__c}
+											</td>
+											<td style="font-weight: bold">
+												{dedupeLoanRec.Application_Status__c}
+											</td>
+											<td style="font-weight: bold">
+												{dedupeLoanRec.Lan_Status__c}
+											</td>
+											<td style="font-weight: bold">
+												{dedupeLoanRec.Lan__c}
+											</td>
+										</tr>
+									</template>
+
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</section>
+				<div class="slds-backdrop slds-backdrop_open"></div>
+			</template>
+		</template>
+
+		<template if:true={isSpinner}>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</template>
+
+
+
+		<!-- Loan Detail Modal End -->
+		<template if:false={showExceptionUser}>
+			<div slot="footer">
+				<!--<lightning-button variant="brand" label="Save" onclick={saveDedupeData} class="slds-m-left_x-small"
+				id={contactId} if:true={dedupeListSizeFlag}></lightning-button>-->
+				<lightning-button variant="brand" label="Submit" onclick={submitDedupeData} class="slds-m-left_x-small"
+					id={contactId} if:true={isOptionDisable}></lightning-button>
+
+			</div>
+		</template>
+
+		<template if:true={showExceptionUser}>
+			<div class="slds-docked-form-footer">
+				<lightning-button variant="brand" label="Submit" onclick={dedupeUserSubmit} class="slds-m-left_x-small"
+					disabled={disableSubmit}></lightning-button>
+			</div>
+		</template>
+
+	</lightning-card>
+
+	<!--div class="slds-docked-form-footer">
+        <button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+            onclick={handleDisbSubmit} disabled={disableSubmit}>Submit</button>
+    </div-->
+
+</template>

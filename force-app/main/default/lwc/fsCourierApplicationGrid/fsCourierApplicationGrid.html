@@ -1,0 +1,58 @@
+<template>
+	<lightning-card>
+		<template if:true={isSave}>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</template>
+		<template if:true={options}>
+			<template if:true={isLoader}>
+				<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+			</template>
+			<template if:false={isLoader}>
+				<template if:true={courierApplications}>
+					<div class="slds-section slds-border_right slds-border_left slds-is-open">
+						<h3 class="slds-section__title slds-theme_shade slds-p-around_xx-small">
+							<div class="slds-p-left_xx-small">
+								<lightning-icon size="small" icon-name={iconName}
+									alternative-text="Courier Application"></lightning-icon>
+							</div>
+							<a href={url} class="slds-text-link_reset slds-text-link">
+								<span class="slds-truncate slds-m-left_small" title="Courier Applications" style="color:black;"><b>Courier Applications ({numberOfApp})</b></span>
+							</a>
+						</h3>
+						<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+							<thead>
+								<th>Courier Control</th>
+								<th>Application</th>
+								<th>Status</th>
+								<th>Document Type</th>
+							</thead>
+							<tbody>
+								<template for:each={courierApplications} for:item="application" for:index="index">
+									<tr key={application.Id}>
+										<td>{application.Courier_Control__r.Name}</td>
+										<td>{application.Application__r.Name}</td>
+										<td>
+											<lightning-combobox name="Status__c" variant="label-hidden"
+												placeholder="Select status" options={options}
+												value={application.Status__c} data-index={index} onchange={handleChange}
+												style="width:auto;"></lightning-combobox>
+										</td>
+										<td>{application.Document_Type__c}</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+					</div>
+				</template>
+			</template>
+			<template if:true={isChanged}>
+				<div class="slds-align_absolute-center">
+					<lightning-button label="Cancel" title="Cancel" onclick={handleCancel}></lightning-button>
+					&nbsp;
+					<lightning-button variant="brand" label="Save" title="Save" onclick={handleSave}>
+					</lightning-button>
+				</div>
+			</template>
+		</template>
+	</lightning-card>
+</template>

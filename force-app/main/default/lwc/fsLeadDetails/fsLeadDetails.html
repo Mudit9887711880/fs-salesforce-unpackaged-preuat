@@ -1,0 +1,180 @@
+<template>
+	<template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c if:true={applicationName} headericon="standard:asset_audit" stagename="Lead Details"
+		appno={applicationName} businessdate={todaysDate} lastlogindate={lastLoginDate} btns={btns} onrowselectionevent={rowselectionevent}>
+	</c-fs-page-container-l-w-c>
+	<!--PAGE HEADER-->
+	<!--CONTENT-->
+	<template if:true={isAddApplicant}>
+		<c-fs-add-new-applicant application-id={recordId} prelogin-id={preLogin} onaddapplicantclose={addapplicantclose} ongetapplicantid={getapplicantid}></c-fs-add-new-applicant>
+	</template>
+	<template if:true={isAddProperty}>
+		<c-fs-add-new-property if:true={propertyAllData} application-id={recordId} property-all-data={propertyAllData} onaddpropertyclose={addpropertyclose} ongetpropertydata={getpropertydata}></c-fs-add-new-property>
+	</template>
+	<template if:true={initiateRetrigger}>
+		<c-fs-retrigger show-modal=true stage-from="Lead Details" application-id={recordId} oncloseclick={handleRetriggerClose}></c-fs-retrigger>
+	</template>
+	<article class="slds-card">
+		<div class="slds-card__body slds-card__body_inner">
+			<lightning-tabset variant="scoped" active-tab-value={activeError}>
+				<lightning-tab label="Application Information" value="step-1" title="Application Information">
+					<div class="slds-scrollable_y">
+						<lightning-tabset variant="scoped">
+							<lightning-tab onactive={handleActive} value="Application Type" label="Application Type" title="Application Type">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-application-type application-id={recordId}>
+									</c-fs-lead-details-application-type>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Application_Information" label="Applicant Information" title="Applicant Information">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-personal-information all-loan-applicant={allLoanApplicant}
+										row-action={rowAction} onshowtoastmessage={showToastMessage}
+										oncheckpersonalinfo={checkPersonalInfo}>
+									</c-fs-lead-details-personal-information>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Education" label="Education" title="Education">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-education all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} row-action={rowAction}
+										onshowtoastmessage={showToastMessage}></c-fs-lead-details-education>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Family" label="Family" title="Family">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-family all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} row-action={rowAction}
+										onshowtoastmessage={showToastMessage}></c-fs-lead-details-family>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Employment Details" label="Employment Details" title="Employment Details">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-employment-details all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} row-action={rowAction}
+										application-id={recordId} onshowtoastmessage={showToastMessage} oncheckempdetailinfo={checkEmpTabDetails}>
+									</c-fs-lead-details-employment-details>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Income Details" label="Income Details" title="Income Details">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-income-details all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} row-action={rowAction}
+										onshowtoastmessage={showToastMessage}></c-fs-lead-details-income-details>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Bank Details" label="Bank Details" title="Bank Details">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-bank-details all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} row-action={rowAction}
+										onshowtoastmessage={showToastMessage} oncheckbankdetailinfo={checkBankTab}></c-fs-lead-details-bank-details>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Reference Details" label="Reference Details" title="Reference Details">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-reference-details record-id={recordId}></c-fs-lead-details-reference-details>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Receipt Details" label="Fee Details" title="Receipt Details">
+								<div class="slds-scrollable_y">
+									<c-fee-creation-parent record-id={recordId} pre-log-in-id={preLogin} app-name={applicationName} primary-applicant-name={primaryApplicantName} stage-name="Lead Detail"></c-fee-creation-parent>
+								</div>
+							</lightning-tab>
+						</lightning-tabset>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Loan Details" title="Loan Details" value="step-2">
+					<div class="slds-scrollable_y">
+						<lightning-tabset variant="scoped">
+							<lightning-tab onactive={handleActive} label="Loan Type" value="loan-type" title="Loan Type">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-loan-type record-id={recordId} oncheckloantypeinfo={checkloantypeinfo}></c-fs-lead-details-loan-type>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Property Details" label="Property Details" title="Property Details">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-property-details all-loan-applicant={allLoanApplicant} application-id={recordId}
+										all-applicant-data={allApplicantData}
+										onshowtoastmessage={showToastMessage} oncheckpropertyvalidation={checkpropertyvalidation}></c-fs-lead-details-property-details>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Property Boundaries" label="Property Boundaries" title="Property Boundaries">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-property-boundaries all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} 
+										onshowtoastmessage={showToastMessage} application-id={recordId}></c-fs-lead-details-property-boundaries>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Property Measurement" label="Property Measurement" title="Property Measurement">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-property-measurement all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData}
+										onshowtoastmessage={showToastMessage} application-id={recordId}></c-fs-lead-details-property-measurement>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Property Address" label="Property Address" title="Property Address">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-property-address all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} 
+										onshowtoastmessage={showToastMessage} application-id={recordId}></c-fs-lead-details-property-address>
+								</div>
+							</lightning-tab>
+							<lightning-tab onactive={handleActive} value="Ownership Details" label="Ownership Details" title="Ownership Details">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-ownership-details all-loan-applicant={allLoanApplicant}
+										all-applicant-data={allApplicantData} 
+										onshowtoastmessage={showToastMessage} application-id={recordId}></c-fs-lead-details-ownership-details>
+								</div>
+							</lightning-tab>
+						</lightning-tabset>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Sourcing Details" title="Sourcing Details">
+					<div class="slds-scrollable_y">
+						<lightning-tabset variant="scoped">
+							<lightning-tab onactive={handleActive} value="Application Details" label="Application Details" title="Application Details">
+								<div class="slds-scrollable_y">
+									<c-fs-lead-details-application-details all-loan-applicant={allLoanApplicant}
+										application-id={recordId} onshowtoastmessage={showToastMessage}>
+									</c-fs-lead-details-application-details>
+								</div>
+							</lightning-tab>
+						</lightning-tabset>
+					</div>
+				</lightning-tab>
+				 <!-- Document Upload Screen -->
+					<lightning-tab label="Document Upload" value="DocumentUpload">
+						<div class="slds-scrollable_y" style="max-height:400px;">
+							<c-fs-generic-upload-documents  stage-name="Lead Detail" onrequireddocument={handleRequiredDocument} application-id={recordId} record-type-id={recordTypeId}>
+							</c-fs-generic-upload-documents>
+						</div>	
+					</lightning-tab>
+					<lightning-tab label="Dedupe Details" value="Dedupe">
+                    	<c-fsdedupe-details-lwc if:true={recordId} record-id={recordId} source="Lead Details" onfetchdedupedetails={getdedupedetails}></c-fsdedupe-details-lwc>
+					</lightning-tab>
+				<!-- Error Tab-->
+				<lightning-tab onactive={handleActive} label="Error" value="Error" show-error-indicator if:true={showErrorTab}
+					style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+			</lightning-tabset>
+		</div>
+	</article>
+	<div class="slds-p-vertical_large"></div>
+	<!--CONTENT-->
+	<!--FOOTER-->
+	<div class="slds-docked-form-footer">
+		<button type="button" class="slds-button slds-button_neutral">Cancel</button>
+		<button type="button" class="slds-button slds-button_brand" onclick={handleSubmit}>Submit</button>
+	</div>
+	<!--FOOTER-->
+</template>

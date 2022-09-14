@@ -1,0 +1,62 @@
+<template>
+    <div class="slds-page-header slds-m-bottom_x-small">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-opportunity">
+                            <lightning-icon icon-name={headericon} class="slds-page-header__icon"></lightning-icon>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span>{stagename}</span>
+                                    <span class="slds-page-header__title slds-truncate" title={appno}>{appno}</span>
+                                </h1>
+                            </div>
+                            <div class="slds-page-header__name-switcher">
+                                <lightning-helptext content={helpText}></lightning-helptext>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-page-header__col-actions">
+                <div class="slds-page-header__controls">
+                    <div class="slds-page-header__control">
+                        <ul class="slds-button-group-list">
+                            <template for:each={actualBtn} for:item="btn">
+                                <li key={btn.name}>
+                                    <lightning-button value={btn.name} label={btn.label} title={btn.label}
+                                        onclick={handleBtnClick}></lightning-button>
+                                </li>
+                            </template>
+                            <template if:true={showoverflowmenu}>
+                                <li>
+                                    <lightning-button-menu alternative-text="Show menu" menu-alignment="auto"
+                                        onselect={handleOnselect}>
+                                        <template for:each={overflowmenulist} for:item="menu">
+                                            <lightning-menu-item key={menu.name} value={menu.name} label={menu.label}>
+                                            </lightning-menu-item>
+                                        </template>
+                                    </lightning-button-menu>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-meta">
+                <p class="slds-page-header__meta-text slds-float_right">
+                    <b>Business Date :</b>{businessdate} • <b>Last Login Date : </b>{lastlogindate}
+                </p>
+            </div>
+        </div>
+        -->
+    </div>
+</template>

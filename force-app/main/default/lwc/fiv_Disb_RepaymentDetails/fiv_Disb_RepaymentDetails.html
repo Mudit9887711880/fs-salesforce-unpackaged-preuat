@@ -1,0 +1,30 @@
+<!--
+  @author            : Karan Singh Soni
+  @group             : TechMatrix Consulting
+  @description       : Parent Component - fiv_Disb_Lwc
+  @created on        : 20-07-2022
+  @last modified on  : 13-08-2022
+  @last modified by  : Karan Singh Soni
+-->
+<template>
+    <lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>
+
+    <div class="slds-box slds-box_xx-small slds-p-bottom_large">
+        <!-- This will be used to show the Embedded Nach component -->
+        <c-fs-agreement-execution-n-a-c-h-_-disbursement application-id={obj_parent_appt_wrapper_data.objAppt.Id}
+            initiate-from="Fiv_Disb_RepaymentDetails" ongetnachbankdetails={handleChildSlcdBankDetail}
+            ongetselectedapplicant={handleAppntSlct}>
+        </c-fs-agreement-execution-n-a-c-h-_-disbursement>
+        <!-- --------------------------------------------------------------- -->
+
+        <div class="slds-box slds-box_xx-small" if:true={objExistRepayRecords}>
+            <c-fs-title-section title="Existing Repayment Details"></c-fs-title-section>
+            <div class="slds-p-bottom_xx-large">
+                <c-generic-data-table-l-w-c result={objExistRepayRecords} onselected={handleSelectedRecord}
+                    if:true={objExistRepayRecords}>
+                </c-generic-data-table-l-w-c>
+            </div>
+        </div>
+        <br /><br /><br />
+    </div>
+</template>

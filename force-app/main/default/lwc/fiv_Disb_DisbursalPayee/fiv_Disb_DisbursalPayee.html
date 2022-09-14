@@ -1,0 +1,332 @@
+<!--
+  @author            : Karan Singh Soni
+  @group             : TechMatrix Consulting
+  @description       : Parent Component - fiv_Disb_Lwc
+  @created on        : 20-07-2022
+  @last modified on  : 07-09-2022
+  @last modified by  : Karan Singh Soni
+-->
+<template>
+    <lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>
+    <div if:true={showUI}>
+        <p style="color: red; text-align: center;" if:false={isBennifAmtMatchDisbAmt}> <b> Total beneficiary
+                amount is not matching with disbursement amount.Please select a record to adjust. </b></p>
+        <div class="slds-box slds-box_xx-small" if:true={enableDisbPayeeEdit}>
+
+
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+                    <lightning-combobox name="BeneficiaryType" label="Beneficiary Type" data-id="BeneficiaryType"
+                        data-field='Beneficiary_Type__c' value={objDisbursalPayee.Beneficiary_Type__c}
+                        placeholder="None" options={listBenificiaryType} onchange={handleComboBoxChange} required>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+
+                    <lightning-input name="BeneficiaryName" type="text" label="Beneficiary Name"
+                        data-field='Beneficiary_Name__c' value={objDisbursalPayee.Beneficiary_Name__c}
+                        onchange={handleInputChange} required></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+
+                    <lightning-input name="Beneficiary Amount" type="number" label="Beneficiary Amount" step=".01"
+                        data-field='Beneficiary_Amount__c' value={objDisbursalPayee.Beneficiary_Amount__c}
+                        onchange={handleInputChange} required></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+
+                    <!--lightning-input name="Beneficiary Bank Account Number" type="text"
+                        label="Beneficiary Bank Account Number" data-field='Beneficiary_Bank_Account_Number__c'
+                        value={objDisbursalPayee.Beneficiary_Bank_Account_Number__c} onchange={handleInputChange}
+                        onblur={handleBlurChange}-->
+
+                    <div class="slds-form-element__control slds-p-top_x-small">
+                        <label for="accntNum1"><abbr class="slds-required" title="required">* </abbr>Beneficiary Bank
+                            Account Number</label>
+                        <input class="slds-input" id="accntNum1" name="Beneficiary Bank Account Number" required=""
+                            label="Beneficiary Bank Account Number" data-field='Beneficiary_Bank_Account_Number__c'
+                            data-label="BeneficiaryBankAccountNumber" onblur={handleBlurChange}
+                            data-errormsg="accMisMatchMsg1" />
+                        <label for="accntNum1" style="color: red;">{accMisMatchMsg1}</label>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3" if:true={tempAccntNumber}>
+
+                    <div class="slds-form-element__control  slds-p-top_x-small">
+                        <label for="accntNum2"><abbr class="slds-required" title="required">* </abbr>Re Enter
+                            Beneficiary Bank Account Number</label>
+                        <input class="slds-input" id="accntNum2" name="BeneficiaryBankAccountNumberCheck" required=""
+                            label="Re Enter Beneficiary Bank Account Number"
+                            data-field='Beneficiary_Bank_Account_Number__c'
+                            data-label="BeneficiaryBankAccountNumberCheck" onblur={handleBlurChange}
+                            data-errormsg="accMisMatchMsg2" />
+                        <label for="accntNum2" style="color: red;">{accMisMatchMsg2}</label>
+
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+                    <div id="isfc">
+                        <label for="isfc">Beneficiary IFSC Code</label>
+                        <c-generic-custom-lookup-l-w-c name="BeneficiaryIFSCCode" lookup-label="Beneficiary IFSC Code"
+                            object-api-name="IFSC_Code_Master__c" key-field-a-p-i="Id" search-field="Name"
+                            is-required=true data-datatype="lookup"
+                            predefined-id={objDisbursalPayee.Beneficiary_IFSC_Code__c}
+                            selected-record-id={objDisbursalPayee.Beneficiary_IFSC_Code__c}
+                            data-objectname="Disbursal_Payee__c" class="editMode" onlookupselected={handleLookupChange}
+                            onlookupvalueremoved={handleLookupChange}>
+                            <!---->
+                        </c-generic-custom-lookup-l-w-c>
+                        <p style="color: red;">{isfcCodeMissErr}</p>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+
+                    <lightning-input name="Beneficiary Bank Name" type="text" label="Beneficiary Bank Name"
+                        data-field='Beneficiary_Bank_Name__c' value={objDisbursalPayee.Beneficiary_Bank_Name__c}
+                        onchange={handleInputChange} disabled required></lightning-input>
+                    <p style="color: red;">{disbErrorMsg1}</p>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+
+                    <lightning-input name="Beneficiary Branch Name" type="text" label="Beneficiary Branch Name"
+                        data-field='Beneficiary_Branch_Name__c' value={objDisbursalPayee.Beneficiary_Branch_Name__c}
+                        onchange={handleInputChange} disabled required></lightning-input>
+                    <p style="color: red;">{disbErrorMsg2}</p>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+
+                    <template if:true={disbPayeePayTypePickVal.data}>
+
+                        <lightning-combobox name="Payment Type" label="Payment Type" data-field='Payment_Type__c'
+                            value={objDisbursalPayee.Payment_Type__c} options={disbPayeePayTypePickVal.data.values}
+                            onchange={handleInputChange} required>
+
+                        </lightning-combobox>
+
+                    </template>
+                </lightning-layout-item>
+
+
+                <lightning-layout-item padding="around-small" size="12" small-device-size="12" medium-device-size="6"
+                    large-device-size="3">
+
+                    <lightning-input type="file" accept={acceptedFormats} label={uploadedfileName} required
+                        onchange={onOpenfileUpload} if:false={currentEditDisbPayeeId}>
+                    </lightning-input>
+                    <lightning-input type="file" accept={acceptedFormats} label={uploadedfileName}
+                        onchange={onOpenfileUpload} if:true={currentEditDisbPayeeId}>
+                    </lightning-input>
+                    <p style="color: red;">{fileErrMsg}</p>
+                </lightning-layout-item>
+
+            </lightning-layout>
+
+            <div class="slds-align_absolute-center slds-m-around_x-small slds-p-bottom_large">
+
+                <lightning-button variant="brand" label="Save" title="Cancel" data-id="saveBtn" onclick={handleSave}
+                    disabled={disableSaveEditBtn}>
+                </lightning-button> &nbsp;
+                <lightning-button label="Cancel" title="Cancel" onclick={handleCancel} if:true={isExistPayeeExists}>
+                </lightning-button><!-- only show cancel button if there is any data table-->
+            </div>
+            <div if:false={isExistPayeeExists}>
+            <br/><br/><br/><br/>
+            
+        </div>
+        </div>
+        <!-- ==================== END of Disbursal Payee Edit  ================================== -->
+
+        <!-- ==================== Exisitng Disbursal Payee Records  ================================== -->
+        <div class="slds-box slds-box_xx-small" if:true={isExistPayeeExists}>
+            <div if:false={enableDisbPayeeEdit}>
+                <lightning-button class="slds-float_right" variant="brand" label="Add Disbursal Payee"
+                    data-name='enableDisbPayeeEdit' title="Add Disbursal Payee" onclick={handleBtnClick}
+                    if:true={addNewBeneficiary}>
+                </lightning-button>
+
+            </div>
+            <br />
+            <br />
+            <div class="slds-p-bottom_xx-large">
+
+                <div style="height:15rem;" class="slds-scrollable">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped "
+                        aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class=" slds-cell-wrap" scope="col">
+                                    &nbsp;&nbsp;
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Beneficiary Type">
+                                        <b>Beneficiary Type</b>
+                                    </div>
+                                </th>
+
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Beneficiary Name">
+                                        <b>Beneficiary Name</b>
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Beneficiary Amount">
+                                        <b>Beneficiary Amount</b>
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Beneficiary Bank Account Number">
+                                        <b>Beneficiary Bank Account Number</b>
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Beneficiary IFSC Code">
+                                        <b>Beneficiary IFSC Code</b>
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Beneficiary Bank Name">
+                                        <b>Beneficiary Bank Name</b>
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Beneficiary Branch Name">
+                                        <b>Beneficiary Branch Name</b>
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Payment Type">
+                                        <b>Payment Type</b>
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    <div title="Verified">
+                                        Verified
+                                    </div>
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    &nbsp;&nbsp;
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    &nbsp;&nbsp;
+                                </th>
+                                <th class=" slds-cell-wrap" scope="col">
+                                    &nbsp;&nbsp;
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={listExistDisbursalPayees} for:item="objWrapDisbPayee" for:index="index">
+                                <tr class="slds-hint-parent" key={objWrapDisbPayee.sobject.Id}>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small" if:false={isBennifAmtMatchDisbAmt}>
+                                            <template if:true={objWrapDisbPayee.isVisible}>
+                                                <lightning-input type="checkbox-button" name="checkBox"
+                                                    data-index={index} data-name="checkboxBtn"
+                                                    checked={objWrapDisbPayee.isChecked}
+                                                    if:true={objWrapDisbPayee.sobject.Is_Verified__c}
+                                                    onchange={handleBtnClick}></lightning-input>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Beneficiary_Type__c}
+                                        </div>
+                                    </td>
+
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Beneficiary_Name__c}
+                                        </div>
+                                    </td>
+
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Beneficiary_Amount__c}
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Beneficiary_Bank_Account_Number__c}
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Beneficiary_IFSC_Code__r.Name}
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Beneficiary_Bank_Name__c}
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Beneficiary_Branch_Name__c}
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            {objWrapDisbPayee.sobject.Payment_Type__c}
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            <lightning-input type="checkbox" name="checkBox" data-index={index}
+                                                checked={objWrapDisbPayee.sobject.Is_Verified__c} disabled>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            <lightning-button-icon icon-name="utility:edit" variant="brand" title="Edit"
+                                                data-index={index} onclick={handleEditRecord}
+                                                disabled={enableDisbPayeeEdit}></lightning-button-icon>
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            <lightning-icon style="cursor: pointer;" data-index={index} size="xx-small"
+                                                icon-name="action:preview" alternative-text="Preview Document"
+                                                title="Preview Document" onclick={viewDocument}></lightning-icon>
+                                        </div>
+                                    </td>
+                                    <td class="slds-cell-wrap">
+                                        <div class="slds-text-body_small">
+                                            <lightning-button-icon icon-name="utility:omni_channel" variant="brand"
+                                                data-name="pennydrop" title="Verify Account" data-index={index}
+                                                disabled={enableDisbPayeeEdit}
+                                                if:false={objWrapDisbPayee.sobject.Is_Verified__c}
+                                                onclick={handleBtnClick}>
+                                            </lightning-button-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+
+                </div>
+                <lightning-button variant="brand" label="Save" title="Save" onclick={handleAmtAdjust}
+                    if:true={enableSaveAmtBtn} class="slds-align_absolute-center">
+                </lightning-button>
+            </div>
+        </div>
+    </div>
+</template>

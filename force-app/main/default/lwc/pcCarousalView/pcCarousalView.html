@@ -1,0 +1,13 @@
+<template>
+	<div class="Carousal">
+		<lightning-button-icon icon-name="utility:chevronleft" alternative-text="Settings" title="Settings"
+			onclick={leftAction} class="left"></lightning-button-icon>
+		<div class="slds-m-around_medium imagecarousal " style="width:700px;">
+			<template for:each={imgList} for:item="itm">
+				<img src={itm.link} key={itm.id}  height="100%" width="700px" align="center" style="width:700px" data-id={itm.id} onclick={navigateToFiles} >
+        </template>
+		</div>
+		<lightning-button-icon icon-name="utility:chevronright" alternative-text="Settings" title="Settings"
+			onclick={rightAction} class="right"></lightning-button-icon>
+	</div>
+</template>

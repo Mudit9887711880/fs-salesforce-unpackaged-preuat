@@ -1,0 +1,29 @@
+<template>
+    <article class="slds-card" data-id="fivC">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="Dynamic Form">
+                        <lightning-icon icon-name="standard:edit" alternative-text="Dynamic Form" title="Dynamic Form">
+                        </lightning-icon>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-text-heading_medium">Dynamic Form Testing</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <div style="margin-top:3rem;">
+                <template if:true={formObj}>
+                    <c-generic-edit-pages-l-w-c fields-content={formObj} onchanged={handleFormValueChange}>
+                    </c-generic-edit-pages-l-w-c>
+                </template>
+                <lightning-button variant="brand" type="submit" label="Save" onclick={handleSave}>
+                </lightning-button>
+            </div>
+        </div>
+    </article>
+</template>

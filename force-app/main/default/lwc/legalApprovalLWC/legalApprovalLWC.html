@@ -1,0 +1,415 @@
+<template>
+    <lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>
+
+    <c-fs-page-container-l-w-c if:true={applicationName} headericon="standard:asset_audit" stagename="Legal Approval"
+        appno={applicationName} businessdate={todaysDate1} lastlogindate={lastLoginDate}>
+    </c-fs-page-container-l-w-c>
+    <article class="slds-card" data-id="legalApproval">
+        <div class="slds-card__body slds-card__body_inner">
+            <lightning-tabset variant="scoped" active-tab-value={tabName}>
+                <lightning-tab label="Property" value="Property" onactive={handleActive}>
+                    <div if:true={showForm} class="slds-box slds-box_xx-small slds-scrollable_y"
+                        style="max-height:280px;">
+                        <lightning-layout multiple-rows>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-dual-listbox name="Title_Document_in_Name_of__c" size="3"
+                                    label="Title Document In Name Of" source-label="Available" selected-label="Selected"
+                                    options={titleDocValues} value={formObj.Title_Document_in_Name_of__c}
+                                    onchange={handleFormValues} required>
+                                </lightning-dual-listbox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="Title_Deed_Number__c" label="Title Deed Number"
+                                    value={formObj.Title_Deed_Number__c} onchange={handleFormValues} max-length="20"
+                                    required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="date" name="Title_Deed_Date__c" label="Title Deed Date"
+                                    value={formObj.Title_Deed_Date__c} onchange={handleFormValues} max-length="20"
+                                    required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="Document_Type__c" label="Title Document Type"
+                                    value={formObj.Document_Type__c} options={documentTypes} onchange={handleFormValues}
+                                    required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="Survey_Number__c" label="Survey Number"
+                                    value={formObj.Survey_Number__c} onchange={handleFormValues} max-length="10"
+                                    required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="Plot_No__c" label="Plot No."
+                                    value={formObj.Plot_No__c} onchange={handleFormValues} max-length="10">
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="Property_Number__c" label="House/Door Number"
+                                    value={formObj.Property_Number__c} onchange={handleFormValues} max-length="10">
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="address" label="FIV-C Address" value=""
+                                    onchange={handleFormValues} disabled>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="Village__c" label="Village"
+                                    value={formObj.Village__c} onchange={handleFormValues} max-length="30">
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="District__c" label="District"
+                                    value={formObj.District__c} onchange={handleFormValues} max-length="30">
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-record-edit-form object-api-name="Property__c" record-id="">
+                                    <label class="slds-form-element__label">Pincode</label>
+                                    <lightning-input-field field-name="MS_Pincode__c" variant="label-hidden"
+                                        value={formObj.MS_Pincode__c}>
+                                    </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="number" step="0.01" name="Extent_Sqft__c" label="Extent (Sqft)"
+                                    value={formObj.Extent_Sqft__c} onchange={handleFormValues} max="999999.99"
+                                    message-when-range-overflow="Maximum 6 digits are allowed.">
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="Link_Doc_Status__c" label="Link Doc Status"
+                                    value={formObj.Link_Doc_Status__c} options={linkDocStatusValues}
+                                    onchange={handleFormValues} required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="Link_Document_Type__c" label="Link Document Types"
+                                    value={formObj.Link_Document_Type__c} options={linkDocumentTypes}
+                                    onchange={handleFormValues} required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="date" name="Link_Doc_Date__c" label="Link Document Date"
+                                    value={formObj.Link_Doc_Date__c} onchange={handleFormValues} required
+                                    max={titleDeedDate}
+                                    message-when-range-overflow="Link Document Date must be less than Title Deed Date.">
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="Link_Documents_in_Name_of__c"
+                                    label="Link Documents In Name Of" value={formObj.Link_Documents_in_Name_of__c}
+                                    onchange={handleFormValues} max-length="30" required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-dual-listbox name="Supporting_Document_SD__c" size="3"
+                                    label="Supporting Document (SD)" source-label="Available" selected-label="Selected"
+                                    options={supportingDocuments} value={formObj.Supporting_Document_SD__c}
+                                    onchange={handleFormValues} required>
+                                </lightning-dual-listbox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="SD_in_name_of__c" label="SD In Name Of"
+                                    value={formObj.SD_in_name_of__c} options={sdNames} onchange={handleFormValues}
+                                    required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="date" name="SD_Date__c" label="SD Date"
+                                    value={formObj.SD_Date__c} onchange={handleFormValues} required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="Login_EC_Type__c" label="Login EC Type"
+                                    value={formObj.Login_EC_Type__c} options={loginECTypes} onchange={handleFormValues}
+                                    required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="Login_EC_Number__c" label="Login EC Number"
+                                    value={formObj.Login_EC_Number__c} onchange={handleFormValues} max-length="30"
+                                    required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="date" name="Login_EC_Date_From__c" label="Login EC Date From"
+                                    value={formObj.Login_EC_Date_From__c} onchange={handleFormValues} required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="date" name="Login_EC_Date_Till__c" label="Login EC Date Till"
+                                    value={formObj.Login_EC_Date_Till__c} onchange={handleFormValues} required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="Online_EC_Status__c" label="Online EC Status"
+                                    value={formObj.Online_EC_Status__c} options={onlineECStatusValues}
+                                    onchange={handleFormValues} required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="date" name="Online_EC_Date_From__c" label="Online EC Date From"
+                                    value={formObj.Online_EC_Date_From__c} onchange={handleFormValues} required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="date" name="Online_EC_Date_Till__c" label="Online EC Date Till"
+                                    value={formObj.Online_EC_Date_Till__c} onchange={handleFormValues} required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="text" name="GuidelineValue_SqFt_asPer_LegalOpinion__c"
+                                    label="Guideline Value SqFt AsPer Legal Opinion"
+                                    value={formObj.GuidelineValue_SqFt_asPer_LegalOpinion__c}
+                                    onchange={handleFormValues} max-length="6">
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="Online_Guideline_Value_Search__c"
+                                    label="Online Guideline Value Search"
+                                    value={formObj.Online_Guideline_Value_Search__c} options={onlineGuideLineValues}
+                                    onchange={handleFormValues} required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-input type="number" name="Online_Guidelive_Value__c"
+                                    label="Online Guideline Value" value={formObj.Online_Guidelive_Value__c}
+                                    onchange={handleFormValues} max="999999"
+                                    message-when-range-overflow="Maximum 6 digits are allowed." required>
+                                </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="3">
+                                <lightning-combobox name="Existing_Encumberances__c" label="Existing Encumberances"
+                                    value={formObj.Existing_Encumberances__c} options={existingEncumberances}
+                                    onchange={handleFormValues} required>
+                                </lightning-combobox>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12" padding="around-large" small-device-size="12"
+                                medium-device-size="12" large-device-size="12">
+                                <div class="slds-text-align--right">
+                                    <lightning-button class="slds-m-right--large" variant="neutral" label="Cancel"
+                                        onclick={cancelForm}>
+                                    </lightning-button>
+                                    <lightning-button variant="brand" label="Save" onclick={handlePropertySave}>
+                                    </lightning-button>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <template if:true={propertyTableData}>
+                        <div
+                            class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+                            <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+                                <span class="slds-truncate" title="Section Title">Property List</span>
+                            </h3>
+                            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+                                <c-generic-data-table-l-w-c result={propertyTableData} btns={rowAction}
+                                    onselected={handleSelectedProperty}></c-generic-data-table-l-w-c>
+                            </div>
+                        </div>
+                    </template>
+                </lightning-tab>
+                <lightning-tab label="MODT Instruction" value="MODTInstruction" onactive={handleActive}>
+                    <div class="slds-box slds-box_xx-small slds-scrollable_y" style="max-height:280px;">
+                        <lightning-record-edit-form record-id={applicationId} object-api-name="Application__c"
+                            onsubmit={handleApplicationSubmit} onsuccess={handleApplicationSuccess}>
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="File_Type__c" onchange={handleMODTSummaryChange}
+                                        variant="label-stacked" required value={fileType}>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="MODT_Template__c" variant="label-stacked"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="MODT_to_be_done_in_name_of__c" required
+                                        variant="label-stacked">
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3" if:false={showOldLoanFields}>
+                                    <lightning-input-field field-name="Old_Loan_Sanction_Date__c"
+                                        variant="label-stacked" required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3" if:false={showOldLoanFields}>
+                                    <lightning-input-field field-name="Old_MODT_Document_No__c" variant="label-stacked">
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3" if:false={showOldLoanFields}>
+                                    <lightning-input-field field-name="Old_Loan_Amount__c" variant="label-stacked">
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3" if:false={showOldLoanFields}>
+                                    <lightning-input-field field-name="Old_Mortgage_Date__c" variant="label-stacked">
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="Registration_District__c"
+                                        variant="label-stacked">
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="SRO_Office__c" variant="label-stacked">
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="9">
+                                    <lightning-input-field field-name="MODT_Schedule__c" variant="label-stacked"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                medium-device-size="12" large-device-size="12">
+                                <div class="slds-var-m-top_medium slds-text-align_right">
+                                    <lightning-button variant="brand" type="submit" label="Save" id="modt-btn">
+                                    </lightning-button>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-record-edit-form>
+                    </div>
+                </lightning-tab>
+                <lightning-tab label="Summary" value="Summary" onactive={handleActive}>
+                    <div class="slds-box slds-box_xx-small slds-scrollable_y" style="max-height:280px;">
+                        <lightning-record-edit-form record-id={applicationId} object-api-name="Application__c"
+                            onsubmit={handleApplicationSubmit} onsuccess={handleApplicationSuccess}>
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="Sanction_Amount_Restriction__c"
+                                        variant="label-stacked" required onchange={handleMODTSummaryChange}>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3" if:true={showSanctionAmountUpTo}>
+                                    <lightning-input-field field-name="Sanction_amount_restriction_upto__c"
+                                        variant="label-stacked" required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="File_Category__c" variant="label-stacked"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="Risk_Document_Color__c" variant="label-stacked"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="User_ID__c" value={employeeId}
+                                        variant="label-stacked" required disabled>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="Legal_Decision__c" variant="label-stacked"
+                                        required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="3">
+                                    <lightning-input-field field-name="Legal_Sanction_Condition__c"
+                                        variant="label-stacked" required>
+                                    </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                                    medium-device-size="12" large-device-size="12">
+                                    <div class="slds-var-m-top_medium slds-text-align_right">
+                                        <lightning-button variant="brand" type="submit" label="Save" id="summary-btn">
+                                        </lightning-button>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-record-edit-form>
+                    </div>
+                </lightning-tab>
+                <lightning-tab label="Upload Document" value="UploadDocument" onactive={handleActive}>
+                    <div class="slds-scrollable_y" style="max-height:280px;">
+                        <template if:true={applicationId}>
+                            <!-- <c-generic-file-upload-l-w-c record-id={applicationId} onfileupload={handleFileUplaod}>
+                            </c-generic-file-upload-l-w-c>
+                            <div class="slds-box slds-box_xx-small">
+                                <c-generic-view-documents record-id={applicationId}></c-generic-view-documents>
+                            </div> -->
+                            <c-fs-generic-upload-documents application-id={applicationId} stage-name="Legal Approval" record-type-id={recordTypeName}>
+                            </c-fs-generic-upload-documents>
+                        </template>
+                    </div>
+                </lightning-tab>
+				<!--SendBack Grid-->
+				<lightning-tab label="Send Back Grid" value="Send_Back_Grid">
+					<div class="slds-scrollable_y" style="max-height:400px;" if:true={applicationId}>
+						<c-fs-send-back-grid application-id={applicationId}>
+						</c-fs-send-back-grid>
+					</div>
+				</lightning-tab>
+				<!-------------------->
+                <lightning-tab label="Error" value="Error" if:true={showErrorTab} onactive={handleActive}
+                    show-error-indicator style="--sds-c-tabs-scoped-color-text-active: red">
+                    <div class="slds-scrollable_y" style="max-height:280px;">
+                        <ul class="slds-list_dotted">
+                            <template for:each={errorMsgs} for:item="err">
+                                <li key={err} class="slds-text-color_destructive">{err}</li>
+                            </template>
+                        </ul>
+                    </div>
+                </lightning-tab>
+            </lightning-tabset>
+        </div>
+        <div class="slds-docked-form-footer">
+            <button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+                onclick={handleLegalApprovalSubmit}>Submit</button>
+        </div>
+    </article>
+</template>

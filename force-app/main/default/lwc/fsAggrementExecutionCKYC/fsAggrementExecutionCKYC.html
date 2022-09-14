@@ -1,0 +1,46 @@
+<template>
+	<template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open" if:true={showApplicants}>
+		<lightning-layout>
+			<lightning-layout-item size="3" padding="horizontal-small">
+				<lightning-combobox name="applicant_list" label="Select Applicant" value={applicantValue}
+					placeholder="Select Value" options={applicantOptions} onchange={handleSelectedApplicant}
+					class="slds-m-bottom_medium mycombobox">
+				</lightning-combobox>
+			</lightning-layout-item>
+		</lightning-layout>
+	</div>
+	<template if:true={showCkyc}>
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+			<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+				<template if:true={fieldsContent}>
+					<c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={handleValueChange}>
+					</c-generic-edit-pages-l-w-c><br/>
+					<div class="slds-align_absolute-center slds-m-around_x-small">
+						<lightning-button variant="brand" label="Save" title="Sace" onclick={handleSave}>
+						</lightning-button>
+						<lightning-button label="Cancel" title="Cancel" onclick={handleCancel}
+							class="slds-m-left_x-small">
+						</lightning-button>
+					</div>
+				</template>
+			</div>
+		</div>
+	</template>
+	<template if:true={isCkycDataArrived}>
+            <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+                <c-fs-title-section title="List Of Ckyc Details"></c-fs-title-section>
+                <c-generic-data-table-l-w-c data-id="Agreement" result={tableData} btns={rowAction}
+                   onselected={handleSelectedLoanApplicant}></c-generic-data-table-l-w-c>
+            </div>
+    </template>
+	<!-- Delete Popup -->
+	<template if:true={showDeletePopup}>
+		<c-fs-delete-l-w-c delete-from="CKYC" object-api-name="Loan_Applicant__c"
+			show-modal={showDeletePopup} rec-id={loanAppId} onmodaldelete={handlemodalactions}
+			onmodalcancel={handlemodalactions}>
+		</c-fs-delete-l-w-c>
+	</template>
+</template>

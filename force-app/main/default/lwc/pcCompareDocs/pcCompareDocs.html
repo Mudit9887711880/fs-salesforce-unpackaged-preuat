@@ -1,0 +1,109 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={carousalSpinner}>
+	</lightning-spinner>
+	<lightning-layout multiple-rows>
+		<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+			large-device-size="2">
+			<lightning-combobox name="Type Of Document" label="Type Of Document" options={documentTypeOption}
+				onchange={handleInputChange}>
+			</lightning-combobox>
+		</lightning-layout-item>
+
+		<template if:true={isApplicant}>
+			<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+				large-device-size="2">
+				<lightning-combobox name="Customer Info" label="Select Applicant" placeholder="Select an Option"
+					options={customerOptions} value={customerValue} onchange={handleInputChange}>
+				</lightning-combobox>
+			</lightning-layout-item>
+		</template>
+
+		<template if:true={isAsset}>
+			<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+				large-device-size="2">
+				<lightning-combobox name="Prperty Info" label="Select Property" placeholder="Select an Option"
+					options={prpertyOptions} value={propertyValue} onchange={handleInputChange}>
+				</lightning-combobox>
+			</lightning-layout-item>
+		</template>
+
+		<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+			large-device-size="2" class="slds-p-top_large">
+			<lightning-button variant="brand" label="Search" name="Search" title="Search" onclick={serachFiles}>
+			</lightning-button>
+		</lightning-layout-item>
+
+		<!--
+		<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+			large-device-size="2">
+			<lightning-combobox name="documentOption" label="Document Type" options={listDocumentOption}
+				value={selectedDocumentOption} onchange={handleInputChange}>
+			</lightning-combobox>
+		</lightning-layout-item>
+		<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+			large-device-size="2">
+			<lightning-combobox name="groupId" label="Group Id" options={listDocumentTypeName}
+				value={selectedDocumentTypeName} onchange={handleInputChange}>
+			</lightning-combobox>
+		</lightning-layout-item>
+		<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+			large-device-size="2">
+			<lightning-combobox name="accName" label="Account Name" options={listAcctNames} value={slcdAccName}
+				onchange={handleInputChange}>
+			</lightning-combobox>
+		</lightning-layout-item>
+		<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+			large-device-size="2">
+			<lightning-combobox name="documentName" label="Document Name" options={listDocumentName}
+				value={selectedDocumentName} onchange={handleInputChange}>
+			</lightning-combobox>
+		</lightning-layout-item>
+		<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+			large-device-size="2" class="slds-p-top_large">
+			<lightning-button variant="brand" label="Search" name="Search" title="Search" onclick={serachFiles}>
+			</lightning-button>
+		</lightning-layout-item>
+		-->
+	</lightning-layout>
+
+	<div class="slds-m-top_small">
+		<lightning-layout multiple-rows>
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+				<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open slds-m-left_x-small slds-m-right_x-small "
+					style="padding-bottom:20px;">
+					<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+						<span class="slds-truncate" title="Section Title">FIV-C Documents</span>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+						<template if:true={fivcDocs}>
+							<c-pc-carousal-view img-list={fivCdocList}></c-pc-carousal-view>
+						</template>
+						<template if:false={fivcDocs}>
+							<div class="slds-align_absolute-center">
+								<h2>No Documents to display.</h2>
+							</div>
+						</template>
+					</div>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+				<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open slds-m-left_x-small slds-m-right_x-small "
+					style="padding-bottom:20px;">
+					<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+						<span class="slds-truncate" title="Section Title">FIV-B Documents</span>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+						<template if:true={fivbDocs}>
+							<c-pc-carousal-view img-list={fivBdocList}></c-pc-carousal-view>
+						</template>
+						<template if:false={fivbDocs}>
+							<div class="slds-align_absolute-center">
+								<h2>No Documents to display.</h2>
+							</div>
+						</template>
+					</div>
+				</div>
+			</lightning-layout-item>
+		</lightning-layout>
+	</div>
+</template>

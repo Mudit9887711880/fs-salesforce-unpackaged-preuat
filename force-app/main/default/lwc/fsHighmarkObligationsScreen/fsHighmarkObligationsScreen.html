@@ -1,0 +1,386 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={highmarkSpinner}></lightning-spinner>
+
+	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
+		style="padding-bottom:20px;">
+		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+			<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; {stageName} - Highmark Obligations</span>
+		</h3>
+		<div class="slds-m-around_x-small  slds-scrollable" style="height:250px; padding-bottom: 10px;">
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table--header-fixed ">
+				<thead>
+					<tr class="th" style="height:40px;font-size:15px;">
+						<th class="slds-size_3-of-10 " scope="col">
+							<div class="slds-truncate slds-m-right_small" title="Sr No">Sr No.</div>
+						</th>
+						<th class="slds-size_3-of-10 " scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Fee Code">Applicant Name</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Insurance Agency">Type of Loan</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Premium">Highmark Score</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Premium"> Type</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Premium">Ownership</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Stage Due">Loan Amount</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Applicable For">O/S</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Applicant/Property">Overdue Amount
+							</div>
+						</th>
+
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Tax Amount">Obligations</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Final Amount">To Be Considered for DBR
+							</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Sum Assured">Current DPD</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Mode">Max DPD</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Mode">Remarks</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate slds-m-left_x-small" title="Action">Action</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<template iterator:it={highmarkpcTableData}>
+						<template if:false={it.value.IsSelfType}>
+							<tr key={it.value.id} id={it.value.id} class="slds-hint-parent">
+								<td class="slds-size_3-of-10" data-id="1">
+									<div class="slds-truncate">{it.value.srNo}</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="2">
+									<div class="td-currency">{it.value.applicantName} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="3">
+									<div class="td-currency">{it.value.typeofloan} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="5">
+									<div class="td-currency">{it.value.highmarkScore} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="5">
+									<div class="td-currency">{it.value.type} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="5">
+									<div class="td-currency">{it.value.ownership} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="6">
+									<div class="td-currency">₹{it.value.loanAmt} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="7">
+									<div class="td-currency">₹{it.value.osAmt} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="8">
+									<div class="td-currency">₹{it.value.overdueAmount} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="9">
+									<div class="td-currency">₹{it.value.obligations} </div>
+								</td>
+
+								<td class="slds-size_3-of-10" data-id="10">
+									<div class="td-currency">
+										<template if:true={isSingleRecord}>
+											<lightning-combobox variant="label-hidden" name="consider-Type"
+												class="consider" label="To be Considered for DBR"
+												value={it.value.tobeconsiderValue} options={considertypeoptions}
+												onchange={handleChange} data-index={it.index} required="true">
+											</lightning-combobox>
+										</template>
+										<template if:false={isSingleRecord}>
+											<template if:false={it.last}>
+												<lightning-combobox variant="label-hidden" name="consider-Type"
+													class="consider" label="To be Considered for DBR"
+													dropdown-alignment="bottom-left" value={it.value.tobeconsiderValue}
+													options={considertypeoptions} onchange={handleChange}
+													data-index={it.index} required="true">
+												</lightning-combobox>
+											</template>
+										</template>
+										<template if:false={isSingleRecord}>
+											<template if:true={it.last}>
+												<lightning-combobox variant="label-hidden" name="consider-Type"
+													class="consider" label="To be Considered for DBR"
+													dropdown-alignment="bottom-left" value={it.value.tobeconsiderValue}
+													options={considertypeoptions} onchange={handleChange}
+													data-index={it.index} required="true">
+												</lightning-combobox>
+											</template>
+										</template>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="11">
+									<div class="td-currency">{it.value.currentDPD} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="12">
+									<div class="td-currency">{it.value.maxdpd} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="13">
+									<div class="td-currency">
+										<lightning-textarea label="Remarks" name="remarks" variant="label-hidden"
+											data-index={it.index} value={it.value.remarks} onchange={handleChange}
+											max-length="1000">
+										</lightning-textarea>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="14">
+									<template if:true={it.last}>
+										<div class="td-currency">
+											<lightning-button-icon icon-name="utility:add" variant="brand"
+												alternative-text="Update" onclick={handleaddRow}
+												class="slds-m-right_small" data-index={it.value.srNo}>
+											</lightning-button-icon>
+
+										</div>
+									</template>
+									<template if:false={it.first}>
+										<template if:false={isSingleRecord}>
+											<template if:true={it.value.IsSelfType}>
+												<lightning-button-icon icon-name="utility:delete" variant="brand"
+													alternative-text="Delete" onclick={handledeleteRow}
+													data-id={it.value.id} data-index={it.value.srNo}>
+												</lightning-button-icon>
+											</template>
+										</template>
+									</template>
+								</td>
+							</tr>
+						</template>
+
+						<template if:true={it.value.IsSelfType}>
+							<tr key={it.value.id} id={it.value.id} class="slds-hint-parent">
+								<td class="slds-size_3-of-10" data-id="1">
+									<div class="slds-truncate">{it.value.srNo}</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="2">
+									<div class="td-currency">
+										<template if:true={isSingleRecord}>
+											<lightning-combobox variant="label-hidden" name="Applicant Name"
+												label="Select Applicant" value={it.value.loanApplicantId}
+												options={customerOptions} onchange={handleChange} data-index={it.index}
+												required="true">
+											</lightning-combobox>
+										</template>
+										<template if:false={isSingleRecord}>
+											<template if:false={it.last}>
+												<lightning-combobox variant="label-hidden" name="Applicant Name"
+													label="Select Applicant" value={it.value.loanApplicantId}
+													dropdown-alignment="bottom-left" options={customerOptions}
+													onchange={handleChange} data-index={it.index} required="true">
+												</lightning-combobox>
+											</template>
+										</template>
+										<template if:false={isSingleRecord}>
+											<template if:true={it.last}>
+												<lightning-combobox variant="label-hidden" name="Applicant Name"
+													dropdown-alignment="bottom-left" label="Select Applicant"
+													value={it.value.loanApplicantId} options={customerOptions}
+													onchange={handleChange} data-index={it.index} required="true">
+												</lightning-combobox>
+											</template>
+										</template>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="3">
+									<div class="td-currency">
+										<lightning-input variant="label-hidden" label="Type Of Loan" name="typeOfloan"
+											type="text" value={it.value.typeofloan} max-length="15"
+											onchange={handleChange} pattern="^[a-z  A-Z]*$" data-index={it.index}
+											message-when-pattern-mismatch="Only alphabets are allowed.">
+										</lightning-input>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="5">
+									<div class="td-currency">{it.value.highmarkScore} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="5">
+									<div class="td-currency">{it.value.type} </div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="5">
+									<div class="td-currency">
+										<lightning-input type="text" variant="label-hidden" name="Ownership__c"
+											value={it.value.ownership} label="Ownership" max-length="15"
+											data-index={it.index} pattern="^[a-z  A-Z]*$" onchange={handleChange}
+											message-when-pattern-mismatch="Only alphabets are allowed.">
+										</lightning-input>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="6">
+									<div class="td-currency">
+										<lightning-input variant="label-hidden" label="Loan Amount" name="loanAmt"
+											onchange={handleChange} data-index={it.index} value={it.value.loanAmt}
+											formatter="currency" type="number" max-length="8">
+										</lightning-input>
+									</div>
+								</td>
+
+								<td class="slds-size_3-of-10" data-id="7">
+									<div class="td-currency">
+										<lightning-input variant="label-hidden" label="O/s" name="osAmt"
+											onchange={handleChange} data-index={it.index} value={it.value.osAmt}
+											formatter="currency" type="number" max-length="8"></lightning-input>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="8">
+									<div class="td-currency">
+										<lightning-input variant="label-hidden" label="overdueAmount" name="overdueAmt"
+											onchange={handleChange} data-index={it.index} value={it.value.overdueAmount}
+											formatter="currency" type="number" max-length="8">
+										</lightning-input>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="9">
+									<div class="td-currency">
+										<lightning-input variant="label-hidden" label="Obligations" name="obligation"
+											data-index={it.index} type="number" value={it.value.obligations}
+											onchange={handleChange} max-length="8">
+										</lightning-input>
+									</div>
+								</td>
+
+								<td class="slds-size_3-of-10" data-id="10">
+									<div class="td-currency">
+										<template if:true={isSingleRecord}>
+											<lightning-combobox variant="label-hidden" name="consider-Type"
+												class="consider" label="To be Considered for DBR"
+												value={it.value.tobeconsiderValue} options={considertypeoptions}
+												onchange={handleChange} data-index={it.index} required="true">
+											</lightning-combobox>
+										</template>
+										<template if:false={isSingleRecord}>
+											<template if:false={it.last}>
+												<lightning-combobox variant="label-hidden" name="consider-Type"
+													class="consider" label="To be Considered for DBR"
+													dropdown-alignment="bottom-left" value={it.value.tobeconsiderValue}
+													options={considertypeoptions} onchange={handleChange}
+													data-index={it.index} required="true">
+												</lightning-combobox>
+											</template>
+										</template>
+										<template if:false={isSingleRecord}>
+											<template if:true={it.last}>
+												<lightning-combobox variant="label-hidden" name="consider-Type"
+													class="consider" dropdown-alignment="bottom-left"
+													label="To be Considered for DBR" value={it.value.tobeconsiderValue}
+													options={considertypeoptions} onchange={handleChange}
+													data-index={it.index} required="true">
+												</lightning-combobox>
+											</template>
+										</template>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="11">
+									<div class="td-currency">
+										<lightning-input variant="label-hidden" label="Current DPD" name="currentDPD"
+											onchange={handleChange} value={it.value.currentDPD} data-index={it.index}
+											type="text" max-length="3"></lightning-input>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="12">
+									<div class="td-currency">
+										<lightning-input variant="label-hidden" label="Max DPD" name="maxDPD"
+											onchange={handleChange} value={it.value.maxdpd} type="text"
+											data-index={it.index} max-length="3"></lightning-input>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="13">
+									<div class="td-currency">
+										<lightning-textarea label="Remarks" name="remarks" variant="label-hidden"
+											data-index={it.index} value={it.value.remarks} onchange={handleChange}
+											max-length="1000">
+										</lightning-textarea>
+									</div>
+								</td>
+								<td class="slds-size_3-of-10" data-id="14">
+									<div class="td-currency">
+										<template if:true={it.last}>
+											<lightning-button-icon icon-name="utility:add" variant="brand"
+												alternative-text="Update" onclick={handleaddRow}
+												class="slds-m-right_small" data-index={it.value.srNo}>
+											</lightning-button-icon>
+										</template>
+										<template if:false={it.first}>
+											<template if:false={isSingleRecord}>
+												<template if:true={it.value.IsSelfType}>
+													<lightning-button-icon icon-name="utility:delete" variant="brand"
+														alternative-text="Delete" onclick={handledeleteRow}
+														data-id={it.value.id} data-index={it.value.srNo}>
+													</lightning-button-icon>
+												</template>
+											</template>
+										</template>
+									</div>
+								</td>
+							</tr>
+						</template>
+					</template></tbody>
+			</table>
+		</div>
+
+		<div class="slds-var-m-top_medium slds-align_absolute-center ">
+			<lightning-button variant="brand" type="submit" label="Save" id="Highmark-btn" onclick={handleHighmark}
+				disabled={isDisabled}>
+			</lightning-button>
+		</div>
+	</div>
+
+	<!-- Overall Remarks form only for PC/AC Screen-->
+	<template if:true={showoverallRemarks}>
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+				<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; {stageName} </span>
+			</h3>
+			<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+				<lightning-record-edit-form id="recordViewForm" record-id={repaymentRecordId}
+					record-type-id={characterRecordTypeId} object-api-name="Character__c"
+					onsubmit={handlecharacterSubmit} onsuccess={handleCharacterSuccess}>
+					<lightning-layout multiple-rows>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="6" large-device-size="6" style="display:none;">
+							<lightning-input-field field-name="Section_Type__c" variant="label-stacked"
+								value="Repayment Behaviour Detail">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="6" large-device-size="6" style="display:none;">
+							<lightning-input-field field-name="Verification__c" variant="label-stacked"
+								value={verificationId}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="4"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Overall_Remarks_Highmark_Obligations__c"
+								variant="label-stacked" required class="highmark">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<div class="slds-var-m-top_medium slds-align_absolute-center slds-var-m-bottom_large">
+								<lightning-button variant="brand" type="submit" label={buttonLabel} id="character-btn">
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-record-edit-form>
+			</div>
+		</div>
+	</template>
+</template>

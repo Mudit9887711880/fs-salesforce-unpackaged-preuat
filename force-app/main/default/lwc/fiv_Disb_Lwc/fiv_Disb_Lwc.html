@@ -1,0 +1,188 @@
+<!--
+  @author            : Karan Singh Soni
+  @group             : TechMatrix Consulting
+  @description       : 
+  @created on        : 12-07-2022
+  @last modified on  : 05-09-2022
+  @last modified by  : Karan Singh Soni
+-->
+<template>
+
+    <lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>
+
+    <template if:true={showTabsData}>
+
+        <!--PAGE HEADER-->
+        <c-fs-page-container-l-w-c headericon="standard:asset_audit" stagename={stageName}
+            appno={objApptWrapperData.objAppt.Name} businessdate={todaysDate} lastlogindate={lastLoginDate} btns={btns}
+            onrowselectionevent={handleHeaderButton}>
+        </c-fs-page-container-l-w-c>
+        <!-- This wills show the SendBack Modal -->
+        <c-fs-send-back stage-from={stageName} application-id={recordId} show-modal={sendback}
+            onsubmitclick={handleSubmitClick} oncloseclick={handlesendbackclose}>
+        </c-fs-send-back>
+
+        <lightning-tabset variant="scoped" active-tab-value={activeTabName}>
+
+            <lightning-tab label="Loan Parameters" value="Loan Parameters" onactive={handleTabActivation}>
+                <c-fiv_-disb_-loan-Params obj_parent_appt_wrapper_data={objApptWrapperData}
+                    oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
+                </c-fiv_-disb_-loan-Params>
+            </lightning-tab>
+            <!--
+                Karan Singh : 09/08/2022 : these tabs will be combined into Fee Details
+            <lightning-tab label="Receipt Details" value="Receipt Details" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small">
+                    <p>Coming Soon...</p>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Charges" value="Charges" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small">
+                    <p>Coming Soon...</p>
+                </div>
+            </lightning-tab>
+            -->
+            <lightning-tab label="Fee Insurance Details" value="Fee Insurance Details" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small">
+                    <c-fee-creation-parent record-id={objApptWrapperData.objAppt.Id}
+                        pre-log-in-id={objApptWrapperData.objAppt.Pre_Login__c}
+                        app-name={objApptWrapperData.objAppt.Name} primary-applicant-name={apptPrimaryApplicantName}
+                        stage-name={stageName} ongetreceiptevent={handleBeforeSubmitCustmEvt}
+                        ongetinsfeechangeevent={handleChangeInFeeInsurance}></c-fee-creation-parent>
+                    <br /><br />
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Disbursal Paramaters" value="Disbursal Paramaters" onactive={handleTabActivation}>
+                <c-fiv_-disb_-disbursal-params obj_parent_appt_wrapper_data={objApptWrapperData}
+                    oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
+                </c-fiv_-disb_-disbursal-params>
+            </lightning-tab>
+            <lightning-tab label="Disbursal Payee Details" value="Disbursal Payee Details"
+                onactive={handleTabActivation}>
+                <c-fiv_-disb_-disbursal-payee obj_parent_appt_wrapper_data={objApptWrapperData}
+                    oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
+                </c-fiv_-disb_-disbursal-payee>
+            </lightning-tab>
+            <lightning-tab label="Insurance Details" value="Insurance Details" onactive={handleTabActivation}>
+                <c-fiv_-disb_-insurance-details obj_parent_appt_wrapper_data={objApptWrapperData}
+                    oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
+                </c-fiv_-disb_-insurance-details>
+            </lightning-tab>
+            <lightning-tab label="Repayment Details" value="Repayment Details" onactive={handleTabActivation}>
+                <c-fiv_-disb_-repayment-details obj_parent_appt_wrapper_data={objApptWrapperData}
+                    oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
+                </c-fiv_-disb_-repayment-details>
+            </lightning-tab>
+            <lightning-tab label="CKYC Details" value="CKYC Details" onactive={handleTabActivation}>
+                <c-fiv_-disb_-ckyc-details obj_parent_appt_wrapper_data={objApptWrapperData}
+                    oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
+                </c-fiv_-disb_-ckyc-details>
+            </lightning-tab>
+            <!-- Karan Singh : 12/08/2022 : ince Document Checklist is not implemented by other team members
+            <lightning-tab label="Document Checklist" value="Document Checklist" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small">
+                    <p>Coming Soon...</p>
+                </div>
+            </lightning-tab>
+            -->
+            <lightning-tab label="User Details" value="User Details" onactive={handleTabActivation}>
+                <c-fiv_-disb_-user-details obj_parent_appt_wrapper_data={objApptWrapperData}
+                    oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
+                </c-fiv_-disb_-user-details>
+            </lightning-tab>
+            <!-- Karan : 12-09-2022 : Commented as this comp is not ready as per Yogendra
+            <lightning-tab label="Document" value="Document" onactive={handleTabActivation}>
+                <div class="slds-scrollable_y" style="max-height:400px;">
+                    <c-fs-generic-upload-documents parent-id={objApptWrapperData.objAppt.Id} stage-name={stageName}
+                        is-agreement-execution=false onrequireddocument={handleRequiredDocument}>
+                    </c-fs-generic-upload-documents>
+                </div>
+            </lightning-tab>
+            -->
+            <lightning-tab label="Deviation Details" value="Deviation Details" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small">
+                    <c-pc-deviation application-id={objApptWrapperData.objAppt.Id}></c-pc-deviation>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Amort schedule" value="Amort schedule" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small slds-scrollable_y" style="height:25rem;">
+                    <c-fs-repayment-schedule application-id={objApptWrapperData.objAppt.Id}></c-fs-repayment-schedule>
+                </div>
+            </lightning-tab>
+            <lightning-tab label="Discussion Memo" value="Discussion Memo" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small">
+                    <c-fiv_-disb_discussion-memo application-id={objApptWrapperData.objAppt.Id} stage-name={stageName}>
+                    </c-fiv_-disb_discussion-memo>
+                </div>
+            </lightning-tab>
+            <!-- Karan 11/08/2022 : this will be the submit button
+            <lightning-tab label="File Processing" value="File Processing" onactive={handleTabActivation}>
+                <div class="slds-box slds-box_xx-small">
+                    <p>Coming Soon...</p>
+                </div>
+            </lightning-tab>
+            -->
+            <!-- Error Tab-->
+            <lightning-tab label="Error" value="Error" show-error-indicator if:true={showErrorTab}
+                style="--slds-c-tabs-scoped-color-text-active: red">
+                <div class="slds-scrollable_y" style="max-height:400px;">
+                    <ul class="slds-list_dotted">
+                        <template for:each={arrValidateErrorMsgs} for:item="err">
+                            <li key={err} class="slds-text-color_destructive">{err}</li>
+                        </template>
+                    </ul>
+                </div>
+            </lightning-tab>
+            <!-- SendBack Grid : added 25/08/2022 Karan-->
+            <lightning-tab label="Send Back Grid" value="Send_Back_Grid" if:true={objApptWrapperData.objAppt.Id}>
+                <div class="slds-scrollable_y" style="max-height:400px;" if:true={objApptWrapperData.objAppt.Id}>
+                    <c-fs-send-back-grid application-id={objApptWrapperData.objAppt.Id}>
+                    </c-fs-send-back-grid>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+
+        <div class="slds-docked-form-footer">
+            <button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+                onclick={handleDisbSubmit} disabled={disableSubmit}>Submit</button>
+            <!-- THis button is used to move this file from one stage to another ex. discision maker to Decision AUthor. then sari exit condition check krni hai -->
+        </div>
+    </template>
+    <template if:false={showTabsData}>
+
+        <lightning-card title="Invalid Disbursal" if:true={objApptWrapperData}>
+            <p class="slds-p-horizontal_small">Please check that the current application is in Disbursal Stage.</p>
+        </lightning-card>
+
+    </template>
+
+    <template if:true={showApprovalmodal}>
+
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Decision</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height:15rem;">
+                    <lightning-combobox name="Select Approval" label="Select Approval" value={slcdApprvalOpt}
+                        placeholder="None" options={approvalOptions} onchange={handleComboBoxChange}>
+                    </lightning-combobox>
+                    <br />
+                    <lightning-input type="text" name="apprvalRemarks" placeholder="Enter Remarks" data-index={index}
+                        data-name="apprvalRemarks" if:true={showapprovalRemarks} onchange={handleInputChange}>
+                    </lightning-input>
+                    <br />
+                    <lightning-button variant="brand" label="Save" title="Save" onclick={handleApprovalBtnClk}
+                        class="slds-align_absolute-center">
+                    </lightning-button>
+
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </template>
+</template>

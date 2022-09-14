@@ -1,0 +1,141 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="medium" if:true={showSpinner}></lightning-spinner>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c headericon="standard:action_list_component" stagename="Agreement Execution"
+		appno={applicationName} businessdate={todaysDate} lastlogindate={lastLoginDate} btns={button}
+		onrowselectionevent={rowselectionevent}>
+	</c-fs-page-container-l-w-c>
+	<!--PAGE HEADER-->
+	<article class="slds-card" data-id="fivC">
+		<div class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<!--CKYC Tab-->
+				<lightning-tab label="CKYC" value="CKYC" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<c-fs-aggrement-execution-c-k-y-c application-id={recordId} oncheckckyc={checkAllCKYCId}>
+						</c-fs-aggrement-execution-c-k-y-c>
+					</div>
+				</lightning-tab>
+				<!--NACH & Disbursement Tab-->
+				<lightning-tab label="NACH & Disbursement" value="NACH" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<c-fs-agreement-execution-n-a-c-h-_-disbursement application-id={recordId}
+							initiate-from="Agreement_Execution">
+						</c-fs-agreement-execution-n-a-c-h-_-disbursement>
+					</div>
+				</lightning-tab>
+				<!--Document Generation Tab-->
+				<lightning-tab label="Document Generation" value="Doc_Gen" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<c-fs-agreement-execution-d-g application-id={recordId} app-name={applicationName}>
+						</c-fs-agreement-execution-d-g>
+					</div>
+				</lightning-tab>
+				<!--Document Upload Tab-->
+				<lightning-tab label="Document Upload" value="DocUpload" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;" if:true={recordId}>
+						<c-fs-generic-upload-documents stage-name="Agreement Execution"
+						                               record-type-id={propRecTypeId}
+													   is-agreement-execution = "true"
+													   application-id={recordId}>
+						</c-fs-generic-upload-documents>
+					</div>
+				</lightning-tab>
+				<!--List Of Documents Tab-->
+				<lightning-tab label="List Of Documents" value="DocList" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<c-fs-agreement-execution-list-of-documents application-id={recordId}>
+						</c-fs-agreement-execution-list-of-documents>
+					</div>
+				</lightning-tab>
+				<!--Decision Tab-->
+				<lightning-tab label="Decision" value="Decision" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="overflow:inherit;">
+						<lightning-record-edit-form record-id={recordId} object-api-name="Application__c"
+							onsuccess={handleDecisionSuccess}>
+							<lightning-layout multiple-rows>
+								<lightning-layout-item size="6" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="6" style="overflow: initial;">
+									<lightning-input-field field-name="Agreement_Execution_Status__c"
+										onchange={checkAppStatus} required></lightning-input-field>
+								</lightning-layout-item>
+								<template if:true={isRequired}>
+									<lightning-layout-item size="6" padding="horizontal-small" small-device-size="12"
+										medium-device-size="6" large-device-size="6">
+										<lightning-input-field field-name="Agreement_Execution_Rejection_Reason__c"
+											required={isRequired}>
+										</lightning-input-field>
+									</lightning-layout-item>
+								</template>
+								<!-- <div style="display:none;">
+									<lightning-input-field field-name="Stage__c" value="Dispatch Pending" required>
+									</lightning-input-field>
+								</div> -->
+							</lightning-layout>
+							<div class="slds-var-m-top_medium slds-float_center">
+								<lightning-button variant="brand" type="submit" label="Save">
+								</lightning-button>
+							</div>
+						</lightning-record-edit-form>
+					</div>
+				</lightning-tab>
+				<!--Error Tab-->
+				<lightning-tab label="Error Info" value="Error" if:true={showErrorTab} onactive={handleActive}
+					show-error-indicator style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+				<!--SendBack Grid-->
+			<lightning-tab label="Send Back Grid" value="Send_Back_Grid">
+				<div class="slds-scrollable_y" style="max-height:400px;" if:true={recordId}>
+					<c-fs-send-back-grid application-id={recordId}>
+					</c-fs-send-back-grid>
+				</div>
+			</lightning-tab>
+			</lightning-tabset>
+		</div>
+		<div class="slds-docked-form-footer">
+			<button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+				onclick={handleAgreementExecutionSubmit}>Submit</button>
+		</div>
+	</article>
+	<template if:true={openSendBack}>
+		<c-fs-send-back show-modal={openSendBack} stage-from="Agreement Execution" application-id={recordId}
+			oncloseclick={handleSendBackClose} onsubmitclick={handleSendBackSubmit}></c-fs-send-back>
+	</template>
+	<template if:true={showRepaymentSchedule}>
+		<!-- Modal/Popup Box LWC starts here -->
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={closeModal}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small">
+						</lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Repayment Schedule</h2>
+				</header>
+				<!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<c-fs-repayment-schedule application-id={recordId}></c-fs-repayment-schedule>
+				</div>
+				<!-- Modal/Popup Box LWC footer starts here -->
+				<footer class="slds-modal__footer">
+					<div class="slds-align_absolute-center">
+						<button class="slds-button slds-button_neutral " onclick={closeModal}
+							title="Close">Close</button>
+					</div>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+</template>

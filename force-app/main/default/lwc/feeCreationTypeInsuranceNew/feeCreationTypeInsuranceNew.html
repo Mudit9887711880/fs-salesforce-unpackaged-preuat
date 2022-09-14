@@ -1,0 +1,148 @@
+<template>
+    <!--template if:true={data}>
+
+        <lightning-datatable data={data} columns={columns} key-field="id" 
+        hide-checkbox-column default-sort-direction={defaultSortDirection}
+        sorted-direction={sortDirection}
+        onsort={onHandleSort}
+        draft-values={draftValues} 
+        onchange={handleChange}>
+        </lightning-datatable>
+
+
+    </template>
+    <template if:false={data}>
+
+        <p>no data to display</p>>
+
+    </template-->
+    <div if:true={isLoading}>
+        <lightning-spinner class="slds-spinner_brand" alternative-text="Loading" size="medium"></lightning-spinner>
+    </div>
+
+    <div class="c-container ">
+        <lightning-card class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large" title="Insurance Detail">
+            <div class="slds-scrollable" style="height:200%; padding-bottom: 10px">
+                <template if:true={data}>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered ">
+                        <thead>
+                            <tr class="th">
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Sr No">Sr No.</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Fee Code">Fee Code</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Stage Due">Stage Due</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Premium">Premium</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Tax Amount">Tax Amount</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Final Amount">Final Amount</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Sum Assured">Sum Assured</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Mode">Mode</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Action">Action</div>
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <template for:each={data} for:item="item" for:index="indexVar">
+                                <tr key={item.key} id={item.Id} class="slds-hint-parent">
+
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="slds-truncate">{item.rowNumber}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="td-currency">{item.Fee_Code__c}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="2">
+                                        <div class="td-currency">{item.Stage_Due__c}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="3">
+                                        <div class="td-currency">₹ {item.Premium__c}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="4">
+
+                                        <div class="td-currency">₹ {item.Tax_Amount__c}</div>
+
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="5">
+                                        <div class="td-currency">₹ {item.Total_Fee__c}</div>
+                                    </td>
+                                    <!--td>
+                                    <div class="slds-form-element slds-form-element_horizontal slds-has-error slds-is-editing">
+                                        <label class="slds-form-element__label" for="horizontal-form-element-id-02">
+                                          <abbr class="slds-required" title="required">* </abbr>Account Name</label>
+                                        <div class="slds-form-element__control">
+                                          <input type="text" id="horizontal-form-element-id-02" class="slds-input" value={item.Sum_Assured__c} />
+                                        </div>
+                                        <div class="slds-form-element__help" id="horizontal-form-element-error-id-01">Complete this field</div>
+                                      </div>
+                                </td-->
+                                    <td class="slds-size_3-of-10" data-id="6">
+                                        <div class="slds-form-element">
+                                            <div class="slds-truncate"><span class="curreny-sum-insured">₹</span>
+
+                                                <input data-id="7" label="Sum Assured"
+                                                    class="sum-insured-field editable-grid-cell" type="number" required
+                                                    pattern="^[0-9]" min="1" value={item.Sum_Assured__c}
+                                                    data-row-index={indexVar} onchange={handleChange} />
+                                                <span class="editable-grid-cell2"> &#128393;</span>
+
+                                                <!-- <lightning-input type="number" max-length=20 value={item.Sum_Assured__c} onchange={handleChange} label="Sum Assured" min=0 required=true></lightning-input>-->
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="7" style="width:auto">
+                                        <div class="td-repayment">
+                                            <!--{item.Repayment_Type__c}-->
+
+                                            <select class="slds-select" id={indexVar}  data-row-index={indexVar} 
+                                                onchange={handleGetSelectedValue}>
+                                                <option value={item.Repayment_Type_2__c} selected disabled hidden>{item.Repayment_Type_2__c}</option>
+                                                <template for:each={options} for:item="listViewItem">
+                                                    <option key={listViewItem.key} value={listViewItem.key}>
+                                                        {listViewItem.value}</option>
+                                                </template>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_1-of-10" data-id="8">
+
+                                        <!-- <lightning-button label="Fetch Premium"
+                                        title="Fetch Premium" onclick={handleClick}
+                                        class="fetch-btn" slot="action">
+                                    </lightning-button> -->
+                                        <button class="fetch-btn" data-row-index={indexVar} onclick={handleClick}>Fetch Premium</button>
+                                    </td>
+
+
+                                </tr>
+
+
+                            </template>
+                        </tbody>
+
+                    </table>
+                </template>
+                <template if:false={data}>
+                    No records to display
+                </template>
+            </div>
+        </lightning-card>
+    </div>
+</template>

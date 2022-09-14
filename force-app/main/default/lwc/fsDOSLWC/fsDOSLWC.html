@@ -1,0 +1,171 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="medium" if:true={showSpinner}></lightning-spinner>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c headericon="standard:asset_audit" stagename="DOS" appno={applicationName}
+		businessdate={todaysDate} lastlogindate={lastLoginDate}>
+	</c-fs-page-container-l-w-c>
+	<!--PAGE HEADER-->
+	<article class="slds-card" data-id="fivC">
+		<div class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<lightning-tab label="Data Entry" value="DataEntry" onactive={handleActive}>
+					<div class="slds-table--header-fixed_container" style="max-height:250px;height:250px;">
+						<div class="slds-scrollable_y" style="height:100%;">
+							<table
+								class="slds-table slds-table_cell-buffer slds-table_bordered slds-table--header-fixed"
+								style="table-layout: fixed; width: 100%;"
+								aria-labelledby="element-with-table-label other-element-with-table-label">
+								<thead>
+									<tr class="slds-line-height_reset">
+										<th class="thStyle" style="width:15%;" scope="col">
+											<div class="slds-truncate slds-cell-fixed" style="font-weight: 700;">
+												Document Type
+											</div>
+										</th>
+										<th class="thStyle" scope="col">
+											<div class="slds-truncate slds-cell-fixed" style="font-weight: 700;">
+												Check Points
+											</div>
+										</th>
+										<th class="thStyle" scope="col">
+											<div class="slds-truncate slds-cell-fixed" style="font-weight: 700;">
+												Guidance
+											</div>
+										</th>
+										<th class="thStyle" style="width:10%;" scope="col">
+											<div class="slds-truncate slds-cell-fixed" style="font-weight: 700;">
+												Verification
+											</div>
+										</th>
+										<th class="thStyle" style="width:10%;" scope="col">
+											<div class="slds-truncate slds-cell-fixed" style="font-weight: 700;">Status
+											</div>
+										</th>
+										<th class="thStyle" scope="col">
+											<div class="slds-truncate slds-cell-fixed" style="font-weight: 700;">
+												Verification Remarks
+											</div>
+										</th>
+									</tr>
+								</thead>
+								<tbody if:true={dosData}>
+									<template if:true={dosData} for:each={dosData} for:item="itm" for:index="index">
+										<tr class="slds-hint-parent" key={itm}>
+											<td class="tdStyle" data-label="DocType" scope="row"
+												rowspan={itm.rowspanval}>
+												{itm.documentType}
+											</td>
+										</tr>
+										<template if:true={itm.dosList} for:each={itm.dosList} for:item="dosItm"
+											for:index="childIndex">
+											<tr key={dosItm}>
+												<td class="slds-cell-wrap" data-label="CheckPoint" scope="row">
+													{dosItm.checkPoint}
+												</td>
+												<td class="slds-cell-wrap" data-label="Guidance" scope="row">
+													{dosItm.guidance}
+												</td>
+												<td class="tdStyle" data-label="Verification" scope="row">
+													<lightning-combobox data-id={index} data-child-id={childIndex}
+														name="verification" label="Verification" variant="label-hidden"
+														value={dosItm.verification} placeholder="Select Verification"
+														options={verificationPicklistVal} onchange={handleFormValues}
+														required>
+													</lightning-combobox>
+												</td>
+												<td class="tdStyle" data-label="Status" scope="row">
+													<lightning-combobox data-id={index} data-child-id={childIndex}
+														name="status" label="Status" variant="label-hidden"
+														value={dosItm.status} placeholder="Select Status"
+														options={statusPicklistVal} onchange={handleFormValues}
+														required>
+													</lightning-combobox>
+												</td>
+												<td class="tdStyle" data-label="Remark" scope="row">
+													<lightning-textarea data-id={index} data-child-id={childIndex}
+														name="remark" label="Enter some text" placeholder="type here..."
+														value={dosItm.remark} variant="label-hidden"
+														onchange={handleFormValues} required></lightning-textarea>
+												</td>
+											</tr>
+										</template>
+									</template>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="slds-text-align--right slds-m-top--small">
+						<button type="button" class="slds-button slds-button_brand"
+						onclick={handleSaveDOSData}>Save</button>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Decision" value="Decision" onactive={handleActive}>
+					<div class="slds-box slds-box_xx-small slds-scrollable_y" style="max-height:400px;">
+						<lightning-record-edit-form object-api-name="Application__c" record-id={recordId}
+							onsuccess={handleSuccess} onsubmit={handleSubmit}>
+							<lightning-layout multiple-rows>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="6">
+									<lightning-input-field field-name="DOS_User__c" variant="label-stacked" required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="6">
+									<label class="slds-form-element__label" for="form-element-05">
+                                    <abbr class="slds-required" title="required">* </abbr>Decision</label>
+									<lightning-input-field field-name="DOS_Decision__c" variant="label-hidden" required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="12">
+									<label class="slds-form-element__label" for="form-element-05">
+                                    <abbr class="slds-required" title="required">* </abbr>Report Finding Observations</label>
+									<lightning-input-field field-name="DOS_Report_Finding_Observations__c"
+										variant="label-hidden" required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="12">
+									<label class="slds-form-element__label" for="form-element-05">
+                                    <abbr class="slds-required" title="required">* </abbr>Decision Remarks</label>
+									<lightning-input-field field-name="DOS_Decision_Remarks__c" variant="label-hidden"
+										required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="12">
+									<div class="slds-var-m-top_medium slds-text-align--right">
+										<lightning-button variant="brand" type="submit" label="Save" id="decision-btn">
+										</lightning-button>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+						</lightning-record-edit-form>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Document Upload" value="DocUpload" onactive={handleActive}>
+					<div class="slds-box slds-box_xx-small slds-scrollable_y" style="max-height:400px;"
+						if:true={recordId}>
+							<c-fs-generic-upload-documents application-id={recordId} stage-name="DOS" record-type-id={} >
+						     </c-fs-generic-upload-documents>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Error" value="Error" if:true={showErrorTab} onactive={handleActive}
+					show-error-indicator style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+			</lightning-tabset>
+		</div>
+		<div class="slds-docked-form-footer">
+			<button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+				onclick={handleDOSSubmit}>Submit</button>
+		</div>
+	</article>
+
+</template>

@@ -1,0 +1,57 @@
+<template>
+	<section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+		class="slds-modal slds-fade-in-open slds-modal_large">
+		<div class="slds-modal__container">
+			<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                onclick={handleCancel}>
+                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                </lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+			<div class="slds-modal__header">
+				<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add/Modify Property</h1>
+			</div>
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+				<template if:true={applicationId}>
+						<!-- Property Form -->
+						<c-fs-pre-login-property-detail stage-name={stageName} ongetpropertydata={callGetPropertyData} ongetnewcreatedpropertydata={handlenewpropertyData}
+							record-type-name={recordTypeName} application-id={applicationId}
+							loan-app-id-list={loanAppIdList} owner-type-option={ownerTypeOption}>
+						</c-fs-pre-login-property-detail>
+						<!-- List Of Applicants -->
+						<template if:true={isPropDataArrived}>
+							<div
+								class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+								<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+									<span class="slds-truncate" title="Section Title">List Of Properties</span>
+								</h3>
+								<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+									<c-generic-data-table-l-w-c data-id="prop" result={propData} btns={propRowAction}
+										onselected={handleSelectedProperty}>
+									</c-generic-data-table-l-w-c>
+								</div>
+							</div>
+						</template>
+						<!-- Delete Popup -->
+						<template if:true={showDeletePopup}>
+							<c-fs-delete-l-w-c delete-from="Prelogin" object-api-name="Property__c" rec-id={recordId}
+								show-modal={showDeletePopup} onmodaldelete={handlemodalactions}
+								onmodalcancel={handlemodalactions}>
+							</c-fs-delete-l-w-c>
+						</template>
+				
+				</template>
+				<template if:false={applicationId}>
+					<div class="slds-align_absolute-center">
+						No Applicant Exist.
+					</div>
+				</template>
+                	</div>
+			<div class="slds-modal__footer">
+				<lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
+				</lightning-button>
+			</div>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

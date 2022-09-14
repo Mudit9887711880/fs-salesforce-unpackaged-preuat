@@ -1,0 +1,65 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <lightning-layout>
+        <lightning-layout-item class="slds-size_12-of-12">
+            <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+                <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+                    <span class="slds-truncate" title="Section Title">Search Application</span>
+                </h3>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input type="text" label="Application Number" placeholder="Enter Application No."
+                            name="appNo" data-name="topupApp" value={topupApp} onchange={handleTopupApp}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <h1 style="padding-top: 40px;">--OR--</h1>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input type="text" label="KYC Number" placeholder="Enter KYC No." value={topupKYC}
+                            data-name="topupKYC" name="kyc" onchange={handleTopupKYC}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <h1 style="padding-top: 40px;">--OR--</h1>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <lightning-input type="text" label="Loan App Number" placeholder="Enter Loan App No."
+                            value={loanAppNumber} data-name="loanApp" name="loan app number" onchange={handleLoanApp}>
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="2"
+                        padding="around-small">
+                        <br>
+                        <lightning-button variant="brand" label="Search" title="Search" onclick={searchAllApplication}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+    <!-- List Of Applicants -->
+    <template if:true={isAppDataArrived}>
+        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+            <div class="slds-theme_shade" style="border-radius: 0.25rem;">
+                <lightning-layout>
+                    <lightning-layout-item class="slds-size_11-of-12" padding="around-small">
+                        <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+                            <span class="slds-truncate" title="Section Title">List Of Applications</span>
+                        </h3>
+                    </lightning-layout-item>
+                    <lightning-layout-item sclass="slds-size_1-of-12" padding="around-small">
+                        <lightning-button variant="brand" label="Next" title="Next" hidden={moveNext}
+                            onclick={handleNext}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small" if:true={appResult}>
+                <c-generic-data-table-l-w-c data-id="app" result={appResult} onrowselectionevent={handleRadioButton}>
+                </c-generic-data-table-l-w-c>
+            </div>
+        </div>
+    </template>
+</template>

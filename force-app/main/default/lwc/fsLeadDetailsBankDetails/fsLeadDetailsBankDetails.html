@@ -1,0 +1,34 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <template if:true={isApplicantEdit}>
+        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+            <c-fs-title-section title="Select Applicant"></c-fs-title-section>
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+                <c-generic-data-table-l-w-c if:true={allApplicantData} data-id="cashflow" result={allApplicantData} onrowselectionevent={handleRadtioButton}></c-generic-data-table-l-w-c>
+            </div>
+        </div>
+    </template>
+    <template if:true={tableData}>
+        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+            <template if:true={fieldsContent}>
+                <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}></c-generic-edit-pages-l-w-c><br/>
+                <div class="slds-align_absolute-center slds-m-around_x-small">
+                    <lightning-button variant="brand" label={labelSave} title="Sace" onclick={handleSave}></lightning-button>
+                    <lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </template>
+            <c-fs-title-section title="List Of Bank Details"></c-fs-title-section>
+            <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={rowAction} onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
+            </div>
+        </div>
+    </template>
+    <template if:true={showDeleteModal}>
+        <c-fs-delete-l-w-c delete-from="Lead Details Screen" object-api-name="Income__c"
+            show-modal={showDeleteModal} rec-id={recordIdForDelete} onmodaldelete={handlemodalactions}
+            onmodalcancel={handlemodalactions}>
+        </c-fs-delete-l-w-c>
+    </template>
+</template>

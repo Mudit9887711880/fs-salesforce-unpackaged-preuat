@@ -1,0 +1,150 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="medium" if:true={showSpinner}></lightning-spinner>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c headericon="standard:asset_audit" stagename="MOD Registration" appno={applicationName}
+		businessdate={todaysDate} lastlogindate={lastLoginDate}>
+	</c-fs-page-container-l-w-c>
+	<!--PAGE HEADER-->
+
+	<article class="slds-card" data-id="fivC">
+		<div class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<lightning-tab label="Document Upload" value="DocUpload" onactive={handleActive}>
+					<c-fs-generic-upload-documents application-id={recordId} stage-name="MOD Registration" record-type-id={}>
+					</c-fs-generic-upload-documents>
+				</lightning-tab>
+				<lightning-tab label="Data Entry" value="DataEntry" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:280px;">
+						<lightning-record-edit-form object-api-name="MOD_Registration__c" record-id={modId}
+							onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}>
+							<lightning-layout multiple-rows>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3" style="display: none;">
+									<lightning-input-field field-name="Application__c" value={recordId}
+										variant="label-stacked">
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="MOD_Done__c" variant="label-stacked" required
+										onchange={handleFormValues} value={modObj.MOD_Done__c}>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" if:false={isMODDone} padding="horizontal-small"
+									small-device-size="12" medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="MOD_Commitment_Date__c" variant="label-stacked"
+										required style="display: none;" value={modObj.MOD_Commitment_Date__c}>
+									</lightning-input-field>
+									<lightning-input type="date" name="MOD_Commitment_Date__c"
+										label="MOD Commitment Date" value={modObj.MOD_Commitment_Date__c}
+										onchange={handleFormValues} required min={erpDate} max={oneMonthLaterDate}
+										message-when-range-underflow="MOD Date should not be less than current business date."
+										message-when-range-overflow="MOD Date should not be more than 1 month from current business date.">
+									</lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" if:true={isMODDone} padding="horizontal-small"
+									small-device-size="12" medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="MOD_Date__c" variant="label-stacked" required
+										style="display: none;" value={modObj.MOD_Date__c}>
+									</lightning-input-field>
+									<lightning-input type="date" name="MOD_Date__c" label="MOD Date"
+										value={modObj.MOD_Date__c} onchange={handleFormValues} required
+										min={oneYearBackDate} max={erpDate}
+										message-when-range-underflow="MOD Date should not be less than 1 year before from current business date."
+										message-when-range-overflow="MOD Date should not be greater than current business date.">
+									</lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" if:true={isMODDone} padding="horizontal-small"
+									small-device-size="12" medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="MOD_Amount__c" variant="label-stacked" required
+										onchange={handleFormValues} value={modObj.MOD_Amount__c} onblur={handleBlur}
+										style="display: none;">
+									</lightning-input-field>
+									<lightning-input type="number" step="0.01" value={modObj.MOD_Amount__c}
+										variant="standard" name="MOD_Amount__c" onchange={handleFormValues}
+										formatter="currency" label="MOD Amount" onblur={handleBlur}
+										message-when-step-mismatch="Maximum 2 decimal places are allowed." required>
+									</lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="Sourcing_Officer__c" variant="label-stacked"
+										required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="Sourcing_BM__c" variant="label-stacked" required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="Customer_for_Collection_A__c"
+										value={modObj.Customer_for_Collection_A__c} variant="label-stacked" required
+										style="display: none;"></lightning-input-field>
+									<lightning-combobox name="Customer_for_Collection_A__c"
+										label="Most Important Customer For Collection A" value={modObj.Customer_for_Collection_A__c}
+										options={customerList1} onchange={handleFormValues} required>
+									</lightning-combobox>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="Mobile_Number_of_A__c" variant="label-stacked"
+										required value={modObj.Mobile_Number_of_A__c}>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="Customer_for_Collection_B__c"
+										value={modObj.Customer_for_Collection_B__c} variant="label-stacked"
+										required={secondRequired} style="display: none;"></lightning-input-field>
+									<lightning-combobox name="Customer_for_Collection_B__c"
+										label="2nd Most Important Customer For Collection B" value={modObj.Customer_for_Collection_B__c}
+										options={customerList2} onchange={handleFormValues} required={secondRequired}>
+									</lightning-combobox>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="6" large-device-size="3">
+									<lightning-input-field field-name="Mobile_Number_of_B__c" variant="label-stacked"
+										required={secondRequired} value={modObj.Mobile_Number_of_B__c}>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="12">
+									<div class="slds-m-top_medium slds-float_right">
+										<lightning-button class="slds-m-right--small" variant="neutral" type="submit"
+											label='Cancel' onclick={onCancel}>
+										</lightning-button>
+										<template if:true={modId}>
+											<lightning-button variant="brand" type="submit" label="Update"
+												id="update-btn1">
+											</lightning-button>
+										</template>
+										<template if:false={modId}>
+											<lightning-button variant="brand" type="submit" label="Save" id="save-btn2">
+											</lightning-button>
+										</template>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+						</lightning-record-edit-form>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Error" value="Error" if:true={showErrorTab} onactive={handleActive}
+					show-error-indicator style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:280px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+			</lightning-tabset>
+		</div>
+		<div class="slds-docked-form-footer">
+			<button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+                onclick={handleMODSubmit}>Submit</button>
+		</div>
+	</article>
+</template>

@@ -1,0 +1,48 @@
+.cursorStyle{
+    cursor: pointer;
+}
+
+.tableStyle{
+    table-layout: fixed;
+    width: 100%;
+}
+
+.tdStyle{
+    /* display: inline-block; */
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+.thStyle{
+    width: 24%;
+}
+
+.statusWitdh{
+    width: 15%;
+}
+
+.guidanceStyle{
+    white-space: pre-wrap !important;
+    white-space: -moz-pre-wrap !important; 
+    white-space: -pre-wrap !important; 
+    white-space: -o-pre-wrap !important; 
+    word-wrap: break-word !important;
+}
+
+td{
+    white-space: pre-wrap !important;
+    white-space: -moz-pre-wrap !important; 
+    white-space: -pre-wrap !important; 
+    white-space: -o-pre-wrap !important; 
+    word-wrap: break-word !important;
+}
+
+wrapping{
+    white-space: pre-wrap !important;
+    white-space: -moz-pre-wrap !important; 
+    white-space: -pre-wrap !important; 
+    white-space: -o-pre-wrap !important; 
+    word-wrap: break-word !important;
+}

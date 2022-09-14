@@ -1,0 +1,162 @@
+<template>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c headericon="standard:asset_audit" stagename="Document Dispatch" appno=""
+		businessdate={todaysDate} lastlogindate={lastLoginDate}>
+	</c-fs-page-container-l-w-c>
+	<!--PAGE HEADER-->
+	<!--Model-->
+	<template if:true={showModal}>
+		here by
+		<section role="dialog" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01"
+			aria-modal="true">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header">
+					<h1 class="slds-modal__title slds-hyphenate">Confirmation</h1>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium slds-text-align--center">
+					Do you want to generate Receipt for Courier Dispatch
+				</div>
+				<div class="slds-modal__footer">
+					<lightning-button variant="brand" label="Yes" title="Yes" onclick={handleClickYes}>
+					</lightning-button>
+					<lightning-button label="No" class="slds-m-left--medium" title="No" onclick={handleClickNo}>
+					</lightning-button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+	</template>
+	<!--Model-->
+	<article class="slds-card" data-id="DocumentDispatch">
+		<div class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large">
+			<lightning-tabset variant="scoped">
+				<lightning-tab label="Document Dispatch">
+					<lightning-layout multiple-rows="true">
+						<lightning-layout-item size="3" padding="around-small" small-device-size="1"
+							medium-device-size="1" large-device-size="2">
+							<div class="custom-box">
+								<lightning-combobox label="Branch" placeholder="Select Branch" options={options}
+									onchange={handleFormValues} value={wrpObj.Branch__c} name="Branch__c" required>
+								</lightning-combobox>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="3" padding="around-small" small-device-size="1"
+							medium-device-size="1" large-device-size="2">
+							<div class="custom-box">
+								<lightning-input type="date" variant="standard" name="From_Date__c" label="From Date"
+									value={wrpObj.From_Date__c} onchange={handleFormValues}>
+								</lightning-input>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="3" padding="around-small" small-device-size="1"
+							medium-device-size="1" large-device-size="2">
+							<div class="custom-box">
+								<lightning-input type="date" variant="standard" name="To_Date__c" label="To Date"
+									value={wrpObj.To_Date__c} onchange={handleFormValues} max={currentDate}
+									message-when-range-overflow="Future date is not allowed">
+								</lightning-input>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="3" padding="around-small" small-device-size="1"
+							medium-device-size="1" large-device-size="2">
+							<div class="custom-box slds-m-top_large">
+								<lightning-button onclick={handleClick} variant="brand" label="Search">
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+					<template if:false={isSpinner}>
+						<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					</template>
+					<template if:true={isSpinner}>
+						<template if:true={applications}>
+							<table
+								class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+								<thead>
+									<th>S. No.</th>
+									<th> Application No</th>
+									<th>Customer Name</th>
+									<th>Sourcing Branch</th>
+									<th>Checkbox</th>
+								</thead>
+								<tbody>
+									<template for:each={applications} for:item="application" for:index="idx">
+										<tr key={application.Id}>
+											<td>{application.serialNumber}</td>
+											<td>{application.applicationNo}</td>
+											<th>{application.customerName}</th>
+											<td>{application.sourcingBranch}</td>
+											<td>
+												<lightning-input key={application.Id} name={application.Id}
+													type="checkbox" data-id={application.Id}
+													checked={application.checked} onchange={handleChnageonUpdate}
+													data-index={idx}>
+												</lightning-input>
+											</td>
+										</tr>
+									</template>
+								</tbody>
+							</table>
+							</br>
+							<div class="slds-clearfix">
+								<div class="slds-float_right">
+									<lightning-button class="slds-align_absolute-center" variant="brand"
+										label="Add to Courier Control Sheet" onclick={handleCourierSheet}>
+									</lightning-button>
+								</div>
+							</div>
+						</template>
+					</template>
+					</br>
+					<template if:false={isShowSpinner}>
+						<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+					</template>
+					<template if:true={showModel}>
+						<div class="slds-box">
+							<lightning-layout multiple-rows>
+								<lightning-layout-item size="6" padding="around-small" small-device-size="2"
+									medium-device-size="4" large-device-size="6">
+									<lightning-input value={wrpObj.Address__c} type="text" variant="standard"
+										name="Address__c" label="Address" required onchange={handleFormValues} disabled>
+									</lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="6" padding="around-small" small-device-size="2"
+									medium-device-size="4" large-device-size="6">
+									<c-l-w-c-lookup object-api-name="Account" field-api-name="Name"
+										object-label="Courier Agency" label="Courier Agency" required="true"
+										onselect={handleSelect} seleted-record-id={wrpObj.Courier_Agency__c}
+										criteria="Account-CourierAgency">
+									</c-l-w-c-lookup>
+								</lightning-layout-item>
+							</lightning-layout>
+							<lightning-layout multiple-rows>
+								<lightning-layout-item size="6" padding="around-small" small-device-size="2"
+									medium-device-size="4" large-device-size="6">
+									<lightning-input value={wrpObj.Courier_POD_No__c} type="text" variant="standard"
+										name="Courier_POD_No__c" label="Courier POD No" onchange={handleFormValues}>
+									</lightning-input>
+								</lightning-layout-item>
+							</lightning-layout>
+							<div class="slds-clearfix">
+								<div class="slds-float_right slds-m-right_small">
+									<lightning-button variant="brand" label={buttonLabel} onclick={handleSave}
+										disabled={isSaveButtoDisable}></lightning-button>
+								</div>
+							</div>
+						</div>
+						</br>
+						<template if:true={isGenerate}>
+							<div class="slds-clearfix">
+								<div class="slds-float_right slds-m-right_small">
+									<lightning-button variant="brand" label="Generate" onclick={showConfirmationModal}
+										disabled={isButtonDisabled}>
+									</lightning-button>
+								</div>
+							</div>
+						</template>
+					</template>
+				</lightning-tab>
+			</lightning-tabset>
+		</div>
+	</article>
+</template>

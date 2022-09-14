@@ -1,0 +1,38 @@
+<template>
+	<template if:true={isLoading}>
+		<lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+	</template>
+	<div if:false={message}>
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th style="text-align:right;" scope="col" title="Month"> Month </th>
+					<th style="text-align:right;" scope="col" title="Opening Position"> Opening Position </th>
+					<th style="text-align:right;" scope="col" title="EMI"> EMI </th>
+					<th style="text-align:right;" scope="col" title="Interest"> Interest </th>
+					<th style="text-align:right;" scope="col" title="Principle Amount"> Principal </th>
+					<th style="text-align:right;" scope="col" title="Closing Position"> Closing POS </th>
+					<th style="text-align:center;" scope="col" title="Due Date"> Due Date </th>
+					<th style="text-align:right;" scope="col" title="No. Of Days Between Installments"> Installments Days </th>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={loanEmiData} for:item="EmiObj">
+					<tr class="slds-hint-parent" key={EmiObj}>
+						<td style="text-align:right;"> {EmiObj.month} </td>
+						<td style="text-align:right;"> {EmiObj.openPos} </td>
+						<td style="text-align:right;"> {EmiObj.emi} </td>
+						<td style="text-align:right;"> {EmiObj.interest} </td>
+						<td style="text-align:right;"> {EmiObj.principle} </td>
+						<td style="text-align:right;"> {EmiObj.closePos} </td>
+						<td style="text-align:center;"> {EmiObj.cycleDate} </td>
+						<td style="text-align:right;"> {EmiObj.numberOfDaysBetweenInstallment} </td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</div>
+	<div if:true={message} class="slds-align_absolute-center">
+		{message}
+	</div>
+</template>

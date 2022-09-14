@@ -1,0 +1,23 @@
+.imagecarousal{
+    display: flex;
+    overflow-x: hidden;
+}
+ .left{
+	 margin-top:25%;
+}
+.right{
+    margin-top:25%;
+} 
+
+.Carousal{
+	display: flex;
+    justify-content: center;
+}
+
+.imagecarousal img{
+	display: none;
+}
+
+.imagecarousal img:first-child{
+	display: block;
+}

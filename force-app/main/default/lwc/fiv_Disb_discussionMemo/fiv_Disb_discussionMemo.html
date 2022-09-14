@@ -1,0 +1,21 @@
+<template>
+    <lightning-button class="slds-align_absolute-center" label="Generate PDF" onclick={handleSavePdf}></lightning-button>
+
+    <lightning-spinner alternative-text="Loading" size="small" if:true={showSpinner}></lightning-spinner>
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <button onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <iframe style="min-height: -webkit-fill-available;" src={siteURL}></iframe>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

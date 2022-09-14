@@ -1,0 +1,122 @@
+<template>
+	<c-fs-page-container-l-w-c if:true={applicationName} headericon="standard:asset_audit" stagename="Legal Opinion"
+		appno={applicationName} businessdate={todaysDate1} lastlogindate={lastLoginDate}>
+	</c-fs-page-container-l-w-c>
+
+	<article class="slds-card" data-id="legalOpinion">
+		<div class="slds-card__body slds-card__body_inner">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<lightning-tab label="Lawyer Selection" value="LawyerSelection" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;overflow:initial;">
+						<template if:false={isSpinner}>
+							<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+						</template>
+						<template if:true={isSpinner}>
+							<template if:true={properties}>
+								<div
+									class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+									<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+										<span class="slds-truncate" title="Section Title">Property List</span>
+									</h3>
+									<table
+										class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+										<thead>
+											<th>Property Name</th>
+											<th>Title Deed Date</th>
+											<th>Title Deed Number</th>
+											<th>External Lawyer</th>
+										</thead>
+										<tbody>
+											<template for:each={properties} for:item="property">
+												<tr key={property.Id}>
+													<td>{property.Name}</td>
+													<td>{property.Title_Deed_Date__c}</td>
+													<td>{property.Title_Deed_Number__c}</td>
+													<td>
+														<lightning-combobox data-id={property.Id}
+                                                            variant="label-hidden"
+															name="External_Lawyer__c"
+															value={property.External_Lawyer__c} options={options}
+															onchange={handleFromValue} required></lightning-combobox>
+													</td>
+												</tr>
+											</template>
+										</tbody>
+									</table>
+								</div>
+							</template>
+							<div class="slds-clearfix">
+								<div class="slds-float_right">
+                                    <template if:true={isVisible}>
+									    <lightning-button variant="brand" label="Save" title="Save" onclick={saveProperty}></lightning-button>
+                                    </template>
+                                </div>
+							</div>
+						</template>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Upload Document" value="UploadDocument" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<!-- <c-generic-file-upload-l-w-c record-id={recordId} onfileupload={handleFileUplaod}>
+                        </c-generic-file-upload-l-w-c>
+                        <div class="slds-box slds-box_xx-small">
+                            <c-generic-view-documents record-id={recordId}></c-generic-view-documents>
+                        </div> -->
+						<c-fs-generic-upload-documents application-id={recordId} stage-name="Legal Opinion" record-type-id={}>
+						</c-fs-generic-upload-documents>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Data Entry" value="DataEntry" onactive={handleActive}>
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<div class="slds-scrollable_y" style="max-height:400px;">
+							<lightning-record-edit-form record-id={recordId} object-api-name="Application__c"
+								onsubmit={handleSubmit} onsuccess={handleSuccess}>
+								<lightning-layout multiple-rows>
+									<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+										medium-device-size="12" large-device-size="6">
+										<lightning-input-field field-name="External_Lawyer__c" disabled
+											variant="label-stacked" value={lawyerId}>
+										</lightning-input-field>
+									</lightning-layout-item>
+									<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+										medium-device-size="12" large-device-size="6">
+										<lightning-input-field field-name="Date_of_legal_opinion__c"
+											variant="label-stacked" required>
+										</lightning-input-field>
+									</lightning-layout-item>
+									<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+										medium-device-size="12" large-device-size="6">
+										<lightning-input-field field-name="Upload_date__c" variant="label-stacked"
+											value={todaysDate} disabled>
+										</lightning-input-field>
+									</lightning-layout-item>
+								</lightning-layout>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="12">
+									<div class="slds-float_right">
+										<lightning-button variant="brand" type="submit" label="Save" id="gen-btn">
+										</lightning-button>
+									</div>
+								</lightning-layout-item>
+							</lightning-record-edit-form>
+						</div>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Error" value="Error" if:true={showErrorTab} onactive={handleActive}
+					show-error-indicator style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+			</lightning-tabset>
+		</div>
+		<div class="slds-docked-form-footer">
+			<button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+                onclick={handleLegalOpinionSubmit}>Submit</button>
+		</div>
+	</article>
+</template>

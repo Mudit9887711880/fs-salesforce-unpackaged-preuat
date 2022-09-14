@@ -1,0 +1,86 @@
+<template>
+    <!--PAGE HEADER-->   
+
+    <c-fs-page-container-l-w-c headericon="standard:code_set" stagename="Final Sanction" if:true={name} appno={name}
+    btns={_btns} onrowselectionevent={rowselectionevent}>
+	</c-fs-page-container-l-w-c>
+    <!--PAGE HEADER--> 
+    
+    <!--CONTENT-->
+    <article class="slds-card">
+        <div class="slds-card__body slds-card__body_inner">
+            <lightning-tabset variant="scoped" active-tab-value={_activeTab}>
+                <lightning-tab label="Final Sanction" value="Final_Sanction">
+                    <template for:each={_dataToDisplay} for:item='item'>
+                        <div class="slds-section slds-is-open" key={item.sectionLabel}>
+                            <h3 class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title={item.sectionLabel}>{item.sectionLabel}</span>
+                            </h3>
+                            <div aria-hidden="false" class="slds-section__content">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col" style="width:12%">
+                                                <div class="slds-truncate" title="Fields">Fields</div>
+                                            </th>
+                                            <th class="" scope="col" style="width:20%">
+                                                <div class="slds-truncate" title="Approval Credit">Approval Credit</div>
+                                            </th>
+                                            <th class="" scope="col" style="width:20%">
+                                                <div class="slds-truncate" title="Legal Approval">Legal Approval</div>
+                                            </th>
+                                            <th class="" scope="col" style="width:8%">
+                                                <div class="slds-truncate" title="Validation">Validation</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={item.sectionContentList} for:item='scl'>
+                                            <tr class="slds-hint-parent" key={scl.order}>
+                                                <td data-label="Fields">
+                                                    <div class="slds-truncate" title={scl.field}>{scl.field}</div>
+                                                </td>
+                                                <td class="slds-cell-wrap" data-label="Approval Credit">
+                                                    <div class="slds-line-clamp" title={scl.acVal}>{scl.acVal}</div>
+                                                </td>
+                                                <td class="slds-cell-wrap" data-label="Legal Approval">
+                                                    <div class="slds-line-clamp" title={scl.laVal}>{scl.laVal}</div>
+                                                </td>
+                                                <td data-label="Validation">
+                                                    <div class="slds-truncate" title={scl.validation}>{scl.validation}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </template>
+                </lightning-tab>
+                <!-- Error Tab-->
+                <lightning-tab label="Error Info" value="Error" show-error-indicator if:true={_showErrorTab}>
+                    <ul class="slds-list_dotted">
+                        <template for:each={_errorMessages} for:item="err">
+                            <li key={err} class="slds-text-color_destructive">{err}</li>
+                        </template>
+                    </ul>
+                </lightning-tab>
+            <!-- Error Tab-->
+            </lightning-tabset>
+        </div>
+    </article>
+    <!--CONTENT-->
+
+    <!--FOOTER-->
+    <div class="slds-docked-form-footer">        
+        <button type="button" class="slds-button slds-button_brand" onclick={handleSubmit}>Submit</button>
+    </div>
+    <!--FOOTER-->
+
+    <!--SEND BACK-->
+    <template if:true={_isSendBack}>
+		<c-fs-send-back show-modal={_isSendBack} stage-from="Final Sanction" application-id={recordId}
+		oncloseclick={handleSendbackClose} onsubmitclick={handleSendbackSubmit}></c-fs-send-back>
+	</template>
+    <!--SEND BACK-->
+</template>

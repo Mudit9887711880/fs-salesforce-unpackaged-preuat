@@ -1,0 +1,97 @@
+<!--
+  @description       : Component For Validating Vehicle_RC,Electricity_Bill,Property_Tax,Vehicle_RC_Advance
+  @author            : 
+  @group             : 
+  @last modified on  : 05-24-2022
+  @last modified by  : Parag Goyal
+-->
+<template>
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+		aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
+		<div class="slds-modal__container">
+			
+			<!-- Modal/Popup Box LWC header here -->
+			<header class="slds-modal__header">
+				<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close"
+                                alternative-text="close"
+                                variant="inverse"
+                                size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+				<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Owner Validations</h2>
+			</header>
+			<!-- Modal/Popup Box LWC body starts here -->
+			<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+				<template if:true={isSpinnerActive}>
+					<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+				</template>
+                <!-- tabset start-->
+				<lightning-tabset variant="scoped" active-tab-value={activeTab}>
+					<lightning-tab label="Vehicle RC" value="Vehicle_RC" onactive={handleTabActivation}>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+								<lightning-input type="text" label="EngineNo" value={EngineNo} class="RC1"
+									onchange={handleEngineNo} required></lightning-input>
+								<lightning-input type="text" label="ChassisNo" value={chassisNo} class="RC2"
+									onchange={handlechassisNo} required></lightning-input>
+							</div>
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+								<lightning-input type="text" label="State" value={State} class="RC3"
+									onchange={handleState} required></lightning-input>
+							</div>
+						</div>
+					</lightning-tab>
+					<lightning-tab label="Property Tax" title="KYC_Property_Tax" value="Property_Tax"
+						onactive={handleTabActivation}>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+								<lightning-input type="text" label="State" value={StateName} class="RC4"
+									onchange={handleState2} required></lightning-input>
+								<lightning-input type="text" label="City" value={City} class="RC5" onchange={handleCity}
+									required></lightning-input>
+							</div>
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+								<lightning-input type="text" label="Property No" value={PropertyNo} class="RC6"
+									onchange={handlePropertyNo} required></lightning-input>
+								<lightning-input type="text" label="District" value={District} onchange={handleDistrict}
+									class="RC" required></lightning-input>
+							</div>
+						</div>
+					</lightning-tab>
+					<lightning-tab label="Electricity Bill" title="KYC_Electricity_Bill" value="Electricity_Bill"
+						onactive={handleTabActivation}>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+								<lightning-input type="text" label="Consumer Id" value={CosumerId} class="RC7"
+									onchange={handleCosumerId} required></lightning-input>
+							</div>
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+								<lightning-input type="text" label="ServiceProvider" value={ServiceProvider} class="RC8"
+									onchange={handleServiceProvider} required></lightning-input>
+							</div>
+						</div>
+					</lightning-tab>
+					<lightning-tab label="Vehicle RC Advance" title="KYC_Vehicle_RC_Adv" value="Vehicle_RC_Advance"
+						onactive={handleTabActivation}>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+								<lightning-input type="text" label="Registration No" value={RegistrationNo} class="RC9"
+									onchange={handleRegistrationNo} required></lightning-input>
+							</div>
+							<div class="slds-col slds-large-size_6-of-12 slds-medium-size_12-of-12 slds-size_12-of-12">
+							</div>
+						</div>
+					</lightning-tab>
+				</lightning-tabset>
+                <!-- tabset end --->
+			</div>
+			<!-- Modal/Popup Box LWC footer starts here -->
+			<footer class="slds-modal__footer">
+				<button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+				<button class="slds-button slds-button_brand" onclick={onSubmit} title="Submit">Submit</button>
+			</footer>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</template>

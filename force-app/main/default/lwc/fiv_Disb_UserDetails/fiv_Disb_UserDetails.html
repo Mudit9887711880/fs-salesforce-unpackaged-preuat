@@ -1,0 +1,19 @@
+<!--
+  @author            : Karan Singh Soni
+  @group             : TechMatrix Consulting
+  @description       : Parent Component - fiv_Disb_Lwc
+  @created on        : 20-07-2022
+  @last modified on  : 20-07-2022
+  @last modified by  : Karan Singh Soni
+-->
+<template>
+    <lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>
+    <div class="slds-box slds-box_xx-small" if:true={objUserDetails}>
+        <c-generic-edit-pages-l-w-c fields-content={objUserDetails} onchanged={handleFieldChanges}>
+        </c-generic-edit-pages-l-w-c>
+        <div class="slds-align_absolute-center slds-m-around_x-small slds-p-bottom_large">
+            <lightning-button variant="brand" label="Save" title="Sace" onclick={handleSave}>
+            </lightning-button>
+        </div>
+    </div>
+</template>

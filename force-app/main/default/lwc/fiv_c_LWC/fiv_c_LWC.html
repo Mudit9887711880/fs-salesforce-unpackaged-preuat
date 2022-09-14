@@ -1,0 +1,306 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="medium" if:true={showSpinner}></lightning-spinner>
+	<template if:true={showConfirmationModal}>
+		<section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-modal="true">
+			<div class="slds-modal__container">
+				<template if:true={isLoader}>
+					<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+				</template>
+				<div class="slds-modal__header">
+      				<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Generate Report</h1>
+    			</div>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<p class="slds-text-heading_medium slds-text-align_center">FIV-C Verification Completed
+						Successfully. Do you want to generate FIV-C Report?</p>
+				</div>
+				<div class="slds-modal__footer">
+					<lightning-button variant="brand" label="Yes" title="Yes" onclick={handleConfirmation}>
+					</lightning-button>
+					<lightning-button variant="netural" label="No" title="No" onclick={handleConfirmation}
+						class="slds-m-left_x-small"></lightning-button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+	</template>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c if:true={verficationObj} headericon="standard:asset_audit" stagename="FIV-C"
+		appno={verficationObj.Application__r.Name} businessdate={todaysDate} lastlogindate={lastLoginDate} btns={btns}
+		onrowselectionevent={headerBtnClick}>
+	</c-fs-page-container-l-w-c>
+	<!--PAGE HEADER-->
+
+	<!-- MUDIT -->	
+	<lightning-tabset variant="scoped" active-tab-value={tabName}>
+		<lightning-tab label="Character" value="Character" onactive={handleActive}>
+			<c-fivc-character-l-w-c if:true={applicationId} verification-id={recordId}
+							application-id={applicationId} oncharactervalidation={checkCharacterValidation}
+							login-id={loginId} pre-login-record-type={preLoginRecordType} loan-amount={loanAmount}>
+			</c-fivc-character-l-w-c>
+		</lightning-tab>
+		<lightning-tab label="Capability" value="Capability" onactive={handleActive}>
+			<c-fivc-capability-l-w-c if:true={applicationId} verification-id={recordId}
+							application-id={applicationId} oncapabilityvalidation={checkCapabilityValidation}>
+			</c-fivc-capability-l-w-c>
+		</lightning-tab>
+		<lightning-tab label="Collateral" value="Collateral" onactive={handleActive}>
+			<c-fivc-collateral-l-w-c if:true={applicationId} verification-id={recordId} login-id={loginId}
+							application-id={applicationId} oncollateralvalidation={checkCollateralValidation}>
+			</c-fivc-collateral-l-w-c>
+		</lightning-tab>
+		<lightning-tab label="Revisit" value="Revisit" onactive={handleActive}>
+			<c-fivc-revisit verification-id={recordId} onrevisitvalidation={handleRevisitValidation}>
+			</c-fivc-revisit>
+		</lightning-tab>
+		<lightning-tab label="Senior/Auditor Confirmation Visit" value="SeniorRevisit" onactive={handleActive}>
+			<c-fivc-revisit is-senior-visit verification-id={recordId}
+						onrevisitvalidation={handleSeniorRevisitValidation}>
+			</c-fivc-revisit>
+		</lightning-tab>
+		<lightning-tab label="Document Upload" value="DocUpload" onactive={handleActive}>
+			<template if:true={verficationObj}>
+				<c-fs-generic-upload-documents if:true={applicationId} application-id={applicationId}
+							stage-name="FIV - C" record-type-id={recordTypeName}
+							onrequireddocument={handleRequiredDocument}>
+				</c-fs-generic-upload-documents>
+			</template>
+		</lightning-tab>
+		<lightning-tab label="Collateral Summary" value="ColSummary" onactive={handleActive}>
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+							aria-labelledby="element-with-table-label other-element-with-table-label">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">
+										<div class="slds-truncate" style="font-weight: 700;">Particulars</div>
+									</th>
+									<th class="" scope="col" colspan="2">
+										<div class="slds-truncate slds-text-align--center" style="font-weight: 700;">
+											Land
+										</div>
+									</th>
+									<th class="" scope="col" colspan="2">
+										<div class="slds-truncate slds-text-align--center" style="font-weight: 700;">
+											Building
+										</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate" style="font-weight: 700;">
+											Total Collateral Value
+										</div>
+									</th>
+								</tr>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate" style="font-weight: 700;">Area(sq ft)</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate" style="font-weight: 700;">Value(INR)</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate" style="font-weight: 700;">Area(sq ft)</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate" style="font-weight: 700;">Value(INR)</div>
+									</th>
+									<th class="" scope="col">
+									</th>
+								</tr>
+							</thead>
+							<tbody if:true={propertySummaryObj}>
+								<template if:true={propertySummaryObj.propertyList}
+									for:each={propertySummaryObj.propertyList} for:item="itm" for:index="index">
+									<tr class="slds-hint-parent" key={itm}>
+										<th data-label="Name" scope="row">
+											<div class="slds-truncate">{itm.Name}</div>
+										</th>
+										<td data-label="Land Area(sq ft)">
+											<div class="slds-truncate">{itm.Land_Measurement_total_area__c}
+											</div>
+										</td>
+										<td data-label="Land Value(INR)">
+											<div class="slds-truncate">&#8377; {itm.Valuation_Final_land_value__c}
+											</div>
+										</td>
+										<td data-label="Building Area(sq ft)">
+											<div class="slds-truncate">{itm.Area_value_per_Sq_ft__c}
+											</div>
+										</td>
+										<td data-label="Building Value(INR)">
+											<div class="slds-truncate">&#8377; {itm.Building_area_total_value__c}
+											</div>
+										</td>
+										<td data-label="Amount">
+											<div class="slds-truncate">&#8377; {itm.Total_Collateral_Value__c}
+											</div>
+										</td>
+									</tr>
+								</template>
+								<tr class="slds-hint-parent" if:true={propertySummaryObj}>
+									<th data-label="Total" scope="row">
+										<div class="slds-truncate" style="font-weight: 700;">Total</div>
+									</th>
+									<th data-label="Blank 1" scope="row"></th>
+									<th data-label="Grand Value Land" scope="row">
+										<div class="slds-truncate">&#8377; {propertySummaryObj.landGrandValue}</div>
+									</th>
+									<th data-label="Blank 2" scope="row"></th>
+									<th data-label="Grand Value Building" scope="row">
+										<div class="slds-truncate">&#8377; {propertySummaryObj.buildingGrandValue}</div>
+									</th>
+									<th data-label="Grand Collateral Value" scope="row">
+										<div class="slds-truncate">&#8377; {propertySummaryObj.collateralGrandValue}
+										</div>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+		</lightning-tab>
+		<lightning-tab label="Capability Summary" value="CapSummary" onactive={handleActive}>
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered"
+							aria-labelledby="element-with-table-label other-element-with-table-label">
+							<thead>
+								<tr class="slds-line-height_reset">
+									<th class="" scope="col">
+										<div class="slds-truncate" title="Name">Name</div>
+									</th>
+									<th class="" scope="col">
+										<div class="slds-truncate" title="Amount">Amount</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody if:true={incomeSummaryObj}>
+								<template if:true={incomeSummaryObj} for:each={incomeSummaryObj.incomeList}
+									for:item="itm" for:index="index">
+									<tr class="slds-hint-parent" key={itm}>
+										<th data-label="Name" scope="row">
+											<div class="slds-truncate" title="Cloudhub">{itm.applicantName}</div>
+										</th>
+										<td data-label="Amount">
+											<div class="slds-truncate" title="Cloudhub">&#8377; {itm.incomePerMonth}
+											</div>
+										</td>
+									</tr>
+								</template>
+								<tr class="slds-hint-parent">
+									<th data-label="Opportunity Name" scope="row">
+										<div class="slds-truncate" title="Cloudhub">Total Income</div>
+									</th>
+									<td data-label="Account Name">
+										<div class="slds-truncate" title="Cloudhub">
+											&#8377; {incomeSummaryObj.totalMonthlyIncome}
+										</div>
+									</td>
+								</tr>
+								<tr class="slds-hint-parent">
+									<th data-label="Opportunity Name" scope="row">
+										<div class="slds-truncate" title="Cloudhub">Obligations</div>
+									</th>
+									<td data-label="Account Name">
+										<div class="slds-truncate" title="Cloudhub">
+											&#8377; {incomeSummaryObj.allObligations}
+										</div>
+									</td>
+								</tr>
+								<tr class="slds-hint-parent">
+									<th data-label="Opportunity Name" scope="row">
+										<div class="slds-truncate" title="Cloudhub">Net Income</div>
+									</th>
+									<td data-label="Account Name">
+										<div class="slds-truncate" title="Cloudhub">
+											&#8377; {incomeSummaryObj.netMonthlyIncome}
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+		</lightning-tab>
+		<lightning-tab label="Decision" value="Decision">
+			<lightning-record-edit-form object-api-name="Verification__c" record-id={recordId}
+							record-type-id={recordTypeId} onsuccess={handleDecisionSuccess}
+							onsubmit={handleDecisionSubmit}>
+							<lightning-layout multiple-rows>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+									medium-device-size="4" large-device-size="2" style="display: none;">
+									<lightning-input-field field-name="Status__c" value="Completed"
+										variant="label-stacked">
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="2">
+									<lightning-input-field field-name="Result__c" onchange={handleFormValues}
+										variant="label-stacked" required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="10">
+									<lightning-input-field field-name="Remarks__c" variant="label-stacked"
+										required={isRemarkRequired}>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="6">
+									<label class="slds-form-element__label" for="form-element-05">
+										<abbr class="slds-required" title="required">* </abbr>Is Applicant/Co-Applicant
+										Related/Known To Field Credit?</label>
+									<lightning-input-field field-name="Is_applicant_co_applicant_related_kn__c"
+										variant="label-hidden" onchange={handleFormValues} required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="6">
+									<label class="slds-form-element__label" for="form-element-05">
+										<abbr class="slds-required" title="required">* </abbr>Is Applicant/Co-Applicant
+										Related/Known To Any Five Star Employee?</label>
+									<lightning-input-field field-name="Is_applic_co_applic_related__c"
+										variant="label-hidden" onchange={handleFormValues} required>
+									</lightning-input-field>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="12">
+									<template if:true={isDecRemarkRequired}>
+										<label class="slds-form-element__label" for="form-element-05">
+											<abbr class="slds-required" title="required">* </abbr>Declaration
+											Remarks</label>
+										<lightning-input-field field-name="Remarks_Declaration__c"
+											variant="label-hidden" required>
+										</lightning-input-field>
+									</template>
+									<template if:false={isDecRemarkRequired}>
+										<label class="slds-form-element__label" for="form-element-05">
+											Declaration Remarks
+										</label>
+										<lightning-input-field field-name="Remarks_Declaration__c"
+											variant="label-hidden" required={isDecRemarkRequired}>
+										</lightning-input-field>
+									</template>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="12">
+									<div class="slds-var-m-top_medium slds-float_right">
+										<lightning-button variant="brand" type="submit" label="Update"
+											id="decision-btn">
+										</lightning-button>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+						</lightning-record-edit-form>
+		</lightning-tab>
+		<lightning-tab label="Error" value="Error" if:true={showErrorTab} onactive={handleActive}
+					show-error-indicator>
+			<ul class="slds-list_dotted">
+							<template for:each={errorMsg} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>			
+		</lightning-tab>
+	</lightning-tabset>
+	<!--
+	<div class="slds-docked-form-footer">
+		<button type="button" style="position:relative; left:40%;" class="slds-button slds-button_brand"
+				onclick={handleFIVCSubmit}>Submit</button>
+	</div>-->
+	<!-- MUDIT -->
+	
+</template>

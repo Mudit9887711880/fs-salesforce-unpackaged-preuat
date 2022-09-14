@@ -1,0 +1,111 @@
+<template>
+
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+    </template>
+
+    <!--PAGE HEADER-->
+    <c-fs-page-header stagename="Login" headericon="standard:code_set" appno={preAppName}>
+    </c-fs-page-header>
+    <!--PAGE HEADER-->
+
+    <!--CONTENT-->
+    <article class="slds-card">
+        <div class="slds-card__body slds-card__body_inner">
+            <lightning-tabset variant="scoped" active-tab-value={activeError}>
+                <!-- Relogin -->
+                <template if:true={isRelogin}>
+                    <lightning-tab label="Relogin" value="Relogin">
+                        <c-fs-relogin-application onshownewlogin={showNewLogin}></c-fs-relogin-application>
+                    </lightning-tab>
+                </template>
+                <!-- Topup -->
+                <template if:true={isTopup}>
+                    <lightning-tab label="Top-Up" value="Top-Up">
+                        <c-fs-topup-application onshownewlogin={showNewLogin}></c-fs-topup-application>
+                    </lightning-tab>
+                </template>
+                <template if:true={isNewlogin}>
+                    <!-- Customer Information Screen -->
+                    <lightning-tab label="Customer Details" value="step-1">
+                        <c-fs-customer-details ongetapplicationid={handleApplicationId}
+                            ongetpreloginid={handlePreloginId} onappname={handleAppName} onchecksubmit={checkSubmit}
+                            ongetowners={getPropertyOwners} application-id={applicationId} prelogin-id={preloginId} ongetownerstype={fillOwner}
+                            ongetprimaryapplicantname={getPrimaryApplicantName}>
+                        </c-fs-customer-details>
+                    </lightning-tab>
+                    <!-- Property Screen -->
+                    <lightning-tab label="Property Details" value="step-2" onactive={handleActive}>
+                        <c-fs-property-details application-id={applicationId} loan-app-id-list={loanAppIdList}
+                            oncheckproperty={checkProperty}>
+                        </c-fs-property-details>
+                    </lightning-tab>
+                    <!-- Application Screen -->
+                    <lightning-tab label="Application Details" value="step-3" onactive={handleActive}>
+                        <div class="slds-scrollable_y" style="height:320px;">
+                            <c-fs-pre-login-application-detail application-id={applicationId} prelogin-id={preloginId}
+                                oncheckrequired={checkAllRequired}>
+                            </c-fs-pre-login-application-detail>
+                        </div>
+                    </lightning-tab>
+                    <!-- Document Upload Screen -->
+					<lightning-tab label="Document Upload" value="DocumentUpload">
+						<div class="slds-scrollable_y" style="max-height:400px;" if:true={applicationId}>
+							<c-fs-generic-upload-documents stage-name="Pre Login" record-type-id={propRecTypeId}
+								is-agreement-execution="false" application-id={applicationId}>
+							</c-fs-generic-upload-documents>
+						</div>
+						<template if:false={applicationId}>
+							<div class="slds-align_absolute-center">
+								No Applicant Exist.
+							</div>
+						</template>
+					</lightning-tab>
+                    <!-- Receipt Screen -->
+                    <lightning-tab label="Fee Details" value="step-4">
+                        <div class="slds-scrollable_y" style="max-height:100%;">
+                            <div if:true={applicationId}>
+                                <c-fee-creation-parent record-id={applicationId} pre-log-in-id ={preloginId} app-name={preAppName} primary-applicant-name={primaryAppName} stage-name="Pre Login" ongetreceiptevent={getReceiptPendingList} ></c-fee-creation-parent>
+                            </div>
+                            <template if:false={applicationId}>
+                                <div class="slds-align_absolute-center">
+                                    No Applicant Exist.
+                                </div>
+						</template>
+                        </div>
+                    </lightning-tab>
+                    <lightning-tab label="Dedupe Details" value="step-5">
+                        <div class="slds-scrollable_y" style="max-height:400px;">
+                            <div class="slds-align_absolute-center">
+                                <img src="https://repository-images.githubusercontent.com/279611541/b7e1e580-c611-11ea-9b24-523c65baea0e"
+                                    height="400px" />
+                            </div>
+                        </div>
+                    </lightning-tab>
+                    <!-- Error Tab-->
+                    <lightning-tab label="Error Info" value="Error" show-error-indicator if:true={showErrorTab}
+                        style="--sds-c-tabs-scoped-color-text-active: red">
+                        <div class="slds-scrollable_y" style="max-height:400px;">
+                            <ul class="slds-list_dotted">
+                                <template for:each={errorMsgs} for:item="err">
+                                    <li key={err} class="slds-text-color_destructive">{err}</li>
+                                </template>
+                            </ul>
+                        </div>
+                    </lightning-tab>
+                </template>
+            </lightning-tabset>
+        </div>
+    </article>
+    <!--CONTENT-->
+
+    <!--FOOTER-->
+    <template if:true={isNewlogin}>
+        <div class="slds-docked-form-footer">
+            <!-- <button type="button" class="slds-button slds-button_neutral">Cancel</button> -->
+            <button type="button" class="slds-button slds-button_brand" onclick={handlePreloginSubmit}>Submit</button>
+        </div>
+    </template>
+    <!--FOOTER-->
+
+</template>

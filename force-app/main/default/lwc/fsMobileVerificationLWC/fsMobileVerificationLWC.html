@@ -1,0 +1,37 @@
+<template>
+    <!-- OTP Validation -->
+    <template if:true={isModalOpen}>
+        <div class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                <!-- style="max-width: 7rem !important;"-->
+                <div class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+                        variant="border-inverse" onclick={closeModal} class=" slds-modal__close">
+                        <!--btnPopup-->
+                    </lightning-button-icon>
+                    <span>Validate OTP</span><!-- class="subhead"-->
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-input type="text" label="Enter OTP" name="otp" onchange={handleOTP}
+                        class="slds-align_absolute-center">
+                        <!-- style="width: max-content;" -->
+                    </lightning-input>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-layout>
+                        <lightning-layout-item size="12" small-device-size="9" medium-device-size="3"
+                            large-device-size="12">
+                            <lightning-button label={validate} variant="brand" onclick={validateOTP}>
+                            </lightning-button>&nbsp;
+                            <lightning-button label="Resend OTP" variant="brand" onclick={resendMobOTP}
+                                data-id="resend">
+                            </lightning-button>&nbsp;
+                            <lightning-button variant="brand-outline" type="cancel" label="Cancel" onclick={closeModal}>
+                            </lightning-button>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,741 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
+        style="overflow: initial;">
+        <c-fs-title-section title="Required Documents"></c-fs-title-section>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3"
+                padding="around-small">
+                <lightning-combobox name="type-picklist" label="Type" value={value} placeholder="Select An Option"
+                    options={typePicklistOption} onchange={handleInputChange} required></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={isTypeApplicant} size="12" small-device-size="6" medium-device-size="4"
+                large-device-size="3" padding="around-small">
+                <lightning-combobox name="applicant-picklist" label="Applicant" value={value}
+                    placeholder="Select An Option" options={applicantPicklistOption} onchange={handleInputChange}
+                    required></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item if:true={isTypeAsset} size="12" small-device-size="6" medium-device-size="4"
+                large-device-size="3" padding="around-small">
+                <lightning-combobox name="asset-picklist" label="Asset" value={value} placeholder="Select An Option"
+                    options={assetPicklistOption} onchange={handleInputChange} required></lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item size="12" padding="around-small">
+                <template if:true={isTypeApplication}>
+                    <lightning-button-icon name="addNewDocument-application" icon-name="utility:add" variant="brand"
+                        alternative-text="Add New Row" class="slds-m-left_xx-small" title="Add New Row"
+                        onclick={handleAddNewDocument}></lightning-button-icon>
+                    <lightning-button-icon name="deleteDocument-application" icon-name="utility:delete" variant="brand"
+                        alternative-text="Delete Row" class="slds-m-left_xx-small" title="Delete"
+                        onclick={handleAddNewDocument}></lightning-button-icon>
+                </template>
+                <template if:true={isTypeApplicant}>
+                    <lightning-button-icon name="addNewDocument-applicant" icon-name="utility:add" variant="brand"
+                        alternative-text="Add New Row" class="slds-m-left_xx-small" title="Add New Row"
+                        onclick={handleAddNewDocument}></lightning-button-icon>
+                    <lightning-button-icon name="deleteDocument-applicant" icon-name="utility:delete" variant="brand"
+                        alternative-text="Delete Row" class="slds-m-left_xx-small" title="Delete"
+                        onclick={handleAddNewDocument}></lightning-button-icon>
+                </template>
+                <template if:true={isTypeAsset}>
+                    <lightning-button-icon name="addNewDocument-asset" icon-name="utility:add" variant="brand"
+                        alternative-text="Add New Row" class="slds-m-left_xx-small" title="Add New Row"
+                        onclick={handleAddNewDocument}></lightning-button-icon>
+                    <lightning-button-icon name="deleteDocument-asset" icon-name="utility:delete" variant="brand"
+                        alternative-text="Delete Row" class="slds-m-left_xx-small" title="Delete"
+                        onclick={handleAddNewDocument}></lightning-button-icon>
+                </template>
+                <lightning-button variant="brand" name="addtionalDocument" label="Add Addtional Document"
+                    title="Add Addtional Document" onclick={handleAddNewDocument} class="slds-m-left_xx-small">
+                </lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+        <!--
+            Used For Application View
+            Start Here
+        -->
+        <template if:true={isTypeApplication}>
+            <div class="c-container" if:true={documentRequiredData}>
+                <div class="slds-scrollable" style="height:200%; padding-bottom: 10px">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+                        <thead>
+                            <tr class="th">
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Sr No">Sr No.</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Document Name">Document Name</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Document Family">Document Family</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Mandatory">Mandatory</div>
+                                </th>
+                                <th class="slds-size_2-of-4" scope="col">
+                                    <div class="slds-truncate" title="Upload">Upload</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <template if:true={isAgreementExecution}>
+                                        <div class="slds-truncate" title="Document Type">Document Type</div>
+                                    </template>
+                                    <template if:false={isAgreementExecution}>
+                                        <div class="slds-truncate" title="Original">Original</div>
+                                    </template>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col" if:true={isAgreementExecution}>
+                                    <div class="slds-truncate" title="Document Type">Document Condition</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Stage">Stage</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Deferal Date">Deferred Date</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Received Date">Received Date</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="No Of Pages">No Of Pages</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Waiver Reason">Waiver Reason</div>
+                                </th>
+                                <th class="slds-size_3-of-10" scope="col">
+                                    <div class="slds-truncate" title="Remarks">Remarks</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={documentRequiredData} for:item="item" for:index="indexVar">
+                                <tr key={item} id={item} class="slds-hint-parent">
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div class="slds-truncate" title="Serial Number">{item.serialNumber}</div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="1">
+                                        <div if:false={item.isInputField} class="td-currency" title="Document Name">
+                                            {item.documentName}
+                                        </div>
+                                        <div if:true={item.isInputField} class="td-currency" title="Document Name">
+                                            <lightning-input data-row-index={indexVar} type="text"
+                                                name="application-documentName" variant="label-hidden"
+                                                value={item.documentName} onchange={selectOptionChange} required>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="2">
+                                        <div if:false={item.isInputField} class="td-currency" title="Document Family">
+                                            {item.documentFamily}
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="2">
+                                        <div if:false={item.isInputField} class="td-currency" title="Mandatory">
+                                            {item.mandatory}
+                                        </div>
+                                        <div if:true={item.isInputField} class="td-currency" title="Mandatory">
+                                            <lightning-combobox data-row-index={indexVar} type="text"
+                                                name="application-mandatory" variant="label-hidden"
+                                                placeholder="Select An Option" options={originalPicklistOption}
+                                                onchange={selectOptionChange} style="overflow: initial;" required>
+                                            </lightning-combobox>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_2-of-4" data-id="5">
+                                        <div title="Upload" class="td-upload">
+                                            <lightning-input data-row-index={indexVar} name="application" type="file"
+                                                accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf" label=""
+                                                onchange={openfileUpload} variant="label-hidden" required>
+                                            </lightning-input>
+                                            <template if:true={item.fileName}>
+                                                <p>{item.fileName}</p>
+                                            </template>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="3">
+                                        <template if:true={isAgreementExecution}>
+                                            <div class="td-currency" title="Agreement Execution">
+                                                <lightning-combobox data-row-index={indexVar} name="application-documentType"
+                                                    variant="label-hidden" label="" value={value}
+                                                    placeholder="Select An Option" options={agreementDocumentTypePicklistOption}
+                                                    onchange={selectOptionChange} style="overflow: initial;" required>
+                                                </lightning-combobox>
+                                            </div>
+                                        </template>
+                                        <template if:false={isAgreementExecution}>
+                                            <div class="td-currency" title="Original">
+                                                <lightning-combobox data-row-index={indexVar} name="application-original"
+                                                    variant="label-hidden" label="" value={value}
+                                                    placeholder="Select An Option" options={originalPicklistOption}
+                                                    onchange={selectOptionChange} style="overflow: initial;" required>
+                                                </lightning-combobox>
+                                            </div>
+                                        </template>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="3" if:true={isAgreementExecution}>
+                                        <template if:true={isAgreementExecution}>
+                                            <div class="td-currency" title="Agreement Execution">
+                                                <lightning-combobox data-row-index={indexVar} name="application-documentCondition"
+                                                    variant="label-hidden" label="" value={value}
+                                                    placeholder="Select An Option" options={documentConditionPicklistOption}
+                                                    onchange={selectOptionChange} style="overflow: initial;" required>
+                                                </lightning-combobox>
+                                            </div>
+                                        </template>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="4">
+                                        <div class="td-currency" title="Status">
+                                            <lightning-combobox data-row-index={indexVar} name="application-status"
+                                                variant="label-hidden" label="" value={value}
+                                                placeholder="Select An Option" options={statusPicklistOption}
+                                                onchange={selectOptionChange} required></lightning-combobox>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="9">
+                                        <div class="td-currency" title="Deferred Stage">
+                                            <lightning-combobox data-row-index={indexVar}
+                                                name="application-deferalStage" variant="label-hidden" label=""
+                                                value={item.deferalStage} placeholder="Select An Option"
+                                                options={deferalPicklistOption} onchange={selectOptionChange}
+                                                disabled={item.deferredStageDisable} required></lightning-combobox>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="9">
+                                        <div class="td-currency" title="Deferred Date">
+                                            <lightning-input data-row-index={indexVar} type="date"
+                                                name="application-deferalDate" variant="label-hidden"
+                                                value={item.deferalDate} disabled={item.deferredDateDisable}
+                                                onchange={selectOptionChange} required>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="9">
+                                        <div class="td-currency" title="Received Date">
+                                            <lightning-input data-row-index={indexVar} type="date"
+                                                name="application-receivedDate" variant="label-hidden"
+                                                value={item.receivedDate} onchange={selectOptionChange}
+                                                disabled={item.receivedDateDisable} required={item.isReceivedDateRequired}>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="7">
+                                        <div class="td-currency" title="No Of Pages">
+                                            <lightning-input data-row-index={indexVar} type="text"
+                                                variant="label-hidden" name="application-noOfPages"
+                                                onchange={selectOptionChange} required={item.isReceivedDateRequired}></lightning-input>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="7">
+                                        <div class="td-currency" title="Waiver Reason">
+                                            <lightning-textarea data-row-index={indexVar}
+                                                name="application-waiverReason" variant="label-hidden"
+                                                onchange={selectOptionChange} disabled={item.waiverReasonDisable}
+                                                value={item.waiverReason} required>
+                                            </lightning-textarea>
+                                        </div>
+                                    </td>
+                                    <td class="slds-size_3-of-10" data-id="8">
+                                        <div class="td-currency" title="Remarks">
+                                            <lightning-textarea class="docvalidation" data-row-index={indexVar}
+                                                name="application-remarks" variant="label-hidden"
+                                                onchange={selectOptionChange}>
+                                            </lightning-textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+                <lightning-button variant="brand" name="save-application" label="Save" title="Save"
+                    onclick={handleSaveApplicationDocument} class="slds-align_absolute-center slds-m-top_x-small">
+                </lightning-button>
+            </div>
+        </template>
+        <!--
+            Used For Application View
+            End Here
+        -->
+
+        <!--
+            Used For Applicant View
+            Start Here
+        -->
+        <template if:true={isTypeApplicant}>
+            <template if:true={objectRecords}>
+                <div class="c-container" if:true={documentRequiredData}>
+                    <template for:each={objectRecords} for:item="record">
+                        <c-fs-title-section title={record.Name} class="slds-p-vertical_xx-small" key={item}>
+                        </c-fs-title-section>
+                        <div key={item} class="slds-scrollable" style="height:200%; padding-bottom: 10px">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+                                <thead>
+                                    <tr class="th">
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Sr No">Sr No.</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Document Name">Document Name</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Document Family">Document Family</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col" if:true={isTypeApplicant}>
+                                            <div class="slds-truncate" title="Applicable For">Applicable For</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Mandatory">Mandatory</div>
+                                        </th>
+                                        <th class="slds-size_2-of-4" scope="col">
+                                            <div class="slds-truncate" title="Upload">Upload</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <template if:true={isAgreementExecution}>
+                                                <div class="slds-truncate" title="Document Type">Document Type</div>
+                                            </template>
+                                            <template if:false={isAgreementExecution}>
+                                                <div class="slds-truncate" title="Original">Original</div>
+                                            </template>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Status">Status</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Stage">Stage</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Deferal Date">Deferred Date</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Received Date">Received Date</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="No Of Pages">No Of Pages</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Waiver Reason">Waiver Reason</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Remarks">Remarks</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={documentRequiredData} for:item="item" for:index="indexVar">
+                                        <tr key={item.key} id={item.Id} class="slds-hint-parent">
+                                            <td class="slds-size_3-of-10" data-id="1">
+                                                <div class="slds-truncate" title="Serial Number">{item.serialNumber}
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="1">
+                                                <div if:false={item.isInputField} class="td-currency"
+                                                    title="Document Name">
+                                                    {item.documentName}
+                                                </div>
+                                                <div if:true={item.isInputField} class="td-currency"
+                                                    title="Document Name">
+                                                    <lightning-input data-row-index={indexVar} type="text"
+                                                        name="applicant-documentName" variant="label-hidden"
+                                                        value={item.documentName} onchange={selectOptionChange} required>
+                                                    </lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="2">
+                                                <div if:false={item.isInputField} class="td-currency"
+                                                    title="Document Family">
+                                                    {item.documentFamily}
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="2">
+                                                <div class="td-currency" title="Applicable For">
+                                                    {item.applicableFor}
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="2" if:true={isTypeApplicant}>
+                                                <div if:false={item.isInputField} class="td-currency" title="Mandatory">
+                                                    {item.mandatory}
+                                                </div>
+                                                <div if:true={item.isInputField} class="td-currency" title="Mandatory">
+                                                    <lightning-combobox data-row-index={indexVar} type="text"
+                                                        name="application-mandatory" variant="label-hidden"
+                                                        placeholder="Select An Option" options={originalPicklistOption}
+                                                        onchange={selectOptionChange} style="overflow: initial;" required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_2-of-4" data-id="5">
+                                                <div title="Upload" class="td-upload">
+                                                    <lightning-input data-row-index={indexVar} name="application"
+                                                        type="file" accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
+                                                        label="" onchange={openfileUpload} variant="label-hidden" required>
+                                                    </lightning-input>
+                                                    <template if:true={item.fileName}>
+                                                        <p>{item.fileName}</p>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="3">
+                                                <template if:true={isAgreementExecution}>
+                                                    <div class="td-currency" title="Agreement Execution">
+                                                        <lightning-combobox data-row-index={indexVar} name="applicant-documentType"
+                                                            variant="label-hidden" label="" value={value}
+                                                            placeholder="Select An Option" options={agreementDocumentTypePicklistOption}
+                                                            onchange={selectOptionChange} style="overflow: initial;" required>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </template>
+                                                <template if:false={isAgreementExecution}>
+                                                    <div class="td-currency" title="Original">
+                                                        <lightning-combobox data-row-index={indexVar} name="applicant-original"
+                                                            variant="label-hidden" label="" value={value}
+                                                            placeholder="Select An Option" options={originalPicklistOption}
+                                                            onchange={selectOptionChange} style="overflow: initial;" required>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="4">
+                                                <div class="td-currency" title="Status">
+                                                    <lightning-combobox data-row-index={indexVar}
+                                                        name="applicant-status" variant="label-hidden" label=""
+                                                        value={value} placeholder="Select An Option"
+                                                        options={statusPicklistOption} onchange={selectOptionChange} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="9">
+                                                <div class="td-currency" title="Deferred Stage">
+                                                    <lightning-combobox data-row-index={indexVar}
+                                                        name="applicant-deferalStage" variant="label-hidden" label=""
+                                                        value={item.deferalStage} placeholder="Select An Option"
+                                                        options={deferalPicklistOption} onchange={selectOptionChange}
+                                                        disabled={item.deferredStageDisable} required></lightning-combobox>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="9">
+                                                <div class="td-currency" title="Deferred Date">
+                                                    <lightning-input data-row-index={indexVar} type="date"
+                                                        name="applicant-deferalDate" variant="label-hidden"
+                                                        value={item.deferalDate} disabled={item.deferredDateDisable}
+                                                        onchange={selectOptionChange} required>
+                                                    </lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="9">
+                                                <div class="td-currency" title="Received Date">
+                                                    <lightning-input data-row-index={indexVar} type="date"
+                                                        name="applicant-receivedDate" variant="label-hidden"
+                                                        value={item.receivedDate} onchange={selectOptionChange}
+                                                        disabled={item.receivedDateDisable} required={item.isReceivedDateRequired}>
+                                                    </lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="7">
+                                                <div class="td-currency" title="No Of Pages">
+                                                    <lightning-input data-row-index={indexVar} type="text"
+                                                        variant="label-hidden" name="applicant-noOfPages"
+                                                        onchange={selectOptionChange} required={item.isReceivedDateRequired}></lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="7">
+                                                <div class="td-currency" title="Waiver Reason">
+                                                    <lightning-textarea data-row-index={indexVar}
+                                                        name="applicant-waiverReason" variant="label-hidden"
+                                                        onchange={selectOptionChange}
+                                                        disabled={item.waiverReasonDisable} value={item.waiverReason} required>
+                                                    </lightning-textarea>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="8">
+                                                <div class="td-currency" title="Remarks">
+                                                    <lightning-textarea data-row-index={indexVar}
+                                                        name="applicant-remarks" variant="label-hidden"
+                                                        onchange={selectOptionChange} >
+                                                    </lightning-textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                    <lightning-button variant="brand" name="save-application" label="Save" title="Save"
+                        onclick={handleSaveApplicationDocument} class="slds-align_absolute-center slds-m-top_x-small">
+                    </lightning-button>
+                </div>
+            </template>
+        </template>
+        <!--
+            Used For Applicant View
+            End Here
+        -->
+
+        <!--
+            Used For Asset View
+            Start Here
+        -->
+        <template if:true={isTypeAsset}>
+            <template if:true={objectRecords}>
+                <div class="c-container" if:true={documentRequiredData}>
+                    <template for:each={objectRecords} for:item="record">
+                        <c-fs-title-section title={record.Name} class="slds-p-vertical_xx-small" key={item}>
+                        </c-fs-title-section>
+                        <div key={item} class="slds-scrollable" style="height:200%; padding-bottom: 10px">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+                                <thead>
+                                    <tr class="th">
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Sr No">Sr No.</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Document Name">Document Name</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Document Family">Document Family</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col" if:true={isTypeApplicant}>
+                                            <div class="slds-truncate" title="Applicable For">Applicable For</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Mandatory">Mandatory</div>
+                                        </th>
+                                        <th class="slds-size_2-of-4" scope="col">
+                                            <div class="slds-truncate" title="Upload">Upload</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <template if:true={isAgreementExecution}>
+                                                <div class="slds-truncate" title="Document Type">Document Type</div>
+                                            </template>
+                                            <template if:false={isAgreementExecution}>
+                                                <div class="slds-truncate" title="Original">Original</div>
+                                            </template>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Status">Status</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Stage">Stage</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Deferal Date">Deferred Date</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Received Date">Received Date</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="No Of Pages">No Of Pages</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Waiver Reason">Waiver Reason</div>
+                                        </th>
+                                        <th class="slds-size_3-of-10" scope="col">
+                                            <div class="slds-truncate" title="Remarks">Remarks</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={documentRequiredData} for:item="item" for:index="indexVar">
+                                        <tr key={item.key} id={item.Id} class="slds-hint-parent">
+                                            <td class="slds-size_3-of-10" data-id="1">
+                                                <div class="slds-truncate" title="Serial Number">{item.serialNumber}
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="1">
+                                                <div if:false={item.isInputField} class="td-currency"
+                                                    title="Document Name">
+                                                    {item.documentName}
+                                                </div>
+                                                <div if:true={item.isInputField} class="td-currency"
+                                                    title="Document Name">
+                                                    <lightning-input data-row-index={indexVar} type="text"
+                                                        name="asset-documentName" variant="label-hidden"
+                                                        value={item.documentName} onchange={selectOptionChange} required>
+                                                    </lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="2">
+                                                <div if:false={item.isInputField} class="td-currency"
+                                                    title="Document Family">
+                                                    {item.documentFamily}
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="2">
+                                                <div if:false={item.isInputField} class="td-currency" title="Mandatory">
+                                                    {item.mandatory}
+                                                </div>
+                                                <div if:true={item.isInputField} class="td-currency" title="Mandatory">
+                                                    <lightning-combobox data-row-index={indexVar} type="text"
+                                                        name="application-mandatory" variant="label-hidden"
+                                                        placeholder="Select An Option" options={originalPicklistOption}
+                                                        onchange={selectOptionChange} style="overflow: initial;" required>
+                                                    </lightning-combobox>
+                                                </div>    
+                                            </td>
+                                            <td class="slds-size_2-of-4" data-id="5">
+                                                <div title="Upload" class="td-upload">
+                                                    <lightning-input data-row-index={indexVar} name="application"
+                                                        type="file" accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
+                                                        label="" onchange={openfileUpload} variant="label-hidden" required>
+                                                    </lightning-input>
+                                                    <template if:true={item.fileName}>
+                                                        <p>{item.fileName}</p>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="3">
+                                                <template if:true={isAgreementExecution}>
+                                                    <div class="td-currency" title="Agreement Execution">
+                                                        <lightning-combobox data-row-index={indexVar} name="asset-documentType"
+                                                            variant="label-hidden" label="" value={value}
+                                                            placeholder="Select An Option" options={agreementDocumentTypePicklistOption}
+                                                            onchange={selectOptionChange} style="overflow: initial;" required>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </template>
+                                                <template if:false={isAgreementExecution}>
+                                                    <div class="td-currency" title="Original">
+                                                        <lightning-combobox data-row-index={indexVar} name="asset-original"
+                                                            variant="label-hidden" label="" value={value}
+                                                            placeholder="Select An Option" options={originalPicklistOption}
+                                                            onchange={selectOptionChange} style="overflow: initial;" required>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </template>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="4">
+                                                <div class="td-currency" title="Status">
+                                                    <lightning-combobox data-row-index={indexVar} name="asset-status"
+                                                        variant="label-hidden" label="" value={value}
+                                                        placeholder="Select An Option" options={statusPicklistOption}
+                                                        onchange={selectOptionChange} required></lightning-combobox>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="9">
+                                                <div class="td-currency" title="Deferred Stage">
+                                                    <lightning-combobox data-row-index={indexVar}
+                                                        name="asset-deferalStage" variant="label-hidden" label=""
+                                                        value={item.deferalStage} placeholder="Select An Option"
+                                                        options={deferalPicklistOption} onchange={selectOptionChange}
+                                                        disabled={item.deferredStageDisable} required>
+                                                    </lightning-combobox>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="9">
+                                                <div class="td-currency" title="Deferred Date">
+                                                    <lightning-input data-row-index={indexVar} type="date"
+                                                        name="asset-deferalDate" variant="label-hidden"
+                                                        value={item.deferalDate} disabled={item.deferredDateDisable}
+                                                        onchange={selectOptionChange} required>
+                                                    </lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="9">
+                                                <div class="td-currency" title="Received Date">
+                                                    <lightning-input data-row-index={indexVar} type="date"
+                                                        name="asset-receivedDate" variant="label-hidden"
+                                                        value={item.receivedDate} onchange={selectOptionChange}
+                                                        disabled={item.receivedDateDisable} required={item.isReceivedDateRequired}>
+                                                    </lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="7">
+                                                <div class="td-currency" title="No Of Pages">
+                                                    <lightning-input data-row-index={indexVar} type="text"
+                                                        variant="label-hidden" name="asset-noOfPages"
+                                                        onchange={selectOptionChange} required={item.isReceivedDateRequired}></lightning-input>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="7">
+                                                <div class="td-currency" title="Waiver Reason">
+                                                    <lightning-textarea data-row-index={indexVar}
+                                                        name="asset-waiverReason" variant="label-hidden"
+                                                        onchange={selectOptionChange}
+                                                        disabled={item.waiverReasonDisable} value={item.waiverReason} required>
+                                                    </lightning-textarea>
+                                                </div>
+                                            </td>
+                                            <td class="slds-size_3-of-10" data-id="8">
+                                                <div class="td-currency" title="Remarks">
+                                                    <lightning-textarea data-row-index={indexVar} name="asset-remarks"
+                                                        variant="label-hidden" onchange={selectOptionChange}>
+                                                    </lightning-textarea>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                    <lightning-button variant="brand" name="save-application" label="Save" title="Save"
+                        onclick={handleSaveApplicationDocument} class="slds-align_absolute-center slds-m-top_x-small">
+                    </lightning-button>
+                </div>
+            </template>
+        </template>
+        <!--
+            Used For Asset View
+            End Here
+        -->
+    </div>
+    <!--
+        Addtional Document Modal
+    -->
+    <template if:true={isAddtionalDocument}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open slds-modal_x-small">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                    onclick={handleAdditionalCancel}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Addtional Document</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"
+                    style="overflow: initial;">
+                    <template if:true={isSpinnerActive}>
+                        <c-fs-spinner></c-fs-spinner>
+                    </template>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" padding="around-small">
+                            <lightning-textarea class="validate" name="Description" label="Description" required
+                                onchange={handleAddtionalDocumentChange}></lightning-textarea>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                            <lightning-input type="text" label="User" value={userName} disabled></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="around-small">
+                            <lightning-input class="validate" name="Addtional Document" type="file"
+                                accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf" label="Document" required
+                                onchange={handleAddtionalDocumentChange}>
+                            </lightning-input>
+                            <template if:true={fileData}>
+                                <p>{fileData.filename}</p>
+                            </template>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleAdditionalCancel} class="slds-m-left_x-small">
+                    </lightning-button>
+                    <lightning-button variant="brand" label="Save" onclick={handleSaveAddNewDocument}
+                        class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+</template>

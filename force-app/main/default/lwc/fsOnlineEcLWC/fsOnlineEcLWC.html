@@ -1,0 +1,52 @@
+<template>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c if:true={applicationName} headericon="standard:asset_audit" stagename="Online EC"
+		appno={applicationName} businessdate={todaysDate} lastlogindate={lastLoginDate}>
+	</c-fs-page-container-l-w-c>
+
+	<!--PAGE HEADER-->
+
+	<!--CONTENT-->
+	<article class="slds-card">
+		<div class="slds-card__body slds-card__body_inner">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<lightning-tab label="Collateral Details" title="Collateral Details" value="Collateral"  onactive={handleActive}>
+					<div class="slds-scrollable_y">
+						<c-fs-online-ec-collateral-l-w-c application-id={applicationId} row-action={rowAction} >
+						</c-fs-online-ec-collateral-l-w-c>
+					</div>
+				</lightning-tab>
+				<lightning-tab label="Upload Document" title="Upload Document">
+					<div class="slds-scrollable_y">
+						<c-fs-generic-upload-documents stage-name="Online EC" application-id={applicationId} record-type-id={recordTypeId}></c-fs-generic-upload-documents>
+					</div>
+				</lightning-tab>
+				<!-- Error Tab-->
+				<lightning-tab label="Error Info" value="Error" show-error-indicator if:true={showErrorTab} onactive={handleActive}
+					style="--sds-c-tabs-scoped-color-text-active: red">
+					<div class="slds-scrollable_y" style="max-height:400px;">
+						<ul class="slds-list_dotted">
+							<template for:each={errorMsgs} for:item="err">
+								<li key={err} class="slds-text-color_destructive">{err}</li>
+							</template>
+						</ul>
+					</div>
+				</lightning-tab>
+			</lightning-tabset>
+
+		</div>
+	</article>
+
+	<!--CONTENT-->
+
+	<!--FOOTER-->
+	<div class="slds-docked-form-footer">
+		<div class="slds-align_absolute-center slds-m-around_x-small">
+			<lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={handleCancel}></lightning-button>
+		</div>
+		<div class="slds-align_absolute-center slds-m-around_x-small">
+			<lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit}></lightning-button>
+		</div>
+	</div>
+	<!--FOOTER-->
+</template>

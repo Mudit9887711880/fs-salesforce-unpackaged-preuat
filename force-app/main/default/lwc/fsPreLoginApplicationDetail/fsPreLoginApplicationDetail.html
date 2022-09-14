@@ -1,0 +1,33 @@
+<template>
+	<template if:true={applicationId}>
+		<template if:true={isSpinnerActive}>
+			<c-fs-spinner></c-fs-spinner>
+		</template>
+		<template if:true={fieldsContent}>
+			<c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={handleFormValueChange}>
+				<lightning-layout-item slot="additionalFieldFirst" padding="around-small" size="12"
+						small-device-size="12" medium-device-size="12" large-device-size="2">
+						<div class="slds-form-element">
+							<label class="slds-form-element__label" style="font-weight: bold !important;">
+								<span style="color: red;">*&nbsp;</span>
+								Field Officer Employee Id
+							</label>
+							<c-l-w-c-lookup object-api-name="User" field-api-name="EmployeeNumber"
+								sub-field-api-name="Name" object-label="User" variant="label-hidden"
+								 onselect={handleSelectedEMPId} seleted-record-id={fieldOfficerEMPId} criteria="NAME_EMP">
+							</c-l-w-c-lookup>
+						</div>
+					</lightning-layout-item>
+			</c-generic-edit-pages-l-w-c><br />
+			<div class="slds-align_absolute-center slds-m-around_x-small">
+				<lightning-button variant="brand" label={labelSave} title={labelSave} onclick={handleSave}>
+				</lightning-button>
+			</div>
+		</template>
+	</template>
+	<template if:false={applicationId}>
+		<div class="slds-align_absolute-center">
+			No Applicant Exist.
+		</div>
+	</template>
+</template>

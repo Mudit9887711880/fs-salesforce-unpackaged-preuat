@@ -1,0 +1,462 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>
+	<template if:true={showDeleteModal}>
+		<section role="dialog" tabindex="-1" class="slds-align--absolute-center slds-modal slds-fade-in-open"
+			aria-labelledby="modal-heading-01" aria-modal="true">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header">
+					<h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate">Delete Record</h1>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium slds-text-align--center" id="modal-content-id-2">
+					Are you sure you want to delete this record?
+				</div>
+				<div class="slds-modal__footer">
+					<lightning-button variant="brand" label="Yes" title="Yes" onclick={handleDelete}>
+					</lightning-button>
+					<lightning-button label="No" class="slds-m-left--medium" title="No" onclick={handleDelete}>
+					</lightning-button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+	</template>
+	<lightning-tabset variant="scoped">
+		<lightning-tab label="Family Details" value="family" onactive={handleTabActivation}>
+			<div class="slds-box slds-box_xx-small">
+				<lightning-record-edit-form object-api-name="Character__c" record-id={familyMemberId}
+					record-type-id={characterRecordTypeFIVC} onsuccess={handleSuccess} onsubmit={handleSubmit}
+					id="character" class="character">
+					<lightning-layout multiple-rows if:true={isFamilyTab}>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Loan_Applicant__c" value={loanApplicantId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Verification__c" value={verificationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Application__c" value={applicationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Section_Type__c" value="Family Detail"
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-combobox name="Customer_Information__c" label="Select Applicant"
+								value={customerId} options={customerList} required onchange={handleCustomerSelection}>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Customer_Type__c" variant="label-stacked" required
+								disabled value={customerTypeVal}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3" style="display:none;">
+							<lightning-input-field field-name="Family_Member_Name__c" variant="label-hidden" required
+								value={familyMemberName}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input type="text" variant="standard" name="Family_Member_Name__c"
+								label="Family Member Name" required max-length="35" value={familyMemberName}
+								pattern="^[a-z  A-Z]*$" onchange={handleFormValues} min-length="3"
+								message-when-too-short="Name should be of 3 characters atleast"
+								message-when-pattern-mismatch="Only alphabets are allowed.">
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Relationship__c" variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Living_with_Applicant__c" variant="label-stacked"
+								required disabled={disableFields}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Relationship_Matrix__c" variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="6">
+							<lightning-input-field field-name="Overall_Remarks__c" variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<div class="slds-var-m-top_medium slds-float_right">
+								<lightning-button class="slds-m-right--small" variant="neutral" type="button"
+									label='Cancel' onclick={onCancel}>
+								</lightning-button>
+								<lightning-button variant="brand" type="submit" label="Save" id="character-btn">
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-record-edit-form>
+			</div>					
+			<template if:true={familyTableData}>
+				<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+					<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+						<span class="slds-truncate" title="Section Title">Family Member List</span>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content">
+						<c-generic-data-table-l-w-c result={familyTableData} btns={rowAction}
+							onselected={handleTableSelection}>
+						</c-generic-data-table-l-w-c>
+					</div>
+				</div>
+			</template>
+		</lightning-tab>
+		<lightning-tab label="Neighbour Check" value="neighbour" onactive={handleTabActivation}>
+			<div class="slds-box slds-box_xx-small">
+				<lightning-record-edit-form object-api-name="Character__c" record-id={neighbourId}
+					record-type-id={characterRecordTypeFIVC} onsuccess={handleSuccess} onsubmit={handleSubmit}
+					id="neighbour">
+					<lightning-layout multiple-rows if:true={isNeighbourDetail}>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Loan_Applicant__c" value={loanApplicantId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Section_Type__c" value="Neighbour Detail"
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Verification__c" value={verificationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Application__c" value={applicationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-combobox name="Customer_Information__c" label="Select Applicant"
+								value={customerId} options={customerList} onchange={handleCustomerSelection}>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Neighbour_Name__c" variant="label-stacked" required
+								style="display:none;" value={neighbourName}>
+							</lightning-input-field>
+							<lightning-input type="text" variant="standard" name="Neighbour_Name__c"
+								label="Neighbour Name" required max-length="25" value={neighbourName}
+								pattern="^[a-z  A-Z]*$" onchange={handleFormValues} min-length="3"
+								message-when-too-short="Name should be of 3 characters atleast"
+								message-when-pattern-mismatch="Only alphabets are allowed.">
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Neighbour_Number__c" variant="label-stacked"
+								style="display:none;" value={neighbourNumber}>
+							</lightning-input-field>
+							<lightning-input type="text" variant="standard" name="Neighbour_Number__c"
+								label="Neighbour Number" required max-length="13" value={neighbourNumber}
+								onchange={handleFormValues} pattern="[0-9]{5,13}"
+								message-when-pattern-mismatch="Only numbers are allowed.">
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field onchange={handleFormValues} field-name="FeedBack__c"
+								variant="label-stacked" required value={neighbourFeedback}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<lightning-input-field field-name="Remarks__c" variant="label-stacked"
+								required={isNeighbourRemarkRequired}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<div class="slds-m-top_medium slds-float_right">
+								<lightning-button class="slds-m-right--small" variant="neutral" type="submit"
+									label='Cancel' onclick={onCancel}>
+								</lightning-button>
+								<lightning-button variant="brand" type="submit" label="Save" id="neighbour-btn">
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-record-edit-form>
+			</div>
+			<template if:true={neighbourTableData}>
+				<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+					<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+						<span class="slds-truncate" title="Section Title">List Of Neighbours</span>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+						<c-generic-data-table-l-w-c result={neighbourTableData} btns={rowAction}
+							onselected={handleTableSelection}></c-generic-data-table-l-w-c>
+					</div>
+				</div>
+			</template>
+		</lightning-tab>
+		<lightning-tab label="Affiliations" value="affiliation" onactive={handleTabActivation}>
+			<div class="slds-box slds-box_xx-small">
+				<lightning-record-edit-form object-api-name="Character__c" record-id={affiliationId}
+					record-type-id={characterRecordTypeFIVC} onsuccess={handleSuccess} onsubmit={handleSubmit}
+					id="affiliation">
+					<lightning-layout multiple-rows if:true={isAffiliationDetail}>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Loan_Applicant__c" value={loanApplicantId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Verification__c" value={verificationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Application__c" value={applicationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Section_Type__c" value="Affiliation Detail"
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-combobox name="Customer_Information__c" label="Select Applicant"
+								value={customerId} options={customerList} onchange={handleCustomerSelection}>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Is_Involved__c" variant="label-stacked" required
+								onchange={handleAffiliationFormValues}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Applicant_Type__c" variant="label-stacked"
+								required={isAffiliationFieldRequired}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Affiliation_Name__c" variant="label-stacked"
+								required={isAffiliationFieldRequired}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="3">
+							<lightning-input-field field-name="Affiliation_with__c" variant="label-stacked"
+								required={isAffiliationFieldRequired} value={affiliationWithVal}
+								onchange={handleAffiliationFormValues}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<template if:true={isPolitics}>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="3">
+								<lightning-input-field field-name="Current_position_Position_held_in_Past__c"
+									variant="label-stacked" required={isAffiliationFieldRequired}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="3">
+								<lightning-input-field field-name="Name_of_party__c" variant="label-stacked"
+									required={isAffiliationFieldRequired}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="3">
+								<lightning-input-field field-name="No_of_years_in_politics__c" variant="label-stacked"
+									required={isAffiliationFieldRequired}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="3">
+								<lightning-input-field field-name="Present_Political_Status__c" variant="label-stacked"
+									required={isAffiliationFieldRequired}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="3">
+								<lightning-input-field field-name="Character_Of_Affiliated_Person__c"
+									variant="label-stacked" required={isAffiliationFieldRequired}>
+								</lightning-input-field>
+							</lightning-layout-item>
+							<lightning-layout-item if:true={isPoliceOrLawyer} size="12" padding="horizontal-small"
+								small-device-size="12" medium-device-size="12" large-device-size="6">
+								<lightning-input-field field-name="Affiliation_Remarks__c" variant="label-stacked"
+									required={isAffiliationFieldRequired}>
+								</lightning-input-field>
+							</lightning-layout-item>
+						</template>
+						<template if:false={isPolitics}>
+							<lightning-layout-item if:true={isPoliceOrLawyer} size="12" padding="horizontal-small"
+								small-device-size="12" medium-device-size="12" large-device-size="9">
+								<lightning-input-field field-name="Remarks__c" variant="label-stacked"
+									required={isAffiliationFieldRequired}>
+								</lightning-input-field>
+							</lightning-layout-item>
+						</template>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<div class="slds-var-m-top_medium slds-float_right">
+								<lightning-button class="slds-m-right--small" variant="neutral" type="submit"
+									label='Cancel' onclick={onCancel}>
+								</lightning-button>
+								<lightning-button variant="brand" type="submit" label="Save" id="affiliation-btn">
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-record-edit-form>
+			</div>
+			<template if:true={affiliationTableData}>
+				<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+					<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+						<span class="slds-truncate" title="Section Title">Affiliations</span>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+						<c-generic-data-table-l-w-c result={affiliationTableData} btns={rowAction}
+							onselected={handleTableSelection}></c-generic-data-table-l-w-c>
+					</div>
+				</div>
+			</template>
+		</lightning-tab>
+		<lightning-tab label="Living Standard" value="living" onactive={handleTabActivation}>
+			<div class="slds-box slds-box_xx-small">
+				<lightning-record-edit-form object-api-name="Character__c" record-id={livingStandardId}
+					record-type-id={characterRecordTypeFIVC} onsuccess={handleSuccess} onsubmit={handleSubmit}
+					id="living">
+					<lightning-layout multiple-rows if:true={isLivingDetail}>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Loan_Applicant__c" value={loanApplicantId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Verification__c" value={verificationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Application__c" value={applicationId}
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="2" style="display:none;">
+							<lightning-input-field field-name="Section_Type__c" value="Living Standard Detail"
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="4">
+							<lightning-combobox name="Customer_Information__c" label="Select Applicant"
+								value={customerId} options={customerList} onchange={handleCustomerSelection}>
+							</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="4">
+							<lightning-input-field field-name="Lifestyle__c" variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="4" if:true={showSecondLifestyle}>
+							<lightning-input-field field-name="Lifestyle_Loan_Amount_2L_to_4_Lakhs__c"
+								variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="4" if:true={showThirdLifestyle}>
+							<lightning-input-field field-name="Lifestyle_Loan_Amount_4L_to_8_Lakhs__c"
+								variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="4" if:true={showFourthLifestyle}>
+							<lightning-input-field field-name="Lifestyle_Loan_Amount_8Lakhs__c" variant="label-stacked"
+								required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="4">
+							<lightning-input-field field-name="Consumer_Durables__c" variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<lightning-input-field field-name="Living_Standard_Remarks__c" variant="label-stacked"
+								required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+							medium-device-size="12" large-device-size="12">
+							<div class="slds-var-m-top_medium slds-float_right">
+								<lightning-button class="slds-m-right--small" variant="neutral" type="submit"
+									label='Cancel' onclick={onCancel}>
+								</lightning-button>
+								<lightning-button variant="brand" type="submit" label="Save" id="living-standard-btn">
+								</lightning-button>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-record-edit-form>
+			</div>
+			<template if:true={livingStandardTableData}>
+				<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+					<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+						<span class="slds-truncate" title="Section Title">Applicant's Living
+							Standard</span>
+					</h3>
+					<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+						<c-generic-data-table-l-w-c result={livingStandardTableData} btns={rowAction}
+							onselected={handleTableSelection}>
+						</c-generic-data-table-l-w-c>
+					</div>
+				</div>
+			</template>
+		</lightning-tab>
+		<lightning-tab label="Repayment Behavior" value="repayment" onactive={handleTabActivation}>
+			<!-- <c-fs-highmark-obligations-screen if:true={customerList} application-id={applicationId}
+				customer-options={customerList} verification-id={verificationId} stage-name="FIV - C">
+			</c-fs-highmark-obligations-screen> -->
+			<c-character-record-create if:true={customerList} application-id={applicationId}
+				customer-options={customerList} stage-name="FIV-C">
+			</c-character-record-create>
+		</lightning-tab>
+	</lightning-tabset>
+</template>

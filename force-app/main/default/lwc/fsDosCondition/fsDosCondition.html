@@ -1,0 +1,95 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="large" if:true={showLoader}></lightning-spinner>
+    <c-fs-page-container-l-w-c if:true={DosData} headericon="standard:asset_audit" stagename="DOS Condition Table" appno={applicationName}
+        businessdate={todaysDate} lastlogindate={lastLoginDate}>
+    </c-fs-page-container-l-w-c>
+    <!--PAGE HEADER-->
+	<article class="slds-card">
+		<div class="slds-card__body slds-card__body_inner">
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+				aria-label="Example table of Opportunities with vertical borders">
+				<thead>
+					<tr>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate" title="Condition">Condition</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate" title="State">State</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate" title="Loan Amount">Loan Amount</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate" title="Total Exposure">Total Exposure</div>
+						</th>
+						<th class="slds-size_3-of-10" scope="col">
+							<div class="slds-truncate" title="DOS Requirement">DOS Requirement</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template for:each={DosData} for:item="itm">
+						<tr class="slds-hint-parent" key={itm.Id}>
+							<td rowspan="2" data-label="Condition">
+								<div class="slds-truncate" title="1">1</div>
+							</td>
+							<td rowspan="2" data-label="State">
+								<div class="slds-truncate" title="State">TN/ AP/ TS/ KA</div>
+							</td>
+							<td rowspan="2" data-label="Loan Amount">
+								<div class="slds-truncate" title="Loanamount">&#8377;{itm.Loanamount};</div>
+							</td>
+							<td data-label="Total Exposure">
+								<div class="slds-truncate" title="Totalexposure">&#60;= &#8377;400000 </div>
+							</td>
+							<td data-label="DOS Requirement">
+								<div class="slds-truncate" title="DOSrequirement">No</div>
+							</td>
+						</tr>
+						<tr class="slds-hint-parent" key={itm.Id}>
+
+							<td data-label="Total Exposure">
+								<div class="slds-truncate" title="<= 4Lakhs"><span><p>&#62; &#8377;400000</p></span>
+								</div>
+							</td>
+
+							<td data-label="DOS Requirement">
+								<div class="slds-truncate" title="DOSrequirement">Yes</div>
+							</td>
+						</tr>
+						<tr key={itm.Id}>
+							<td rowspan="2" data-label="Condition">
+								<div class="slds-truncate" title="2">2</div>
+							</td>
+							<td rowspan="2" data-label="State">
+								<div class="slds-truncate" title="State">MP/ MH/ CG/ UP</div>
+							</td>
+							<td rowspan="2" data-label="Loan Amount">
+								<div class="slds-truncate" title="Loanamount">&#8377;{itm.Loanamount}</div>
+							</td>
+							<td data-label="Total Exposure">
+								<div class="slds-truncate" title="<= 4Lakhs">&#60;= &#8377;300000</div>
+							</td>
+							<td data-label="DOS Requirement">
+								<div class="slds-truncate" title="DOSrequirement">No</div>
+							</td>
+						</tr>
+						<tr key={itm.Id}>
+
+							<td data-label="Total Exposure">
+								<div class="slds-truncate" title="<= 4Lakhs">&#62; &#8377;300000</span></div>
+							</td>
+							<td data-label="DOS Requirement">
+								<div class="slds-truncate" title="DOSrequirement">Yes</div>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+			<div class="slds-modal__footer slds-theme_default">
+				<lightning-button variant="brand" label="Execute" title="Execute" class="slds-m-left_x-small" onclick={handleCheckDOSCondition}>
+				</lightning-button>
+			</div>
+		</div>
+	</article>
+</template>

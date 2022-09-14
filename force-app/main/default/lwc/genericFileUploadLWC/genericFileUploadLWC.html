@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Upload Document">
+        <p class="slds-p-horizontal_small">
+            <lightning-combobox name="documentOption" label="Document Type" options={listDocumentOption}
+                value={selectedDocumentOption} onchange={handleInputChange}>
+            </lightning-combobox>
+            <lightning-combobox name="groupId" label="Group Id" options={listDocumentTypeName}
+                value={selectedDocumentTypeName} onchange={handleInputChange}>
+            </lightning-combobox>
+
+            <!--  CH01 -->
+            <lightning-combobox name="accName" label="Account Name" options={listAcctNames} value={slcdAccName}
+                onchange={handleInputChange}>
+            </lightning-combobox>
+            <!--CH01 END-->
+
+            <lightning-combobox name="documentName" label="Document Name" options={listDocumentName}
+                value={selectedDocumentName} onchange={handleInputChange}>
+            </lightning-combobox>
+        </p>        
+        <p slot="footer">
+            <lightning-file-upload label="Upload Document" name="Upload Document" record-id={recordId}
+                onuploadfinished={handleUploadFinished}>
+            </lightning-file-upload>
+        </p>
+    </lightning-card>
+</template>

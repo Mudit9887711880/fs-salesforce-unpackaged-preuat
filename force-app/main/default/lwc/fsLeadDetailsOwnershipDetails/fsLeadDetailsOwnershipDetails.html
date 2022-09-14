@@ -1,0 +1,48 @@
+<template>
+    <template if:true={isSpinnerActive}>
+        <c-fs-spinner></c-fs-spinner>
+    </template>
+    <!--<template if:true={isApplicantEdit}>
+        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+            <c-fs-title-section title="Select Applicant"></c-fs-title-section>
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+                <c-generic-data-table-l-w-c if:true={allApplicantData} data-id="cashflow" result={allApplicantData} onrowselectionevent={handleRadtioButton}></c-generic-data-table-l-w-c>
+            </div>
+        </div>
+    </template>-->
+    <template if:true={tableData}>
+        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+            <template if:true={fieldsContent}>
+                <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}></c-generic-edit-pages-l-w-c><br/>
+                <div class="slds-align_absolute-center slds-m-around_x-small">
+                    <lightning-button variant="brand" label="Update" title="Sace" onclick={handleSave}></lightning-button>
+                    <lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </template>
+            <c-fs-title-section title="List Of Applicants"></c-fs-title-section>
+            <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={rowAction} onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
+            </div>
+        </div>
+    </template>
+    <template if:true={showDeleteModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01"
+            aria-modal="true">
+            <div class="slds-modal__container" style="width:8rem;">
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate">Delete Record</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium slds-text-align--center" id="modal-content-id-2">
+                    Are you sure you want to delete this record?
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Yes" title="Yes" onclick={handleDelete}>
+                    </lightning-button>
+                    <lightning-button label="No" class="slds-m-left--medium" title="No" onclick={handleDelete}>
+                    </lightning-button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

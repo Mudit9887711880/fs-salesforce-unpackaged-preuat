@@ -1,0 +1,6 @@
+.phoneLink,a{
+	color: black !important;
+    cursor: not-allowed !important;
+    text-decoration: none !important;
+    pointer-events: none !important; 
+}

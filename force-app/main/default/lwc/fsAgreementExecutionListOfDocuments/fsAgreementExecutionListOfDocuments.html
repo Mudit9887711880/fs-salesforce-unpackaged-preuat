@@ -1,0 +1,84 @@
+<template>
+    <lightning-spinner alternative-text="Loading" size="large" if:true={showSpinner}></lightning-spinner>
+	<div if:true={allContentVersionRecord}
+		class="slds-box  slds-p-around_none slds-section slds-border_right slds-border_left slds-is-open">
+		<c-fs-title-section title="List Of Documents"></c-fs-title-section>
+		<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-p-top_xx-small"
+			aria-labelledby="element-with-table-label other-element-with-table-label">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th class="widthapplicantcss" scope="col">
+						<div class="slds-truncate" title="Name">Document Name</div>
+					</th>
+					<th class="widthapplicantcss" scope="col">
+						<div class="slds-truncate" title="DOC_Type">Document Type</div>
+					</th>
+					<th class="widthapplicantcss" scope="col">
+						<div class="slds-truncate" title="DOC_No">Document Number</div>
+					</th>
+					<th class="widthapplicantcss" scope="col">
+						<div class="slds-truncate" title="DOC_Date">Document Date</div>
+					</th>
+					<th class="widthapplicantcss" scope="col">
+						<div class="slds-truncate" title="PAGE_NO">Number of Pages</div>
+					</th>
+					<th class="widthapplicantcss" scope="col">
+						<div class="slds-truncate" title="DOC_CON">Document Condition</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template for:each={allContentVersionRecord} for:item="data" for:index="index">
+					<tr class="slds-hint-parent" key={data.cv.Id}>
+						<th data-label="Name" scope="row">
+							<div class="slds-truncate" title="Name">
+								{data.cv.Document_Name__c}
+							</div>
+						</th>
+						<td data-label="Stage">
+							<div class="slds-truncate" title="Type" style="overflow: initial;">
+								{data.cv.Agreement_Document_Type__c}
+								<!-- <lightning-combobox data-id={index} name="Agreement_Document_Type__c" label=""
+									variant="label-hidden" placeholder="Select Document Type" options={docTypeList}
+									value={data.cv.Agreement_Document_Type__c} required onchange={handleValueChange}>
+								</lightning-combobox> -->
+							</div>
+						</td>
+						<td data-label="DOC_NO">
+							<div class="slds-truncate" title="DOC_NO">
+								{data.cv.Document_Number__c}
+							</div>
+						</td>
+						<td data-label="DOC_DATE">
+							<div class="slds-truncate" title="DOC_DATE">
+								<lightning-formatted-date-time value={data.cv.CreatedDate}>
+								</lightning-formatted-date-time>
+							</div>
+						</td>
+						<td data-label="PAGE_NO">
+							<div class="slds-truncate" title="PAGE_NO">
+								{data.cv.Number_of_Pages__c}
+								<!-- <lightning-input data-id={index} type="number" variant="label-hidden" name="Number_of_Pages__c" label=""
+									placeholder="Enter Page Number" onchange={handleValueChange}
+									value={data.cv.Number_of_Pages__c}></lightning-input> -->
+							</div>
+						</td>
+						<td data-label="DOC_CON">
+							<div class="slds-truncate" title="DOC_CON" style="overflow: initial;">
+								{data.cv.Document_Condition__c}
+								<!-- <lightning-combobox data-id={index} name="Document_Condition__c" label=""
+									variant="label-hidden" placeholder="Select Document Condition" options={docConList}
+									value={data.cv.Document_Condition__c} required onchange={handleValueChange}>
+								</lightning-combobox> -->
+							</div>
+						</td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+		<footer class="slds-modal__footer">
+			<!-- <button class="slds-button slds-button_brand" onclick={handleSave} title="Save">Save</button> -->
+			<button class="slds-button slds-button_brand" onclick={generateDocument} title="Generate Acknowledgement Slip">Generate Acknowledgement Slip</button>
+		</footer>
+	</div>
+</template>

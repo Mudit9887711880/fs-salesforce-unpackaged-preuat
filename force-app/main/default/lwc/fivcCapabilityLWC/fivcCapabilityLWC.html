@@ -1,0 +1,919 @@
+<template>
+    <template if:true={showDeleteModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01"
+            aria-modal="true">
+            <div class="slds-modal__container" style="width:8rem;">
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Delete Record</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium slds-text-align--center" id="modal-content-id-2">
+                    Are you sure you want to delete this record?
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Yes" title="Yes" onclick={handleDelete}>
+                    </lightning-button>
+                    <lightning-button label="No" class="slds-m-left--medium" title="No" onclick={handleDelete}>
+                    </lightning-button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+    <lightning-spinner alternative-text="Loading" size="small" if:true={showLoader}></lightning-spinner>
+    <div class="slds-box slds-box_xx-small">
+        <lightning-record-edit-form object-api-name="Capability__c" if:true={showForm} record-id={capabilityRecordId}
+            onsuccess={handleCapabiltySuccess} onsubmit={handleCapabiltySubmit} record-type-id={fivCRecordType}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+                    large-device-size="2" style="display:none;">
+                    <lightning-input-field field-name="Verification__c" value={verificationId} variant="label-stacked">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+                    large-device-size="2" style="display:none;">
+                    <lightning-input-field field-name="Application__c" value={applicationId} variant="label-stacked">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+                    large-device-size="2" style="display:none;">
+                    <lightning-input-field field-name="Loan_Applicant__c" value={loanApplicantId}
+                        variant="label-stacked">
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+                    large-device-size="3">
+                    <lightning-combobox name="Customer_Information__c" label="Select Applicant" value={loanApplicantId}
+                        options={customerList} onchange={handleCustomerSelection} required>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+                    large-device-size="3">
+                    <lightning-input-field field-name="Income_segment__c" variant="label-stacked"
+                        onchange={handleFormValue} data-id="Income_segment__c" required>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+                    large-device-size="3">
+                    <lightning-input-field field-name="Subsegment__c" variant="label-stacked" onchange={handleFormValue}
+                        required>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={isEateriesAndOthers} size="12" padding="horizontal-small"
+                    small-device-size="3" medium-device-size="4" large-device-size="3">
+                    <lightning-input-field field-name="Day_Margin_Basis__c" variant="label-stacked"
+                        onchange={handleFormValue} data-id="Day_Margin_Basis__c" required>
+                    </lightning-input-field>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={isSelfEmployedOrBusiness} size="12" padding="horizontal-small"
+                    small-device-size="6" medium-device-size="4" large-device-size="3">
+                    <lightning-input-field field-name="Day_Margin_Basis__c" variant="label-stacked"
+                        onchange={handleFormValue} data-id="Day_Margin_Basis__c" required>
+                    </lightning-input-field>
+                </lightning-layout-item>
+            </lightning-layout>
+            <hr class="slds-m-vertical--x-small">
+            <lightning-layout multiple-rows>
+                <template if:true={isSalaried}>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Name_of_the_Employer__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Year_of_Service_With_Employer__c" variant="label-stacked"
+                            required style="display: none;" value={yearOfServiceWidEmp}>
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={yearOfServiceWidEmp} variant="standard"
+                            name="Year_of_Service_With_Employer__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 3 digits are allowed."
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Year Of Service With Employer" max="999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Nature_of_Job__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Total_Work_Experience__c" variant="label-stacked" required
+                            style="display: done;" value={totalWorkExp}>
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={totalWorkExp} variant="standard"
+                            name="Total_Work_Experience__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 3 digits are allowed."
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Total Work Experience" max="999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field value={monthlySalary} field-name="Monthly_Salary__c"
+                            variant="label-stacked" required style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={monthlySalary} variant="standard"
+                            name="Monthly_Salary__c" onchange={handleFormValue} max="99999999.99"
+                            message-when-range-overflow="Maximum 8 digits are allowed." required
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." label="Monthly Salary">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Mode_of_Salary__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="6" large-device-size="6">
+                        <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                            variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                            name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 100% is allowed." required formatter="percent-fixed"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                            label="% Of Income Transacted Through Bank Account" max="100">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="6" large-device-size="12">
+                        <lightning-input-field field-name="Overall_Remarks__c" variant="label-stacked">
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Employment_Document_Proof__c" variant="label-stacked"
+                            required onchange={handleFormValue}>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Nature_of_Document_Proof__c" variant="label-stacked"
+                            required={DocProofRequired}>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="Other_Confirmations__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="3">
+                        <lightning-input-field field-name="IncomePincode__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={isRentalMortgage}>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="No_of_Units__c" variant="label-stacked" required
+                            value={numberOfUnits} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={numberOfUnits} variant="standard"
+                            name="No_of_Units__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 8 digits are allowed."
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="No. Of Units" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Rental_Income__c" variant="label-stacked" required
+                            value={rentalIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={rentalIncome} variant="standard"
+                            name="Rental_Income__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Rental Income" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                            variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                            name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 100% is allowed." required formatter="percent-fixed"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                            label="% Of Income Transacted Through Bank Account" max="100">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="12" large-device-size="12">
+                        <lightning-input-field field-name="Remarks__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={isRentalOther}>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Rental_Property_Owner_name__c" variant="label-stacked"
+                            required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Rental_income_property_address__c" variant="label-stacked"
+                            required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Proof__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Proof_of_Ownership__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="FC_Enquiry_with__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="No_of_Units__c" variant="label-stacked" required
+                            value={numberOfUnits} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={numberOfUnits} variant="standard"
+                            name="No_of_Units__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 8 digits are allowed."
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="No. Of Units" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Rental_Income__c" variant="label-stacked" required
+                            value={rentalIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={rentalIncome} variant="standard"
+                            name="Rental_Income__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Rental Income" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                            variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                            name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 100% is allowed." required formatter="percent-fixed"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                            label="% Of Income Transacted Through Bank Account" max="100">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Remarks__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={isDailyWages}>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Year_of_Occupation__c" variant="label-stacked" required
+                            style="display: none;" value={yearOfOccupation}>
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={yearOfOccupation} variant="standard"
+                            name="Year_of_Occupation__c" onchange={handleFormValue} label="Year Of Occupation"
+                            message-when-range-overflow="Maximum 3 digits are allowed." max="999.99"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required>
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Proof__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Proof_Remarks__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Other_Confirmations_Daily_Wages__c" variant="label-stacked"
+                            required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Income_per_day__c" variant="label-stacked"
+                            data-id="Income_per_day__c" onchange={handleCalculations} value={incomePerDayVal} required
+                            style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={incomePerDayVal} variant="standard"
+                            name="Income_per_day__c" onchange={handleCalculations}
+                            message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Income Per Day" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Number_of_days__c" variant="label-stacked" required
+                            data-id="Number_of_days__c" value={numberOfDays} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" value={numberOfDays} variant="standard" name="Number_of_days__c"
+                            onchange={handleCalculations} message-when-range-overflow="Maximum 8 digits are allowed."
+                            required label="Number Of Days" max="99999999" max-length="8">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Assumptions_for_Income__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Gross_Monthly_Income__c" variant="label-stacked"
+                            value={grossMonthlyIncome}>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                            variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                            name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 100% is allowed." required formatter="percent-fixed"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                            label="% Of Income Transacted Through Bank Account" max="100">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Reference_Name__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Income_reference_Contact_Number__c" variant="label-stacked"
+                            required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Feedback__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                        medium-device-size="12" large-device-size="12">
+                        <lightning-input-field field-name="Remarks__c" variant="label-stacked">
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={isPension}>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Income_per_month__c" variant="label-stacked" required
+                            value={incomePerMonth} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={incomePerMonth} variant="standard"
+                            name="Income_per_month__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Income Per Month" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="8" large-device-size="8">
+                        <lightning-input-field field-name="Income_Remarks__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Spouse_alive__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                            variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                            name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 100% is allowed." required formatter="percent-fixed"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                            label="% Of Income Transacted Through Bank Account" max="100">
+                        </lightning-input>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={isAbroadIncome}>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Income_per_month__c" variant="label-stacked" required
+                            value={incomePerMonth} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={incomePerMonth} variant="standard"
+                            name="Income_per_month__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Income Per Month" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="8" large-device-size="8">
+                        <lightning-input-field field-name="Income_Remarks__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                            variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                            name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 100% is allowed." required formatter="percent-fixed"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                            label="% Of Income Transacted Through Bank Account" max="100">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Proof__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Proof_Remarks__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Other_Confirmations_Daily_Wages__c" variant="label-stacked"
+                            required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Income_reference_name__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Income_reference_Contact_Number__c" variant="label-stacked"
+                            required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                        medium-device-size="4" large-device-size="4">
+                        <lightning-input-field field-name="Feedback__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                        medium-device-size="8" large-device-size="8">
+                        <lightning-input-field field-name="Remarks__c" variant="label-stacked">
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={isOther}>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                        medium-device-size="12" large-device-size="3">
+                        <lightning-input-field field-name="Income_per_month__c" variant="label-stacked" required
+                            value={incomePerMonth} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={incomePerMonth} variant="standard"
+                            name="Income_per_month__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                            label="Income Per Month" max="99999999.99">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                        medium-device-size="12" large-device-size="3">
+                        <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                            variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                        </lightning-input-field>
+                        <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                            name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                            message-when-range-overflow="Maximum 100% is allowed." required formatter="percent-fixed"
+                            message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                            label="% Of Income Transacted Through Bank Account" max="100">
+                        </lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                        medium-device-size="12" large-device-size="6">
+                        <lightning-input-field field-name="Income_Remarks__c" variant="label-stacked" required>
+                        </lightning-input-field>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={isSelfEmployedOrBusiness}>
+                    <template if:true={isDayBasis}>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Year_of_Occupation__c" variant="label-stacked" required
+                                style="display: none;" value={yearOfOccupation}>
+                            </lightning-input-field>
+                            <lightning-input type="number" step="0.01" value={yearOfOccupation} variant="standard"
+                                name="Year_of_Occupation__c" onchange={handleFormValue} label="Year Of Occupation"
+                                message-when-range-overflow="Maximum 3 digits are allowed." max="999.99"
+                                message-when-step-mismatch="Maximum 2 decimal places are allowed." required>
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Ownership_document_proof__c" variant="label-stacked">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Nature_of_Document_Proof__c" variant="label-stacked">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Other_Confirmations__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                            medium-device-size="8" large-device-size="8">
+                            <lightning-input-field field-name="Overall_Remarks_Regarding_Business__c"
+                                variant="label-stacked">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Income_per_day__c" variant="label-stacked"
+                                data-id="Income_per_day__c" onchange={handleCalculations} value={incomePerDayVal}
+                                required style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" step="0.01" value={incomePerDayVal} variant="standard"
+                                name="Income_per_day__c" onchange={handleCalculations}
+                                message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                                message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                                label="Income Per Day" max="99999999.99">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Number_of_days__c" variant="label-stacked" required
+                                data-id="Number_of_days__c" value={numberOfDays} style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" value={numberOfDays} variant="standard"
+                                name="Number_of_days__c" onchange={handleCalculations}
+                                message-when-range-overflow="Maximum 8 digits are allowed." required
+                                label="Number Of Days" max="99999999" max-length="8">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Gross_Monthly_Income__c" variant="label-stacked"
+                                value={grossMonthlyIncome}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Assumptions_for_Income__c" variant="label-stacked"
+                                required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                                variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                                name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                                message-when-range-overflow="Maximum 100% is allowed." required
+                                formatter="percent-fixed"
+                                message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                                label="% Of Income Transacted Through Bank Account" max="100">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Business_Reference_Name__c" variant="label-stacked"
+                                required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Business_Reference_Contact_Number__c"
+                                variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Feedback__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                            medium-device-size="12" large-device-size="12">
+                            <lightning-input-field field-name="Business_Reference_Remarks__c" variant="label-stacked"
+                                required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                    </template>
+                    <template if:true={isMarginBasis}>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Sales_per_day__c" variant="label-stacked" required
+                                data-id="Sales_per_day__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Number_of_days__c" variant="label-stacked" required
+                                data-id="Number_of_days__c" value={numberOfDays} style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" value={numberOfDays} variant="standard"
+                                name="Number_of_days__c" onchange={handleCalculations}
+                                message-when-range-overflow="Maximum 8 digits are allowed." required
+                                label="Number Of Days" max="99999999" max-length="8">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Sales_per_month__c" variant="label-stacked" required
+                                value={salesPerMonth}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Margin__c" variant="label-stacked" required
+                                data-id="Margin__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Margin_in_amount__c" variant="label-stacked" required
+                                value={salesPerMonth}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Electricity__c" variant="label-stacked" required
+                                data-id="Electricity__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Salary__c" variant="label-stacked" required
+                                data-id="Salary__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Rent__c" variant="label-stacked" required
+                                data-id="Rent__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Others__c" variant="label-stacked" required
+                                data-id="Others__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="3">
+                            <lightning-input-field field-name="Gross_Monthly_Income__c" variant="label-stacked" required
+                                value={grossMonthlyIncome}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                    </template>
+                </template>
+                <template if:true={isEateriesAndOthers}>
+                    <template if:true={isDayBasis}>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Business_name__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Business_Nature__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Year_of_Business__c" value={yearOfBusiness}
+                                variant="label-stacked" required style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" step="0.01" value={yearOfBusiness} variant="standard"
+                                name="Year_of_Business__c" onchange={handleFormValue} required
+                                message-when-range-overflow="Maximum 3 digits are allowed."
+                                message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                                label="Year Of Business" max="999.99">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Total_experience_in_this_business_yrs__c"
+                                variant="label-stacked" required value={totalExpInBusiness} style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" step="0.01" value={totalExpInBusiness} variant="standard"
+                                name="Total_experience_in_this_business_yrs__c" onchange={handleFormValue}
+                                message-when-range-overflow="Maximum 3 digits are allowed."
+                                message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                                label="Total Experience In This Business(yrs)" max="999">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Nature_of_Ownership__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Ownership_Proof_available__c" variant="label-stacked"
+                                required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="regular_business_activity__c" variant="label-stacked"
+                                required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Income_per_day__c" variant="label-stacked"
+                                data-id="Income_per_day__c" onchange={handleCalculations} value={incomePerDayVal}
+                                required style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" step="0.01" value={incomePerDayVal} variant="standard"
+                                name="Income_per_day__c" onchange={handleCalculations}
+                                message-when-range-overflow="Maximum 8 digits are allowed." formatter="currency"
+                                message-when-step-mismatch="Maximum 2 decimal places are allowed." required
+                                label="Income Per Day" max="99999999.99">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Number_of_days__c" variant="label-stacked" required
+                                data-id="Number_of_days__c" value={numberOfDays} style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" value={numberOfDays} variant="standard"
+                                name="Number_of_days__c" onchange={handleCalculations}
+                                message-when-range-overflow="Maximum 8 digits are allowed." required
+                                label="Number Of Days" max="99999999" max-length="8">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Assumptions_for_Income__c" variant="label-stacked">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Gross_Monthly_Income__c" variant="label-stacked" required
+                                value={grossMonthlyIncome}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
+                                variant="label-hidden" required value={percentageOfIncome} style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" step="0.01" value={percentageOfIncome} variant="standard"
+                                name="of_income_transacted_through_bank_acco__c" onchange={handleFormValue}
+                                message-when-range-overflow="Maximum 100% is allowed." required
+                                formatter="percent-fixed"
+                                message-when-step-mismatch="Maximum 2 decimal places are allowed."
+                                label="% Of Income Transacted Through Bank Account" max="100">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="BusinessPincode__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="8" large-device-size="8">
+                            <lightning-input-field field-name="Overall_Remarks__c" variant="label-stacked">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Business_Reference_Name__c" variant="label-stacked"
+                                required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Business_Reference_Contact_Number__c"
+                                variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Feedback__c" variant="label-stacked" required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                            medium-device-size="12" large-device-size="12">
+                            <lightning-input-field field-name="Business_Reference_Remarks__c" variant="label-stacked"
+                                required>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                            medium-device-size="12" large-device-size="12">
+                            <lightning-input-field field-name="Overall_Remarks_Regarding_Business__c"
+                                variant="label-stacked">
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                    </template>
+                    <template if:true={isMarginBasis}>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Sales_per_day__c" variant="label-stacked" required
+                                data-id="Sales_per_day__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Number_of_days__c" variant="label-stacked" required
+                                data-id="Number_of_days__c" value={numberOfDays} style="display: none;">
+                            </lightning-input-field>
+                            <lightning-input type="number" value={numberOfDays} variant="standard"
+                                name="Number_of_days__c" onchange={handleCalculations}
+                                message-when-range-overflow="Maximum 8 digits are allowed." required
+                                label="Number Of Days" max="99999999" max-length="8">
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Sales_per_month__c" variant="label-stacked" required
+                                value={salesPerMonth}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Margin__c" variant="label-stacked" required
+                                data-id="Margin__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Margin_in_amount__c" variant="label-stacked" required
+                                value={marginInAmount}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Electricity__c" variant="label-stacked" required
+                                data-id="Electricity__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Salary__c" variant="label-stacked" required
+                                data-id="Salary__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Rent__c" variant="label-stacked" required
+                                data-id="Rent__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Others__c" variant="label-stacked" required
+                                data-id="Others__c" onchange={handleCalculations}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+                            medium-device-size="4" large-device-size="4">
+                            <lightning-input-field field-name="Gross_Monthly_Income__c" variant="label-stacked" required
+                                value={grossMonthlyIncome}>
+                            </lightning-input-field>
+                        </lightning-layout-item>
+                    </template>
+                </template>
+                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+                    medium-device-size="12" large-device-size="12">
+                    <div class="slds-var-m-top_medium slds-float_right">
+                        <lightning-button class="slds-m-right--small" variant="neutral" type="submit" label='Cancel'
+                            onclick={onCancel}>
+                        </lightning-button>
+                        <lightning-button variant="brand" type="submit" label="Save" id="capability-btn">
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-record-edit-form>
+    </div>
+    <template if:true={capabilityTableData}>
+        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+            <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+                <span class="slds-truncate" title="Section Title">List of Capabilities</span>
+            </h3>
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+                <c-generic-data-table-l-w-c result={capabilityTableData} btns={rowAction}
+                    onselected={handleSelectedCapability}></c-generic-data-table-l-w-c>
+            </div>
+        </div>
+    </template>
+</template>

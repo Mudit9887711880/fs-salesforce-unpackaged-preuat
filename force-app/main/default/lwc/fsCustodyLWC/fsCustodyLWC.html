@@ -1,0 +1,347 @@
+<template>
+	<!--PAGE HEADER-->
+	<c-fs-page-container-l-w-c headericon="standard:asset_audit" stagename="Document Custody" appno={applicationName}
+		businessdate={todaysDate} lastlogindate={lastLoginDate}>
+	</c-fs-page-container-l-w-c>
+	<!--PAGE HEADER-->
+	<article class="slds-card">
+		<div class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large">
+			<lightning-tabset variant="scoped" active-tab-value={tabName}>
+				<template if:true={fileInwardUser}>
+					<lightning-tab label="File Inward" value="FileInward" onactive={handleActive}>
+						<template if:true={isloaded}>
+							<lightning-layout multiple-rows>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="custom-box">
+										<div class="slds-form-element">
+											<label class="slds-form-element__label" for="text-input-id-48">
+											<abbr class="slds-required" title="required">* </abbr>Customer Name</label>
+											<div class="slds-form-element__control">
+												<c-generic-custom-lookup-l-w-c object-api-name="Loan_Applicant__c"
+													disabled key-field-a-p-i="Id" search-field="Applicant_Name__c"
+													predefined-id={custId} onlookupselected={handleOnChangeCustomerName}
+													onlookupvalueremoved={removehandleOnChangeCust}>
+												</c-generic-custom-lookup-l-w-c>
+											</div>
+											<template if:true={showerrorcustomer}>
+												<div style="color:red;" class="slds-form-element__help"
+													id="error-message-id-571">Complete this field.</div>
+											</template>
+										</div>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<lightning-input required="required" onchange={handleFormValues}
+										value={wrpObj.Loan_Account_Number__c} variant="standard"
+										label="Loan Account Number" name="Loan_Account_Number__c" max-length="10"
+										type="text">
+									</lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<lightning-input required="required" onchange={handleFormValues} disabled
+										value={wrpObj.State__c} variant="standard" label="State" name="State__c"
+										type="text" max-length="30">
+									</lightning-input>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="slds-form-element">
+										<label class="slds-form-element__label" for="text-input-id-48">
+											<abbr class="slds-required" title="required">* </abbr>Branch Name</label>
+										<div class="slds-form-element__control">
+											<c-generic-custom-lookup-l-w-c object-api-name="Branch_Master__c" disabled
+												key-field-a-p-i="Id" search-field="Name"
+												predefined-id={wrpObj.Branch_Name__c} class="editMode"
+												onlookupselected={handleOnChangeBranch}
+												onlookupvalueremoved={removehandleOnChangeBranch}>
+											</c-generic-custom-lookup-l-w-c>
+										</div>
+										<template if:true={showerrorBranch}>
+											<div style="color:red;" class="slds-form-element__help"
+												id="error-message-id-531">Complete this field.</div>
+										</template>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+
+									<div class="slds-form-element">
+										<label class="slds-form-element__label" for="text-input-id-48">  Old Application Number</label>
+											
+										<div class="slds-form-element__control">
+											<c-generic-custom-lookup-l-w-c object-api-name="Application__c"
+												key-field-a-p-i="Id" search-field="Name" disabled
+												predefined-id={wrpObj.Old_Application_Number__c} class="editMode"
+												onlookupselected={handleOnChangeOldApp}
+												onlookupvalueremoved={removehandleOnChangeOldApp}>
+											</c-generic-custom-lookup-l-w-c>
+										</div>
+										
+									</div>
+								</lightning-layout-item>
+
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="custom-box">
+										<!--<lightning-input label="Application Number" name="designation" required="required" type="text" ></lightning-input>-->
+										<div class="slds-form-element">
+											<label class="slds-form-element__label" for="text-input-id-48">
+											<abbr class="slds-required" title="required">* </abbr>Application Number</label>
+											<div class="slds-form-element__control">
+												<c-generic-custom-lookup-l-w-c object-api-name="Application__c"
+													key-field-a-p-i="Id" search-field="Name" disabled
+													predefined-id={wrpObj.Application_Number__c} class="editMode"
+													onlookupselected={handleOnChangeApp}
+													onlookupvalueremoved={removehandleOnChangeApp}>
+												</c-generic-custom-lookup-l-w-c>
+											</div>
+											<template if:true={showerrorApp}>
+												<div style="color:red;" class="slds-form-element__help"
+													id="error-message-id-501">Complete this field.</div>
+											</template>
+										</div>
+									</div>
+								</lightning-layout-item>
+
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="custom-box">
+										<lightning-combobox required="required" onchange={handleFormValues}
+											value={wrpObj.File_Inward_Status__c} name="File_Inward_Status__c"
+											label="File Inward Status" options={fileinwardPicklistValues}>
+										</lightning-combobox>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="custom-box">
+										<lightning-input required="required" onchange={handleFormValues}
+											value={wrpObj.Disbursement_Date__c} label="Disbursement Date"
+											name="Disbursement_Date__c" type="Date" max={currentDate}
+											message-when-range-overflow="Date cannot be in future.">
+										</lightning-input>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="custom-box">
+										<lightning-input required="required" onchange={handleFormValues}
+											value={wrpObj.Stage_in_Date__c} max={currentDate} label="Stage In Date"
+											name="Stage_in_Date__c"
+											message-when-range-overflow="Date cannot be in future." type="Date">
+										</lightning-input>
+									</div>
+								</lightning-layout-item>
+
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="custom-box">
+										<lightning-input required="required" onchange={handleFormValues} max-length="20"
+											value={wrpObj.Application_Type__c} label="Application Type" disabled
+											name="Application_Type__c" type="text">
+										</lightning-input>
+									</div>
+								</lightning-layout-item>
+								<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+									medium-device-size="12" large-device-size="8">
+									<div class="custom-box">
+										<lightning-textarea  onchange={handleFormValues}
+											value={wrpObj.Remarks__c} name="Remarks__c" label="Remarks" maxlength="255">
+										</lightning-textarea>
+									</div>
+								</lightning-layout-item>
+
+
+								<lightning-layout-item size="12" padding="around-small" small-device-size="12"
+									medium-device-size="12" large-device-size="8"></lightning-layout-item>
+								<lightning-layout-item size="12" padding="around-small" small-device-size="12"
+									medium-device-size="12" large-device-size="4">
+									<div class="custom-box slds-clearfix slds-float_right">
+										<lightning-button onclick={handleSave} variant="brand" type="submit"
+											label="Save">
+										</lightning-button>
+									</div>
+								</lightning-layout-item>
+							</lightning-layout>
+							<template if:false={isSpinner}>
+								<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+							</template>
+						</template>
+					</lightning-tab>
+				</template>
+				<!--- file inward ends here-->
+				<template if:true={makerUser}>
+					<lightning-tab label="Documents" value="Docs" onactive={handleActive}>
+						<lightning-layout multiple-rows>
+							<lightning-layout-item size="12" padding="around-small" small-device-size="12"
+								medium-device-size="12" large-device-size="12">
+								<c-fs-generic-upload-documents parent-id={recordId} stage-name="Custody Documents">
+								</c-fs-generic-upload-documents>
+							</lightning-layout-item>
+						</lightning-layout>
+					</lightning-tab>
+				</template>
+				<!--- documents ends here-->
+				<template if:true={checkerUser}>
+					<lightning-tab label="VDC - Vault Deposit C" value="VDC" onactive={handleActive}>
+						<lightning-layout multiple-rows>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box">
+									<div class="slds-form-element">
+										<label class="slds-form-element__label" for="text-input-id-48">
+										<abbr class="slds-required" title="required">* </abbr>Maker Id</label>
+										<div class="slds-form-element__control">
+											<c-generic-custom-lookup-l-w-c object-api-name="User" key-field-a-p-i="Id"
+												predefined-id={wrpObj.Maker_Id__c}  search-field="Name" class="editMode"
+												onlookupselected={handleOnChangeMaker}
+												onlookupvalueremoved={removehandleOnChangeMaker} disabled>
+											</c-generic-custom-lookup-l-w-c>
+										</div>
+										<template if:true={showerrorMakerId}>
+											<div style="color:red;" class="slds-form-element__help"
+												id="error-message-id-521">Complete this field.
+											</div>
+										</template>
+									</div>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="8">
+								<div class="custom-box">
+									<lightning-textarea required="required" onchange={handleFormValues}
+										value={wrpObj.Maker__c} maxlength="1000" name="Maker__c" label="Maker Remarks">
+									</lightning-textarea>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box">
+									<!--	<lightning-input label="Checker Id" name="name" required="required" type="text"></lightning-input>-->
+									<div class="slds-form-element">
+										<label class="slds-form-element__label" for="text-input-id-48">
+										<abbr class="slds-required" title="required">* </abbr>Checker Id</label>
+										<div class="slds-form-element__control">
+											<c-generic-custom-lookup-l-w-c object-api-name="User" key-field-a-p-i="Id"
+												search-field="Name" class="editMode"
+												predefined-id={wrpObj.Checker_Id__c}
+												onlookupselected={handleOnChangeChecker}
+												onlookupvalueremoved={removehandleOnChangeChecker} disabled>
+											</c-generic-custom-lookup-l-w-c>
+										</div>
+										<template if:true={showerrorCheckrId}>
+											<div style="color:red;" class="slds-form-element__help"
+												id="error-message-id-511">Complete this field.
+											</div>
+										</template>
+									</div>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="8">
+								<div class="custom-box">
+									<lightning-textarea required="required" onchange={handleFormValues}
+										value={wrpObj.Checker_Remarks__c} maxlength="1000" name="Checker_Remarks__c"
+										label="Checker Remarks">
+									</lightning-textarea>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="around-small" small-device-size="12"
+								medium-device-size="12" large-device-size="8"></lightning-layout-item>
+							<lightning-layout-item size="12" padding="around-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box slds-clearfix slds-float_right">
+									<lightning-button onclick={handleSave} variant="brand" type="submit" label="Save">
+									</lightning-button>
+								</div>
+							</lightning-layout-item>
+						</lightning-layout>
+						<template if:false={isSpinner}>
+							<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+						</template>
+					</lightning-tab>
+				</template>
+				<!--- VDC ends here-->
+				<template if:true={custodyStorageUser}>
+					<lightning-tab label="Vendor Handoff" value="VendorHandoff" onactive={handleActive}>
+						<lightning-layout multiple-rows>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box">
+									<lightning-input required="required" onchange={handleFormValues}
+										value={wrpObj.Handoff_Date__c} variant="standard" label="Handoff Date"
+										name="Handoff_Date__c" type="Date">
+									</lightning-input>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box">
+									<lightning-input required="required" onchange={handleFormValues}
+										value={wrpObj.File__c} max-length="20" variant="standard" label="File Bar Code"
+										name="File__c" type="text">
+									</lightning-input>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box">
+									<lightning-input required="required" onchange={handleFormValues} max-length="20"
+										value={wrpObj.Box_Bar_Code__c} variant="standard" label="Box Bar Code"
+										name="Box_Bar_Code__c" type="text">
+									</lightning-input>
+								</div>
+							</lightning-layout-item>
+
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box">
+									<lightning-combobox required="required" onchange={handleFormValues}
+										value={wrpObj.Storage_Vendor_Name__c} name="Storage_Vendor_Name__c"
+										label="Storage Vendor Name" options={storageVendorPicklistValues}>
+									</lightning-combobox>
+								</div>
+							</lightning-layout-item>
+							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box">
+									<lightning-combobox required="required" onchange={handleFormValues}
+										value={wrpObj.File_Status__c} name="File_Status__c" label="File Status"
+										options={fileStatusPicklistValues}>
+									</lightning-combobox>
+								</div>
+							</lightning-layout-item>
+
+							<lightning-layout-item size="12" padding="around-small" small-device-size="12"
+								medium-device-size="12" large-device-size="8"></lightning-layout-item>
+							<lightning-layout-item size="12" padding="around-small" small-device-size="12"
+								medium-device-size="12" large-device-size="4">
+								<div class="custom-box slds-clearfix slds-float_right">
+									<lightning-button class="slds-m-left_large" variant="brand" label="Save"
+										onclick={handleSave}>
+									</lightning-button>
+								</div>
+							</lightning-layout-item>
+						</lightning-layout>
+						<template if:false={isSpinner}>
+							<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+						</template>
+					</lightning-tab>
+				</template>
+				<!-- VENDOR HANDOFF ENDS HERE -->
+			</lightning-tabset>
+		</div>
+		<template if:true={showfooter}>
+			<div class="slds-docked-form-footer">
+				<lightning-button onclick={handleletterpdf} variant="brand" type="submit" label="Welcome Letter">
+				</lightning-button>
+				<lightning-button onclick={handlerepaymentpdf} class="slds-m-left_large" variant="brand" type="submit"
+					label="Repayment Schedule">
+				</lightning-button>
+			</div>
+		</template>
+	</article>
+</template>
