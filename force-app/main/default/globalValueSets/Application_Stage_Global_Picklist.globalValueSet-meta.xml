@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Login</fullName>
+        <default>false</default>
+        <label>Login</label>
+    </customValue>
+    <customValue>
+        <fullName>FIV - B</fullName>
+        <default>false</default>
+        <label>FIV - B</label>
+    </customValue>
+    <customValue>
+        <fullName>FIV - C</fullName>
+        <default>false</default>
+        <label>FIV - C</label>
+    </customValue>
+    <customValue>
+        <fullName>Online EC</fullName>
+        <default>false</default>
+        <label>Online EC</label>
+    </customValue>
+    <customValue>
+        <fullName>Lead Detail</fullName>
+        <default>false</default>
+        <label>Lead Detail</label>
+    </customValue>
+    <customValue>
+        <fullName>In Principle Sanction</fullName>
+        <default>false</default>
+        <label>In Principle Sanction</label>
+    </customValue>
+    <customValue>
+        <fullName>Process Credit</fullName>
+        <default>false</default>
+        <label>Process Credit</label>
+    </customValue>
+    <customValue>
+        <fullName>Approval Credit</fullName>
+        <default>false</default>
+        <label>Approval Credit</label>
+    </customValue>
+    <customValue>
+        <fullName>Final Sanction</fullName>
+        <default>false</default>
+        <label>Final Sanction</label>
+    </customValue>
+    <customValue>
+        <fullName>Post Approval</fullName>
+        <default>false</default>
+        <label>Post Approval</label>
+    </customValue>
+    <customValue>
+        <fullName>MOD Registration</fullName>
+        <default>false</default>
+        <label>MOD Registration</label>
+    </customValue>
+    <customValue>
+        <fullName>Agreement Execution</fullName>
+        <default>false</default>
+        <label>Agreement Execution</label>
+    </customValue>
+    <customValue>
+        <fullName>Dispatch Pending</fullName>
+        <default>false</default>
+        <label>Dispatch Pending</label>
+    </customValue>
+    <customValue>
+        <fullName>Document Receipt</fullName>
+        <default>false</default>
+        <label>Document Receipt</label>
+    </customValue>
+    <customValue>
+        <fullName>Disbursal Maker</fullName>
+        <default>false</default>
+        <label>Disbursal Maker</label>
+    </customValue>
+    <customValue>
+        <fullName>Disbursal Author</fullName>
+        <default>false</default>
+        <label>Disbursal Author</label>
+    </customValue>
+    <customValue>
+        <fullName>Document Deferral</fullName>
+        <default>false</default>
+        <label>Document Deferral</label>
+    </customValue>
+    <customValue>
+        <fullName>Custody</fullName>
+        <default>false</default>
+        <label>Custody</label>
+    </customValue>
+    <masterLabel>Application Stage Global Picklist</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
