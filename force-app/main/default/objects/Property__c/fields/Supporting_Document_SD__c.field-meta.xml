@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supporting_Document_SD__c</fullName>
+    <externalId>false</externalId>
+    <label>Supporting Document (SD)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>Adangal</fullName>
+                <default>false</default>
+                <label>Adangal</label>
+            </value>
+            <value>
+                <fullName>Chitta</fullName>
+                <default>false</default>
+                <label>Chitta</label>
+            </value>
+            <value>
+                <fullName>EB</fullName>
+                <default>false</default>
+                <label>EB</label>
+            </value>
+            <value>
+                <fullName>Form B</fullName>
+                <default>false</default>
+                <label>Form B</label>
+            </value>
+            <value>
+                <fullName>Form B1</fullName>
+                <default>false</default>
+                <label>Form B1</label>
+            </value>
+            <value>
+                <fullName>Form P2</fullName>
+                <default>false</default>
+                <label>Form P2</label>
+            </value>
+            <value>
+                <fullName>House Tax</fullName>
+                <default>false</default>
+                <label>House Tax</label>
+            </value>
+            <value>
+                <fullName>Khasra</fullName>
+                <default>false</default>
+                <label>Khasra</label>
+            </value>
+            <value>
+                <fullName>Khata</fullName>
+                <default>false</default>
+                <label>Khata</label>
+            </value>
+            <value>
+                <fullName>Krin Pustika</fullName>
+                <default>false</default>
+                <label>Krin Pustika</label>
+            </value>
+            <value>
+                <fullName>Namuna 8</fullName>
+                <default>false</default>
+                <label>Namuna 8</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>patta</fullName>
+                <default>false</default>
+                <label>patta</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

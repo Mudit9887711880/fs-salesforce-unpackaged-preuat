@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Emandate Requery</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:type="xsd:string">Emandate_API</value>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/emandate/requery</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">{
+&quot;Authorization&quot;:&quot;Basic YWRtaW46YWRtaW4=&quot;,
+&quot;CORRELATIONID&quot;:&quot;123456789&quot;,
+&quot;CLIENTID&quot;:&quot;78g659ed2a0dfa2b&quot;,
+&quot;CLIENTSECRET&quot;:&quot;f56f68b65739bd8a&quot;,
+&quot;ContentType&quot;:&quot;application/json&quot;
+}</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">GET</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;status&quot;: &quot;1&quot;,
+    &quot;url&quot;: &quot;https://emandateuat.rblbank.com/enach/emandateuploadpage.aspx?ref=6wRfsmynaber9VIg%2FkAsNA%3D%3D&amp;amp;Mandatereqid=APItest0123457891014015&quot;
+}</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">NONE</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

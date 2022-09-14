@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fee</fullName>
+    <active>true</active>
+    <label>Fee</label>
+    <picklistValues>
+        <picklist>Applicable_on_Loan_Amount_Asset_Value__c</picklist>
+        <values>
+            <fullName>Asset Value</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loan Amount</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Fee_Code__c</picklist>
+        <values>
+            <fullName>Cersai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IMD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LegaL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PRC_FEE_Type</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technical</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Repayment_Type_2__c</picklist>
+        <values>
+            <fullName>Deduct from Disbursement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Receipt</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Stage_Due__c</picklist>
+        <values>
+            <fullName>Disbursement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Post Disbursement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre Disbursement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pre Login</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>System</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

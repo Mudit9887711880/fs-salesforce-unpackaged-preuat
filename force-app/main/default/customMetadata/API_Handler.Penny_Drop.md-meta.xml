@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Penny Drop</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:type="xsd:string">{
+         &quot;transId&quot;:&quot;475689&quot;,
+         &quot;corpId&quot;:&quot;FIVESTARBU&quot;,
+         &quot;makerId&quot;:&quot;M001&quot;,
+         &quot;checkerId&quot;:&quot;C001&quot;,
+         &quot;approverId&quot;:&quot;A001&quot;,
+         &quot;signature&quot;:&quot;Signature&quot;
+}</value>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/payee/validate</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">{
+&quot;Authorization&quot;:&quot;Basic YWRtaW46YWRtaW4=&quot;,
+&quot;CORRELATIONID&quot;:&quot;123456789&quot;,
+&quot;CLIENTID&quot;:&quot;78g659ed2a0dfa2b&quot;,
+&quot;CLIENTSECRET&quot;:&quot;f56f68b65739bd8a&quot;,
+&quot;ContentType&quot;:&quot;application/json&quot;
+}</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+  &quot;beneficiaryAccountValidationResponse&quot;: {
+    &quot;header&quot;: {
+      &quot;transId&quot;: &quot;20017&quot;,
+      &quot;corpId&quot;: &quot;MC001&quot;,
+      &quot;makerId&quot;: &quot;M001&quot;,
+      &quot;checkerId&quot;: &quot;C001&quot;,
+      &quot;approverId&quot;: &quot;A001&quot;
+    },
+    &quot;body&quot;: {
+      &quot;status&quot;: &quot;Success&quot;,
+      &quot;accountNumber&quot;: &quot;109566016496&quot;,
+      &quot;ifscCode&quot;: &quot;DNSB0000021&quot;,
+      &quot;beneficiaryName&quot;: &quot;VARSHA&quot;,
+      &quot;remarks&quot;: &quot;Transaction is successful and customer is successfully validated&quot;,
+      &quot;bankRefNo&quot;: &quot;629114449955&quot;,
+      &quot;npciResponseCode&quot;: &quot;00&quot;
+    },
+    &quot;signature&quot;: {
+      &quot;signature&quot;: &quot;Signature&quot;
+    }
+  }
+}</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">NONE</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

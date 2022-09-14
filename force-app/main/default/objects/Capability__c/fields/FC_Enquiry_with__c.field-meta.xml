@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FC_Enquiry_with__c</fullName>
+    <externalId>false</externalId>
+    <label>FC Enquiry With</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tenant</fullName>
+                <default>false</default>
+                <label>Tenant</label>
+            </value>
+            <value>
+                <fullName>Neighbour</fullName>
+                <default>false</default>
+                <label>Neighbour</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

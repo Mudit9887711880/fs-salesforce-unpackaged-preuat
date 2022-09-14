@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ownership_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Ownership Status (Residence address)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Company Provided</fullName>
+                <default>false</default>
+                <label>Company Provided</label>
+            </value>
+            <value>
+                <fullName>Hostel</fullName>
+                <default>false</default>
+                <label>Hostel</label>
+            </value>
+            <value>
+                <fullName>Lease Hold</fullName>
+                <default>false</default>
+                <label>Lease Hold</label>
+            </value>
+            <value>
+                <fullName>Owned By Parent</fullName>
+                <default>false</default>
+                <label>Owned By Parent</label>
+            </value>
+            <value>
+                <fullName>Siblings</fullName>
+                <default>false</default>
+                <label>Siblings</label>
+            </value>
+            <value>
+                <fullName>Self</fullName>
+                <default>false</default>
+                <label>Self</label>
+            </value>
+            <value>
+                <fullName>Pagadi System</fullName>
+                <default>false</default>
+                <label>Pagadi System</label>
+            </value>
+            <value>
+                <fullName>Paying Guest</fullName>
+                <default>false</default>
+                <label>Paying Guest</label>
+            </value>
+            <value>
+                <fullName>Rented</fullName>
+                <default>false</default>
+                <label>Rented</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

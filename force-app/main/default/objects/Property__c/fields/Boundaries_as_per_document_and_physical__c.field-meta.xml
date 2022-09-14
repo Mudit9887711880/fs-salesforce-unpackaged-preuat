@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Boundaries_as_per_document_and_physical__c</fullName>
+    <defaultValue>false</defaultValue>
+    <externalId>false</externalId>
+    <label>Boundaries as per document and physical</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

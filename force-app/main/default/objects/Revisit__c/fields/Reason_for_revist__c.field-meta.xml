@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_for_revist__c</fullName>
+    <externalId>false</externalId>
+    <label>Reason For Revisit</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Same day revisit as document less than 6 months</fullName>
+                <default>false</default>
+                <label>Same day revisit as document less than 6 months</label>
+            </value>
+            <value>
+                <fullName>Next day revisit as Living &amp; mortgage property different</fullName>
+                <default>false</default>
+                <label>Next day revisit as Living &amp; mortgage property different</label>
+            </value>
+            <value>
+                <fullName>Sample Value 1</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sample Value 1</label>
+            </value>
+            <value>
+                <fullName>Sample Value 2</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sample Value 2</label>
+            </value>
+            <value>
+                <fullName>Sample Value 3</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sample Value 3</label>
+            </value>
+            <value>
+                <fullName>Sample Value 4</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Sample Value 4</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

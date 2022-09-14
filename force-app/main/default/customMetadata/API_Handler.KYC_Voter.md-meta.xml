@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>KYC Voter</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:type="xsd:string">KYCAPIs</value>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/authentication/voterid</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">Authorization:Basic YWRtaW46YWRtaW4=
+CORRELATION-ID:123456789
+CLIENT-ID:78g659ed2a0dfa2b
+CLIENT-SECRET:f56f68b65739bd8a
+Content-Type:application/json</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">NONE</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:type="xsd:string">Voter Id</value>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

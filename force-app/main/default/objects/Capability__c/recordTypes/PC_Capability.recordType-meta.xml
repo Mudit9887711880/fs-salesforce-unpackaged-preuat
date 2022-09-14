@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PC_Capability</fullName>
+    <active>true</active>
+    <label>PC Capability</label>
+    <picklistValues>
+        <picklist>Day_Margin_Basis__c</picklist>
+        <values>
+            <fullName>Day Basis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Margin Basis</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Employment_Document_Proof__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FC_Enquiry_with__c</picklist>
+        <values>
+            <fullName>Neighbour</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tenant</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Feedback__c</picklist>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Income_segment__c</picklist>
+        <values>
+            <fullName>Daily wages</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eateries</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income from Abroad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Milk business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pension</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rental Income</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salaried</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self Employed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shop owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transport business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vegetables%2FFruits%2FFlower%2FVendor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Mode_of_Salary__c</picklist>
+        <values>
+            <fullName>Bank Credit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cash Salary</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Nature_of_Document_Proof__c</picklist>
+        <values>
+            <fullName>Bank Statement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ID card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letter from Employer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pay Slip</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Nature_of_Ownership_Proof__c</picklist>
+        <values>
+            <fullName>GST Certificate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nameboard Matching</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partnership Agreement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reference</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Nature_of_Ownership__c</picklist>
+        <values>
+            <fullName>Not an Owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partnership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sole Proprietorship</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Other_Confirmations_Daily_Wages__c</picklist>
+        <values>
+            <fullName>Direct Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neighbour</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Other_Confirmations__c</picklist>
+        <values>
+            <fullName>Bank Credit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Visit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reference</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ownership_Proof_available__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ownership_document_proof__c</picklist>
+        <values>
+            <fullName>Dummy1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dummy2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Proof_Remarks__c</picklist>
+        <values>
+            <fullName>Bank Credit in India</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC confirmation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salary slip</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Visa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Work Permit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Proof__c</picklist>
+        <values>
+            <fullName>no</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Proof_of_Ownership__c</picklist>
+        <values>
+            <fullName>Adangal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electricity bill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>House tax receipt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Khasra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Khatha</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Patta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Segment__c</picklist>
+        <values>
+            <fullName>Housewife</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retired</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unemployed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Spouse_alive__c</picklist>
+        <values>
+            <fullName>no</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subsegment__c</picklist>
+        <values>
+            <fullName>Agri labour</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aluminium %2F Steel %2F Glass - Fabrication</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bakery shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Barber</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bars %26 wine shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beautician</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beauty Parlour %2F Saloon %2F Spa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beedi business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Beedi maker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bero %2F Wardropes %2F Almirah %2F racks %2F Storewell manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Book Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brick manuacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Building constructer %28both with material %26 without material%29 %2F Civil contractor %2F Building material %2F related business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cable Operator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Carpenter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Catering business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cattle income</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centering %2F labour contractor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clay %2F any other crafts business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cobbler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercial - Other property</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercial - mortgage proeprty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commision based income</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Country medicines %2F Betul shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Courier shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cups %2F plates %2F other related manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dairy %28Curd %2F ghee%2Fetc%29 vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dealers %2F Traders %28Stock not visible%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dying unit %28coloring%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Educational institutions %2F Coaching centre %2F Tuition centre</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electrical %2F Electronic shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electrician</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fancy Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fast foods</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fisherman</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fisherman with own boat %2F selling to retail customers through shop or own vehicle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flour Mill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flower shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Footwear shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fruits Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Furniture and carpentering shop %28including cot %2F bed %29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Garments shops %2F related business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gas dealership %2F Petrolium related products shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>General shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hamali%2Fcooli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hardware %26 Sanitary Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hospitals %26 Clinics</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotels</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Housewife</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ice cream parlour%28including sold through road vehicle%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Income from vehicles on rent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interior designer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jewellery  shop %2F Gold smith %2F any other related business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kirana shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laundry Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limestone ash manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lodge %2F Hostel business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Logistics business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Loom %2F Weaving %2F Spinning business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Machining unit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marriage %2F other function related business %28DJ Sound %2F Rent from hall %2F Tent %2F supply of chairs %2F etc%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mason %2F%2FMason helper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Milk vendor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mutton%2C Beaf%2C Fish%2C Chicken shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oil refining or mill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opticals shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Owner cum driver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paan shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Painter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Petty Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pharmacy %2F Medical allied business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Photo shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plumber</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Poultry farm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Priest %2F Astrologer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Printing unit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Provisional shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residential - Mortgage property</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residential - Other proeprty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Restaurant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retired</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rice Mill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scrap shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seed dealer %2F Nursery %28Horticulture %2F sericulture%2Fetc%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sports equipment %2F accessaries shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stockists %2F Dealer %2F Traders</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supermarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tailor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tailor shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tea %26 snack shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tiffin center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Timber shop %28Trees gets converted into Timber%2E %29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Toy Shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transport Operator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Travels</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tuition %2F coaching center at home</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unemployed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vegetables shop</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicle dealers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vehicles spare sales or services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Water Treatment plant %2F Water supplier or any othere related business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Welding  unit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wheat mill</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Windows manufacturing %2F Door manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Xerox copier %2F Online related services</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>driver</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>juice shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>sweat shops</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>wire manufactring</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>regular_business_activity__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

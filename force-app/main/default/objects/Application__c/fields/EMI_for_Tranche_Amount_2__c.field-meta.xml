@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EMI_for_Tranche_Amount_2__c</fullName>
+    <externalId>false</externalId>
+    <formula>ROUND((Tranche_2__c * (Customer_Communicated__c/12) )*
+(((1+(Customer_Communicated__c/12))^ Total_Tenor__c )/
+(((1+(Customer_Communicated__c/12))^ Total_Tenor__c )-1)),2)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>EMI For Tranche 2</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

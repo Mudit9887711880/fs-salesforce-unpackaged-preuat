@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Building_Ownership__c</fullName>
+    <externalId>false</externalId>
+    <label>Building Ownership</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Self Constructed</fullName>
+                <default>false</default>
+                <label>Self Constructed</label>
+            </value>
+            <value>
+                <fullName>Constructed by ancestral</fullName>
+                <default>false</default>
+                <label>Constructed by ancestral</label>
+            </value>
+            <value>
+                <fullName>Vacant</fullName>
+                <default>false</default>
+                <label>Vacant</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

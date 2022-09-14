@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Value__c</fullName>
+    <externalId>false</externalId>
+    <label>Value</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Loan Amount</fullName>
+                <default>false</default>
+                <label>Loan Amount</label>
+            </value>
+            <value>
+                <fullName>Installment Amount</fullName>
+                <default>false</default>
+                <label>Installment Amount</label>
+            </value>
+            <value>
+                <fullName>Asset Cost</fullName>
+                <default>false</default>
+                <label>Asset Cost</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

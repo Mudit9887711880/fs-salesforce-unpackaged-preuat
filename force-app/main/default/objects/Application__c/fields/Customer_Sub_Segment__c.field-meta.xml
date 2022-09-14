@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Sub_Segment__c</fullName>
+    <externalId>false</externalId>
+    <label>Customer Sub Segment</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Customer_Segment__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hotels</fullName>
+                <default>false</default>
+                <label>Hotels</label>
+            </value>
+            <value>
+                <fullName>Restaurant</fullName>
+                <default>false</default>
+                <label>Restaurant</label>
+            </value>
+            <value>
+                <fullName>Tea &amp; snack shops</fullName>
+                <default>false</default>
+                <label>Tea &amp; snack shops</label>
+            </value>
+            <value>
+                <fullName>sweat shops</fullName>
+                <default>false</default>
+                <label>sweat shops</label>
+            </value>
+            <value>
+                <fullName>juice shops</fullName>
+                <default>false</default>
+                <label>juice shops</label>
+            </value>
+            <value>
+                <fullName>Bakery shop</fullName>
+                <default>false</default>
+                <label>Bakery shop</label>
+            </value>
+            <value>
+                <fullName>Catering business</fullName>
+                <default>false</default>
+                <label>Catering business</label>
+            </value>
+            <value>
+                <fullName>Fast foods</fullName>
+                <default>false</default>
+                <label>Fast foods</label>
+            </value>
+            <value>
+                <fullName>Tiffin center</fullName>
+                <default>false</default>
+                <label>Tiffin center</label>
+            </value>
+            <value>
+                <fullName>Ice cream parlour(including sold through road vehicle)</fullName>
+                <default>false</default>
+                <label>Ice cream parlour(including sold through road vehicle)</label>
+            </value>
+            <value>
+                <fullName>Paan shop</fullName>
+                <default>false</default>
+                <label>Paan shop</label>
+            </value>
+            <value>
+                <fullName>Bars &amp; wine shop</fullName>
+                <default>false</default>
+                <label>Bars &amp; wine shop</label>
+            </value>
+            <value>
+                <fullName>Logistics business</fullName>
+                <default>false</default>
+                <label>Logistics business</label>
+            </value>
+            <value>
+                <fullName>Transport Operator</fullName>
+                <default>false</default>
+                <label>Transport Operator</label>
+            </value>
+            <value>
+                <fullName>Travels</fullName>
+                <default>false</default>
+                <label>Travels</label>
+            </value>
+            <value>
+                <fullName>Vehicle dealers</fullName>
+                <default>false</default>
+                <label>Vehicle dealers</label>
+            </value>
+            <value>
+                <fullName>Vehicles spare sales or services</fullName>
+                <default>false</default>
+                <label>Vehicles spare sales or services</label>
+            </value>
+            <value>
+                <fullName>Income from vehicles on rent</fullName>
+                <default>false</default>
+                <label>Income from vehicles on rent</label>
+            </value>
+            <value>
+                <fullName>Owner cum driver</fullName>
+                <default>false</default>
+                <label>Owner cum driver</label>
+            </value>
+            <value>
+                <fullName>Aluminium / Steel / Glass - Fabrication</fullName>
+                <default>false</default>
+                <label>Aluminium / Steel / Glass - Fabrication</label>
+            </value>
+            <value>
+                <fullName>Welding unit</fullName>
+                <default>false</default>
+                <label>Welding unit</label>
+            </value>
+            <value>
+                <fullName>Bero / Wardropes / Almirah / racks / Storewell manufacturing</fullName>
+                <default>false</default>
+                <label>Bero / Wardropes / Almirah / racks / Storewell manufacturing</label>
+            </value>
+            <value>
+                <fullName>Brick manuacturing</fullName>
+                <default>false</default>
+                <label>Brick manuacturing</label>
+            </value>
+            <value>
+                <fullName>Limestone ash manufacturing</fullName>
+                <default>false</default>
+                <label>Limestone ash manufacturing</label>
+            </value>
+            <value>
+                <fullName>Dying unit (coloring)</fullName>
+                <default>false</default>
+                <label>Dying unit (coloring)</label>
+            </value>
+            <value>
+                <fullName>Machining unit</fullName>
+                <default>false</default>
+                <label>Machining unit</label>
+            </value>
+            <value>
+                <fullName>Oil refining or mill</fullName>
+                <default>false</default>
+                <label>Oil refining or mill</label>
+            </value>
+            <value>
+                <fullName>Printing unit</fullName>
+                <default>false</default>
+                <label>Printing unit</label>
+            </value>
+            <value>
+                <fullName>Rice Mill</fullName>
+                <default>false</default>
+                <label>Rice Mill</label>
+            </value>
+            <value>
+                <fullName>Wheat mill</fullName>
+                <default>false</default>
+                <label>Wheat mill</label>
+            </value>
+            <value>
+                <fullName>Timber shop (Trees gets converted into Timber. )</fullName>
+                <default>false</default>
+                <label>Timber shop (Trees gets converted into Timber. )</label>
+            </value>
+            <value>
+                <fullName>Windows manufacturing / Door manufacturing</fullName>
+                <default>false</default>
+                <label>Windows manufacturing / Door manufacturing</label>
+            </value>
+            <value>
+                <fullName>wire manufactring</fullName>
+                <default>false</default>
+                <label>wire manufactring</label>
+            </value>
+            <value>
+                <fullName>Loom / Weaving / Spinning business</fullName>
+                <default>false</default>
+                <label>Loom / Weaving / Spinning business</label>
+            </value>
+            <value>
+                <fullName>Cups / plates / other related manufacturing</fullName>
+                <default>false</default>
+                <label>Cups / plates / other related manufacturing</label>
+            </value>
+            <value>
+                <fullName>Vegetables shop</fullName>
+                <default>false</default>
+                <label>Vegetables shop</label>
+            </value>
+            <value>
+                <fullName>Fruits Shop</fullName>
+                <default>false</default>
+                <label>Fruits Shop</label>
+            </value>
+            <value>
+                <fullName>Flower shop</fullName>
+                <default>false</default>
+                <label>Flower shop</label>
+            </value>
+            <value>
+                <fullName>Cattle income</fullName>
+                <default>false</default>
+                <label>Cattle income</label>
+            </value>
+            <value>
+                <fullName>Milk vendor</fullName>
+                <default>false</default>
+                <label>Milk vendor</label>
+            </value>
+            <value>
+                <fullName>Dairy (Curd / ghee/etc) vendor</fullName>
+                <default>false</default>
+                <label>Dairy (Curd / ghee/etc) vendor</label>
+            </value>
+            <value>
+                <fullName>Supermarket</fullName>
+                <default>false</default>
+                <label>Supermarket</label>
+            </value>
+            <value>
+                <fullName>Provisional shops</fullName>
+                <default>false</default>
+                <label>Provisional shops</label>
+            </value>
+            <value>
+                <fullName>Kirana shops</fullName>
+                <default>false</default>
+                <label>Kirana shops</label>
+            </value>
+            <value>
+                <fullName>General shops</fullName>
+                <default>false</default>
+                <label>General shops</label>
+            </value>
+            <value>
+                <fullName>Petty Shop</fullName>
+                <default>false</default>
+                <label>Petty Shop</label>
+            </value>
+            <value>
+                <fullName>Poultry farm</fullName>
+                <default>false</default>
+                <label>Poultry farm</label>
+            </value>
+            <value>
+                <fullName>Beauty Parlour / Saloon / Spa</fullName>
+                <default>false</default>
+                <label>Beauty Parlour / Saloon / Spa</label>
+            </value>
+            <value>
+                <fullName>Beedi business</fullName>
+                <default>false</default>
+                <label>Beedi business</label>
+            </value>
+            <value>
+                <fullName>Book Shop</fullName>
+                <default>false</default>
+                <label>Book Shop</label>
+            </value>
+            <value>
+                <fullName>Building constructer (both with material &amp; without material) / Civil contractor / Building material / related business</fullName>
+                <default>false</default>
+                <label>Building constructer (both with material &amp; without material) / Civil contractor / Building material / related business</label>
+            </value>
+            <value>
+                <fullName>Cable Operator</fullName>
+                <default>false</default>
+                <label>Cable Operator</label>
+            </value>
+            <value>
+                <fullName>Clay / any other crafts business</fullName>
+                <default>false</default>
+                <label>Clay / any other crafts business</label>
+            </value>
+            <value>
+                <fullName>Country medicines / Betul shop</fullName>
+                <default>false</default>
+                <label>Country medicines / Betul shop</label>
+            </value>
+            <value>
+                <fullName>Courier shop</fullName>
+                <default>false</default>
+                <label>Courier shop</label>
+            </value>
+            <value>
+                <fullName>Opticals shop</fullName>
+                <default>false</default>
+                <label>Opticals shop</label>
+            </value>
+            <value>
+                <fullName>Fancy Shop</fullName>
+                <default>false</default>
+                <label>Fancy Shop</label>
+            </value>
+            <value>
+                <fullName>Flour Mill</fullName>
+                <default>false</default>
+                <label>Flour Mill</label>
+            </value>
+            <value>
+                <fullName>Furniture and carpentering shop (including cot / bed )</fullName>
+                <default>false</default>
+                <label>Furniture and carpentering shop (including cot / bed )</label>
+            </value>
+            <value>
+                <fullName>Gas dealership / Petrolium related products shop</fullName>
+                <default>false</default>
+                <label>Gas dealership / Petrolium related products shop</label>
+            </value>
+            <value>
+                <fullName>Laundry Business</fullName>
+                <default>false</default>
+                <label>Laundry Business</label>
+            </value>
+            <value>
+                <fullName>Lodge / Hostel business</fullName>
+                <default>false</default>
+                <label>Lodge / Hostel business</label>
+            </value>
+            <value>
+                <fullName>Pharmacy / Medical allied business</fullName>
+                <default>false</default>
+                <label>Pharmacy / Medical allied business</label>
+            </value>
+            <value>
+                <fullName>Garments shops / related business</fullName>
+                <default>false</default>
+                <label>Garments shops / related business</label>
+            </value>
+            <value>
+                <fullName>Scrap shop</fullName>
+                <default>false</default>
+                <label>Scrap shop</label>
+            </value>
+            <value>
+                <fullName>Sports equipment / accessaries shop</fullName>
+                <default>false</default>
+                <label>Sports equipment / accessaries shop</label>
+            </value>
+            <value>
+                <fullName>Stockists / Dealer / Traders</fullName>
+                <default>false</default>
+                <label>Stockists / Dealer / Traders</label>
+            </value>
+            <value>
+                <fullName>Mutton, Beaf, Fish, Chicken shop</fullName>
+                <default>false</default>
+                <label>Mutton, Beaf, Fish, Chicken shop</label>
+            </value>
+            <value>
+                <fullName>Water Treatment plant / Water supplier or any othere related business</fullName>
+                <default>false</default>
+                <label>Water Treatment plant / Water supplier or any othere related business</label>
+            </value>
+            <value>
+                <fullName>Xerox copier / Online related services</fullName>
+                <default>false</default>
+                <label>Xerox copier / Online related services</label>
+            </value>
+            <value>
+                <fullName>Toy Shop</fullName>
+                <default>false</default>
+                <label>Toy Shop</label>
+            </value>
+            <value>
+                <fullName>Educational institutions / Coaching centre / Tuition centre</fullName>
+                <default>false</default>
+                <label>Educational institutions / Coaching centre / Tuition centre</label>
+            </value>
+            <value>
+                <fullName>Electrical / Electronic shops</fullName>
+                <default>false</default>
+                <label>Electrical / Electronic shops</label>
+            </value>
+            <value>
+                <fullName>Footwear shop</fullName>
+                <default>false</default>
+                <label>Footwear shop</label>
+            </value>
+            <value>
+                <fullName>Tailor shop</fullName>
+                <default>false</default>
+                <label>Tailor shop</label>
+            </value>
+            <value>
+                <fullName>Photo shop</fullName>
+                <default>false</default>
+                <label>Photo shop</label>
+            </value>
+            <value>
+                <fullName>Hardware &amp; Sanitary Shop</fullName>
+                <default>false</default>
+                <label>Hardware &amp; Sanitary Shop</label>
+            </value>
+            <value>
+                <fullName>Hospitals &amp; Clinics</fullName>
+                <default>false</default>
+                <label>Hospitals &amp; Clinics</label>
+            </value>
+            <value>
+                <fullName>Jewellery shop / Gold smith / any other related business</fullName>
+                <default>false</default>
+                <label>Jewellery shop / Gold smith / any other related business</label>
+            </value>
+            <value>
+                <fullName>Marriage / other function related business (DJ Sound / Rent from hall / Tent / supply of chairs / etc)</fullName>
+                <default>false</default>
+                <label>Marriage / other function related business (DJ Sound / Rent from hall / Tent / supply of chairs / etc)</label>
+            </value>
+            <value>
+                <fullName>Seed dealer / Nursery (Horticulture / sericulture/etc)</fullName>
+                <default>false</default>
+                <label>Seed dealer / Nursery (Horticulture / sericulture/etc)</label>
+            </value>
+            <value>
+                <fullName>Barber</fullName>
+                <default>false</default>
+                <label>Barber</label>
+            </value>
+            <value>
+                <fullName>Beautician</fullName>
+                <default>false</default>
+                <label>Beautician</label>
+            </value>
+            <value>
+                <fullName>Carpenter</fullName>
+                <default>false</default>
+                <label>Carpenter</label>
+            </value>
+            <value>
+                <fullName>Interior designer</fullName>
+                <default>false</default>
+                <label>Interior designer</label>
+            </value>
+            <value>
+                <fullName>Cobbler</fullName>
+                <default>false</default>
+                <label>Cobbler</label>
+            </value>
+            <value>
+                <fullName>Electrician</fullName>
+                <default>false</default>
+                <label>Electrician</label>
+            </value>
+            <value>
+                <fullName>Painter</fullName>
+                <default>false</default>
+                <label>Painter</label>
+            </value>
+            <value>
+                <fullName>Tailor</fullName>
+                <default>false</default>
+                <label>Tailor</label>
+            </value>
+            <value>
+                <fullName>Plumber</fullName>
+                <default>false</default>
+                <label>Plumber</label>
+            </value>
+            <value>
+                <fullName>Fisherman</fullName>
+                <default>false</default>
+                <label>Fisherman</label>
+            </value>
+            <value>
+                <fullName>Commision based income</fullName>
+                <default>false</default>
+                <label>Commision based income</label>
+            </value>
+            <value>
+                <fullName>Mason //Mason helper</fullName>
+                <default>false</default>
+                <label>Mason //Mason helper</label>
+            </value>
+            <value>
+                <fullName>Dealers / Traders (Stock not visible)</fullName>
+                <default>false</default>
+                <label>Dealers / Traders (Stock not visible)</label>
+            </value>
+            <value>
+                <fullName>Centering / labour contractor</fullName>
+                <default>false</default>
+                <label>Centering / labour contractor</label>
+            </value>
+            <value>
+                <fullName>Tuition / coaching center at home</fullName>
+                <default>false</default>
+                <label>Tuition / coaching center at home</label>
+            </value>
+            <value>
+                <fullName>Priest / Astrologer</fullName>
+                <default>false</default>
+                <label>Priest / Astrologer</label>
+            </value>
+            <value>
+                <fullName>Agri labour</fullName>
+                <default>false</default>
+                <label>Agri labour</label>
+            </value>
+            <value>
+                <fullName>driver</fullName>
+                <default>false</default>
+                <label>driver</label>
+            </value>
+            <value>
+                <fullName>Beedi maker</fullName>
+                <default>false</default>
+                <label>Beedi maker</label>
+            </value>
+            <value>
+                <fullName>Hamali/cooli</fullName>
+                <default>false</default>
+                <label>Hamali/cooli</label>
+            </value>
+            <value>
+                <fullName>Commercial - mortgage proeprty</fullName>
+                <default>false</default>
+                <label>Commercial - mortgage proeprty</label>
+            </value>
+            <value>
+                <fullName>Residential - Mortgage property</fullName>
+                <default>false</default>
+                <label>Residential - Mortgage property</label>
+            </value>
+            <value>
+                <fullName>Commercial - Other property</fullName>
+                <default>false</default>
+                <label>Commercial - Other property</label>
+            </value>
+            <value>
+                <fullName>Residential - Other proeprty</fullName>
+                <default>false</default>
+                <label>Residential - Other proeprty</label>
+            </value>
+            <value>
+                <fullName>Fisherman with own boat / selling to retail customers through shop or own vehicle</fullName>
+                <default>false</default>
+                <label>Fisherman with own boat / selling to retail customers through shop or own vehicle</label>
+            </value>
+            <value>
+                <fullName>Housewife</fullName>
+                <default>false</default>
+                <label>Housewife</label>
+            </value>
+            <value>
+                <fullName>Retired</fullName>
+                <default>false</default>
+                <label>Retired</label>
+            </value>
+            <value>
+                <fullName>Unemployed</fullName>
+                <default>false</default>
+                <label>Unemployed</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Daily wages</controllingFieldValue>
+            <valueName>Agri labour</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Daily wages</controllingFieldValue>
+            <valueName>driver</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Daily wages</controllingFieldValue>
+            <valueName>Beedi maker</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Daily wages</controllingFieldValue>
+            <valueName>Hamali/cooli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rental Income</controllingFieldValue>
+            <valueName>Commercial - mortgage proeprty</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rental Income</controllingFieldValue>
+            <valueName>Residential - Mortgage property</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rental Income</controllingFieldValue>
+            <valueName>Commercial - Other property</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rental Income</controllingFieldValue>
+            <valueName>Residential - Other proeprty</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Housewife</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Retired</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Unemployed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Others</controllingFieldValue>
+            <valueName>Others</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>Hotels</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>Restaurant</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>Tea &amp; snack shops</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>sweat shops</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>juice shops</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>Bakery shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>Catering business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>Fast foods</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Eateries</controllingFieldValue>
+            <valueName>Tiffin center</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Food business</controllingFieldValue>
+            <valueName>Ice cream parlour(including sold through road vehicle)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Food business</controllingFieldValue>
+            <valueName>Paan shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Food business</controllingFieldValue>
+            <valueName>Bars &amp; wine shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Transport business</controllingFieldValue>
+            <valueName>Logistics business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Transport business</controllingFieldValue>
+            <valueName>Transport Operator</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Transport business</controllingFieldValue>
+            <valueName>Travels</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Transport business</controllingFieldValue>
+            <valueName>Vehicle dealers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Transport business</controllingFieldValue>
+            <valueName>Vehicles spare sales or services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Transport business</controllingFieldValue>
+            <valueName>Income from vehicles on rent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Transport business</controllingFieldValue>
+            <valueName>Owner cum driver</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Aluminium / Steel / Glass - Fabrication</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Welding unit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Bero / Wardropes / Almirah / racks / Storewell manufacturing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Brick manuacturing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Limestone ash manufacturing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Dying unit (coloring)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Machining unit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Oil refining or mill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Printing unit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Rice Mill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Wheat mill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Timber shop (Trees gets converted into Timber. )</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Windows manufacturing / Door manufacturing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>wire manufactring</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Loom / Weaving / Spinning business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Manufacturing</controllingFieldValue>
+            <valueName>Cups / plates / other related manufacturing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vegetables/Fruits/Flower/Vendor</controllingFieldValue>
+            <valueName>Vegetables shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vegetables/Fruits/Flower/Vendor</controllingFieldValue>
+            <valueName>Fruits Shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vegetables/Fruits/Flower/Vendor</controllingFieldValue>
+            <valueName>Flower shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Milk business</controllingFieldValue>
+            <valueName>Cattle income</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Milk business</controllingFieldValue>
+            <valueName>Milk vendor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Milk business</controllingFieldValue>
+            <valueName>Dairy (Curd / ghee/etc) vendor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General shops</controllingFieldValue>
+            <valueName>Supermarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General shops</controllingFieldValue>
+            <valueName>Provisional shops</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General shops</controllingFieldValue>
+            <valueName>Kirana shops</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General shops</controllingFieldValue>
+            <valueName>General shops</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>General shops</controllingFieldValue>
+            <valueName>Petty Shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Poultry farm</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Beauty Parlour / Saloon / Spa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Beedi business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Book Shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Building constructer (both with material &amp; without material) / Civil contractor / Building material / related business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Cable Operator</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Clay / any other crafts business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Country medicines / Betul shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Courier shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Opticals shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Fancy Shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Flour Mill</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Furniture and carpentering shop (including cot / bed )</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Gas dealership / Petrolium related products shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Laundry Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Lodge / Hostel business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Pharmacy / Medical allied business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Garments shops / related business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Scrap shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Sports equipment / accessaries shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Stockists / Dealer / Traders</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Mutton, Beaf, Fish, Chicken shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Water Treatment plant / Water supplier or any othere related business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Xerox copier / Online related services</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Toy Shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Educational institutions / Coaching centre / Tuition centre</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Electrical / Electronic shops</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Footwear shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Tailor shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Photo shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Hardware &amp; Sanitary Shop</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Hospitals &amp; Clinics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Jewellery shop / Gold smith / any other related business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Marriage / other function related business (DJ Sound / Rent from hall / Tent / supply of chairs / etc)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Seed dealer / Nursery (Horticulture / sericulture/etc)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Shop owner</controllingFieldValue>
+            <valueName>Fisherman with own boat / selling to retail customers through shop or own vehicle</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Barber</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Beautician</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Carpenter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Interior designer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Cobbler</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Electrician</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Painter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Tailor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Plumber</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Fisherman</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Commision based income</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Mason //Mason helper</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Dealers / Traders (Stock not visible)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Centering / labour contractor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Tuition / coaching center at home</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Self Employed</controllingFieldValue>
+            <valueName>Priest / Astrologer</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

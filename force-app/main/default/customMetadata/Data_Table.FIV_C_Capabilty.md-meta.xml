@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>FIV_C_Capabilty</label>
+    <protected>false</protected>
+    <values>
+        <field>Default_Fields__c</field>
+        <value xsi:type="xsd:string">Id,Loan_Applicant__c,Employment_Document_Proof__c,of_income_transacted_through_bank_acco__c,Monthly_Salary__c,Year_of_Business__c,Total_experience_in_this_business_yrs__c,Year_of_Service_With_Employer__c,Total_Work_Experience__c,Year_of_Occupation__c,Income_per_day__c,Number_of_days__c,Income_per_month__c,No_of_Units__c,Rental_Income__c</value>
+    </values>
+    <values>
+        <field>Default_Page_Size__c</field>
+        <value xsi:type="xsd:double">10.0</value>
+    </values>
+    <values>
+        <field>Object_API_Name__c</field>
+        <value xsi:type="xsd:string">Capability__c</value>
+    </values>
+    <values>
+        <field>Paging_Picklist_Values__c</field>
+        <value xsi:type="xsd:string">10,20,30,50</value>
+    </values>
+    <values>
+        <field>Show_Checkboxes__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Show_Pagination__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Show_Paging_Picklist__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Show_Search__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Sort_By__c</field>
+        <value xsi:type="xsd:string">Name</value>
+    </values>
+    <values>
+        <field>Sort_Direction__c</field>
+        <value xsi:type="xsd:string">asc</value>
+    </values>
+    <values>
+        <field>Table_Key_Field_API_Name__c</field>
+        <value xsi:type="xsd:string">Id</value>
+    </values>
+    <values>
+        <field>Treat_Checkboxes_As_Radio__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

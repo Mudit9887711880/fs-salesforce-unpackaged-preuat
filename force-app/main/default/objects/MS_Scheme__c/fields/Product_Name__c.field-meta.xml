@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Name__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Name</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>FSBL LAP Business Loan</fullName>
+                <default>false</default>
+                <label>FSBL LAP Business Loan</label>
+            </value>
+            <value>
+                <fullName>FSBL LAP Business Loan Top Up</fullName>
+                <default>false</default>
+                <label>FSBL LAP Business Loan Top Up</label>
+            </value>
+            <value>
+                <fullName>FSBL LAP Housing Loan</fullName>
+                <default>false</default>
+                <label>FSBL LAP Housing Loan</label>
+            </value>
+            <value>
+                <fullName>FSBL LAP MORTGAGE LOAN</fullName>
+                <default>false</default>
+                <label>FSBL LAP MORTGAGE LOAN</label>
+            </value>
+            <value>
+                <fullName>FSBL LAP Mortgage Loan Top Up</fullName>
+                <default>false</default>
+                <label>FSBL LAP Mortgage Loan Top Up</label>
+            </value>
+            <value>
+                <fullName>FSHL HOME CONSTRUCTION</fullName>
+                <default>false</default>
+                <label>FSHL HOME CONSTRUCTION</label>
+            </value>
+            <value>
+                <fullName>FSHL Home Improvement</fullName>
+                <default>false</default>
+                <label>FSHL Home Improvement</label>
+            </value>
+            <value>
+                <fullName>FSHL Home Purchase</fullName>
+                <default>false</default>
+                <label>FSHL Home Purchase</label>
+            </value>
+            <value>
+                <fullName>FSHL Home Loan Takeover</fullName>
+                <default>false</default>
+                <label>FSHL Home Loan Takeover</label>
+            </value>
+            <value>
+                <fullName>LAP</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>LAP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

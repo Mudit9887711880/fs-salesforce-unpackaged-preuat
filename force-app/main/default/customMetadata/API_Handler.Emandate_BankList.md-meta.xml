@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Emandate BankList</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:type="xsd:string">Emandate_API</value>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/emandate/bank/list</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">{
+&quot;Authorization&quot;:&quot;Basic YWRtaW46YWRtaW4=&quot;,
+&quot;CORRELATIONID&quot;:&quot;123456789&quot;,
+&quot;CLIENTID&quot;:&quot;78g659ed2a0dfa2b&quot;,
+&quot;CLIENTSECRET&quot;:&quot;f56f68b65739bd8a&quot;,
+&quot;ContentType&quot;:&quot;application/json&quot;
+}</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">GET</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;liveBankListRes&quot;: {
+        &quot;status&quot;: &quot;1&quot;,
+        &quot;bankList&quot;: {
+            &quot;bankdata&quot;: [
+                {
+                    &quot;bankId&quot;: &quot;ANDB&quot;,
+                    &quot;bankName&quot;: &quot;ANDHRA BANK&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;APBL&quot;,
+                    &quot;bankName&quot;: &quot;Airtel Payments Bank - ONMAGS&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;APGB&quot;,
+                    &quot;bankName&quot;: &quot;Andhra Pragathi Grameena Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;AUBL&quot;,
+                    &quot;bankName&quot;: &quot;AU Small Finance Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;BARB&quot;,
+                    &quot;bankName&quot;: &quot;Bank of Baroda&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;BDBL&quot;,
+                    &quot;bankName&quot;: &quot;BANDHAN BANK LIMITED&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;BILD&quot;,
+                    &quot;bankName&quot;: &quot;Bill Desk&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;BKID&quot;,
+                    &quot;bankName&quot;: &quot;Bank Of India&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CBIN&quot;,
+                    &quot;bankName&quot;: &quot;Central Bank of India&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CHSX&quot;,
+                    &quot;bankName&quot;: &quot;THE CHANDIGARH STATE CO-OP BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CITI&quot;,
+                    &quot;bankName&quot;: &quot;CITIBANK N A&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CIUB&quot;,
+                    &quot;bankName&quot;: &quot;City Union Bank Limited&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CLBL&quot;,
+                    &quot;bankName&quot;: &quot;Capital Local Area Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CNRB&quot;,
+                    &quot;bankName&quot;: &quot;Canara Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CNSX&quot;,
+                    &quot;bankName&quot;: &quot;The Chembur Nagarik Sahakari Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;COSB&quot;,
+                    &quot;bankName&quot;: &quot;THE COSMOS CO-OPERATIVE BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;CSBK&quot;,
+                    &quot;bankName&quot;: &quot;The Catholic Syrian Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;DBSS&quot;,
+                    &quot;bankName&quot;: &quot;DEVELOPMENT BANK OF SINGAPORE&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;DCBL&quot;,
+                    &quot;bankName&quot;: &quot;DCB Bank Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;DEUT&quot;,
+                    &quot;bankName&quot;: &quot;Deutsche Bank AG&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;DIGI&quot;,
+                    &quot;bankName&quot;: &quot;DIGIOTECH SOLUTIONS PVT LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;DLXB&quot;,
+                    &quot;bankName&quot;: &quot;Dhanalaxmi Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ESAF&quot;,
+                    &quot;bankName&quot;: &quot;ESAF SMALL FINANCE BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ESFB&quot;,
+                    &quot;bankName&quot;: &quot;Equitas Small Finance Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;FDRL&quot;,
+                    &quot;bankName&quot;: &quot;Federal Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;FEBA&quot;,
+                    &quot;bankName&quot;: &quot;IDBI FEBA Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;FFFF&quot;,
+                    &quot;bankName&quot;: &quot;FFFF&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;FINO&quot;,
+                    &quot;bankName&quot;: &quot;FINO PAYMENTS BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;FSSN&quot;,
+                    &quot;bankName&quot;: &quot;FSS NET&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;HDFC&quot;,
+                    &quot;bankName&quot;: &quot;HDFC Bank Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;HSBC&quot;,
+                    &quot;bankName&quot;: &quot;The Hongkong &amp; Shanghai Banking Corporation Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;IBKL&quot;,
+                    &quot;bankName&quot;: &quot;IDBI Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ICIC&quot;,
+                    &quot;bankName&quot;: &quot;ICICI Bank Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;IDFB&quot;,
+                    &quot;bankName&quot;: &quot;IDFC Bank Limited&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;IDIB&quot;,
+                    &quot;bankName&quot;: &quot;Indian Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;INDB&quot;,
+                    &quot;bankName&quot;: &quot;Indusind Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;IOBA&quot;,
+                    &quot;bankName&quot;: &quot;Indian Overseas Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;JAKA&quot;,
+                    &quot;bankName&quot;: &quot;The Jammu And Kashmir Bank Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;JIOB&quot;,
+                    &quot;bankName&quot;: &quot;JIO PAYMENTS BANK LTD - ONMAGS&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;JIOP&quot;,
+                    &quot;bankName&quot;: &quot;JIO PAYMENTS BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;JSFB&quot;,
+                    &quot;bankName&quot;: &quot;Jana Small Finance Bank ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;KARB&quot;,
+                    &quot;bankName&quot;: &quot;Karnataka Bank Ltd.,&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;KCCB&quot;,
+                    &quot;bankName&quot;: &quot;The Kalupur Commercial Co-Operative Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;KJSB&quot;,
+                    &quot;bankName&quot;: &quot;The Kalyan Janata Sahakari Bank Ltd.&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;KKBK&quot;,
+                    &quot;bankName&quot;: &quot;Kotak Mahindra Bank Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;KVBL&quot;,
+                    &quot;bankName&quot;: &quot;Karur Vysa Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;KVGB&quot;,
+                    &quot;bankName&quot;: &quot;Karnataka Vikas Grameena Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;MAHA&quot;,
+                    &quot;bankName&quot;: &quot;BANK OF MAHARASHTRA DEBIT&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;MAHB&quot;,
+                    &quot;bankName&quot;: &quot;Bank of Maharashtra&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;USFB&quot;,
+                    &quot;bankName&quot;: &quot;Ujjivan Small Finance Bank Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;UTBI&quot;,
+                    &quot;bankName&quot;: &quot;United Bank of India&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;UTIB&quot;,
+                    &quot;bankName&quot;: &quot;Axis Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;UTKS&quot;,
+                    &quot;bankName&quot;: &quot;UTKARSH SMALL FINANCE BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;VARA&quot;,
+                    &quot;bankName&quot;: &quot;Varacha co-op bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;VIJB&quot;,
+                    &quot;bankName&quot;: &quot;Vijaya Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;YESB&quot;,
+                    &quot;bankName&quot;: &quot;YES Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ABHY&quot;,
+                    &quot;bankName&quot;: &quot;Abhyudaya Co-operative Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ACUX&quot;,
+                    &quot;bankName&quot;: &quot;The Adarsh Cooperative Urban Bank Limited&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ALLA&quot;,
+                    &quot;bankName&quot;: &quot;Allahabad Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;NCBL&quot;,
+                    &quot;bankName&quot;: &quot;THE NATIONAL CO-OPERATIVE BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;NESF&quot;,
+                    &quot;bankName&quot;: &quot;NORTH EAST SMALL FINANCE BANK LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;NSDL&quot;,
+                    &quot;bankName&quot;: &quot;National Securities  Limited&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ONMG&quot;,
+                    &quot;bankName&quot;: &quot;ONMAGS&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;ORBC&quot;,
+                    &quot;bankName&quot;: &quot;Oriental Bank of Commerce&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;PSIB&quot;,
+                    &quot;bankName&quot;: &quot;Punjab and Sind Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;PUNB&quot;,
+                    &quot;bankName&quot;: &quot;Punjab National Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;PYTM&quot;,
+                    &quot;bankName&quot;: &quot;Paytm Payments Bank Ltd.&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;RATN&quot;,
+                    &quot;bankName&quot;: &quot;Ratnakar Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SBIN&quot;,
+                    &quot;bankName&quot;: &quot;State Bank of India&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SCBL&quot;,
+                    &quot;bankName&quot;: &quot;Standard Chartered Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SHIX&quot;,
+                    &quot;bankName&quot;: &quot;SHIVALIK MERCANTILE CO-OP BANK Ltd&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SIBL&quot;,
+                    &quot;bankName&quot;: &quot;South Indian Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SPCB&quot;,
+                    &quot;bankName&quot;: &quot;The Surat People&apos;s Co-op. Bank Ltd.&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;STCB&quot;,
+                    &quot;bankName&quot;: &quot;SBM BANK INDIA LTD&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SURY&quot;,
+                    &quot;bankName&quot;: &quot;Suryoday Small Finance Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SUVX&quot;,
+                    &quot;bankName&quot;: &quot;SUVARNAYUG SAHAKARI BANK LTD.&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;SYNB&quot;,
+                    &quot;bankName&quot;: &quot;Syndicate bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;TEST&quot;,
+                    &quot;bankName&quot;: &quot;Test Bank&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;TMBL&quot;,
+                    &quot;bankName&quot;: &quot;Tamilnad Mercantile Bank Ltd.&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;UBIN&quot;,
+                    &quot;bankName&quot;: &quot;Union Bank of India&quot;
+                },
+                {
+                    &quot;bankId&quot;: &quot;UCBA&quot;,
+                    &quot;bankName&quot;: &quot;UCO Bank&quot;
+                }
+            ]
+        }
+    }
+}</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">NONE</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

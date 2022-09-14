@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_For_Visit__c</fullName>
+    <externalId>false</externalId>
+    <label>Reason For Visit</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Character reconfirmation</fullName>
+                <default>false</default>
+                <label>Character reconfirmation</label>
+            </value>
+            <value>
+                <fullName>Income reconfirmation</fullName>
+                <default>false</default>
+                <label>Income reconfirmation</label>
+            </value>
+            <value>
+                <fullName>Property reconfirmation as no boundaries in document</fullName>
+                <default>false</default>
+                <label>Property reconfirmation as no boundaries in document</label>
+            </value>
+            <value>
+                <fullName>Property reconfirmation as no pathway in document</fullName>
+                <default>false</default>
+                <label>Property reconfirmation as no pathway in document</label>
+            </value>
+            <value>
+                <fullName>Property reconfirmation as no measurement in document</fullName>
+                <default>false</default>
+                <label>Property reconfirmation as no measurement in document</label>
+            </value>
+            <value>
+                <fullName>Property reconfirmation as unable to measure the area of property</fullName>
+                <default>false</default>
+                <label>Property reconfirmation as unable to measure the area of property</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

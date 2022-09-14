@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other</fullName>
+    <active>true</active>
+    <description>Use this record type for KYC of other docs other then OCR.</description>
+    <label>Other</label>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Adhar Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Driving License</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pan Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Passport</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voter Id</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

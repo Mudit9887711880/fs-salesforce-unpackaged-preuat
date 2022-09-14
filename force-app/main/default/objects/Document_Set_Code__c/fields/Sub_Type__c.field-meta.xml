@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Sub Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Flat</fullName>
+                <default>false</default>
+                <label>Flat</label>
+            </value>
+            <value>
+                <fullName>Row house</fullName>
+                <default>false</default>
+                <label>Row house</label>
+            </value>
+            <value>
+                <fullName>Apartments</fullName>
+                <default>false</default>
+                <label>Apartments</label>
+            </value>
+            <value>
+                <fullName>Shop</fullName>
+                <default>false</default>
+                <label>Shop</label>
+            </value>
+            <value>
+                <fullName>Mall</fullName>
+                <default>false</default>
+                <label>Mall</label>
+            </value>
+            <value>
+                <fullName>Factory</fullName>
+                <default>false</default>
+                <label>Factory</label>
+            </value>
+            <value>
+                <fullName>Mill</fullName>
+                <default>false</default>
+                <label>Mill</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

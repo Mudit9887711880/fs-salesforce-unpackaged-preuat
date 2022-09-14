@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gross_Monthly_Income__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+ISPICKVAL(Income_segment__c , &apos;Daily wages&apos;),
+Income_per_day__c * Number_of_days__c,
+IF((ISPICKVAL(Income_segment__c , &apos;Self Employed&apos;) || ISPICKVAL(Income_segment__c , &apos;Eateries&apos;) ||
+ISPICKVAL(Income_segment__c , &apos;Food business&apos;) || ISPICKVAL(Income_segment__c , &apos;Manufacturing&apos;) ||
+ISPICKVAL(Income_segment__c , &apos;Milk business&apos;) || ISPICKVAL(Income_segment__c , &apos;Shop owner&apos;) ||
+ISPICKVAL(Income_segment__c , &apos;General shops&apos;) || ISPICKVAL(Income_segment__c , &apos;Vegetables/Fruits/Flower/Vendor&apos;)),
+IF(ISPICKVAL(Day_Margin_Basis__c , &apos;Day Basis&apos;),
+Income_per_day__c * Number_of_days__c ,
+Margin_in_amount__c - (Electricity__c + Salary__c + Rent__c + Others__c))
+,0))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Gross Monthly Income</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

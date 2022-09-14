@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Property_Ownership__c</fullName>
+    <externalId>false</externalId>
+    <label>Property Ownership</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Self Acquired</fullName>
+                <default>false</default>
+                <label>Self Acquired</label>
+            </value>
+            <value>
+                <fullName>Ancestral</fullName>
+                <default>false</default>
+                <label>Ancestral</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

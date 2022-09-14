@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Type_Selected_Applicant</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISPICKVAL(Type__c, &apos;Applicant&apos;), OR(ISPICKVAL(Applicable_For__c, &apos;&apos;),ISPICKVAL( Income_Type__c , &apos;&apos;)))</errorConditionFormula>
+    <errorMessage>Fill Applicable And Income Type.</errorMessage>
+</ValidationRule>

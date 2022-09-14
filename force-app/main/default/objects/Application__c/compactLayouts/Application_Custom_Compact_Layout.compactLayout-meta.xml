@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Custom_Compact_Layout</fullName>
+    <fields>Name</fields>
+    <fields>Primary_Applicant__c</fields>
+    <fields>Staff_Loan__c</fields>
+    <fields>Sourcing_Branch__c</fields>
+    <fields>Requested_Loan_Amount__c</fields>
+    <fields>Total_amount_recommended__c</fields>
+    <fields>Tenor_In_Months__c</fields>
+    <label>Application Custom Compact Layout</label>
+</CompactLayout>

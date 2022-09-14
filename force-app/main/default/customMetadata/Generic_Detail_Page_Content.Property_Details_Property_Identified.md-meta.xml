@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Property Identified</label>
+    <protected>false</protected>
+    <values>
+        <field>Column_Width_desktop__c</field>
+        <value xsi:type="xsd:string">3</value>
+    </values>
+    <values>
+        <field>Column_Width_mobile__c</field>
+        <value xsi:type="xsd:string">12</value>
+    </values>
+    <values>
+        <field>Column_Width_tablet__c</field>
+        <value xsi:type="xsd:string">6</value>
+    </values>
+    <values>
+        <field>DataType__c</field>
+        <value xsi:type="xsd:string">picklist</value>
+    </values>
+    <values>
+        <field>Disabled__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Extra_Large_Label__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Field_API_Name__c</field>
+        <value xsi:type="xsd:string">Property_Identified__c</value>
+    </values>
+    <values>
+        <field>Field_Sequence__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Generic_Detail_page__c</field>
+        <value xsi:type="xsd:string">Lead_Details_Property_Details</value>
+    </values>
+    <values>
+        <field>HelpText__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Lookup_Object_API_Name__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Max_Length__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Min_Length__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Object_API_Name__c</field>
+        <value xsi:type="xsd:string">Property__c</value>
+    </values>
+    <values>
+        <field>Pattern_Mismatch_Message__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Required__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Section_Label__c</field>
+        <value xsi:type="xsd:string">Fill Property Details</value>
+    </values>
+    <values>
+        <field>Section_Order__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Show_On_UI__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>URL_Target_Field_API_Name__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Validation_Pattern__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

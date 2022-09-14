@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Emandate Status</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:type="xsd:string">Emandate_API</value>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/emandate/status</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">{
+&quot;Authorization&quot;:&quot;Basic YWRtaW46YWRtaW4=&quot;,
+&quot;CORRELATIONID&quot;:&quot;123456789&quot;,
+&quot;CLIENTID&quot;:&quot;78g659ed2a0dfa2b&quot;,
+&quot;CLIENTSECRET&quot;:&quot;f56f68b65739bd8a&quot;,
+&quot;ContentType&quot;:&quot;application/json&quot;
+}</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">GET</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;mandateStatusApiRes&quot;: {
+        &quot;status&quot;: &quot;1&quot;,
+        &quot;mandateReqId&quot;: &quot;APItest34128678901123457891014015&quot;,
+        &quot;name&quot;: &quot;veeta nair&quot;,
+        &quot;mobileNumber&quot;: &quot;+91-9773801229&quot;,
+        &quot;telephoneNumber&quot;: &quot;+91-022-11234543&quot;,
+        &quot;emailId&quot;: &quot;test@gmail.com&quot;,
+        &quot;panNo&quot;: &quot;PPAZM1234M&quot;,
+        &quot;accountType&quot;: &quot;savings&quot;,
+        &quot;accountNumber&quot;: &quot;11111&quot;,
+        &quot;amount&quot;: &quot;128.00&quot;,
+        &quot;amountType&quot;: &quot;Fixed Amount&quot;,
+        &quot;startDate&quot;: &quot;22-07-2021&quot;,
+        &quot;endDate&quot;: &quot;25-07-2022&quot;,
+        &quot;untilCancel&quot;: &quot;False&quot;,
+        &quot;fequency&quot;: &quot;BIMN%Bi-Monthly&quot;,
+        &quot;purpose&quot;: &quot;Bill Payment Credit card&quot;,
+        &quot;corpName&quot;: &quot;nita pvt ltd&quot;,
+        &quot;catCode&quot;: &quot;B001&quot;,
+        &quot;catDesc&quot;: &quot;Bill Payment Credit card&quot;,
+        &quot;umrnNo&quot;: 12345,
+        &quot;rejectReson&quot;: &quot;No Details available for Requested NpciRefId&quot;,
+        &quot;rejBy&quot;: &quot;&quot;,
+        &quot;npciRefMsgId&quot;: &quot;&quot;,
+        &quot;mandateStatus&quot;: &quot;Process incomplete&quot;,
+        &quot;requestDateTime&quot;: &quot;7/22/2021 18:44:59&quot;,
+        &quot;responsedDateTime&quot;: &quot;9/5/2021 00:24:31&quot;,
+        &quot;bankName&quot;: &quot;Axis Bank&quot;,
+        &quot;authenticationMode&quot;: &quot;NetBanking&quot;,
+        &quot;utilityCode&quot;: &quot;RATN00005000010550&quot;
+    }
+}</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">NONE</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

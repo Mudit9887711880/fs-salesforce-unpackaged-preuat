@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Section_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Section Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Family Detail</fullName>
+                <default>false</default>
+                <label>Family Detail</label>
+            </value>
+            <value>
+                <fullName>Neighbour Detail</fullName>
+                <default>false</default>
+                <label>Neighbour Detail</label>
+            </value>
+            <value>
+                <fullName>Affiliation Detail</fullName>
+                <default>false</default>
+                <label>Affiliation Detail</label>
+            </value>
+            <value>
+                <fullName>Living Standard Detail</fullName>
+                <default>false</default>
+                <label>Living Standard Detail</label>
+            </value>
+            <value>
+                <fullName>Repayment Behaviour Detail</fullName>
+                <default>false</default>
+                <label>Repayment Behaviour Detail</label>
+            </value>
+            <value>
+                <fullName>FIV-B Character Detail</fullName>
+                <default>false</default>
+                <label>FIV-B Character Detail</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

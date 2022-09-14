@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Document Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Settlement Deed</fullName>
+                <default>false</default>
+                <label>Settlement Deed</label>
+            </value>
+            <value>
+                <fullName>Will Deed</fullName>
+                <default>false</default>
+                <label>Will Deed</label>
+            </value>
+            <value>
+                <fullName>Sale Deed</fullName>
+                <default>false</default>
+                <label>Sale Deed</label>
+            </value>
+            <value>
+                <fullName>Release Deed</fullName>
+                <default>false</default>
+                <label>Release Deed</label>
+            </value>
+            <value>
+                <fullName>Parition Deed</fullName>
+                <default>false</default>
+                <label>Parition Deed</label>
+            </value>
+            <value>
+                <fullName>Gift Deed</fullName>
+                <default>false</default>
+                <label>Gift Deed</label>
+            </value>
+            <value>
+                <fullName>Consent Deed</fullName>
+                <default>false</default>
+                <label>Consent Deed</label>
+            </value>
+            <value>
+                <fullName>Co-ownership deed</fullName>
+                <default>false</default>
+                <label>Co-ownership deed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

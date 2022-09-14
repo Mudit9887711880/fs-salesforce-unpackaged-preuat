@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Property_Location_Classification__c</fullName>
+    <externalId>false</externalId>
+    <label>Property Location / Classification</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Metro</fullName>
+                <default>false</default>
+                <label>Metro</label>
+            </value>
+            <value>
+                <fullName>Urban</fullName>
+                <default>false</default>
+                <label>Urban</label>
+            </value>
+            <value>
+                <fullName>Semi Urban</fullName>
+                <default>false</default>
+                <label>Semi Urban</label>
+            </value>
+            <value>
+                <fullName>Rural</fullName>
+                <default>false</default>
+                <label>Rural</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

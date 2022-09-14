@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discussion_done_with__c</fullName>
+    <externalId>false</externalId>
+    <label>Discussion Done With</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>MD</fullName>
+                <default>false</default>
+                <label>MD</label>
+            </value>
+            <value>
+                <fullName>CEO</fullName>
+                <default>false</default>
+                <label>CEO</label>
+            </value>
+            <value>
+                <fullName>CCO</fullName>
+                <default>false</default>
+                <label>CCO</label>
+            </value>
+            <value>
+                <fullName>Senior Head Credit</fullName>
+                <default>false</default>
+                <label>Senior Head Credit</label>
+            </value>
+            <value>
+                <fullName>TL</fullName>
+                <default>false</default>
+                <label>TL</label>
+            </value>
+            <value>
+                <fullName>Approval Credit</fullName>
+                <default>false</default>
+                <label>Approval Credit</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

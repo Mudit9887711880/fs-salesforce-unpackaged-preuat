@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Dedupe API</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;applicants&quot;: [
+        {
+            &quot;applicant&quot;: {
+                &quot;applicantType&quot;: &quot;Individual&quot;,
+                &quot;applicantId&quot;: &quot;KGF123&quot;,
+                &quot;dob&quot;: &quot;24-06-1982&quot;,
+                &quot;branch&quot;: &quot;AD12345&quot;,
+                &quot;pincode&quot;: &quot;786543321120&quot;,
+                &quot;kycIds&quot;: {
+                    &quot;pan&quot;: &quot;AZKCF1234&quot;,
+                    &quot;passport&quot;: &quot;KPKC2627876554&quot;,
+                    &quot;aadhaar&quot;: &quot;19G02477825&quot;,
+                    &quot;voterId&quot;: &quot;RRV1300466&quot;,
+                    &quot;drivingLicense&quot;: &quot;tn07ksdjfksdjf&quot;
+                }
+            }
+        }
+    ]
+}</value>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/customer/ux/customer/dedupe</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">{
+&quot;Authorization&quot;:&quot;Basic YWRtaW46YWRtaW4=&quot;,
+&quot;CORRELATIONID&quot;:&quot;commonexpapi123&quot;,
+&quot;CLIENTID&quot;:&quot;78g659ed2a0dfa2b&quot;,
+&quot;CLIENTSECRET&quot;:&quot;f56f68b65739bd8a&quot;,
+&quot;ContentType&quot;:&quot;application/json&quot;,
+&quot;token&quot;:&quot;M3gyTUpsa1I2QVdwanNsRXd5aWZSWmhQNG9sQmpYSlR1YmJJUnJQeWlTaz06YzcxMmNiMjgtZjIyNS00YjlmLTgwOGEtZWMxYTdjZjgwMGRkOjEyMTk5&quot;
+}</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;applicantId&quot;: &quot;KGF123&quot;,
+    &quot;matches&quot;: [
+        {
+            &quot;match&quot;: {
+                &quot;customerRelId&quot;: &quot;GLBCUST00000207774&quot;,
+                &quot;cifId&quot;: &quot;GLBCUST00000207774&quot;,
+                &quot;source&quot;: &quot;FINNONE_NEO_CAS&quot;,
+                &quot;loans&quot;: [
+                    {
+                        &quot;loan&quot;: {
+                            &quot;lan&quot;: &quot;FSAPLALONS000005075033&quot;,
+                            &quot;lanstatus&quot;: &quot;C&quot;,
+                            &quot;applicationNo&quot;: &quot;APPL00072695&quot;,
+                            &quot;applicationStatus&quot;: &quot;Post Disbursal&quot;,
+                            &quot;branchCode&quot;: &quot;5000215&quot;
+                        }
+                    },
+                    {
+                        &quot;loan&quot;: {
+                            &quot;lan&quot;: &quot;&quot;,
+                            &quot;lanstatus&quot;: &quot;&quot;,
+                            &quot;applicationNo&quot;: &quot;APPL00400780&quot;,
+                            &quot;applicationStatus&quot;: &quot;Disbursal&quot;,
+                            &quot;branchCode&quot;: &quot;&quot;
+                        }
+                    }
+                ],
+                &quot;firstName&quot;: &quot;SHAIK&quot;,
+                &quot;lastName&quot;: &quot;MUNNI&quot;,
+                &quot;dob&quot;: &quot;03-09-1977 00:00:00&quot;,
+                &quot;mobileNo&quot;: null,
+                &quot;residenceAddress&quot;: {
+                    &quot;addressLine1&quot;: &quot;10/307‐51‐A&quot;,
+                    &quot;addressLine2&quot;: &quot;AZAD STREET KADIRI KADIRI&quot;,
+                    &quot;addressLine3&quot;: &quot;&quot;,
+                    &quot;city&quot;: &quot;Anantapur&quot;,
+                    &quot;district&quot;: &quot;&quot;,
+                    &quot;state&quot;: &quot;Andhra Pradesh&quot;,
+                    &quot;pincode&quot;: &quot;515591&quot;
+                },
+                &quot;kycIds&quot;: {
+                    &quot;pan&quot;: null,
+                    &quot;passport&quot;: null,
+                    &quot;aadhaar&quot;: &quot;776962393875&quot;,
+                    &quot;voterId&quot;: null,
+                    &quot;drivingLicense&quot;: null
+                }
+            }
+        },
+        {
+            &quot;match&quot;: {
+                &quot;customerRelId&quot;: &quot;GLBCUST00000000834&quot;,
+                &quot;cifId&quot;: &quot;GLBCUST00000000834&quot;,
+                &quot;source&quot;: &quot;FINNONE_NEO_CAS&quot;,
+                &quot;loans&quot;: [
+                    {
+                        &quot;loan&quot;: {
+                            &quot;lan&quot;: &quot;&quot;,
+                            &quot;lanstatus&quot;: &quot;&quot;,
+                            &quot;applicationNo&quot;: &quot;APPL00000137&quot;,
+                            &quot;applicationStatus&quot;: &quot;Cancellation&quot;,
+                            &quot;branchCode&quot;: &quot;&quot;
+                        }
+                    }
+                ],
+                &quot;firstName&quot;: &quot;V&quot;,
+                &quot;lastName&quot;: &quot;SIVANESHWARAN&quot;,
+                &quot;dob&quot;: &quot;27-07-1994 00:00:00&quot;,
+                &quot;mobileNo&quot;: null,
+                &quot;residenceAddress&quot;: {
+                    &quot;addressLine1&quot;: &quot;74&quot;,
+                    &quot;addressLine2&quot;: &quot;Ramnagar, Pandithachozhanallur&quot;,
+                    &quot;addressLine3&quot;: &quot;Melavidayal&quot;,
+                    &quot;city&quot;: &quot;&quot;,
+                    &quot;district&quot;: &quot;&quot;,
+                    &quot;state&quot;: &quot;&quot;,
+                    &quot;pincode&quot;: &quot;612804&quot;
+                },
+                &quot;kycIds&quot;: {
+                    &quot;pan&quot;: null,
+                    &quot;passport&quot;: null,
+                    &quot;aadhaar&quot;: &quot;274822103624&quot;,
+                    &quot;voterId&quot;: &quot;SGB0740282&quot;,
+                    &quot;drivingLicense&quot;: null
+                }
+            }
+        }
+    ]
+}</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">NONE</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

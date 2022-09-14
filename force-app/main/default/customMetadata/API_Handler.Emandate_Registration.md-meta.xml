@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Emandate Registration</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:type="xsd:string">Emandate_API</value>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:type="xsd:string">{
+        &quot;title&quot;: &quot;Mrs&quot;,
+        &quot;name&quot;: &quot;veeta nair&quot;,
+        &quot;mobileNumber&quot;: 9773801229,
+        &quot;stdCode&quot;: &quot;022&quot;,
+        &quot;telephoneNumber&quot;: 11234543,
+        &quot;emailId&quot;: &quot;veneetiaaaaaabcedfghijklknopqurstuvwdxyz@gmail.com&quot;,
+        &quot;pan&quot;: &quot;PPAZM1234M&quot;,
+        &quot;accountType&quot;: &quot;Saving Account&quot;,
+        &quot;accountNumber&quot;: &quot;11111&quot;,
+        &quot;amountType&quot;: &quot;Maximum&quot;,
+        &quot;amount&quot;: 128,
+        &quot;frequency&quot;: &quot;Bi-Monthly&quot;,
+        &quot;startDate&quot;: &quot;05-08-2022&quot;,
+        &quot;endDate&quot;: &quot;31-12-2099&quot;,
+        &quot;destinationBank&quot;: &quot;UTIB&quot;,
+        &quot;mandateReqId&quot;: &quot;API&quot;,
+        &quot;utilityCode&quot;: &quot;RATN00005000010550&quot;,
+        &quot;categoryCode&quot;: &quot;B001&quot;,
+        &quot;freeText1&quot;: &quot;a&quot;,
+        &quot;freeText2&quot;: &quot;b&quot;,
+        &quot;freeText3&quot;: &quot;c&quot;,
+        &quot;freeText4&quot;: &quot;c&quot;
+}</value>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/emandate/registration</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">{
+&quot;Authorization&quot;:&quot;Basic YWRtaW46YWRtaW4=&quot;,
+&quot;CORRELATIONID&quot;:&quot;123456789&quot;,
+&quot;CLIENTID&quot;:&quot;78g659ed2a0dfa2b&quot;,
+&quot;CLIENTSECRET&quot;:&quot;f56f68b65739bd8a&quot;,
+&quot;ContentType&quot;:&quot;application/json&quot;
+}</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;status&quot;: &quot;1&quot;,
+    &quot;url&quot;: &quot;https://emandateuat.rblbank.com/enach/emandateuploadpage.aspx?ref=6wRfsmynaber9VIg%2FkAsNA%3D%3D&amp;Mandatereqid=API3488678901123457891014015&quot;,
+    &quot;mandateReqID&quot;: &quot;API3488678901123457891014015&quot;
+}</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">NONE</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

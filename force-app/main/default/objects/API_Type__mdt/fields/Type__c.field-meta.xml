@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>OCR</fullName>
+                <default>true</default>
+                <label>OCR</label>
+            </value>
+            <value>
+                <fullName>High Mark</fullName>
+                <default>false</default>
+                <label>High Mark</label>
+            </value>
+            <value>
+                <fullName>KYC</fullName>
+                <default>false</default>
+                <label>KYC</label>
+            </value>
+            <value>
+                <fullName>Kotak Insurance</fullName>
+                <default>false</default>
+                <label>Kotak Insurance</label>
+            </value>
+            <value>
+                <fullName>Penny Drop</fullName>
+                <default>false</default>
+                <label>Penny Drop</label>
+            </value>
+            <value>
+                <fullName>eNach</fullName>
+                <default>false</default>
+                <label>eNach</label>
+            </value>
+            <value>
+                <fullName>Owner Validations</fullName>
+                <default>false</default>
+                <label>Owner Validations</label>
+            </value>
+            <value>
+                <fullName>Mobile Verification</fullName>
+                <default>false</default>
+                <label>Mobile Verification</label>
+            </value>
+            <value>
+                <fullName>Emandate</fullName>
+                <default>false</default>
+                <label>Emandate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

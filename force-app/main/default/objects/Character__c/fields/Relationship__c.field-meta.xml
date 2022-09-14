@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Relationship__c</fullName>
+    <externalId>false</externalId>
+    <label>Relationship</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Father of</fullName>
+                <default>false</default>
+                <label>Father of</label>
+            </value>
+            <value>
+                <fullName>Mother of</fullName>
+                <default>false</default>
+                <label>Mother of</label>
+            </value>
+            <value>
+                <fullName>Son  of</fullName>
+                <default>false</default>
+                <label>Son  of</label>
+            </value>
+            <value>
+                <fullName>Daughter Of</fullName>
+                <default>false</default>
+                <label>Daughter Of</label>
+            </value>
+            <value>
+                <fullName>Wife of</fullName>
+                <default>false</default>
+                <label>Wife of</label>
+            </value>
+            <value>
+                <fullName>Husband of</fullName>
+                <default>false</default>
+                <label>Husband of</label>
+            </value>
+            <value>
+                <fullName>Brother of</fullName>
+                <default>false</default>
+                <label>Brother of</label>
+            </value>
+            <value>
+                <fullName>Sister of</fullName>
+                <default>false</default>
+                <label>Sister of</label>
+            </value>
+            <value>
+                <fullName>Brother in law of</fullName>
+                <default>false</default>
+                <label>Brother in law of</label>
+            </value>
+            <value>
+                <fullName>Sister in law of</fullName>
+                <default>false</default>
+                <label>Sister in law of</label>
+            </value>
+            <value>
+                <fullName>Grandfather of</fullName>
+                <default>false</default>
+                <label>Grandfather of</label>
+            </value>
+            <value>
+                <fullName>Grandmother of</fullName>
+                <default>false</default>
+                <label>Grandmother of</label>
+            </value>
+            <value>
+                <fullName>Grandson of</fullName>
+                <default>false</default>
+                <label>Grandson of</label>
+            </value>
+            <value>
+                <fullName>Granddaughter of</fullName>
+                <default>false</default>
+                <label>Granddaughter of</label>
+            </value>
+            <value>
+                <fullName>Uncle of</fullName>
+                <default>false</default>
+                <label>Uncle of</label>
+            </value>
+            <value>
+                <fullName>Aunt of</fullName>
+                <default>false</default>
+                <label>Aunt of</label>
+            </value>
+            <value>
+                <fullName>Cousin of</fullName>
+                <default>false</default>
+                <label>Cousin of</label>
+            </value>
+            <value>
+                <fullName>Self</fullName>
+                <default>false</default>
+                <label>Self</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

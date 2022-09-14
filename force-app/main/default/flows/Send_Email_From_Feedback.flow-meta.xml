@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>High_Priority_Bug</name>
+        <label>High Priority Bug</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBodyTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>ToEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Critical Or Blocker Issue Occurs in Pre UAT</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <interviewLabel>Send Email From Feedback {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Email From Feedback</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>High_Priority_Bug</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>STATUS__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </filters>
+        <object>Centrum_Care__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>EmailBodyTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Bug with SEVERITY : {!$Record.SEVERITY__c} created in PRE UAT : 
+Name : {!$Record.Name},
+Record Id : {!$Record.Id},
+Module : {!$Record.Module_Related_to__c},
+Description : {!$Record.DESCRIPTION__c}.</text>
+    </textTemplates>
+    <variables>
+        <name>ToEmails</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>mudit.s@techmatrixconsulting.com,atul.rai@techmatrixconsulting.com,ankur.v@techmatrixconsulting.com</stringValue>
+        </value>
+    </variables>
+</Flow>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Building_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Building Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RCC</fullName>
+                <default>false</default>
+                <label>RCC</label>
+            </value>
+            <value>
+                <fullName>ACC</fullName>
+                <default>false</default>
+                <label>ACC</label>
+            </value>
+            <value>
+                <fullName>Titled</fullName>
+                <default>false</default>
+                <label>Titled</label>
+            </value>
+            <value>
+                <fullName>Hut</fullName>
+                <default>false</default>
+                <label>Hut</label>
+            </value>
+            <value>
+                <fullName>Tin Sheet</fullName>
+                <default>false</default>
+                <label>Tin Sheet</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>Mud</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Mud</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

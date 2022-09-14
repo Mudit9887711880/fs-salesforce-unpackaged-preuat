@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_Due__c</fullName>
+    <externalId>false</externalId>
+    <label>Stage Due</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pre Login</fullName>
+                <default>false</default>
+                <label>Pre Login</label>
+            </value>
+            <value>
+                <fullName>Disbursement</fullName>
+                <default>false</default>
+                <label>Disbursement</label>
+            </value>
+            <value>
+                <fullName>Pre Disbursement</fullName>
+                <default>false</default>
+                <label>Pre Disbursement</label>
+            </value>
+            <value>
+                <fullName>Post Disbursement</fullName>
+                <default>false</default>
+                <label>Post Disbursement</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

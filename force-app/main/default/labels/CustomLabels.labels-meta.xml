@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Business_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Business Date</shortDescription>
+        <value>14/09/2022</value>
+    </labels>
+    <labels>
+        <fullName>Custody_Document_Checker_Required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custody Document Checker Required</shortDescription>
+        <value>true</value>
+    </labels>
+    <labels>
+        <fullName>Document_Generation_Record_Type_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Document Generation Record Type Name</shortDescription>
+        <value>Aadhar Consent Form,DPN,Form 60,Insurance Undertaking Letter.MOD amount difference letter,MSME Letter,Original Title Deed - BM/OO Declaration,Property Schedule mismatch letter,Schedule A,Signature Mismatch Letter,Vernacular / LTI Declaration</value>
+    </labels>
+    <labels>
+        <fullName>Legal_Approval_Required_Docs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Legal Approval Required Docs</shortDescription>
+        <value>Legal Opinion Report,Supporting Docs,Online EC Report,Guideline Value,Pleading Document</value>
+    </labels>
+    <labels>
+        <fullName>Legal_Opinion_Lawyer_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Legal Opinion Lawyer Error Message</shortDescription>
+        <value>No lawyer is selected for this application, please select any lawyer.</value>
+    </labels>
+    <labels>
+        <fullName>Legal_Opinion_Required_Field_Missing_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Legal Opinion Required Field Missing Error Message</shortDescription>
+        <value>Please fill required fields of data entry section.</value>
+    </labels>
+    <labels>
+        <fullName>Legal_Opion_Report_Missing_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Legal Opion Report Missing Error Message</shortDescription>
+        <value>Legal Opinion Report is missing for this application, please upload Legal Opinion Report.</value>
+    </labels>
+    <labels>
+        <fullName>Property_RecordTypes_To_Clone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property RecordTypes To Clone</shortDescription>
+        <value>FIV-B Property Detail,FIV-C Property Detail,Lead Detail,Legal Approval,Online EC Property Detail,PC Property Detail</value>
+    </labels>
+</CustomLabels>

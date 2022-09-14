@@ -1,0 +1,1184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Highmark</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:type="xsd:string">Highmark</value>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/inquiry</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">Authorization:Basic YWRtaW46YWRtaW4=
+CORRELATION-ID:123456789
+CLIENT-ID:78g659ed2a0dfa2b
+CLIENT-SECRET:f56f68b65739bd8a
+Content-Type:application/json</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;basePlusReportFile&quot;: {
+        &quot;basePlusReports&quot;: {
+            &quot;basePlusReport&quot;: {
+                &quot;header&quot;: {
+                    &quot;dateOfRequest&quot;: &quot;05-09-2022&quot;,
+                    &quot;preparedFor&quot;: &quot;FiveStar Business&quot;,
+                    &quot;preparedForId&quot;: &quot;NBF0000039&quot;,
+                    &quot;dateOfIssue&quot;: &quot;05-09-2022&quot;,
+                    &quot;reportId&quot;: &quot;Five220905CR373964075&quot;,
+                    &quot;batchId&quot;: &quot;316542586220905&quot;,
+                    &quot;status&quot;: &quot;SUCCESS&quot;
+                },
+                &quot;request&quot;: {
+                    &quot;name&quot;: &quot;SUMATHI.R&quot;,
+                    &quot;dob&quot;: &quot;15-06-1978&quot;,
+                    &quot;addresss1&quot;: &quot;F NO 201 PRAGATHI BOMMARILLU APTS P 5 8 59 RAJIV GANDI NAGAR BACHUPALLY HYDERABAD 500090 TS&quot;,
+                    &quot;mbrId&quot;: &quot;M12345&quot;,
+                    &quot;creditInqPurpsTyp&quot;: &quot;ACCT-ORIG&quot;,
+                    &quot;creditInqPurpsTypDesc&quot;: &quot;Others&quot;,
+                    &quot;creditInquiryStage&quot;: &quot;PRE-SCREEN&quot;,
+                    &quot;creditRptId&quot;: &quot;CR12345&quot;,
+                    &quot;creditReqTyp&quot;: &quot;INDV&quot;,
+                    &quot;creditRptTrnDtTm&quot;: &quot;M12345&quot;,
+                    &quot;losAppId&quot;: &quot;101M12345&quot;,
+                    &quot;loanAmount&quot;: &quot;500000&quot;
+                },
+                &quot;personalInfoVariation&quot;: {
+                    &quot;nameVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;SUMATHI RAJA RAJA&quot;,
+                                &quot;reportedDate&quot;: &quot;03-04-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;SUMATHI R&quot;,
+                                &quot;reportedDate&quot;: &quot;02-07-2020&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;SUMANTH A&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2017&quot;
+                            }
+                        }
+                    ],
+                    &quot;addressVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;NO:5/48 ARUNTHATHIYAR STREET PANANKADU PETHAMPATTI -SALEM 637501 TN&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2020&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;5-36D RAJAPALAYAM ST SALEM 637501 TN&quot;,
+                                &quot;reportedDate&quot;: &quot;02-07-2020&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;5-36D RAJAPALAYAM ST MARIYAMMAN KOVIL NEAR SALEM 637501&quot;,
+                                &quot;reportedDate&quot;: &quot;31-12-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;F NO-201 PRAGATHI BOMMARILLU APTS P NO 5 8, 59 RAJIV GANDI NAGAR BACHUPALLY HYDERABAD 500090 AP&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;-&quot;,
+                                &quot;reportedDate&quot;: &quot;03-08-2012&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;DLF BLDG  GACHIBOWLI HYDERABAD 500032 AP&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;5 36D RAJAPALAYAM ST MARIYAMMAN KOVIL NEAR SALEM 637501&quot;,
+                                &quot;reportedDate&quot;: &quot;05-06-2017&quot;
+                            }
+                        }
+                    ],
+                    &quot;panVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;GTFPL3777N&quot;,
+                                &quot;reportedDate&quot;: &quot;02-07-2020&quot;
+                            }
+                        }
+                    ],
+                    &quot;drivingLicenseVariations&quot;: null,
+                    &quot;dateOfBirthVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;01-01-1978&quot;,
+                                &quot;reportedDate&quot;: &quot;02-07-2020&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;19-03-1982&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2020&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;17-01-1987&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;15-04-1979&quot;,
+                                &quot;reportedDate&quot;: &quot;03-04-2017&quot;
+                            }
+                        }
+                    ],
+                    &quot;voterIdVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;57183070130602&quot;,
+                                &quot;reportedDate&quot;: &quot;03-04-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;77465999301366&quot;,
+                                &quot;reportedDate&quot;: &quot;02-07-2020&quot;
+                            }
+                        }
+                    ],
+                    &quot;passportVariations&quot;: null,
+                    &quot;phoneNumberVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;6573212914&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;8893176756&quot;,
+                                &quot;reportedDate&quot;: &quot;28-01-2011&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;6688493648&quot;,
+                                &quot;reportedDate&quot;: &quot;02-07-2020&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;7851332337&quot;,
+                                &quot;reportedDate&quot;: &quot;03-04-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;6613273974&quot;,
+                                &quot;reportedDate&quot;: &quot;31-10-2014&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;8841315166&quot;,
+                                &quot;reportedDate&quot;: &quot;02-02-2015&quot;
+                            }
+                        }
+                    ],
+                    &quot;rationCardVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;B1824348&quot;,
+                                &quot;reportedDate&quot;: &quot;03-04-2017&quot;
+                            }
+                        }
+                    ],
+                    &quot;emailVariations&quot;: [
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;MAIL2SUMANTH171GMAILCOM&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2017&quot;
+                            }
+                        },
+                        {
+                            &quot;variation&quot;: {
+                                &quot;value&quot;: &quot;KFLVR9405@FMG.COM&quot;,
+                                &quot;reportedDate&quot;: &quot;31-05-2017&quot;
+                            }
+                        }
+                    ]
+                },
+                &quot;accountsSummary&quot;: {
+                    &quot;derivedAttributes&quot;: {
+                        &quot;inquiriesInLastSixMonths&quot;: &quot;37&quot;,
+                        &quot;lengthOfCreditHistoryYear&quot;: &quot;6&quot;,
+                        &quot;lengthOfCreditHistoryMonth&quot;: &quot;6&quot;,
+                        &quot;averageAccountAgeYear&quot;: &quot;2&quot;,
+                        &quot;averageAccountAgeMonth&quot;: &quot;0&quot;,
+                        &quot;newAccountsInLastSixMonths&quot;: &quot;0&quot;,
+                        &quot;newDelinqAccountsInLastSixMonths&quot;: &quot;0&quot;
+                    },
+                    &quot;primaryAccountsSummary&quot;: {
+                        &quot;primaryNumberOfAccounts&quot;: &quot;12&quot;,
+                        &quot;primaryActiveNumberOfAccounts&quot;: &quot;1&quot;,
+                        &quot;primaryOverdueNumberrOfAccounts&quot;: &quot;1&quot;,
+                        &quot;primarySecuredNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;primaryUnsecuredNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;primaryUntaggedNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;primaryCurrentBalance&quot;: &quot;26,510&quot;,
+                        &quot;primarySanctionedAmount&quot;: &quot;45,000&quot;,
+                        &quot;primaryDisbursedAmount&quot;: &quot;45,000&quot;
+                    },
+                    &quot;secondaryAccountsSummary&quot;: {
+                        &quot;secondaryNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;secondaryActiveNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;secondaryOverdueNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;secondarySecuredNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;secondaryUnSecuredNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;secondaryUntaggedNumberOfAccounts&quot;: &quot;0&quot;,
+                        &quot;secondaryCurrentBalance&quot;: &quot;0&quot;,
+                        &quot;secondarySanctionedAmount&quot;: &quot;0&quot;,
+                        &quot;secondaryDisbursedAmount&quot;: &quot;0&quot;
+                    }
+                },
+                &quot;responses&quot;: {
+                    &quot;response&quot;: [
+                        {
+                            &quot;loanDetails&quot;: {
+                                &quot;acctNumber&quot;: &quot;XXXX&quot;,
+                                &quot;creditGuarantor&quot;: &quot;XXXX&quot;,
+                                &quot;acctType&quot;: &quot;JLG Individual&quot;,
+                                &quot;dateReported&quot;: &quot;02-07-2020&quot;,
+                                &quot;ownershipInd&quot;: &quot;Primary&quot;,
+                                &quot;accountStatus&quot;: &quot;Active&quot;,
+                                &quot;disbursedAmt&quot;: &quot;45,000&quot;,
+                                &quot;disbursedDt&quot;: &quot;13-04-2017&quot;,
+                                &quot;lastPaymentDate&quot;: &quot;07-08-2019&quot;,
+                                &quot;overdueAmt&quot;: &quot;26,510&quot;,
+                                &quot;writeOffAmt&quot;: &quot;21,974&quot;,
+                                &quot;currentBal&quot;: &quot;26,510&quot;,
+                                &quot;combinedPaymentHistory&quot;: &quot;Jul:2020,670/XXX|Jun:2020,640/XXX|May:2020,609/XXX|Apr:2020,579/XXX|Mar:2020,548/XXX|Feb:2020,519/XXX|Jan:2020,488/XXX|Dec:2019,457/XXX|Nov:2019,427/XXX|Oct:2019,396/XXX|Sep:2019,366/XXX|Aug:2019,366/XXX|Jul:2019,335/XXX|Jun:2019,305/XXX|May:2019,274/XXX|Apr:2019,244/XXX|Mar:2019,213/XXX|Feb:2019,185/XXX|Jan:2019,154/XXX|Dec:2018,XXX/XXX|Nov:2018,123/XXX|Oct:2018,093/XXX|Sep:2018,062/XXX|Aug:2018,063/XXX|Jul:2018,062/XXX|Jun:2018,031/XXX|May:2018,XXX/XXX|Apr:2018,062/XXX|Mar:2018,032/XXX|Feb:2018,029/XXX|Jan:2018,001/XXX|Dec:2017,000/XXX|Nov:2017,000/XXX|Oct:2017,000/XXX|Sep:2017,000/XXX|Aug:2017,XXX/XXX|&quot;,
+                                &quot;matchedType&quot;: &quot;PRIMARY&quot;,
+                                &quot;installmentAmt&quot;: &quot;2,420/Monthly&quot;
+                            }
+                        }
+                    ]
+                },
+                &quot;inquiryHistory&quot;: [
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;25-07-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;15-07-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;13-07-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;32,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;11-07-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;08-07-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;64,873&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-07-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;29-06-2022&quot;,
+                            &quot;purpose&quot;: &quot;Business Loan General&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;28-06-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;13-06-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;26-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;35,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;24-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;38,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;19-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;12-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;09-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;30,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;09-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;06-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;JLG Group&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;04-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;30,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;02-05-2022&quot;,
+                            &quot;purpose&quot;: &quot;JLG Group&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;28-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;28-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;JLG Group&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;26-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Personal Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;22-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;19-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;JLG Group&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;18-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;12-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;12-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Personal Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;08-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Personal Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;04-04-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;08-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;23,533&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;08-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;07-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;12,435&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;07-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;5,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;13,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;03-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;03-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;3,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;03-03-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;01-02-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;29-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;5,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;FiveStar Business C&quot;,
+                            &quot;inquiryDate&quot;: &quot;29-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;27-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;18-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;17-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;Auto Loan (Personal)&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;3,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;13-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;07-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;06-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;04-01-2022&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;30-12-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;27-12-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;27-12-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;23-12-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;17-12-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;17-12-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;02-12-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;29-11-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;83,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;27-11-2021&quot;,
+                            &quot;purpose&quot;: &quot;Education Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-08-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;20,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;29-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;19-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;07-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;25,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;07-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;45,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,15,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;5,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;03-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;98,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;03-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;42,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;03-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;88,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;03-07-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;62,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;26-06-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;50,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;21-06-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;16-06-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;15-06-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;08-06-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;5,65,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;25-05-2021&quot;,
+                            &quot;purpose&quot;: &quot;Personal Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;25-05-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;20-05-2021&quot;,
+                            &quot;purpose&quot;: &quot;Personal Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;20-05-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;14-05-2021&quot;,
+                            &quot;purpose&quot;: &quot;Business Loan Priority Sector Small Business&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;10,001&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-05-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;05-05-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;17-04-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;5,65,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;17-04-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;13-04-2021&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;12-03-2021&quot;,
+                            &quot;purpose&quot;: &quot;Microfinance Business Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;25,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;26-02-2021&quot;,
+                            &quot;purpose&quot;: &quot;Other&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;06-01-2021&quot;,
+                            &quot;purpose&quot;: &quot;Loan Against Shares / Securities&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;28-11-2020&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;2,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;20-11-2020&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;1,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;18-11-2020&quot;,
+                            &quot;purpose&quot;: &quot;Housing Loan&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;20,00,000&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;17-11-2020&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;14-10-2020&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;13-10-2020&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;08-10-2020&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    },
+                    {
+                        &quot;history&quot;: {
+                            &quot;memberName&quot;: &quot;XXXX&quot;,
+                            &quot;inquiryDate&quot;: &quot;01-10-2020&quot;,
+                            &quot;purpose&quot;: &quot;OTHER&quot;,
+                            &quot;ownershipType&quot;: &quot;PRIMARY&quot;,
+                            &quot;amount&quot;: &quot;0&quot;
+                        }
+                    }
+                ],
+                &quot;scores&quot;: {
+                    &quot;score&quot;: {
+                        &quot;scoreType&quot;: &quot;PERFORM-Consumer&quot;,
+                        &quot;scoreValue&quot;: &quot;620&quot;,
+                        &quot;scoreComments&quot;: &quot;K-Very High Risk&quot;
+                    }
+                },
+                &quot;printableReport&quot;: {
+                    &quot;type&quot;: &quot;PDF&quot;,
+                    &quot;fileName&quot;: &quot;Five220905CR373964075.html&quot;,
+                    &quot;content&quot;: &quot;ABC&quot;
+                }
+            }
+        }
+    }
+}</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

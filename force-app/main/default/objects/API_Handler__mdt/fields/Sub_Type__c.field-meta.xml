@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Type__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Sub Type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Aadhaar Card</fullName>
+                <default>true</default>
+                <label>Aadhaar Card</label>
+            </value>
+            <value>
+                <fullName>Voter Id</fullName>
+                <default>false</default>
+                <label>Voter Id</label>
+            </value>
+            <value>
+                <fullName>Pan Card</fullName>
+                <default>false</default>
+                <label>Pan Card</label>
+            </value>
+            <value>
+                <fullName>Driving License</fullName>
+                <default>false</default>
+                <label>Driving License</label>
+            </value>
+            <value>
+                <fullName>Passport</fullName>
+                <default>false</default>
+                <label>Passport</label>
+            </value>
+            <value>
+                <fullName>High Mark</fullName>
+                <default>false</default>
+                <label>High Mark</label>
+            </value>
+            <value>
+                <fullName>Mobile OTP</fullName>
+                <default>false</default>
+                <label>Mobile OTP</label>
+            </value>
+            <value>
+                <fullName>Validate OTP</fullName>
+                <default>false</default>
+                <label>Validate OTP</label>
+            </value>
+            <value>
+                <fullName>Driver Licence</fullName>
+                <default>false</default>
+                <label>Driver Licence</label>
+            </value>
+            <value>
+                <fullName>Electricity Bill</fullName>
+                <default>false</default>
+                <label>Electricity Bill</label>
+            </value>
+            <value>
+                <fullName>Property Tax</fullName>
+                <default>false</default>
+                <label>Property Tax</label>
+            </value>
+            <value>
+                <fullName>Vehicle Search Advance</fullName>
+                <default>false</default>
+                <label>Vehicle Search Advance</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

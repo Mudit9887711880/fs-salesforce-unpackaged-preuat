@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Alternate_Channel_Mode__c</fullName>
+    <externalId>false</externalId>
+    <label>Alternate Channel Mode</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Top-up Loan</fullName>
+                <default>false</default>
+                <label>Top-up Loan</label>
+            </value>
+            <value>
+                <fullName>Brokers</fullName>
+                <default>false</default>
+                <label>Brokers</label>
+            </value>
+            <value>
+                <fullName>Customer Refferal</fullName>
+                <default>false</default>
+                <label>Customer Refferal</label>
+            </value>
+            <value>
+                <fullName>Flute Board</fullName>
+                <default>false</default>
+                <label>Flute Board</label>
+            </value>
+            <value>
+                <fullName>Light Board</fullName>
+                <default>false</default>
+                <label>Light Board</label>
+            </value>
+            <value>
+                <fullName>Old Customer</fullName>
+                <default>false</default>
+                <label>Old Customer</label>
+            </value>
+            <value>
+                <fullName>Other Refferal</fullName>
+                <default>false</default>
+                <label>Other Refferal</label>
+            </value>
+            <value>
+                <fullName>Repeat Customer</fullName>
+                <default>false</default>
+                <label>Repeat Customer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

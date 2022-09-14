@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Worklist</fullName>
+    <columns>NAME</columns>
+    <columns>Application__c</columns>
+    <columns>Borrower_name__c</columns>
+    <columns>Record_Type_Name__c</columns>
+    <columns>Status__c</columns>
+    <columns>Owner__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>My Worklist</label>
+</ListView>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SD_in_name_of__c</fullName>
+    <externalId>false</externalId>
+    <label>SD In Name Of</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>P</fullName>
+                <default>false</default>
+                <label>P</label>
+            </value>
+            <value>
+                <fullName>C1</fullName>
+                <default>false</default>
+                <label>C1</label>
+            </value>
+            <value>
+                <fullName>C2</fullName>
+                <default>false</default>
+                <label>C2</label>
+            </value>
+            <value>
+                <fullName>C3</fullName>
+                <default>false</default>
+                <label>C3</label>
+            </value>
+            <value>
+                <fullName>C4</fullName>
+                <default>false</default>
+                <label>C4</label>
+            </value>
+            <value>
+                <fullName>G</fullName>
+                <default>false</default>
+                <label>G</label>
+            </value>
+            <value>
+                <fullName>Seller</fullName>
+                <default>false</default>
+                <label>Seller</label>
+            </value>
+            <value>
+                <fullName>Previous Owner</fullName>
+                <default>false</default>
+                <label>Previous Owner</label>
+            </value>
+            <value>
+                <fullName>Third Party</fullName>
+                <default>false</default>
+                <label>Third Party</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

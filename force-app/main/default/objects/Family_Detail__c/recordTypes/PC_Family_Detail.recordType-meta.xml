@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PC_Family_Detail</fullName>
+    <active>true</active>
+    <label>PC Family Detail</label>
+    <picklistValues>
+        <picklist>Applicant_Type__c</picklist>
+        <values>
+            <fullName>Both</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Highest Income Earner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property Holder</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Customer_Type__c</picklist>
+        <values>
+            <fullName>Applicant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Co-applicant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guarantor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>others</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Living_with_Applicant__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Relationship__c</picklist>
+        <values>
+            <fullName>Aunt of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brother in law of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brother of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cousin of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daughter Of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Father of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Granddaughter of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandfather of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandmother of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandson of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Husband of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mother of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sister in law of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sister of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Son of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uncle of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wife of</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>To_be_considerd_for_DBR__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

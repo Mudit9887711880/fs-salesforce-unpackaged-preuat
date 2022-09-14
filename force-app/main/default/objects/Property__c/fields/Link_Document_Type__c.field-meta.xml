@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Link_Document_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Link Document Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Gift Deed</fullName>
+                <default>false</default>
+                <label>Gift Deed</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>Partition Deed</fullName>
+                <default>false</default>
+                <label>Partition Deed</label>
+            </value>
+            <value>
+                <fullName>Release Deed</fullName>
+                <default>false</default>
+                <label>Release Deed</label>
+            </value>
+            <value>
+                <fullName>Sale Deed</fullName>
+                <default>false</default>
+                <label>Sale Deed</label>
+            </value>
+            <value>
+                <fullName>Settlement Deed</fullName>
+                <default>false</default>
+                <label>Settlement Deed</label>
+            </value>
+            <value>
+                <fullName>Will</fullName>
+                <default>false</default>
+                <label>Will</label>
+            </value>
+            <value>
+                <fullName>Co-ownership Deed</fullName>
+                <default>false</default>
+                <label>Co-ownership Deed</label>
+            </value>
+            <value>
+                <fullName>NA</fullName>
+                <default>false</default>
+                <label>NA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

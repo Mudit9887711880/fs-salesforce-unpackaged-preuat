@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Group_ID__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Group ID</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AG/DEED</fullName>
+                <default>true</default>
+                <label>AG/DEED</label>
+            </value>
+            <value>
+                <fullName>Cert</fullName>
+                <default>false</default>
+                <label>Cert</label>
+            </value>
+            <value>
+                <fullName>Layout/Plan</fullName>
+                <default>false</default>
+                <label>Layout/Plan</label>
+            </value>
+            <value>
+                <fullName>Letter</fullName>
+                <default>false</default>
+                <label>Letter</label>
+            </value>
+            <value>
+                <fullName>NOC</fullName>
+                <default>false</default>
+                <label>NOC</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Per/ORD</fullName>
+                <default>false</default>
+                <label>Per/ORD</label>
+            </value>
+            <value>
+                <fullName>POA</fullName>
+                <default>false</default>
+                <label>POA</label>
+            </value>
+            <value>
+                <fullName>Receipts</fullName>
+                <default>false</default>
+                <label>Receipts</label>
+            </value>
+            <value>
+                <fullName>Records</fullName>
+                <default>false</default>
+                <label>Records</label>
+            </value>
+            <value>
+                <fullName>RR</fullName>
+                <default>false</default>
+                <label>RR</label>
+            </value>
+            <value>
+                <fullName>ID Proof/Address Proof/Other Documents</fullName>
+                <default>false</default>
+                <label>ID Proof/Address Proof/Other Documents</label>
+            </value>
+            <value>
+                <fullName>Signature</fullName>
+                <default>false</default>
+                <label>Signature</label>
+            </value>
+            <value>
+                <fullName>Income Documents</fullName>
+                <default>false</default>
+                <label>Income Documents</label>
+            </value>
+            <value>
+                <fullName>Docket checks</fullName>
+                <default>false</default>
+                <label>Docket checks</label>
+            </value>
+            <value>
+                <fullName>Specialized Services</fullName>
+                <default>false</default>
+                <label>Specialized Services</label>
+            </value>
+            <value>
+                <fullName>Contact Point Verification</fullName>
+                <default>false</default>
+                <label>Contact Point Verification</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

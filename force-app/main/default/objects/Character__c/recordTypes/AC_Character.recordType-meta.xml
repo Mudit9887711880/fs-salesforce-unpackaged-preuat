@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AC_Character</fullName>
+    <active>true</active>
+    <label>AC Character</label>
+    <picklistValues>
+        <picklist>Affiliation_with__c</picklist>
+        <values>
+            <fullName>Advocate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Police</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Politics</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Applicant_Type__c</picklist>
+        <values>
+            <fullName>Both</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Highest Income Earner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Property Holder</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Character_Of_Affiliated_Person__c</picklist>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Character__c</picklist>
+        <values>
+            <fullName>Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Below Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Consumer_Durables__c</picklist>
+        <values>
+            <fullName>2 Wheeler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CAR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cooler</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flat TV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flooring</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Normal TV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Painting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Refrigerator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sofa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Washing Machine</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Customer_Type__c</picklist>
+        <values>
+            <fullName>Co-Applicant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guarantor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Primary Applicant</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FeedBack__c</picklist>
+        <values>
+            <fullName>Negative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neutral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Positive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Is_Involved__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lifestyle_Loan_Amount_2L_to_4_Lakhs__c</picklist>
+        <values>
+            <fullName>Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Below Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lifestyle_Loan_Amount_4L_to_8_Lakhs__c</picklist>
+        <values>
+            <fullName>Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Below Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lifestyle_Loan_Amount_8Lakhs__c</picklist>
+        <values>
+            <fullName>Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Below Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lifestyle__c</picklist>
+        <values>
+            <fullName>Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Below Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Living_Standard__c</picklist>
+        <values>
+            <fullName>Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Below Average</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Living_with_Applicant__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Money_lending_Involvement__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Politics_Involvement__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Present_Political_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Relationship_Matrix__c</picklist>
+        <values>
+            <fullName>Dummy 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dummy 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Relationship__c</picklist>
+        <values>
+            <fullName>Aunt of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brother in law of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brother of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cousin of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daughter Of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Father of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Granddaughter of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandfather of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandmother of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandson of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Husband of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mother of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sister in law of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sister of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Son  of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uncle of</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wife of</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Section_Type__c</picklist>
+        <values>
+            <fullName>Affiliation Detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FIV-B Character Detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Family Detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Living Standard Detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neighbour Detail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Repayment Behaviour Detail</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>To_be_considerd_for_DBR__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Bureau</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Self</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

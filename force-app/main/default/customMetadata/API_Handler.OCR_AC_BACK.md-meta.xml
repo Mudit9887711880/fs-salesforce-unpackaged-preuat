@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Back</label>
+    <protected>false</protected>
+    <values>
+        <field>API_Type__c</field>
+        <value xsi:type="xsd:string">OCR_APIs</value>
+    </values>
+    <values>
+        <field>Body__c</field>
+        <value xsi:type="xsd:string">{
+&quot;fileB64&quot;:##REPLACE_WITH_IMAGE##,
+&quot;maskAadhaar&quot;:false,
+&quot;hideAadhaar&quot;:false,
+&quot;conf&quot;:true,
+&quot;docType&quot;:&quot;&quot;,
+&quot;checkBlur&quot;:false,
+&quot;checkBlackAndWhite&quot;:false,
+&quot;checkCutCard&quot;:false,
+&quot;checkBrightness&quot;:false
+}</value>
+    </values>
+    <values>
+        <field>Endpoint__c</field>
+        <value xsi:type="xsd:string">https://uat-api.fsbl.in/api/1.0/ux/authentication/kycocr</value>
+    </values>
+    <values>
+        <field>HeaderParameters__c</field>
+        <value xsi:type="xsd:string">Authorization:Basic YWRtaW46YWRtaW4=
+CORRELATION-ID:123456789
+CLIENT-ID:78g659ed2a0dfa2b
+CLIENT-SECRET:f56f68b65739bd8a
+Content-Type:application/json</value>
+    </values>
+    <values>
+        <field>Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+    <values>
+        <field>Mock_Response__c</field>
+        <value xsi:type="xsd:string">{ &quot;requestId&quot;: &quot;9709dbd7-7d1e-4ce7-9a26-0812c4530181&quot;, &quot;result&quot;: [ { &quot;details&quot;: { &quot;aadhaar&quot;: { &quot;value&quot;: &quot;307934702923&quot;, &quot;conf&quot;: 1.0, &quot;isMasked&quot;: &quot;no&quot; }, &quot;address&quot;: { &quot;value&quot;: &quot;railway staion road, bhagwatiganj, Balrampur, Balrampur, Uttar Pradesh, 271201&quot;, &quot;conf&quot;: 1.0 }, &quot;pin&quot;: { &quot;value&quot;: &quot;271201&quot;, &quot;conf&quot;: 1.0 }, &quot;imageUrl&quot;: { &quot;value&quot;: &quot;&quot; }, &quot;qr&quot;: { &quot;value&quot;: &quot;&quot; }, &quot;father&quot;: { &quot;value&quot;: &quot;&quot;, &quot;conf&quot;: 0 }, &quot;husband&quot;: { &quot;value&quot;: &quot;&quot;, &quot;conf&quot;: 0 }, &quot;addressSplit&quot;: { &quot;careOf&quot;: &quot;&quot;, &quot;houseNumber&quot;: &quot;&quot;, &quot;city&quot;: &quot;Balrampur&quot;, &quot;line1&quot;: &quot;&quot;, &quot;line2&quot;: &quot;railway staion road bhagwatiganj&quot;, &quot;street&quot;: &quot;railway staion road&quot;, &quot;locality&quot;: &quot;bhagwatiganj&quot;, &quot;landmark&quot;: &quot;&quot;, &quot;district&quot;: &quot;Balrampur&quot;, &quot;state&quot;: &quot;Uttar Pradesh&quot;, &quot;pin&quot;: &quot;271201&quot; } }, &quot;type&quot;: &quot;Aadhaar Back&quot; } ], &quot;statusCode&quot;: 101, &quot;description&quot;: &quot;Successful OCR&quot; }</value>
+    </values>
+    <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">2.0</value>
+    </values>
+    <values>
+        <field>Orientation__c</field>
+        <value xsi:type="xsd:string">BACK</value>
+    </values>
+    <values>
+        <field>Sub_Type__c</field>
+        <value xsi:type="xsd:string">Aadhaar Card</value>
+    </values>
+    <values>
+        <field>Timeout__c</field>
+        <value xsi:type="xsd:double">120000.0</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

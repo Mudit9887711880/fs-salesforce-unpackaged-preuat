@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Sourcing_Branch__c</columns>
+    <columns>Stage__c</columns>
+    <columns>Sub_Stage__c</columns>
+    <columns>application_status__c</columns>
+    <columns>Requested_Loan_Amount__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Applications</label>
+</ListView>

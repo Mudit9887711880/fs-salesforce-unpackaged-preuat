@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Person_residing_at_Mortgage_property__c</fullName>
+    <externalId>false</externalId>
+    <label>Person Residing At Mortgage Property</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Vacant</fullName>
+                <default>false</default>
+                <label>Vacant</label>
+            </value>
+            <value>
+                <fullName>Blood relative</fullName>
+                <default>false</default>
+                <label>Blood relative</label>
+            </value>
+            <value>
+                <fullName>Other relatives</fullName>
+                <default>false</default>
+                <label>Other relatives</label>
+            </value>
+            <value>
+                <fullName>3rd Party</fullName>
+                <default>false</default>
+                <label>3rd Party</label>
+            </value>
+            <value>
+                <fullName>Seller</fullName>
+                <default>false</default>
+                <label>Seller</label>
+            </value>
+            <value>
+                <fullName>Relative</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Relative</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Residual_Age_Of_Property__c</fullName>
+    <externalId>false</externalId>
+    <label>Residual Age Of Property</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Less than 5 Years</fullName>
+                <default>false</default>
+                <label>Less than 5 Years</label>
+            </value>
+            <value>
+                <fullName>5 to 15 Years</fullName>
+                <default>false</default>
+                <label>5 to 15 Years</label>
+            </value>
+            <value>
+                <fullName>15 to 25 Years</fullName>
+                <default>false</default>
+                <label>15 to 25 Years</label>
+            </value>
+            <value>
+                <fullName>25 to 40 Years</fullName>
+                <default>false</default>
+                <label>25 to 40 Years</label>
+            </value>
+            <value>
+                <fullName>More than 40 Years</fullName>
+                <default>false</default>
+                <label>More than 40 Years</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

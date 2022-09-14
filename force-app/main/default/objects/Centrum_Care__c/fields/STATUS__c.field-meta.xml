@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>STATUS__c</fullName>
+    <externalId>false</externalId>
+    <label>STATUS</label>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>New</fullName>
+                <default>true</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+                <label>In Progress</label>
+            </value>
+            <value>
+                <fullName>Closed</fullName>
+                <default>false</default>
+                <label>Closed</label>
+            </value>
+            <value>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+                <label>Fixed</label>
+            </value>
+            <value>
+                <fullName>Reopened</fullName>
+                <default>false</default>
+                <label>Reopened</label>
+            </value>
+            <value>
+                <fullName>Hold</fullName>
+                <default>false</default>
+                <label>Hold</label>
+            </value>
+            <value>
+                <fullName>Not a Bug</fullName>
+                <default>false</default>
+                <label>Not a Bug</label>
+            </value>
+            <value>
+                <fullName>Under Testing</fullName>
+                <default>false</default>
+                <label>Under Testing</label>
+            </value>
+            <value>
+                <fullName>Deployed in Pre-UAT</fullName>
+                <default>false</default>
+                <label>Deployed in Pre-UAT</label>
+            </value>
+            <value>
+                <fullName>Moved to Phase 2</fullName>
+                <default>false</default>
+                <label>Moved to Phase 2</label>
+            </value>
+            <value>
+                <fullName>Accepted</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Accepted</label>
+            </value>
+            <value>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Blocked</label>
+            </value>
+            <value>
+                <fullName>Resolved</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Resolved</label>
+            </value>
+            <value>
+                <fullName>Taken-up in UAT</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Taken-up in UAT</label>
+            </value>
+            <value>
+                <fullName>Validated by Centrum Business</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Validated by Centrum Business</label>
+            </value>
+            <value>
+                <fullName>Waiting for Response From User</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Waiting for Response From User</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

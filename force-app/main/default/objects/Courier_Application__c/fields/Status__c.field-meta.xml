@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Dispatch</fullName>
+                <default>false</default>
+                <label>Dispatch</label>
+            </value>
+            <value>
+                <fullName>File In Transit</fullName>
+                <default>false</default>
+                <label>File In Transit</label>
+            </value>
+            <value>
+                <fullName>Received</fullName>
+                <default>false</default>
+                <label>Received</label>
+            </value>
+            <value>
+                <fullName>Not Received</fullName>
+                <default>false</default>
+                <label>Not Received</label>
+            </value>
+            <value>
+                <fullName>Re-Dispatched</fullName>
+                <default>false</default>
+                <label>Re-Dispatched</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

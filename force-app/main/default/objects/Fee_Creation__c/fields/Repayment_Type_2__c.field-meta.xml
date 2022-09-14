@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Repayment_Type_2__c</fullName>
+    <externalId>false</externalId>
+    <label>Repayment Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Direct Receipt</fullName>
+                <default>false</default>
+                <label>Direct Receipt</label>
+            </value>
+            <value>
+                <fullName>Deduct from Disbursement</fullName>
+                <default>false</default>
+                <label>Deduct from Disbursement</label>
+            </value>
+            <value>
+                <fullName>Add to Loan Amount</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Add to Loan Amount</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
