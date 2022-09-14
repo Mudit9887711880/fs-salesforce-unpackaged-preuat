@@ -1,0 +1,25 @@
+<aura:component controller="FS_PreLoginController" implements="force:appHostable,lightning:hasPageReference,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride" access="global">
+    <!--Declare Attributes  controller=FS_PreLoginController-->
+    <!--implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride,lightning:hasPageReference"-->
+    <aura:attribute name="selectedRecordId" type="Id" />
+    <aura:attribute name="reloadLwc" type="Boolean"/>
+    <aura:attribute name="preAppId" type="String" />
+    <aura:attribute name="preAppName" type="String" />
+    <!--Declare Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- <aura:if isTrue="{!v.reloadLwc}">
+        <c:preLoginNewEditOverrideLWC recordId="{!v.recordId}" recordTypeId="{!v.selectedRecordId}" preAppId="{!v.preAppId}" preAppName="{!v.preAppName}"/>
+        <aura:set attribute="else">
+            <c:preLoginNewEditOverrideLWC recordId="{!v.recordId}" recordTypeId="{!v.selectedRecordId}" preAppId="{!v.applicationId}" preAppName="{!v.preAppName}"/>
+        </aura:set>
+    </aura:if>  -->
+    
+    <aura:if isTrue="{!v.reloadLwc}">
+        <c:fsPrelogin recordId="{!v.recordId}" recordTypeId="{!v.selectedRecordId}" preAppId="{!v.preAppId}" preAppName="{!v.preAppName}"/>
+        <aura:set attribute="else">
+            <c:fsPrelogin recordId="{!v.recordId}" recordTypeId="{!v.selectedRecordId}" preAppId="{!v.applicationId}" preAppName="{!v.preAppName}"/>
+        </aura:set>
+    </aura:if> 
+    
+</aura:component>

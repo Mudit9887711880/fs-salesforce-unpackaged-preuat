@@ -1,0 +1,13 @@
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:actionOverride" access="global" controller="FsLeadDetailsController">
+    <lightning:navigation aura:id="navService"/>    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />    
+    <aura:html tag="style">
+        .slds-modal {
+        visibility: hidden;
+        display: none;
+        }
+        .slds-backdrop{
+        display: none;
+        }        
+    </aura:html>
+</aura:component>

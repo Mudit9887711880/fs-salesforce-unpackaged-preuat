@@ -1,0 +1,67 @@
+<aura:component implements="lightning:availableForFlowScreens">
+
+    <!--Declare Attributes-->
+    <aura:attribute name="recordList" type="String[]"/>
+    <aura:attribute name="recordListTable" type="Object"/>
+    <aura:attribute name="rowNo" type="Integer" default="0"/>
+    <!--Declare Handler-->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+     
+    <!--Component Start-->
+    <div class="slds-m-around--xxx-large">               
+         
+        <lightning:card>
+            <aura:set attribute="title">
+                List Of Exclusions
+            </aura:set>
+            
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset slds-text-title_caps">
+                            <th class="slds-is-resizable" scope="col">
+                                <div class="slds-truncate" title="Name">
+                                    No.
+                                </div>
+                            </th>
+                            <th class="slds-is-resizable" scope="col">
+                                <div class="slds-truncate" title="Name">
+                                    Exclusion Type
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <aura:if isTrue="{!v.recordListTable.length > 0}">
+            
+                    <tbody>
+                        <aura:iteration items="{!v.recordListTable}" var="objExclusion">
+                            <tr class="slds-hint-parent">
+                                <td data-label="Exclusion Type" scope="row">
+                                    <div class="slds-truncate" title="{!objExclusion.rowNo}">
+                                        {!objExclusion.rowNo}
+                                    </div>
+                                </td>
+                                <th data-label="Exclusion Type" scope="row">
+                                    <div class="slds-truncate" title="{!objExclusion.Name}">
+                                        {!objExclusion.Name}
+                                    </div>
+                                </th>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </aura:if>
+                </table>
+            <aura:if isTrue="{!empty(v.recordListTable)}">
+                <div class="slds-align_absolute-center">
+                    <br/>
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title="No Exclusions Found">No Exclusions Found!</span>
+                        </h3>
+                    </div>
+                </div>
+            </aura:if>
+        </lightning:card>
+    </div>
+    <!--Component End-->
+
+</aura:component>

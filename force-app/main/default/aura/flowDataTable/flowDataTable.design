@@ -1,0 +1,6 @@
+<design:component label="Lightning DataTable - Time Slots" >
+
+    <!-- CHANGE THE OBJECT NAMES HERE AND IN THE CMP FILE TO SUPPORT DIFFERENT OBJECTS -->
+    <design:attribute name="recordList" label="Collection Of Data"/>
+    
+</design:component>

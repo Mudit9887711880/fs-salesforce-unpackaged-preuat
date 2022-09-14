@@ -1,0 +1,23 @@
+<!--
+  @author            : Karan Singh Soni
+  @group             : TechMatrix Consulting
+  @description       : Create as a quick action for fs_dedupeDetails_Lwc component.
+  @created on        : 21-08-2022
+  @last modified on  : 21-08-2022
+  @last modified by  : Karan Singh Soni
+-->
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+
+    <aura:html tag="style">
+        .slds-modal {
+        visibility: hidden;
+        display: none;
+        }
+        .slds-backdrop{
+        display: none;
+        }
+    </aura:html>
+
+    <lightning:navigation aura:id="navService" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+</aura:component>
