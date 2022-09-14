@@ -1,0 +1,134 @@
+<apex:page controller="DocumentGenerationVFController" readOnly="true"  applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-bottom:0.6in;
+            @bottom-left {
+            
+            content: element(footer);
+            
+            }
+            
+            }
+            .tdmargin
+            {
+            padding-left:10px;
+            }
+            .text
+            {
+            font-size:13.5px;
+            }
+            div.footer {
+            display: block;
+            margin-bottom: 35px;
+            
+            position: running(footer);
+            }
+            .pagenumber:before {
+            content: counter(page);
+            }
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tabledata{
+            border: 10px solid black;
+            border-collapse: collapse;
+            }
+            #line1{
+            margin-left:2px;
+            
+            }
+            #line2{
+            margin-left:50px;
+            }
+            #line3{
+            margin-left:65px;
+            }
+            
+        </style>      
+    </head>
+    <h2 style="text-align:center;margin-top:-5px"><u>Insurance Undertaking Letter</u></h2> 
+    <body>
+        <apex:form >
+            <div>
+                <p>
+                    <b>Date:</b> ______________
+                </p>
+                <p style="float:right;margin-right:0.9in;margin-top:-3%">
+                    <b>Place:</b> {!loanApp.Application__r.Sourcing_Branch__r.Name}<br/><br/>
+                    <b>TO,</b><br/>
+                    <b>The Manager</b><br/>
+                    <b>Five Star Buisness Finance Limited</b><br/>
+                    KilPauk,Chennai<br/><br/><br/>
+                </p>
+            </div>
+            <div>
+                <p class="text" style="margin-top:0px;">
+                    <b>From,</b><br/>
+                    {!loanApp.Customer_Information__r.Name}<br/>   
+                    {!loanApp.Residence_Address_Line_1__c}, {!loanApp.Residence_City__c},<br/> {!loanApp.Residence_State__c}, {!loanApp.Residence_Pincode__r.Name}  
+                </p>
+            </div>
+            <div class="text">
+                <b> Dear Sir,</b><br/>
+                 Sub:Insurance undertaking Letter<br/><br/>
+            </div>
+            <div class="text">
+                <p>
+                    We have applied for a loan under the Application Number <b>{!application.Name}</b> and	 has been sanctioned a limit
+                    of Rs <b>₹{!loanApp.Application__r.Total_Amount_Recommended_PcAc__c}</b>.As per the terms and conditions of the Loan Sanction Letter, we would like to avail the
+                    Credit Life Insurance Cover for <b>{!loanApp.Customer_Information__r.Name}</b>.In this period, we would like to
+                    confirm the following:<br/><br/>
+                </p>
+                <ol style="margin-left:1in;margin-right:0.8in;text-align:justify;">   
+                    <li>The Credit Life Cover will be taken from <b>Kotak Mahindra Life Insurance Company Ltd</b>. We will<br/>
+                        <span style = "text-align:left;">execute all the documents in this regard.<br/></span></li>
+                    <li>We are aware that the Credit Life Insurance cover is being taken only for one Applicant, in the name<br/>
+                        <b>{!loanApp.Customer_Information__r.Name}</b>.
+                        Considering the premium cost, we have taken a<br/>decision for covering only
+                        one of the Applicants and we hereby give our explicit consent for this decision.
+                        <span style = "text-align:left;">We will stand by this decision and shall not contain any dispute in this matter, in the future.<br/></span></li>
+                    <li>We are aware that the loan is being disbursed ahead of the confirmation of coverage of  the Credit<br/>
+                        Life Insurance policy by the Insurance Company,If for any reason the coverage was to be denied<br/>
+                        by the Insurance Company,we will be bound by the decision of Five Star Buisness Finance Limited;<br/>
+                        which could include taking a separate Life Insurance cover in the name of the above Applicant,<br/>
+                        clearly stating Five Star Business Finance Limited as the beneficiary or Immediate repayment of the<br/>
+                        <span style = "text-align:left;">loan in full along with applicable charges.<br/></span></li>
+                    <li>The Credit Life Insurance cover is only for this loan sanctioned under the aforementioned Application<br/>
+                        Number and for the aforementioned amount only. We are aware that the coverage will not be applicable<br/>
+                        <span style = "text-align:left;">for any previous loan(s) that we have taken in the past from the Company.<br/></span></li>
+                    <li>We are aware that the payment of claims shall be as per the policies of the Insurance company and could<br/>
+                        <span style = "text-align:left;">exclude situations such as suicide and other exclusions.<br/></span></li>
+                    <li>We are aware that we are fully responsible for timely repayment of the loan; irrespective of the availability
+                        and pay-out of this Credit Life Insurance. We are also aware that, in case of death of the above-mentioned
+                        insured person; the claim amount of the insurance shall be decided by the Insurance Company only.In case
+                        of non-payment of the claim amount or partial payment of the claim amount; we understand that Five-star
+                        Business Finance Limited does not have an role in the same and will not hold Five Star Business Finance
+                        Limited responsible for the same. In such cases. We undertake to settle the pending loan amount in full
+                        <span style = "text-align:left;">along with the applicable charges by our own means.<br/></span></li>
+                    <li>We acknowledge that Five Star Business Finance shall have the right to receive and adjust any pending<br/>
+                        <span style = "text-align:left;">payment that may be received in connection with the insurance policy.<br/></span></li>
+                    <li>In case of any shortfall in repayment of loan (even after claim pay-out or decline of claim payment by<br/>
+                        the InsurancCompany); we are responsible for full repayment of this loan and we will clear the loan.<br/><br/></li>
+                </ol>
+                <b>Yours Truly,</b><br/><br/>
+            </div>
+            <div class="footer;margin-bottom:-1.9in;">
+                <table style="border-collapse:collapse; text-align:justify; width:100%;">
+                    <tr>
+                        <apex:repeat value="{!applicants}" var="applicant" id="theRepeat1">
+                            <td class="text">______________</td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <apex:repeat value="{!applicants}" var="applicant" id="theRepeat2">
+                           <td class="text">{!applicant.applicantName}</td>
+                        </apex:repeat>
+                    </tr><br/>
+                </table>
+            </div>
+        </apex:form>
+    </body>
+</apex:page>

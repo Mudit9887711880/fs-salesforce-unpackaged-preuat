@@ -1,0 +1,146 @@
+<apex:page readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf" standardController="Courier_Control__c" extensions="CourierControlSheetVfCtrl">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-bottom:0.6in;
+            @bottom-left {
+            
+            content: element(footer);
+            
+            }
+            
+            }
+            .tdmargin
+            {
+            padding-left:10px;
+            }
+            .text
+            {
+            font-size:10px;
+            font-family:Arial Unicode MS;
+            }
+            div.footer {
+            display: block;
+            margin-bottom: 35px;
+            
+            position: running(footer);
+            }
+            .pagenumber:before {
+            content: counter(page);
+            }
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tabledata{
+            border: 1.5px solid black;
+            border-collapse: collapse;
+            }
+        </style>      
+    </head>
+    <apex:form >
+        <p class="text">To </p>
+        
+        <p class="text">{!wrpObj.address}</p>
+        <p class="text">This address needs to be autopopulated based on the maters where each branch code is mapped is Hub or HO</p>     
+        
+        <br/><br/>
+        <br/><br/>
+        <br/><br/>
+        <br/><br/>
+        <p class="text" style="text-align:center">........................................Tear off here and paste the address section on top of courier section........................................</p> 
+        <hr style="border: none;
+                   border-top: 1px dashed #1a0c0c;
+                   color: #fff;
+                   background-color: #fff;
+                   height: 1px;"/>
+        <p  class="text"  style="text-align:center">........................................Courier Control Sheet to be kept inside the courier cover after tallying with physical documents........................................ </p>
+        
+        <h3 style="text-align:center">Courier Control Sheet</h3>
+        
+        <table class="tabledata text" style="width:100%" rowspan="3" >
+            <tr rowspan="4">
+                <td class="tabledata" >Courier Batch Ref No</td>
+                <td class="tabledata tdmargin">{!wrpObj.refNo}</td>
+                <td class="tabledata">Business Date</td>
+                <td class="tabledata tdmargin" >{!wrpObj.businessDate}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" >Branch Name</td>
+                <td class="tabledata tdmargin">{!wrpObj.branchName}</td>
+                <td class="tabledata">Count of Application</td>
+                <td class="tabledata tdmargin" >{!wrpObj.noOfApplication}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" >Courier Agency</td>
+                <td class="tabledata tdmargin">{!wrpObj.courierAgency}</td>
+                <td class="tabledata" >Courier POD Number</td>
+                <td class="tabledata tdmargin" >{!wrpObj.courierPodNo}</td>
+                
+            </tr>
+        </table>
+        <table  class="tabledata text" style="width:100%" rowspan="4">
+            <tr colspan="5">
+                <th class="tabledata"  > S No.</th>
+                <th class="tabledata" >Application No/Loan No</th>
+                <th class="tabledata" >Customer Name</th>
+                <th class="tabledata" >Document Type</th>
+                <th class="tabledata" >Courier despatch date</th>
+                <th class="tabledata" >check box (OO to verify and tick manually)</th>    
+            </tr>
+            <apex:repeat value="{!wrpObj.appDetails}" var="application">
+                <tr colspan="5">
+                    <td class="tabledata">{!application.index}
+                    </td>
+                    <td class="tabledata">{!application.applicationName}
+                    </td>
+                    <td class="tabledata">{!application.applicantName}
+                    </td>
+                    <td class="tabledata">{!application.documentType}
+                    </td>
+                    <td class="tabledata">{!wrpObj.courierDispatchDate}
+                    </td>
+                    <td class="tabledata" style="text-align:center;"><img src="{!$Resource.Checkbox_Unchecked}"/>
+                    </td> 
+                </tr>
+            </apex:repeat>
+        </table>
+        <p class="text">
+            <b>Note:</b>
+            <br/>
+            1.Each and every courier consignment (courier cover) should be attached with separate courier control sheet.
+            <br/> 2.Courier control sheet should be manually verified and tallied with the physical document inside the courier cover.        
+            <br/>3. In case of any excess/short of document ,the same needs to be removed/added by editing the list of application within a courier batch reference number. 
+            <br/>4. Multiple Document type can  be batched together and can be instead within one courier cover.
+            <br/> 5.POD to be updated if available at the time of generating courier control sheet.
+        </p>
+        <hr/>
+        <h3>
+            Declaration by Ops Officer
+        </h3>
+        <hr/>
+        <p class="text">
+            I here by declare that all physical documents for the above -mentioned list of application/loan numbers were 
+            verified by me and are being sent in good order through the above -mentioned courier agency .I also hereby confirm that I have verified the POD 
+            details and found to be correct.
+        </p>
+        <table class="tabledata text" style = "width:100%">
+            <tr>
+                <td class="tabledata" >Ops Officer Employee Id
+                </td >
+                <td class="tabledata tdmargin">{!wrpObj.opsOfficerId}</td>
+                <td class="tabledata" >Ops Officer Name</td>
+                <td class="tabledata tdmargin">{!wrpObj.opsOfficerName}</td>
+            </tr>
+            <tr>
+                <td class="tabledata">Date
+                </td>
+                <td class="tabledata tdmargin" >{!wrpObj.currentDate}</td>
+                <td class="tabledata">Ops Officer Signature</td>
+                <td class="tabledata tdmargin"></td>
+            </tr>
+        </table>
+    </apex:form>
+    
+</apex:page>

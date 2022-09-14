@@ -1,0 +1,63 @@
+<apex:page controller="ApplicantDocumentGeneratorController" readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true"  standardStylesheets="false" applyBodyTag="false"  contentType="text/html;charset=UTF-8" renderAs="pdf" >
+    <head>
+        <h3 Style="margin-left:5%">
+            <u>VERNAUCULAR/LEFT THUMB IMPRESSION [LTI] DECLARATION</u>
+        </h3>
+    </head>
+    <body class="slds-scope">
+        <apex:form >
+            <div Style="font-size:17px">
+                <p>
+                    <span>
+                        I <b>{!witness.witnessName}</b> residing at <b> {!witness.witnessAddress}</b> do here by state and declare on solemn  affirmation as under.
+                    </span>
+                </p>
+                <p>
+                    <span>
+                        1. That Mr./Mrs./Miss <b>{!witness.borrowerName}</b> is my <b> {!witness.witnessRelation} </b> (relationship) and I know him/her for the past for the past <b> {!witness.witnessMonthsKnown} </b> years/months and he/she signs in the
+                        vernacular/ affixing LTI during the normal course of the business/transactions.
+                    </span>
+                </p>
+                
+                <p>
+                    <span>
+                        2. That I have read out and explained in vermacular language the contents and nature of the loan agreement and all other documents which has been signed in vermacular language/affixed LTI by him/her
+                        for availling the loan from M/s. Five Star Business Finance Limited .He/she is acknowledging the same.
+                    </span>
+                </p>
+                
+                <span> 3. That he/she is has signed in vermaculor language/ has affixed LTI in all the documents and loan aggreement after understanding the same.His/Her signature in vermavular language/LTI is duly attested by me hereunder.
+                </span>
+                <br/>
+                <br/>
+                <br/>
+                
+                <span> solemnly affimed at_______________on this day of ________________20
+                </span>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div>
+                <p class="text">Signature of the Borrower<b>({!witness.borrowerName})</b>
+                    <br/><br/><br/>
+                Signature of the Executant/Witness<b>({!witness.witnessName})</b></p>
+                <!--<span style="float:right;margin-right:0.3in;">Signature of the Executant/Witness({!witness.witnessName})</span></p>-->
+            </div> <br/>
+            
+            <div style="margin-top:100px;">
+                <p>
+                    Attested
+                </p>  
+            </div>
+            
+        </apex:form>
+        <div class="footer" style="margin-top:100px;">
+            <div>
+                <p class="text">Signature of the Executant/Witness({!witness.witnessName})<span style="float:right;margin-right:1.1in;">Date : ________________</span></p>
+            </div>
+        </div>
+    </body>
+</apex:page>

@@ -1,0 +1,1016 @@
+<!--/*
+* ──────────────────────────────────────────────────────────────────────────────────────────────────
+* @author           Arnav Chaudhary 
+* @modifiedBy       Arnav Chaudhary  
+* @created          2022-08-2
+* @modified         2022-08-2
+* @Description      This vf page creates a PDF version of an Online Nach Form.
+* ──────────────────────────────────────────────────────────────────────────────────────────────────
+*/-->
+<apex:page readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false"   renderAs="pdf" contentType="text/html;charset=UTF-8" controller="OfflineNachFormVfController">
+    <apex:form >
+        <head>
+            <style>
+                .textBox {
+                width: 200px;
+                height: 30px;
+                border: 1px solid #000;
+                overflow: hidden;
+                line-height: 30px;
+                padding: 5px;
+                position: relative;
+                }
+                .page-break {
+                display:block;
+                page-break-after:always;
+                }
+            </style> 
+        </head>
+        <div>
+            <table  style="border: 1px solid black; float: left; margin: 8px;">
+                <tbody><tr><td width="700px" height="100%" style="font-size: 9px;">
+                    
+                    <table style="width:100%; border-collapse: collapse;">
+                        <tr>
+                            <td width="20%">
+                                <div >
+                                    <!--   <apex:image url="{!$Resource.KifsLogo}" width="60px" height="40px"/>-->
+                                    <img src="{!$Resource.FiveStarLogo}" width="100px" height="50px"/>
+                                </div>
+                            </td>
+                            <td width="20%">UMRN
+                                <!--{!bnkDetils.UMRN__c}-->
+                                __________________
+                            </td>
+                            <td width="30%">
+                            </td>
+                            <td width="9%">Date
+                                
+                            </td>
+                            <td width="5%"><div style="text-align:center;font-weight:bold;width:30px;height:14px;border:1px solid black; font-size:13px;">{!DAY(TODAY())}</div></td>
+                            <td width="5%"> <div style="text-align:center;font-weight:bold;width:30px;height:14px;border:1px solid black;font-size:13px;">{!MONTH(TODAY())}</div></td>
+                            <td width="10%"><div style="text-align:center;font-weight:bold;width:50px;height:14px;border:1px solid black;font-size:13px;">{!YEAR(TODAY())}</div></td>
+                        </tr>
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr >
+                            <td width="90%">
+                                <table width ="100%" border-collapse= "collapse">
+                                    <tr>
+                                        <td>
+                                            
+                                            <!--<apex:outputField value="{!enach1.Create__c}"/>-->
+                                            <img src="{!$Resource.Checkedbox}"/>
+                                        </td>
+                                        <td style="font-size: 8px">Create</td>
+                                        <td style="font-size: 10px;">Sponser Bank Code <span style="font-weight:bold;width:60px;height:13px;border:1px solid black;">
+                                         <!--RATNOTREASU-->{!sponsorCode}
+                                            </span>
+                                        </td>
+                                        <td  style="font-size: 10px">
+                                            Utility Code <span style="font-weight:bold;width:400px;height:13px;border:1px solid black;">&nbsp;
+                                          <!--  NACH0000000000021298-->{!utilityCode}  </span>
+                                        </td>
+                                        <td>
+                                            <!-- {!$Label.Enach_Utility_Code}-->
+                                            <!--div style="font-weight:bold;width:120px;height:20px;border:1px solid black;">
+
+</div-->
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width ="100%" border-collapse= "collapse">
+                                    <tr>
+                                        <td style="font-size:8px ;text-indent:5em;">
+                                            Modify 
+                                        </td>
+                                        
+                                        <td  style="font-size: 10px">I/We Hereby authorise
+                                            <span style="font-weight:bold;width:400px;height:13px;border:1px solid black;">&nbsp;
+                                                FIVE-STAR BUSINESS FINANCE LIMITED</span>
+                                        </td>
+                                        <td  style="font-size: 10px">
+                                            To debit <span style="font-weight:bold;width:300px;height:13px;border:1px solid black;">&nbsp;
+                                            SB/CA/OA/CC/OTHER
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width ="100%" border-collapse= "collapse">
+                                    <tr>
+                                        <td>
+                                            <!-- <apex:outputField value="{!enach1.Cancel__c}"  />-->
+                                        </td>
+                                        <td  style="font-size: 8px;text-indent:4em;">Cancel</td>
+                                        <td  style="font-size: 10px">Bank a/c Number
+                                            <span style="font-weight:bold;width:300px;height:13px;border:1px solid black; " >&nbsp;
+                                                <!--5092342659483245-->
+                                                {!objBank.Account_Number__c}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr>
+                            <td>
+                                with Bank
+                            </td>
+                            <td>
+                                <div class="textBox">
+                                    <!--{!bnkDetils.Name}-->
+                                    <!--<span> {!enach1.Bank__c}
+</span>-->
+                                    <div style="font-weight:bold;width:100px;height:12px;border:1px solid black;">{!objBank.Branch_Name__c}</div>
+                                </div> 
+                            </td>
+                            <td>
+                                IFSC  
+                            </td>
+                            <td>
+                                
+                                <div class="textBox">
+                                    <!--{!bnkDetils.Name}-->
+                                    <!--  <span>  {!enach1.IFSC__c}
+</span> -->
+                                    <div style="font-weight:bold;width:100px;height:11px;border:1px solid black;">{!objBank.MS_IFSC_Code__r.Name}</div>
+                                </div> 
+                                
+                                
+                            </td>
+                            <td>
+                                OR MICR
+                            </td>
+                            <td>
+                                
+                                <div class="textBox">
+                                    <!--{!bnkDetils.Name}-->
+                                    <!--<span>                          {!enach1.MICR__c}
+
+</span>-->
+                                    <div style="font-weight:bold;width:100px;height:11px;border:1px solid black;"><!--MICR-->
+                                    </div>
+                                </div> 
+                                
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr>
+                            <td width="15%" >
+                                an amount of
+                            </td>
+                            <td width="50%">
+                                
+                                
+                                <div class="textBox">
+                                    
+                                    <div style="font-weight:bold;height:11px;border:1px solid black;">
+                                        <!--InWords-->
+                                        {!amountInWords}
+                                    </div>
+                                </div> 
+                                
+                            </td>
+                            
+                            <td width="25%">
+                                
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;">
+                                    <!--Amount-->
+                                    {!objBank.Application__r.Emi_PcAc__c}
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr>
+                            <td style="font-size: 8px;font-weight:bold">FREQUENCY
+                            </td>
+                            <td>
+                                <img src="{!$Resource.Checkedbox}"/> 
+                                <!-- <apex:outputField value="{!enach1.Month__c}"  />-->
+                            </td>
+                            <td style="font-size: 8px">Monthly</td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>
+                                <!--  <apex:outputField value="{!enach1.Quarter__c}"  />-->
+                            </td>
+                            <td style="font-size: 8px">Qtly</td>
+                            <!-- <td>
+<apex:inputField value="{!enach1.Month__c}"  />
+</td>
+<td style="font-size: 13px">Qtly</td> -->
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>  
+                            </td>
+                            <td style="font-size: 8px">H-yrly</td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>   
+                            </td>
+                            <td style="font-size: 8px">Yrly</td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>
+                            </td>
+                            <td style="font-size: 8px">
+                                As and when presented
+                            </td>
+                            <!-- <td style="font-size: 8px"> <apex:outputField value="{!enach1.As_and_when_presented__c}"  /></td>-->
+                            <td style="font-size: 8px;font-weight:bold">DEBIT TYPE
+                            </td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>  
+                            </td>
+                            <td style="font-size: 8px">Fixed Amount</td>
+                            <td>
+                                <img src="{!$Resource.Checkedbox}"/> 
+                            </td>
+                            <td style="font-size: 8px">Maximum Amount</td>
+                        </tr>
+                    </table>
+                    
+                    <table border-collapse= "collapse">
+                        <tr>
+                            <td width="100px">Reference 1
+                            </td>
+                            <td>
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;"></div>
+                            </td>
+                            <td>Phone No:
+                            </td>
+                            <td >
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;">
+                                    <!--{!accIns.Phone}-->
+                                    <!--{!bnkDetils.Account__r.PersonMobilePhone}-->
+                                    &nbsp;&nbsp;
+                                    <!--Mobile-->
+                                    {!objBank.Loan_Applicant__r.Mobile__c}
+                                </div> 
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>Reference 2
+                            </td>
+                            <td>
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;"></div>
+                            </td>
+                            
+                            
+                            <td>E-mail ID:
+                            </td>
+                            <td >
+                                <div style="font-weight:bold;width:300px;height:11px;border:1px solid black;">
+                                    <!--{!accIns.PersonEmail}-->
+                                    <!--{!bnkDetils.Account__r.PersonEmail}-->
+                                    &nbsp;&nbsp;
+                                    <!--PersonEmail-->
+                                    {!objBank.Loan_Applicant__r.Email__c}
+                                </div> 
+                            </td>  
+                        </tr>
+                    </table>
+                    <p style="font-size: 10px;text-indent:0.5em;">
+                        I agree for the debit of mandate processing charges by the bank whom I am authorising to debit my account as per latest schedule of charges of the bank.
+                    </p>
+                    <table border-collapse= "collapse">
+                        <h>Period</h>
+                        <table >
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="font-size:10px">From:
+                                            </td>
+                                            <td style="font-size:10px">
+                                             <!--   {!TODAY()}-->
+                                                <!--apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!enach1.From__c}" /> </apex:outputText--> 
+                                                <apex:outputText value="{0,date,dd-MM-yy}">
+      											  <apex:param value="{!TODAY()}" /> 
+												</apex:outputText>
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px">To
+                                            </td>
+                                            <td>
+                                                <!--apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!enach1.To__c}" /> </apex:outputText-->
+                                                {!toDate}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Or
+                                            </td>
+                                            <td rendered="Untill_Cancelled">
+                                                <!--<img src="{!$Resource.checkedbox}"/>--><img src="{!$Resource.Checkedbox}"/> Until Cancelled
+                                            </td>
+                                            <td rendered="Untill_Cancelled">
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                    </table> 
+                                </td>
+                                <td>
+                                    <Table width="100%" border-collapse= "collapse">
+                                        <tr>
+                                            <td style="font-size:10px">
+                                                Signature
+                                            </td>
+                                            <td>____________________
+                                            </td>
+                                            <td>____________________
+                                            </td>
+                                            <td>____________________
+                                            </td>    
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 10px">
+                                                Customer Name:
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <!--1.{!accIns.Name}-->
+                                                <!--1.{!bnkDetils.Account__r.Name}-->
+                                                <u>{!objBank.Bank_Account_Holder_Name__c} </u>
+                                            </td>    
+                                        </tr>    
+                                    </Table>
+                                </td>
+                                
+                                
+                            </tr>
+                            <P style="font-size: 8px">
+                                This is to confirm that the declaration has been carefully read, understood and made by me/us.<b>I</b> am authorizing the user entity/corporate to debit my account,based 
+                                on the instructions agreed and signed by me.*<b>I</b> have understand that I am authorized to cancel/amend this mandate by appropriately communicating the cancellation/amendment
+                                request to the User entity/Corporate or the bank where <b>I</b> have authorized the debit.
+                            </P>
+                        </table>
+                    </table>
+                    
+                    </td></tr></tbody>
+            </table>
+        </div>
+        
+        <!--Adding another section of Online Nach form-->
+        <div>
+            <table  style="border: 1px solid black; float: left; margin: 8px;margin-top:20%;">
+                <tbody><tr><td width="700px" height="100%" style="font-size: 9px;">
+                    
+                    <table style="width:100%; border-collapse: collapse;">
+                        <tr>
+                            <td width="20%">
+                                <div >
+                                    <!--   <apex:image url="{!$Resource.KifsLogo}" width="60px" height="40px"/>-->
+                                    <img src="{!$Resource.FiveStarLogo}" width="100px" height="50px"/>
+                                </div>
+                            </td>
+                            <td width="20%">UMRN
+                                <!--{!bnkDetils.UMRN__c}-->
+                                __________________
+                            </td>
+                            <td width="30%">
+                            </td>
+                            <td width="9%">Date
+                                
+                            </td>
+                            <td width="5%"><div style="text-align:center;font-weight:bold;width:30px;height:14px;border:1px solid black; font-size:13px;">{!DAY(TODAY())}</div></td>
+                            <td width="5%"> <div style="text-align:center;font-weight:bold;width:30px;height:14px;border:1px solid black;font-size:13px;">{!MONTH(TODAY())}</div></td>
+                            <td width="10%"><div style="text-align:center;font-weight:bold;width:50px;height:14px;border:1px solid black;font-size:13px;">{!YEAR(TODAY())}</div></td>
+                        </tr>
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr >
+                            <td width="90%">
+                                <table width ="100%" border-collapse= "collapse">
+                                    <tr>
+                                        <td>
+                                            
+                                            <!--<apex:outputField value="{!enach1.Create__c}"/>-->
+                                            <img src="{!$Resource.Checkedbox}"/>
+                                        </td>
+                                        <td style="font-size: 8px">Create</td>
+                                        <td style="font-size: 10px;">Sponser Bank Code <span style="font-weight:bold;width:60px;height:13px;border:1px solid black;">
+                                            {!sponsorCode}
+                                            </span>
+                                        </td>
+                                        <td  style="font-size: 10px">
+                                            Utility Code <span style="font-weight:bold;width:400px;height:13px;border:1px solid black;">&nbsp;
+                                            {!utilityCode}</span>
+                                        </td>
+                                        <td>
+                                            <!-- {!$Label.Enach_Utility_Code}-->
+                                            <!--div style="font-weight:bold;width:120px;height:20px;border:1px solid black;">
+
+</div-->
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width ="100%" border-collapse= "collapse">
+                                    <tr>
+                                        <td style="font-size:8px ;text-indent:5em;">
+                                            Modify 
+                                        </td>
+                                        
+                                        <td  style="font-size: 10px">I/We Hereby authorise
+                                            <span style="font-weight:bold;width:400px;height:13px;border:1px solid black;">&nbsp;
+                                                FIVE-STAR BUSINESS FINANCE LIMITED</span>
+                                        </td>
+                                        <td  style="font-size: 10px">
+                                            To debit <span style="font-weight:bold;width:300px;height:13px;border:1px solid black;">&nbsp;
+                                            SB/CA/OA/CC/OTHER
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table width ="100%" border-collapse= "collapse">
+                                    <tr>
+                                        <td>
+                                            <!-- <apex:outputField value="{!enach1.Cancel__c}"  />-->
+                                        </td>
+                                        <td  style="font-size: 8px;text-indent:4em;">Cancel</td>
+                                        <td  style="font-size: 10px">Bank a/c Number
+                                            <span style="font-weight:bold;width:300px;height:13px;border:1px solid black; " >&nbsp;
+                                                <!--5092342659483245-->
+                                                {!objBank.Account_Number__c}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr>
+                            <td>
+                                with Bank
+                            </td>
+                            <td>
+                                <div class="textBox">
+                                    <!--{!bnkDetils.Name}-->
+                                    <!--<span> {!enach1.Bank__c}
+</span>-->
+                                    <div style="font-weight:bold;width:100px;height:12px;border:1px solid black;">{!objBank.Branch_Name__c}</div>
+                                </div> 
+                            </td>
+                            <td>
+                                IFSC  
+                            </td>
+                            <td>
+                                
+                                <div class="textBox">
+                                    <!--{!bnkDetils.Name}-->
+                                    <!--  <span>  {!enach1.IFSC__c}
+</span> -->
+                                    <div style="font-weight:bold;width:100px;height:11px;border:1px solid black;">{!objBank.MS_IFSC_Code__r.Name}</div>
+                                </div> 
+                                
+                                
+                            </td>
+                            <td>
+                                OR MICR
+                            </td>
+                            <td>
+                                
+                                <div class="textBox">
+                                    <!--{!bnkDetils.Name}-->
+                                    <!--<span>                          {!enach1.MICR__c}
+
+</span>-->
+                                    <div style="font-weight:bold;width:100px;height:11px;border:1px solid black;"><!--MICR-->
+                                    </div>
+                                </div> 
+                                
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr>
+                            <td width="15%" >
+                                an amount of
+                            </td>
+                            <td width="50%">
+                                
+                                
+                                <div class="textBox">
+                                    
+                                    <div style="font-weight:bold;height:11px;border:1px solid black;">
+                                        <!--InWords-->
+                                        {!amountInWords}
+                                    </div>
+                                </div> 
+                                
+                            </td>
+                            
+                            <td width="25%">
+                                
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;">
+                                    <!--Amount-->
+                                    {!objBank.Application__r.Emi_PcAc__c}
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        
+                    </table>
+                    <table width="100%" border-collapse= "collapse">
+                        <tr>
+                            <td style="font-size: 8px;font-weight:bold">FREQUENCY
+                            </td>
+                            <td>
+                                <img src="{!$Resource.Checkedbox}"/> 
+                                <!-- <apex:outputField value="{!enach1.Month__c}"  />-->
+                            </td>
+                            <td style="font-size: 8px">Monthly</td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>
+                                <!--  <apex:outputField value="{!enach1.Quarter__c}"  />-->
+                            </td>
+                            <td style="font-size: 8px">Qtly</td>
+                            <!-- <td>
+<apex:inputField value="{!enach1.Month__c}"  />
+</td>
+<td style="font-size: 13px">Qtly</td> -->
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>  
+                            </td>
+                            <td style="font-size: 8px">H-yrly</td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>   
+                            </td>
+                            <td style="font-size: 8px">Yrly</td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>
+                            </td>
+                            <td style="font-size: 8px">
+                                As and when presented
+                            </td>
+                            <!-- <td style="font-size: 8px"> <apex:outputField value="{!enach1.As_and_when_presented__c}"  /></td>-->
+                            <td style="font-size: 8px;font-weight:bold">DEBIT TYPE
+                            </td>
+                            <td>
+                                <img src="{!$Resource.Checkbox_Unchecked}"/>  
+                            </td>
+                            <td style="font-size: 8px">Fixed Amount</td>
+                            <td>
+                                <img src="{!$Resource.Checkedbox}"/> 
+                            </td>
+                            <td style="font-size: 8px">Maximum Amount</td>
+                        </tr>
+                    </table>
+                    
+                    <table border-collapse= "collapse">
+                        <tr>
+                            <td width="100px">Reference 1
+                            </td>
+                            <td>
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;"></div>
+                            </td>
+                            <td>Phone No:
+                            </td>
+                            <td >
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;">
+                                    <!--{!accIns.Phone}-->
+                                    <!--{!bnkDetils.Account__r.PersonMobilePhone}-->
+                                    &nbsp;&nbsp;
+                                    <!--Mobile-->
+                                    {!objBank.Loan_Applicant__r.Mobile__c}
+                                </div> 
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>Reference 2
+                            </td>
+                            <td>
+                                <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;"></div>
+                            </td>
+                            
+                            
+                            <td>E-mail ID:
+                            </td>
+                            <td >
+                                <div style="font-weight:bold;width:300px;height:11px;border:1px solid black;">
+                                    <!--{!accIns.PersonEmail}-->
+                                    <!--{!bnkDetils.Account__r.PersonEmail}-->
+                                    &nbsp;&nbsp;
+                                    <!--PersonEmail-->
+                                    {!objBank.Loan_Applicant__r.Email__c}
+                                </div> 
+                            </td>  
+                        </tr>
+                    </table>
+                    <p style="font-size: 10px;text-indent:0.5em;">
+                        I agree for the debit of mandate processing charges by the bank whom I am authorising to debit my account as per latest schedule of charges of the bank.
+                    </p>
+                    <table border-collapse= "collapse">
+                        <h>Period</h>
+                        <table >
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="font-size:10px">From
+                                            </td>
+                                            <td style="font-size:10px">
+                                               <apex:outputText value="{0,date,dd-MM-yy}">
+      											  <apex:param value="{!TODAY()}" /> 
+												</apex:outputText>
+                                                <!--apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!enach1.From__c}" /> </apex:outputText--> 
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:10px">To
+                                            </td>
+                                            <td>
+                                                <!--apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!enach1.To__c}" /> </apex:outputText-->
+                                                {!toDate}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Or
+                                            </td>
+                                            <td rendered="Untill_Cancelled">
+                                                <!--<img src="{!$Resource.checkedbox}"/>--><img src="{!$Resource.Checkedbox}"/> Until Cancelled
+                                            </td>
+                                            <td rendered="Untill_Cancelled">
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                    </table> 
+                                </td>
+                                <td>
+                                    <Table width="100%" border-collapse= "collapse">
+                                        <tr>
+                                            <td style="font-size:10px">
+                                                Signature
+                                            </td>
+                                            <td>____________________
+                                            </td>
+                                            <td>____________________
+                                            </td>
+                                            <td>____________________
+                                            </td>    
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 10px">
+                                                Customer Name:
+                                            </td>
+                                            <td style="font-size: 12px">
+                                                <!--1.{!accIns.Name}-->
+                                                <!--1.{!bnkDetils.Account__r.Name}-->
+                                                <u>{!objBank.Bank_Account_Holder_Name__c} </u>
+                                            </td>    
+                                        </tr>    
+                                    </Table>
+                                </td>
+                                
+                                
+                            </tr>
+                            <P style="font-size: 8px">
+                                This is to confirm that the declaration has been carefully read, understood and made by me/us.<b>I</b> am authorizing the user entity/corporate to debit my account,based 
+                                on the instructions agreed and signed by me.*<b>I</b> have understand that I am authorized to cancel/amend this mandate by appropriately communicating the cancellation/amendment
+                                request to the User entity/Corporate or the bank where <b>I</b> have authorized the debit.
+                            </P>
+                        </table>
+                    </table>
+                    
+                    </td></tr></tbody>
+            </table>
+        </div>
+        
+        <!--Adding another section of Online Nach form-->
+        
+        
+        <table  style="border: 1px solid black; float: left; margin: 8px;margin-top:30%;">
+            <tbody><tr><td width="700px" height="100%" style="font-size: 9px;">
+                
+                <table style="width:100%; border-collapse: collapse;">
+                    <tr>
+                        <td width="20%">
+                            <div >
+                                <!--   <apex:image url="{!$Resource.KifsLogo}" width="60px" height="40px"/>-->
+                                <img src="{!$Resource.FiveStarLogo}" width="100px" height="50px"/>
+                            </div>
+                        </td>
+                        <td width="20%">UMRN
+                            <!--{!bnkDetils.UMRN__c}-->
+                            __________________
+                        </td>
+                        <td width="30%">
+                        </td>
+                        <td width="9%">Date
+                            
+                        </td>
+                        <td width="5%"><div style="text-align:center;font-weight:bold;width:30px;height:14px;border:1px solid black; font-size:13px;">{!DAY(TODAY())}</div></td>
+                        <td width="5%"> <div style="text-align:center;font-weight:bold;width:30px;height:14px;border:1px solid black;font-size:13px;">{!MONTH(TODAY())}</div></td>
+                        <td width="10%"><div style="text-align:center;font-weight:bold;width:50px;height:14px;border:1px solid black;font-size:13px;">{!YEAR(TODAY())}</div></td>
+                    </tr>
+                </table>
+                <table width="100%" border-collapse= "collapse">
+                    <tr >
+                        <td width="90%">
+                            <table width ="100%" border-collapse= "collapse">
+                                <tr>
+                                    <td>
+                                        
+                                        <!--<apex:outputField value="{!enach1.Create__c}"/>-->
+                                        <img src="{!$Resource.Checkedbox}"/>
+                                    </td>
+                                    <td style="font-size: 8px">Create</td>
+                                    <td style="font-size: 10px;">Sponser Bank Code <span style="font-weight:bold;width:60px;height:13px;border:1px solid black;">
+                                        {!sponsorCode}
+                                        </span>
+                                    </td>
+                                    <td  style="font-size: 10px">
+                                        Utility Code <span style="font-weight:bold;width:400px;height:13px;border:1px solid black;">&nbsp;
+                                        {!utilityCode}</span>
+                                    </td>
+                                    <td>
+                                        <!-- {!$Label.Enach_Utility_Code}-->
+                                        <!--div style="font-weight:bold;width:120px;height:20px;border:1px solid black;">
+
+</div-->
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width ="100%" border-collapse= "collapse">
+                                <tr>
+                                    <td style="font-size:8px ;text-indent:5em;">
+                                        Modify 
+                                    </td>
+                                    
+                                    <td  style="font-size: 10px">I/We Hereby authorise
+                                        <span style="font-weight:bold;width:400px;height:13px;border:1px solid black;">&nbsp;
+                                            FIVE-STAR BUSINESS FINANCE LIMITED</span>
+                                    </td>
+                                    <td  style="font-size: 10px">
+                                        To debit <span style="font-weight:bold;width:300px;height:13px;border:1px solid black;">&nbsp;
+                                        SB/CA/OA/CC/OTHER
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table width ="100%" border-collapse= "collapse">
+                                <tr>
+                                    <td>
+                                        <!-- <apex:outputField value="{!enach1.Cancel__c}"  />-->
+                                    </td>
+                                    <td  style="font-size: 8px;text-indent:4em;">Cancel</td>
+                                    <td  style="font-size: 10px">Bank a/c Number
+                                        <span style="font-weight:bold;width:300px;height:13px;border:1px solid black; " >&nbsp;
+                                            <!--5092342659483245-->
+                                            {!objBank.Account_Number__c}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <table width="100%" border-collapse= "collapse">
+                    <tr>
+                        <td>
+                            with Bank
+                        </td>
+                        <td>
+                            <div class="textBox">
+                                <!--{!bnkDetils.Name}-->
+                                <!--<span> {!enach1.Bank__c}
+</span>-->
+                                <div style="font-weight:bold;width:100px;height:12px;border:1px solid black;">{!objBank.Branch_Name__c}</div>
+                            </div> 
+                        </td>
+                        <td>
+                            IFSC  
+                        </td>
+                        <td>
+                            
+                            <div class="textBox">
+                                <!--{!bnkDetils.Name}-->
+                                <!--  <span>  {!enach1.IFSC__c}
+</span> -->
+                                <div style="font-weight:bold;width:100px;height:11px;border:1px solid black;">{!objBank.MS_IFSC_Code__r.Name}</div>
+                            </div> 
+                            
+                            
+                        </td>
+                        <td>
+                            OR MICR
+                        </td>
+                        <td>
+                            
+                            <div class="textBox">
+                                <!--{!bnkDetils.Name}-->
+                                <!--<span>                          {!enach1.MICR__c}
+
+</span>-->
+                                <div style="font-weight:bold;width:100px;height:11px;border:1px solid black;"><!--MICR-->
+                                </div>
+                            </div> 
+                            
+                        </td>
+                    </tr>
+                    
+                </table>
+                <table width="100%" border-collapse= "collapse">
+                    <tr>
+                        <td width="15%" >
+                            an amount of
+                        </td>
+                        <td width="50%">
+                            
+                            
+                            <div class="textBox">
+                                
+                                <div style="font-weight:bold;height:11px;border:1px solid black;">
+                                    <!--InWords-->
+                                    {!amountInWords}
+                                </div>
+                            </div> 
+                            
+                        </td>
+                        
+                        <td width="25%">
+                            
+                            <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;">
+                                <!--Amount-->
+                                {!objBank.Application__r.Emi_PcAc__c}
+                            </div>
+                        </td>
+                        
+                    </tr>
+                    
+                </table>
+                <table width="100%" border-collapse= "collapse">
+                    <tr>
+                        <td style="font-size: 8px;font-weight:bold">FREQUENCY
+                        </td>
+                        <td>
+                            <img src="{!$Resource.Checkedbox}"/> 
+                            <!-- <apex:outputField value="{!enach1.Month__c}"  />-->
+                        </td>
+                        <td style="font-size: 8px">Monthly</td>
+                        <td>
+                            <img src="{!$Resource.Checkbox_Unchecked}"/>
+                            <!--  <apex:outputField value="{!enach1.Quarter__c}"  />-->
+                        </td>
+                        <td style="font-size: 8px">Qtly</td>
+                        <!-- <td>
+<apex:inputField value="{!enach1.Month__c}"  />
+</td>
+<td style="font-size: 13px">Qtly</td> -->
+                        <td>
+                            <img src="{!$Resource.Checkbox_Unchecked}"/>  
+                        </td>
+                        <td style="font-size: 8px">H-yrly</td>
+                        <td>
+                            <img src="{!$Resource.Checkbox_Unchecked}"/>   
+                        </td>
+                        <td style="font-size: 8px">Yrly</td>
+                        <td>
+                            <img src="{!$Resource.Checkbox_Unchecked}"/>
+                        </td>
+                        <td style="font-size: 8px">
+                            As and when presented
+                        </td>
+                        <!-- <td style="font-size: 8px"> <apex:outputField value="{!enach1.As_and_when_presented__c}"  /></td>-->
+                        <td style="font-size: 8px;font-weight:bold">DEBIT TYPE
+                        </td>
+                        <td>
+                            <img src="{!$Resource.Checkbox_Unchecked}"/>  
+                        </td>
+                        <td style="font-size: 8px">Fixed Amount</td>
+                        <td>
+                            <img src="{!$Resource.Checkedbox}"/> 
+                        </td>
+                        <td style="font-size: 8px">Maximum Amount</td>
+                    </tr>
+                </table>
+                
+                <table border-collapse= "collapse">
+                    <tr>
+                        <td width="100px">Reference 1
+                        </td>
+                        <td>
+                            <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;"></div>
+                        </td>
+                        <td>Phone No:
+                        </td>
+                        <td >
+                            <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;">
+                                <!--{!accIns.Phone}-->
+                                <!--{!bnkDetils.Account__r.PersonMobilePhone}-->
+                                &nbsp;&nbsp;
+                                <!--Mobile-->
+                                {!objBank.Loan_Applicant__r.Mobile__c}
+                            </div> 
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td>Reference 2
+                        </td>
+                        <td>
+                            <div style="font-weight:bold;width:200px;height:11px;border:1px solid black;"></div>
+                        </td>
+                        
+                        
+                        <td>E-mail ID:
+                        </td>
+                        <td >
+                            <div style="font-weight:bold;width:300px;height:11px;border:1px solid black;">
+                                <!--{!accIns.PersonEmail}-->
+                                <!--{!bnkDetils.Account__r.PersonEmail}-->
+                                &nbsp;&nbsp;
+                                <!--PersonEmail-->
+                                {!objBank.Loan_Applicant__r.Email__c}
+                            </div> 
+                        </td>  
+                    </tr>
+                </table>
+                <p style="font-size: 10px;text-indent:0.5em;">
+                    I agree for the debit of mandate processing charges by the bank whom I am authorising to debit my account as per latest schedule of charges of the bank.
+                </p>
+                <table border-collapse= "collapse">
+                    <h>Period</h>
+                    <table >
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td style="font-size:10px">From
+                                        </td>
+                                        <td style="font-size:10px">
+                                            <apex:outputText value="{0,date,dd-MM-yy}">
+      											  <apex:param value="{!TODAY()}" /> 
+												</apex:outputText>
+                                            <!--apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!enach1.From__c}" /> </apex:outputText--> 
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px">To
+                                        </td>
+                                        <td>
+                                            <!--apex:outputText value="{0,date,dd/MM/yy}"> <apex:param value="{!enach1.To__c}" /> </apex:outputText-->
+                                            {!toDate}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Or
+                                        </td>
+                                        <td rendered="Untill_Cancelled">
+                                            <!--<img src="{!$Resource.checkedbox}"/>--><img src="{!$Resource.Checkedbox}"/> Until Cancelled
+                                        </td>
+                                        <td rendered="Untill_Cancelled">
+                                            
+                                        </td>
+                                        
+                                    </tr>
+                                </table> 
+                            </td>
+                            <td>
+                                <Table width="100%" border-collapse= "collapse">
+                                    <tr>
+                                        <td style="font-size:10px">
+                                            Signature
+                                        </td>
+                                        <td>____________________
+                                        </td>
+                                        <td>____________________
+                                        </td>
+                                        <td>____________________
+                                        </td>    
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 10px">
+                                            Customer Name:
+                                        </td>
+                                        <td style="font-size: 12px">
+                                            <!--1.{!accIns.Name}-->
+                                            <!--1.{!bnkDetils.Account__r.Name}-->
+                                            <u>{!objBank.Bank_Account_Holder_Name__c} </u>
+                                        </td>    
+                                    </tr>    
+                                </Table>
+                            </td>
+                            
+                            
+                        </tr>
+                        <P style="font-size: 8px">
+                            This is to confirm that the declaration has been carefully read, understood and made by me/us.<b>I</b> am authorizing the user entity/corporate to debit my account,based 
+                            on the instructions agreed and signed by me.*<b>I</b> have understand that I am authorized to cancel/amend this mandate by appropriately communicating the cancellation/amendment
+                            request to the User entity/Corporate or the bank where <b>I</b> have authorized the debit.
+                        </P>
+                    </table>
+                </table>
+                
+                </td></tr></tbody>
+        </table>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,94 @@
+<apex:page readOnly="true" controller="InPrincipleSanctionVfController" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf">
+   <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            
+            margin-top:1in;
+            }
+             .tabledata{
+            font-size:11px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top:-1px;
+            border: 1.5px solid black;
+            border-collapse: collapse;
+            }
+         </style>
+    </head>
+    <apex:form style="font-family:Arial Unicode MS;" >
+    
+        <table width="100%" cellpadding="4">
+            <tr><td width="100%" style="text-align:center;background-color:#E46C0A ;font-size:11px;font-weight:bold" >IN-PRINCIPLE SANCTION</td></tr>
+        </table>
+        <table width="100%" cellpadding="4" style="margin-top:-3px;">
+            <tr><td width="100%" style="text-align:center;background-color:#E46C0A ;font-size:11px;font-weight:bold" >CUSTOMER INFORMATION</td></tr>
+        </table>
+        
+         <table  class="tabledata" width="99.2%"  cellpadding="4"   >
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;border-top:none;">BRANCH NAME</td> 
+                 <td  class="tabledata" width="50%" style="border-top:none;">{!BranchName}</td> 
+             </tr>
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">APPLICATION NUMBER</td> 
+                 <td  class="tabledata" width="50%">{!appObj.Application__r.Name} </td> 
+             </tr>
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">NAME OF CUSTOMER</td> 
+                 <td  class="tabledata" width="50%">{!CustomerName} </td> 
+             </tr>
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">NAME OF GUARANTOR IF ANY</td> 
+                 <td  class="tabledata" width="50%">{!GuarantorName} </td> 
+             </tr>
+        </table>  
+    
+        <table width="100%" cellpadding="4" style="margin-top:-3px;">
+            <tr><td width="100%" style="text-align:center;background-color:#E46C0A ;font-size:11px;font-weight:bold" >KEY SANCTION TERMS</td></tr>
+        </table>
+         <table  class="tabledata" width="99.2%"  cellpadding="4"   >
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;border-top:none;">CREDIT SANCTION LOAN AMOUNT (A)</td> 
+                 <td  class="tabledata" width="50%" style="border-top:none;">{!Credit_Sanction_Loan_Amount} </td> 
+             </tr>
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">TOTAL SANCTION AMOUNT (C ) = (A) </td> 
+                 <td  class="tabledata" width="50%"> {!Credit_Sanction_Loan_Amount} </td> 
+             </tr>
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">FINAL SANCTION AMOUNT (AFTER ROUND OFF)</td> 
+                 <td  class="tabledata" width="50%"> {!Final_Sanction_Amount} </td> 
+             </tr>
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">TENURE (IN MONTHS)</td> 
+                 <td  class="tabledata" width="50%">{!appObj.Tenor__c} </td> 
+             </tr>
+             <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">ANNULAISED RATE OF INTEREST</td> 
+                 <td  class="tabledata" width="50%">{!appObj.ROI__c} </td> 
+             </tr>
+              <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">Number of advance EMI</td> 
+                 <td  class="tabledata" width="50%">1</td> 
+             </tr>
+              <tr>
+                 <td  class="tabledata" width="50%" style="font-weight:bold;">EMI AMOUNT</td> 
+                 <td  class="tabledata" width="50%">{!EMICalculation}</td> 
+             </tr>
+        </table>  
+        
+        <table width="100%" cellpadding="4" style="margin-top:-3px;">
+            <tr><td width="100%" style="text-align:center;background-color:#E46C0A ;font-size:11px;font-weight:bold" >BRANCH MANAGERS CONFIRMATION</td></tr>
+        </table>
+         <table  class="tabledata" width="99.2%"  cellpadding="4"   >
+             <tr>
+                 <td  class="tabledata" width="100%" style="font-weight:bold;border-top:none;">I have read the above terms of sanction and discussed the same with my team And I confirmed the above details are true as per my Knowledge</td> 
+            </tr>
+        </table>
+        
+        
+    </apex:form>
+    
+    
+</apex:page>

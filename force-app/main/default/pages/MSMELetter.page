@@ -1,0 +1,104 @@
+<apex:page controller="DocumentGenerationVFController" readOnly="true"  applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-bottom:0.6in;
+            @bottom-left {
+            
+            content: element(footer);
+            
+            }
+            
+            }
+            .tdmargin
+            {
+            padding-left:10px;
+            }
+            .text
+            {
+            font-size:14px;
+            }
+            div.footer {
+            display: block;
+            margin-bottom: 35px;
+            
+            position: running(footer);
+            }
+            .pagenumber:before {
+            content: counter(page);
+            }
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tabledata{
+            border: 10px solid black;
+            border-collapse: collapse;
+            }
+        </style>      
+    </head>
+    <h2 style="text-align:center;margin-top:-5px"><u>MSME and End Use Declaration</u></h2> 
+    <body class="slds-scope">
+        <apex:form >
+            <div>
+                <p>
+                    <b>Date:&nbsp;_______________</b> 
+                </p>
+                <p style="float:right;margin-top:-2.9%">
+                    <b>Place:</b> {!loanApp.Application__r.Sourcing_Branch__r.Name}<br/><br/>
+                </p>
+            </div>
+            <div><br/>
+                <p class="text">
+                    <b>From,</b><br/>
+                    {!loanApp.Customer_Information__r.Name}<br/>   
+                    {!loanApp.Residence_Address_Line_1__c}, {!loanApp.Residence_City__c}, {!loanApp.Residence_State__c}, {!loanApp.Residence_Pincode__r.Name}   
+                </p>
+            </div>
+            <div>
+                <p class="text">
+                    <b>TO,</b><br/>
+                    <b>Branch Manager ,</b><br/>
+                    <b>Five Star Buisness Finance Limited</b><br/>
+                    Rayachoti , Andhra Pradesh - 516269
+                </p>
+            </div>
+            <div>
+                Dear Sir,
+            </div>
+            <div>
+                <p class="text">
+                    <b>Sub: </b>MSME and End Use Declaration for loan applied under {!application.Name}.
+                </p>
+            </div>
+            <div>
+                <p class="text">
+                    I/We have applied for a loan under the above mentioned application number and we have been santioned an amount of
+                    ₹{!loanApp.Application__r.Total_Amount_Recommended_PcAc__c}.I/We also hereby declare that we have requested for my/our business-related purpose only and will use
+                    this loan for the same purpose only.<br/><br/><br/>
+                    For availing this loan, I/We do hereby declare that the investment in Plant and Machinery/Equipement does not exceed Rs
+                    1 crore and annual turnover does not exceed Rs 5 crores.<br/><br/><br/>
+                    <b>
+                        Thanking You,<br/><br/>
+                        Yours Truly,<br/><br/>
+                    </b>
+                </p>
+            </div>
+            <div class="footer;margin-bottom:-1.9in;">
+                <table style="border-collapse:collapse; text-align:justify; width:100%;">
+                    <tr>
+                        <apex:repeat value="{!applicants}" var="applicant" id="theRepeat1">
+                            <td class="text">______________</td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <apex:repeat value="{!applicants}" var="applicant" id="theRepeat2">
+                           <td class="text">{!applicant.applicantName}</td>
+                        </apex:repeat>
+                    </tr><br/>
+                </table>
+            </div>
+        </apex:form>
+    </body>
+</apex:page>

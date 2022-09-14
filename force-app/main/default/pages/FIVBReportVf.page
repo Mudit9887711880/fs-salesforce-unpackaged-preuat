@@ -1,0 +1,358 @@
+<apex:page readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf" controller="FSFIVBReportVfController">
+    
+    <head>
+        <!--meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /-->
+        <style type="text/css" media="print">
+            @page {
+            margin-top: 90px;
+            
+            margin-bottom: 90px;
+            @top-center {
+            content: element(header);
+            }
+            @bottom-center {
+            content: element(footer);
+            }
+            }
+            
+            div.header {
+            font-family: Arial Unicode MS;
+            position: running(header);
+            width: 100%;
+            margin-right: 10px;
+            padding: 10px;
+            }
+            
+            div.footer {
+            position: running(footer);
+            width: 100%;
+            
+            }
+            
+            .pagenumber:before {
+            content: counter(page);
+            }
+            
+            .pagecount:before {
+            content: counter(pages);
+            }
+            
+            .tabledata {
+            font-size: 12px;
+            border: 1.5px solid black;
+            border-collapse: collapse;
+            }
+        </style>
+    </head>
+    
+    
+    
+    <div class="header">
+        <font style=" float:left;margin-left:140px;font-size:18px;font-family:Arial Unicode MS;font-weight:bold;">BM &nbsp;</font>
+        <span>
+            <font style=" float:left;font-size:16px;font-family:Arial Unicode MS;font-weight:bold; ">INSPECTION REPORT ON INCOME AND PROPERTY</font>
+        </span>
+    </div>
+    
+    <div class="footer">
+        <center>
+            <div style="font-size:12px;color:#0047AB; font-weight: 900;">Page
+                <span class="pagenumber" /> of &nbsp;
+                <span class="pagecount" />
+            </div>
+        </center>
+    </div>
+    <apex:form style="font-family:Arial Unicode MS;">
+        
+        
+        
+        <p style="text-align:right;margin-right:1in;font-size:12px;"> BRANCH:{!verificationRecord.Application__r.Branch__c} </p>
+        <p style="text-align:right;margin-top:-10px;margin-right:0.7in;font-size:12px;"> Date of Inspection:
+            <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                <apex:param value="{!verificationRecord.Inspection_Date__c}" />
+            </apex:outputText>
+        </p>
+        
+        
+        <!--Distance From Branch, Title Document Type, Title Document No, Title Document Date -->
+        <table class="tabledata" style="width:95%;">
+            <tr>
+                <td class="tabledata">Application No</td>
+                <td class="tabledata">{!applicationRecord.Name}</td>
+                <td class="tabledata">Applicant Name</td>
+                <td class="tabledata">{!applicantName}</td>
+            </tr>
+            <tr>
+                <td class="tabledata">Customer Type</td>
+                <td class="tabledata">Primary Applicant</td>
+                <td class="tabledata">Loan Purpose</td>
+                <td class="tabledata">{!verificationRecord.Purpose__c}</td>
+            </tr>
+            <tr>
+                <td class="tabledata">Login amount:</td>
+                <td class="tabledata">{!verificationRecord.Application__r.Requested_Loan_Amount__c}</td>
+                <td class="tabledata">BM Recommendation Amount:</td>
+                <td class="tabledata">{!verificationRecord.BM_Recommended_Amount__c}</td>
+            </tr>
+            <tr>
+                <td class="tabledata">Branch Tier</td>
+                <td class="tabledata">pending</td>
+                <td class="tabledata">Tenor (in Months)</td>
+                <td class="tabledata">{!verificationRecord.Tenor__c}</td>
+            </tr>
+        </table>
+        <br/>
+        <table class="tabledata" style="width:95%;">
+            <apex:repeat value="{!propertyRecords}" var="pro">
+                <tr>
+                    <td class="tabledata">Property Name</td>
+                    <td class="tabledata">
+                        {!pro.Name}
+                    </td>
+                    <td class="tabledata">Title Deed Type</td>
+                    <td class="tabledata">
+                        {!pro.Title_Deed_Type__c}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tabledata">Title Deed No</td>
+                    <td class="tabledata">
+                        {!pro.Title_Deed_Number__c}
+                    </td>
+                    <td class="tabledata">Title Deed Date</td>
+                    <td class="tabledata">
+                        <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                            <apex:param value="{!pro.Title_Deed_Date__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tabledata">Distance From Branch</td>
+                    <td class="tabledata">{!pro.Distance_from_Branch__c}</td>
+                    <td class="tabledata">Risk Document</td>
+                    <td class="tabledata">{!pro.Risk_Document__c}</td>
+                </tr>
+                
+            </apex:repeat>
+        </table>
+        <h4 style="text-align:center; text-decoration: underline;font-weight:bold;">
+            Income Report
+        </h4>
+        
+        <table class="tabledata" style="width:95%;text-align:center;">
+            <tr>
+                <td class="tabledata">Name</td>
+                <td class="tabledata">Type Of
+                    <br/>Applicant</td>
+                <td class="tabledata">Highmark
+                    <br/> Score</td>
+                <td class="tabledata">Income segment</td>
+                <td class="tabledata">Gross Income
+                    <br/> (Rs per
+                    <br/>month) #</td>
+                <td class="tabledata">Remarks</td>
+            </tr>
+            <apex:repeat value="{!cashflowRecords}" var="cashflow">
+                <tr>
+                    <td class="tabledata">{!cashflow.Loan_Applicant__r.Applicant_Name__c}</td>
+                    <td class="tabledata">{!cashflow.Loan_Applicant__r.Customer_Type__c}</td>
+                    <td class="tabledata">{!cashflow.HM_Score__c}</td>
+                    <td class="tabledata">{!cashflow.Profile__c}</td>
+                    <td class="tabledata">{!cashflow.Gross_Income__c}</td>
+                    <td class="tabledata">{!cashflow.BM_Comments_for_Cashflow__c}</td>
+                    
+                </tr>
+            </apex:repeat>
+            <tr>
+                <td class="tabledata" colspan="4">Net income</td>
+                <td class="tabledata">{!totalNetIncome}</td>
+                <td class="tabledata"> </td>
+            </tr>
+            <tr>
+                <td class="tabledata" colspan="4">Obligations</td>
+                <td class="tabledata">{!totalObligations}</td>
+                <td class="tabledata"> </td>
+            </tr>
+            <tr>
+                <td class="tabledata" colspan="4">Grand Total</td>
+                <td class="tabledata">{!grandTotal}</td>
+                <td class="tabledata"> </td>
+            </tr>
+            <tr>
+                <td class="tabledata" colspan="6"> # Assumptions for Income</td>
+            </tr>
+            <tr>
+                <td class="tabledata" colspan="6">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tabledata" colspan="4">
+                    <br/>
+                </td>
+                <td class="tabledata">
+                    <br/>
+                </td>
+                <td class="tabledata">
+                    <br/> </td>
+            </tr>
+            <tr>
+                <td class="tabledata" colspan="6"> Enquires done with</td>
+            </tr>
+            <apex:variable var="rowNo" value="{!0}" />
+            <apex:repeat value="{!characterRecords}" var="char">
+                <tr>
+                    <td class="tabledata" colspan="2">
+                        <apex:variable var="rowNo" value="{!rowNo+1}" />{!rowNo}
+                    </td>
+                    <td class="tabledata" colspan="4">{!char.Reference_check_done_with__c}</td>
+                </tr>
+            </apex:repeat>
+        </table>
+        
+        <!--PageBreak-->
+        <div style="page-break-after:always;"></div>
+        <!--PageBreak-->
+        
+        <h4 style="text-align:center; text-decoration: underline;">
+            Property Valuation Report
+        </h4>
+        
+        <table class="tabledata" style="width:96%; text-align:center;">
+            <tr>
+                
+                <td class="tabledata">
+                    Property Name
+                </td>
+                <td class="tabledata">
+                    Property Address
+                </td>
+            </tr>
+            <apex:repeat value="{!addressWrapper}" var="pro">
+                <tr>
+                  
+                    <td class="tabledata">
+                        {!pro.propertyName}
+                    </td>
+                    <td class="tabledata">
+                        {!pro.propertyAddress}
+                    </td>
+                </tr>
+            </apex:repeat>
+        </table>
+        <h4 style="text-align:center; text-decoration: underline;">
+            Boundaries
+        </h4>
+        <table class="tabledata" style="width:96%; text-align:center;">
+            <tr>
+                <th class="tabledata"> As per Document</th>
+                <th class="tabledata"> As per Physical inspection</th>
+            </tr>
+            <tr>
+                <td class="tabledata"> North By:</td>
+                <td class="tabledata"> North By:</td>
+            </tr>
+            <tr>
+                <td class="tabledata">South By:</td>
+                <td class="tabledata">South By:</td>
+            </tr>
+            <tr> <td class="tabledata">East By:</td>
+                <td class="tabledata">East By:</td>
+            </tr>
+            <tr><td class="tabledata">East By:</td>
+                <td class="tabledata">East By:</td>
+            </tr>
+            <tr><th>Boundaries remarks (if mismatch)</th>
+            <th></th></tr>
+        </table>  
+        <h4 style="text-align:center; text-decoration: underline;">
+            Land Area Measurements
+        </h4>
+        <table class="tabledata" style="width:96%; text-align:center;">
+            <tr>
+                <th class="tabledata"> As per Document</th>
+                <th class="tabledata"> As per Physical inspection</th>
+            </tr>
+            <tr>
+                <td class="tabledata"> North By:</td>
+                <td class="tabledata"> North By:</td>
+            </tr>
+            <tr>
+                <td class="tabledata">South By:</td>
+                <td class="tabledata">South By:</td>
+            </tr>
+            <tr> <td class="tabledata">East By:</td>
+                <td class="tabledata">East By:</td>
+            </tr>
+            <tr><td class="tabledata">East By:</td>
+                <td class="tabledata">East By:</td>
+            </tr>
+             <tr><th>Measurement remarks (if mismatch)</th>
+            <th></th></tr>
+        </table>
+        <h4 style="text-align:center; text-decoration: underline;">
+            Building
+        </h4>
+        <table class="tabledata" style="width:96%; text-align:center;">
+            <tr>
+                <th class="tabledata"> Age of the building (yrs)</th>
+                <th class="tabledata"> CONSTRUCTION</th>
+            </tr>
+            <tr>
+                <td class="tabledata">Roof of the building (RCC / ACC/Tiled / Hut)</td>
+                <td class="tabledata">RCC</td></tr>
+        </table>
+        <h4 style="text-align:center; text-decoration: underline;">
+            Collateral Valuation
+        </h4>
+        <table class="tabledata" style="width:96%; ">
+            <tr style="text-align:center;">
+                <td class="tabledata">Particulars</td>
+                <td class="tabledata">Property Name</td>
+                <td class="tabledata">Area (sq ft)
+                    <br/> (A) </td>
+                <td class="tabledata">Market value per sq
+                    <br/>ft
+                    <br/>(B)</td>
+                <td class="tabledata">Adopted Value per sq
+                    <br/>ft
+                    <br/>(C)</td>
+                <td class="tabledata">Total
+                    <br/>
+                    <br/>(D) = (A) X (C )</td>
+            </tr>
+            <apex:repeat value="{!wrapperProperty}" var="pro">
+                <tr>
+                    <td class="tabledata">Land – (E)</td>
+                    <td class="tabledata">{!pro.customerName}</td>
+                    <td class="tabledata">{!pro.totalAreasqft}</td>
+                    <td class="tabledata">{!pro.totalAreaBuilding}</td>
+                    <td class="tabledata"> {!pro.adoptedValuePersqft}</td>
+                    <td class="tabledata">{!pro.totalAmount}</td>
+                </tr>
+                
+            </apex:repeat>
+            <!--<tr>
+<td class="tabledata" colspan="4">Grand Total collateral value (H) = (E) + (F) + (G)</td>
+<td class="tabledata"> Rs.7,31,300/-</td>
+</tr>
+<tr>
+<td class="tabledata" colspan="4">LTV (%)</td>
+<td class="tabledata"> 47.00%</td>
+</tr>-->
+        </table>
+        
+        <p style="font-size:12px;padding-top:60px;">
+            <span style="text-decoration:underline;">
+                <b>Declaration</b>
+            </span>: I hereby declare that I am not related to any applicant or co-applicant directly or indirectly.
+            
+        </p>
+        <p style="font-size:12px;"> Remarks (if related):______________</p>
+        
+    </apex:form>
+</apex:page>

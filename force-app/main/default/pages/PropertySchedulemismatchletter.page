@@ -1,0 +1,87 @@
+<apex:page controller="PropertyScheduleController" readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true"  standardStylesheets="false" applyBodyTag="false"  contentType="text/html;charset=UTF-8" renderAs="pdf" >
+    <head>
+         <h2 style="text-align:center;margin-top:-5px"><u>Customer Undertaking for Property Schedule Mismatch</u></h2> 
+    </head>
+   <body class="slds-scope">
+        <div Style="font-size:14px">
+    <apex:form >
+        <div>
+            <p style="float:right;"><br/>
+                <b>Date:_____________</b>
+            </p>
+        </div>
+        <div>
+            <p><br/><br/>
+                <b>From,</b><br/>
+                {!loanApp.Customer_Information__r.Name},<br/>
+                {!loanApp.Residence_Address_Line_1__c},<br/>
+                {!loanApp.Residence_State__c},<br/>
+                {!loanApp.Residence_City__c},<br/>
+                {!loanApp.Residence_Pincode__r.Name}<br/><br/>
+                 <b>To,</b><br/>
+                The Manager(DODDENI NAGARAJU),<br/>
+                Five Star Business Finance Limited,<br/>
+                NALGONDA2<br/><br/><br/><br/>
+                Dear Sir,<br/><br/>             
+            </p>
+       </div>
+        <div>
+            <p style="float-center;margin-left:0.5in">
+                <b><u>Sub: Undertaking for mismatch Between Property Schedule in Tile Document and MODT</u> </b>
+            </p>
+        </div>
+       
+        <div>
+            <p>
+                I/We hereby confirm that we have applied for a loan with your company under the Application number {!loanApp.Application__r.Name}
+                for which we have recieved  sanction amount of Rs.{!loanApp.Application__r.Total_Amount_Recommended_PcAc__c}.
+            </p>
+        </div>
+        <div><p>
+            As part of the sanction condition, I/We would submit the Title Deed No {!objProp.Title_Deed_Number__c} .Containig the Details of the property
+            ,which is being mortgaged favour of your company ,through registration of a Memorandum of Deposit of Title Deed document 
+            in the local SRO Office.
+         </p></div>
+        <div>
+            <p>
+              while registration the SRO,unfortunately there has been an error, while capturing the details of the property.
+                The correction at the SRO would involve extra expenditure; hence considering the expenses already incurred 
+                by us :request you to process our loan based on this undertaking.
+            </p>
+        </div>
+        <div>
+            <p>
+                The correct deatails of the property is appended herewith:
+            </p>
+            <p>
+                __________________________________________________________________________________________________<br/><br/>
+                __________________________________________________________________________________________________<br/><br/>
+                __________________________________________________________________________________________________<br/><br/>
+                __________________________________________________________________________________________________<br/><br/>
+                __________________________________________________________________________________________________<br/><br/>
+                
+                Notwithstanding the details mentioned above; I/We confirm that the property describe in the Title Document 
+                No mentioned above is being mortgaged in favour of your company for the above mentioned loan sanctioned to us
+                and I/We will be responsible for any legal issues, if any , arises in the future in this context.
+            </p>
+        </div>
+        <div>
+            <p>
+                <b>Thanking You,</b>
+            </p>
+            <p>
+                <b>Yours Truely,</b><br/>
+            </p>
+            <table style="border-collapse:collapse; text-align:justify; width:100%;">
+                <tr>
+                    <apex:repeat value="{!applicants}" var="applicant" id="theRepeat2">
+                        <td class="text">_________________<br/>
+                        <b>{!applicant.applicantName}</b></td>
+                    </apex:repeat>
+                </tr>
+            </table>
+        </div>
+    </apex:form>
+       </div>
+    </body>
+</apex:page>

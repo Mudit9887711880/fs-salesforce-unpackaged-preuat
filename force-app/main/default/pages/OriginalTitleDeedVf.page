@@ -1,0 +1,96 @@
+<apex:page controller="DocumentGenerationVFController" readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-bottom:0.6in;
+            @bottom-left {
+            
+            content: element(footer);
+            
+            }
+            
+            }
+            .tdmargin
+            {
+            padding-left:18px;
+            }
+            .text
+            {
+            font-size:15px;
+            }
+            div.footer {
+            display: block;
+            margin-bottom: 35px;
+            
+            position: running(footer);
+            }
+            .pagenumber:before {
+            content: counter(page);
+            }
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tabledata{
+            border: 10px solid black;
+            border-collapse: collapse;
+            }
+            
+        </style>      
+    </head>
+    <h2 class="text" style="text-align:center;margin-top:-5px"><u>TITLE DEED DOCUMENT SCRUTINY DECLARATION BY BRANCH MANAGER</u></h2> 
+    
+    <apex:form >
+        <p class="text" > Application No. :<b>{!application.Name}</b>&nbsp;&nbsp;Customer Name : <b>{!loanApp.Customer_Information__r.Name}</b>&nbsp;&nbsp; Branch Name : {!application.Sourcing_Branch__r.Name}
+        </p>
+        The customer has submitted the following original deed document for this application
+        <br/><br/>
+        <div> 
+            <apex:repeat value="{!listPropWrap}" var="property" id="propRepeat">
+                {!property.counter}. Document no : {!property.propTitleDeedNumber} Document Type : {!property.propTitleDeedType} <br/><br/>
+            </apex:repeat>
+        </div>
+        I, hereby, confirm that I have checked the above mentioned documents and confirm the following:
+        <br/>
+        <ul>
+            <li>The above mentioned documents are ORIGINAL only.</li>
+            <li>The above mentioned documents are NOT COLOUR XEROX.</li> 
+            <li>The above mentioned documents are NOT LAMINATED/LAMINATION REMOVED.</li>
+        </ul>
+        
+        If this title document is found to be colour xerox or xerox or laminated document; I am ok to face any<br/> 
+        action taken by HO on me.<br/><br/><br/> 
+        
+        BM NAME: __________________________ BM SIGN: _______________________ <br/> 
+        <br/><br/>
+        Date: _________________
+        <br/><br/>
+        __________________________________________________________________________________________________________________________________________________
+        <br/><br/>
+        <h2 class="text" style="text-align:center;margin-top:-5px"><u>TITLE DEED DOCUMENT SCRUTINY DECLARATION BY OPERATION MANAGER</u></h2> 
+        <p class="text" > Application No. :<b>{!application.Name}</b>&nbsp;&nbsp;Customer Name : <b>{!loanApp.Customer_Information__r.Name}</b>&nbsp;&nbsp; Branch Name : {!application.Sourcing_Branch__r.Name}
+        </p>
+        The customer has submitted the following original deed document for this application
+        <br/><br/>
+        <div> 
+            <apex:repeat value="{!listPropWrap}" var="property" id="propRepeat1">
+                {!property.counter}. Document no : {!property.propTitleDeedNumber} Document Type : {!property.propTitleDeedType} <br/><br/>
+            </apex:repeat>
+        </div>
+        I, hereby, confirm that I have checked the above mentioned documents and confirm the following:
+        <br/>
+        <ul>
+            <li>The above mentioned documents are ORIGINAL only.</li>
+            <li>The above mentioned documents are NOT COLOUR XEROX.</li> 
+            <li>The above mentioned documents are NOT LAMINATED/LAMINATION REMOVED.</li>
+        </ul>
+        
+        If this title document is found to be Colour xerox or xerox or laminated document; I am ok to face any<br/> 
+        action taken by HO on me.<br/><br/><br/> 
+        
+        OO NAME: __________________________ OO SIGN: _______________________ <br/> 
+        <br/><br/>
+        Date: _________________
+    </apex:form>
+</apex:page>

@@ -1,0 +1,201 @@
+<!--
+  @author            : Neeraj Soni
+  @group             : TechMatrix Consulting
+  @description       :
+  @created on        : 23/08/2022
+  @last modified on  : 06-09-2022
+  @last modified by  : Karan Singh Soni
+  CH01 : 05/09/2022 : Karan Singh Soni : Adding field mappings.
+-->
+<apex:page showHeader="false" applyBodyTag="false" renderAs="pdf" controller="FS_DisbursalMemoController" >
+    <head>
+        <style>
+
+            tr td:first-child {
+                width: 9em;
+                min-width: 9em;
+                max-width: 9em;
+                word-break: break-all;
+                background-color:#AEAAAA;
+            }
+
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            .blueColor {
+            	background-color:#8EB4E3;
+            }
+
+            .grayColor {
+            	background-color:#AEAAAA;
+            }
+
+            .greenColor {
+            	background-color:#D7E4BD;
+            }
+
+            .whiteColor {
+            	background-color:white!impotant;
+            }
+        </style>
+    </head>
+    <body>
+        <table border="1" style="width:100%;text-align:center;border:2px,solid, black">
+            <tr>
+                <th colspan="4" style="background-color:#6699CC">DISBURSAL MEMO</th>
+            </tr>
+            <tr>
+                <td colspan="1">Application number</td>
+                <td colspan="3">{!applicationRecord.Name}</td>
+            </tr>
+            <tr>
+                <td colspan="1">Applicant name</td>
+                <td colspan="3">{!primaryApplicant.Applicant_Name__c}</td>
+            </tr>
+            <tr>
+                <td colspan="1">Branch name</td>
+                <td colspan="3">{!applicationRecord.Branch__c}</td>
+            </tr>
+            <tr>
+                <td colspan="1">PURPOSE</td>
+                <td colspan="3">{!purpose}</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Loan Amount</td>
+                <td class="grayColor">Requested by Customer</td>
+                <td class="grayColor">Recommended by Branch</td>
+                <td class="grayColor">Recommended by Process/approval</td>
+            </tr>
+            <tr>
+                <td style="background-color:white">{!applicationRecord.Requested_Loan_Amount__c}</td>
+                <td>{!FIVBverificationRecord.BM_Recommended_Amount__c}</td>
+                <td>{!applicationRecord.Total_Amount_Recommended_PcAc__c}</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Income Details</td>
+                <td class="grayColor">BRANCH</td>
+                <td class="grayColor">FIELD CREDIT</td>
+                <td class="grayColor">CREDIT PROCESS/APPROVER</td>
+            </tr>
+            <tr>
+                <td style="background-color:white">{!FIVBverificationRecord.Total_Income__c}</td>
+                <td>{!FIVCverificationRecord.Total_Income__c}</td>
+                <td>{!grossMonthlyIncome}</td>
+            </tr>
+            <tr>
+                <td>CREDIT SCORE</td>
+                <td>{!creditScore}</td>
+                <td class="grayColor">Living Style</td>
+                <td>Mapping required from client</td>
+            </tr>
+            <tr>
+                <td>DISTANCE FROM BRANCH</td>
+                <td><apex:outputLabel style="font-size: small " value="{!SUBSTITUTE(JSENCODE(strAllPropertyDistance), '\\n', '<br/>')}" escape="false"/ >   </td>
+                <td class="grayColor">OVERALL RISK</td>
+                <td>{!applicationRecord.Borrower_s_Risk_Rating__c}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="greenColor"></td>
+                <td class="grayColor">INCOME</td>
+                <td class="grayColor">NATURE OF JOB</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="greenColor">&nbsp;</td>
+                <td class="greenColor">{!totalIncome}</td>
+                <td class="greenColor">{!natureOfJob}</td>
+            </tr>
+            <tr>
+                <td>TOTAL INCOME</td>
+                <td class="greenColor">&nbsp;</td>
+                <td class="greenColor">{!totalIncome}</td>
+                <td class="greenColor"></td>
+            </tr>
+            <tr>
+                <td>OBLIGATIONS</td>
+                <td class="greenColor">&nbsp;</td>
+                <td class="greenColor">{!obliations}</td>
+                <td class="greenColor"></td>
+            </tr>
+            <tr>
+                <td>TOTAL Net income</td>
+                <td class="greenColor">&nbsp;</td>
+                <td class="greenColor">{!totalIncome-obliations}</td>
+                <td class="greenColor"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="grayColor">BRANCH</td>
+                <td class="grayColor">FIELD</td>
+                <td class="grayColor">PROCESS</td>
+            </tr>
+            <tr>
+                <td>LAND AREA</td>
+                <td>{!branchLandDetails.Land_Area_Sq_Ft__c}</td>
+                <td>{!fieldLandDetails.Land_Area_Sq_Ft__c}</td>
+                <td>{!processLandDetails.Land_Area_Sq_Ft__c}</td>
+            </tr>
+            <tr>
+                <td>Built up Area</td>
+                <td>{!branchLandDetails.Building_Area_Sq_Ft__c}</td>
+                <td>{!fieldLandDetails.Building_Area_Sq_Ft__c}</td>
+                <td>{!processLandDetails.Building_Area_Sq_Ft__c}</td>
+            </tr>
+            <tr>
+                <td>Land Value</td>
+                <td>{!branchLandDetails.Final_Land_Value__c}</td>
+                <td>{!fieldLandDetails.Final_Land_Value__c}</td>
+                <td>{!processLandDetails.Final_Land_Value__c}</td>
+            </tr>
+            <tr>
+                <td>Building Value</td>
+                <td>{!branchLandDetails.Building_Value__c}</td>
+                <td>{!fieldLandDetails.Building_Value__c}</td>
+                <td>{!processLandDetails.Building_Value__c}</td>
+            </tr>
+            <tr>
+                <td>Total Value</td>
+                <td>{!totalBranchValue}</td>
+                <td>{!totalFieldValue}</td>
+                <td>{!totalProcessValue}</td>
+            </tr>
+            <tr>
+                <td>Ratios</td>
+                <td colspan="2" class="grayColor">Branch recommended amount</td>
+                <td class="grayColor">Credit recommended amount</td>
+            </tr>
+            <tr>
+                <td>LTV in % to the value amt decided by credit</td>
+                <td colspan="2">{!FIVBverificationRecord.LTV__C}%</td>
+                <td>{!applicationRecord.LTV_PC__c}%</td>
+            </tr>
+            <tr>
+                <td>DBR in % for the income decided by Credit</td>
+                <td colspan="2">{!FIVBverificationRecord.DBR__C}%</td>
+                <td>{!applicationRecord.DBR_PC__c}%</td>
+            </tr>
+            <tr>
+                <td>Positive Points</td>
+                <td colspan="3">Mapping required from client</td>
+            </tr>
+            <tr>
+                <td>Negative Points</td>
+                <td colspan="3">Mapping required from client</td>
+            </tr>
+            <tr>
+                <td>Other Remarks</td>
+                <td colspan="3">{!applicationRecord.AC_Remarks__c}</td>
+            </tr>
+            <tr>
+                <td colspan="4">SPECIAL CONDITION</td>
+            </tr>
+            <tr>
+                <td colspan="4">{!applicationRecord.Legal_Sanction_Condition__c}</td>
+            </tr>
+        </table>
+    </body>
+
+</apex:page>

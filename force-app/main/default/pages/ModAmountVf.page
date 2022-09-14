@@ -1,0 +1,75 @@
+<apex:page controller="DocumentGenerationVFController" readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-bottom:0.6in;
+            @bottom-left {
+            
+            content: element(footer);
+            
+            }
+            
+            }
+            .tdmargin
+            {
+            padding-left:18px;
+            }
+            .text
+            {
+            font-size:21px;
+            }
+            div.footer {
+            display: block;
+            margin-bottom: 35px;
+            
+            position: running(footer);
+            }
+            .pagenumber:before {
+            content: counter(page);
+            }
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tabledata{
+            border: 10px solid black;
+            border-collapse: collapse;
+            }
+            
+        </style>      
+    </head>
+    <apex:form >
+        <h2 class="text" style="text-align:center;margin-top:-5px"><u>Letter for Amount Difference in MOTD and Loan Sanctioned Amount </u></h2>  
+        <body><br/>
+            <p>
+                <b> Date: ______________ </b>
+                <br/>
+                <br/>
+                <b>Branch:</b><br/> 
+                {!loanApp.Application__r.Sourcing_Branch__r.Name}
+                <br/>
+                <br/>
+                <b>From,</b><br/>
+                {!loanApp.Customer_Information__r.Name}<br/>
+                {!loanApp.Residence_Address_Line_1__c}, {!loanApp.Residence_City__c}, {!loanApp.Residence_State__c}, {!loanApp.Residence_Pincode__r.Name}
+                <br/>
+                <br/>
+                <b>TO</b>,<br/>
+                <b>Branch Manager, Five Star Business Finance Limited</b><br/>
+                {!loanApp.Application__r.Sourcing_Branch__r.Name}<br/> <br/>
+                Dear Sir,<br/><br/>
+                <b>Sub:</b> Difference in Memorandum of Title Deed (MOTD) registered amount and the loan sanction amount<br/><br/>
+                Application Number: <b>{!application.Name}.</b> Sanction Loan Amount: Rs.{!loanApp.Application__r.Total_Amount_Recommended_PcAc__c}<br/><br/><br/>
+                I/We have got a loan sanctioned as mentioned above. However, we has registered the MOTD in favour of Five-Star Business Finace Limited for value higher than the Sanction Loan Amount.<br/><br/><br/><br/>
+                I/We are aware that the sanction amount has been restricted to the above mentioned Sanction amount and I/We confirm our acceptance to the reduced Sanction amount, despite the value of MOTD done.
+                <br/><br/><br/>
+                <b>Thanking You,</b><br/><br/>
+                <b>Your Sincerely,</b><br/><br/>
+                {!loanApp.Customer_Information__r.Name}
+            </p>
+        </body>
+        
+        
+    </apex:form>       
+</apex:page>

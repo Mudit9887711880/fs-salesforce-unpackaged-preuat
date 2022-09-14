@@ -1,0 +1,70 @@
+<apex:page controller="ApplicantDocumentGeneratorController" readOnly="true"  applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-bottom:0.6in;
+            @bottom-left {
+            
+            content: element(footer);
+            
+            }
+            
+            }
+            .tdmargin
+            {
+            padding-left:10px;
+            }
+            .text
+            {
+            font-size:15px;
+            }
+            div.footer {
+            display: block;
+            margin-bottom: 35px;
+            
+            position: running(footer);
+            }
+            .pagenumber:before {
+            content: counter(page);
+            }
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tabledata{
+            border: 10px solid black;
+            border-collapse: collapse;
+            }
+            
+        </style>      
+    </head>
+    <h2 style="text-align:center;margin-top:-5px"><u>Customer Undertaking for Signature Mismatch</u></h2> 
+    <apex:form >
+        <div class="text">
+            <p style="float:right;"><br/>
+                <b>Date:</b>______________
+            </p>
+            <p style="float:left;"><br/><br/>
+                To,<br/>
+                The Branch Manager,<br/>
+                Five Star Business Finance Limited,<br/>
+                NALGONDA2<br/><br/><br/><br/>
+                <b><u>Subject: Undertaking for Signature Mismatch</u></b><br/><br/>
+                <b><u>Reference: {!applicants.applicationName}</u></b><br/><br/>
+                Dear Sir/Madam,<br/><br/><br/>
+                With reference to my request for application of this loan with your company.I hereby affirm that my signature has<br/><br/>
+                changed, over passage of time, from the one featured in my <b><u>{!docType}</u></b>, which has been submitted along with<br/><br/>
+                this application form.<br/><br/><br/><br/>
+                I hereby confirm that the signature given below in this undertaking letter and in all loan related document for this<br/><br/>
+                application is correct and agreee not to make any claim against <b>Five Star Business Finance Limited</b> in respect thereto.<br/><br/><br/><br/>
+                If there are any issues, in the future, relating to this; I will bear all the legal responsibilities and will provide full<br/><br/>
+                cooperation to the company in this regard.<br/><br/><br/>
+                <b>Thanking You,</b><br/><br/>
+                <b>Yours Sincerely,</b><br/><br/>
+                Customer Signature:____________________<br/><br/>
+                Customer Name:{!applicants.applicantName}
+            </p>
+        </div>
+    </apex:form>
+</apex:page>

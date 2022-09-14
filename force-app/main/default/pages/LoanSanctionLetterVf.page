@@ -1,0 +1,246 @@
+<apex:page readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true" renderAs="pdf" controller="LoanSanctionLetterVfController">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-bottom:0.6in;
+            @bottom-left {
+            
+            content: element(footer);
+            
+            }
+            
+            }
+            .tdmargin
+            {
+            padding-left:10px;
+            }
+            .text
+            {
+            font-size:10px;
+            font-family:Arial Unicode MS;
+            }
+            div.footer {
+            display: block;
+            margin-bottom: 35px;
+            
+            position: running(footer);
+            }
+            .pagenumber:before {
+            content: counter(page);
+            }
+            .pagecount:before {
+            content: counter(pages);
+            }
+            .tabledata{
+            border: 1.5px solid black;
+            border-collapse: collapse;
+            }
+        </style>      
+    </head>
+    <apex:form >
+        
+        <img src="{!$Resource.LoanSanctionLogo}" width="180px" height="40px"    />  
+        <h4 style="text-align:center">LOAN SANCTION LETTER</h4>
+        <p class="text">To :<span style="float:right;margin-right:1.2in;"><apex:outputText value="{0,date,dd-MM-yy}">
+      											  <apex:param value="{!TODAY()}" /> 
+												</apex:outputText></span></p>
+        <p class="text">Mr/Ms. &nbsp;&nbsp;&nbsp;<!--ANITA SEN--> {!primaryAppName} <span style="float:right;margin-right:1.2in;"><!--APPL00365764--> {!objApp.Name}</span></p>
+        <p class="text"><!--87 KH/1, BIJANVADA GRAMIN, VILLAGE BIJANVADA, TEHSIL PIPARIYA, DISTRICT HOSHANGABAD 257-->{!address}</p>
+        <br/><br/>
+        <p class="text">Dear Sir/Madam,</p>
+        <br/>
+        <p class="text" style="text-align:justify;margin-right:1.2in" >
+            With reference to your application dated  <!--10/03/2022--><apex:outputText value="{0,date,dd-MM-yy}">
+    		<apex:param value="{!TODAY()}" /> </apex:outputText> , Five Star Business Finance Limited [FSBF/Company] is pleased to inform you that we have in 
+            principle, sanctioned the loan for the purpose of business commencement / business improvement/ construction/ purchase/ repairs/ renovation/ extension
+            of a house or for any other purpose, as described in the schedule furnished hereunder and on the specific terms &amp; conditions general terms and 
+            conditions specified in our Fair Practice Code (FPC) &amp; Most Important Terms  &amp; Conditions (MITC), a copy of which has been provided to you.
+        </p>
+        <br/><br/>
+        <h5>Loan Details</h5>
+        
+        
+        <table class="tabledata text" style="width:90%;">
+            <tr>
+                <td class="tabledata" style="width:35%">Purpose of Loan</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--Business Loan-->{!objApp.Loan_Purpose_1__c}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:35%">Primary Borrower</td>
+                <td class="tabledata tdmargin" style="width:70%">{!primaryAppName}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:35%">Co-borrowers &amp; relationship</td>
+                <td class="tabledata tdmargin" style="width:70%"><br/><!--  CHANDRAHASS M,Spouse-->{!coAppName} <br/><br/>{!relationCoApp}<!--DEVENDRA SEN,Spouse--><br/> </td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:35%">Name of Guarantor &amp; relationship</td>
+                <td class="tabledata tdmargin" style="width:70%">{!gurantorName}<br/>{!relationGurantor}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Nature of Security &amp; Schedule of Property to be Financed</td>
+                <td class="tabledata tdmargin" style="width:70%">Registered Mortgage of following property by way of deposit of title<br/>
+                    Schedule / Description of Property as mentioned in the document number captured in the Legal sanction condition.
+                <br/><br/></td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Loan Amount sanctioned (Rs.)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--150000--><!--{!loanAmount}--> {!objApp.Total_Amount_Recommended_PcAc__c} </td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Type of interest (Fixed / Floating)</td>
+                <td class="tabledata tdmargin" style="width:70%">Fixed</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Rate of Interest (%)- (Including advance EMI)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--24.54%--><!--{!objApp.Effective_IRR__c}--><!--{!roiAdvEmi}-->{!objApp.Customer_Communicated__c}%</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Additional Rate of Interest (%)-if applicable (Including advance EMI)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--24.54%--> {!addRoi}%</td>
+            </tr> 
+            <tr>
+                <td class="tabledata" style="width:30%">Final annualized Rate of interest (%)-(Including advance EMI)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--24.54%--> {!finalAdvEmi}%</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Reason for Additional Rate of Interest,if applicable</td>
+                <td class="tabledata tdmargin" style="width:70%">{!reasonROI}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Repayment Tenure (months)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--84--><!--{!repaymentTenure}-->{!objApp.Tenor_In_Months__c}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Monthly Installment / EMI (Rs.)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--3678--><!--{!monthlyEMI}-->{!objApp.Emi_PcAc__c}</td>
+            </tr>            
+        </table>
+        <!--footer-->
+        <div class="footer">
+            <table>
+                <tr>
+                    <td><div style="margin-left:20px;" class="text">Page <span class="pagenumber"/> of &nbsp; <span class="pagecount"/></div></td>
+                    <td style="width:75%;text-align:center;" class="text"><i>This is a computer generated letter and does not require any signature</i></td>
+                    <td class="text">Borrower/s</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!--PageBreak-->
+        <div style="page-break-after:always;"></div>
+        <!--PageBreak-->
+        
+        <h4>
+            Schedule of Charges
+        </h4>
+        <table class="tabledata text" style="width:90%;">
+            <tr>
+                <td class="tabledata" style="width:30%">Legal &amp; Inspection Fee (Rs)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--2000-->{!legalFee}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Processing fee (%)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--2%-->{!processingFee} <span style="padding-left:120px;">(Plus applicable GST)</span>  </td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Additional interest for delayed</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--3% per month-->NA</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Cheque bounce charges (Rs)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--300-->{!checqueCharges}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Collection charges (Rs)</td>
+                    <td class="tabledata tdmargin" style="width:70%"><!--100-->{!collectionCharges}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Document Charges (Rs)</td>
+                <td class="tabledata tdmargin" style="width:70%"><br/><!--2000-->NA<br/><br/> </td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Document &amp; Storage<br/> Related Charge(Rs)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--500-->NA</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Insurance Premium</td>
+                <td class="tabledata tdmargin" style="width:70%"><br/><!--Actuals-->{!insured} <span style="padding-left:100px;">(Plus applicable GST)</span><br/><br/></td>
+            </tr>
+        </table>
+        
+        <h4> Other information </h4>
+        <table class="tabledata text" style="width:100%;">
+            <tr>
+                <td class="tabledata" style="width:30%">Number of advance EMI</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--1-->{!objApp.Number_of_advance_EMI__c}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Rate of Interest (%)- (Excluding <br/>advance EMI)</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--23.75%-->{!objApp.Customer_Communicated__c}</td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Legal Sanction Conditions , if any</td>
+                <td class="tabledata tdmargin" style="width:70%"><!--SALE DEED -MP169812021A1350206 09/04/2021 <br/> PT <br/>KHASRA COPY<br/><br/><br/>-->{!objApp.Legal_Sanction_Condition__c}  </td>
+            </tr>
+            <tr>
+                <td class="tabledata" style="width:30%">Credit Sanction conditions, if any</td>
+                   <td class="tabledata tdmargin" style="width:70%">{!remarks}
+                </td>
+            </tr>
+            
+        </table>
+        
+        
+        
+        
+        
+        <!--PageBreak-->
+        <div style="page-break-after:always;"></div>
+        <!--PageBreak-->
+        
+        <h3>
+            Other Terms and Conditions:
+        </h3>
+        
+        <p class="text">1. This Offer is valid for 30 days from the date of sanction or any other extended date thereof as communicated in <br/> writing by FSBF.</p>
+        <p class="text">2.  The loan should be used only for the purpose for which it is sanctioned and not to any other use.</p>
+        <p class="text">3.  Mortgage Registration expenses and other expenses should be paid by the borrower/s. Other charges including <br/> processing fee not paid by the borrower shall be deducted from the first or subsequent disbursals. Any other charges<br/> shall be debited to his / her loan account.</p>
+        <p class="text">4.  Borrower/s should handover all the original documents as required by the Company before disbursement and<br/> whenever it is being asked for.</p>
+        <p class="text">5.  The ROI, repayment period and all other general terms and conditions shall be subject to change from time to time as<br/> notified in the company's website www.fivestargroup.in or on the Notice Boards of the Company.</p>      
+        <p class="text">6.  The disbursement of the sanctioned loan is subject to your acceptance and compliance of all terms &amp; conditions, FPC &amp;<br/> MITC, execution of prescribed documents and providing the prescribed security.</p>      
+        <p class="text">7.  The disbursement of the loan is at the sole discretion of the company and does not vest any right with the borrower<br/> to claim the disbursement of the loan as a matter of right.</p>      
+        <p class="text">8.  In case of construction of property, the disbursement will be in stages depending upon the progress of construction.</p>      
+        <p class="text">9.  The first EMI(advance EMI) shall have to be paid in advance by the borrower. Upon Borrower's request, Company<br/> reserves the right to deduct such EMI from the first disbursal.</p>      
+        <p class="text">10. The EMI for the full loan amount shall commence from the date of first disbursal, irrespective of the quantum of first<br/> disbursal. The Borrower conveys his / her acceptance to make payments of such EMIs without demur.</p>      
+        <p class="text">11. The Company follows 4 instalment dates - 5th/10th/15th/20th of every month.The actual instalment date shall be<br/> fixed as one of the abovementioned dates,immediately succeeding the date of first disbursal. For example , if the loan<br/> is disbursed on 17th of August,the instalment date shall be fixed as 20th of every month.</p>      
+        <p class="text">12. The Comapny reserves the right to hold portion of the loan from the borrower in case of any documents are<br/> yet to be submitted by the borrower or in case of non fulfillment of any condition stipulated by the company.Such<br/> portion of loan amount shall be disbursed to the borrower on submission of pending documents or fulfilment of<br/> stipulated conditions. In such cases, the interest charged on such amount,if any would be refunded to the borrower.</p>      
+        <p class="text">13. The Borrower undertakes to pay the statutory dues , including but not limited to property tax etc, to ensure that the<br/> mortgaged property remains legally valid and enforcable .The borrower also undertakes that the mortgaged property is<br/> constructed as per the approval plan by the relevant goverment authorities.The borrower also undertakes to submit all the<br/> documents evidencing payment of all such dues including property tax receipts,insurance premium receipts , as and when<br/> called for by FSBF.</p>      
+        <p class="text">14. If the monthly instalments or any other payments are due and are not paid on or before the due date, additional<br/> interest of 3% per month shall be charged for the period of default with compounding at monthly rests on the overdue<br/> amount. Failure of FSBF to send notice for payment or deposit of post-dated cheques shall not serve as a reason for<br/> non- payment of monthly instalments.</p>      
+        <p class="text">15. The company may cancel/ modify any of the terms and conditions of the loan<br/> or withhold part or full amount of the loan without assigning any reason whatsoever.</p>
+        <p class="text">16. FSBF may, in its sole discretion, permit prepayment of the Loan at the request of the borrower, subject to the<br/> borrower paying prepayment charges at the rate as may be prescribed in the agreement /MITC, on the amount due<br/> under the said Loan.</p>
+        <p class="text">17. Special Conditions mentioned herein shall be fulfilled by the borrower and the disbursal on the loan shall be subject<br/> to fulfilment of such conditions mentioned herein.</p>
+        <p class="text">18. The Borrower/Co borrower/Guarantor agrees that, in response to his / her request, FSBF would obtain Credit life<br/> insurance through an insurer identified by FSBF, for one of the Borrowers, completely at the discretion of FSBF, and the<br/> premium for such insurance shall be paid by the Borrower. FSBF shall have the right to receive and adjust any payment that<br/> it may receive in connection with such insurance policy against the Loan. In case of death of the insured person; the claim<br/> amount of the Insurance is a subject matter to be decided by the Insurance Company only and FSBF does not have any say<br/> in this matter. Such life insurance coverage being taken voluntarily by the Borrower shall be for a term equal to the tenure <br/>of the Loan. In the event of any loan outstanding after the adjustment of any payment from the insurance policy, the Borrower<br/> agrees and undertakes to make payment of the same to FSBF.</p>
+        
+        <!--PageBreak-->
+        <div style="page-break-after:always;"></div>
+        <!--PageBreak-->
+        
+        <p class="text">19. FSBF does not accept any responsibility nor liability for any loss or damage arising from any service failures or<br/> disruptions (including but not limited to, loss of data) attributable to a systems or equipment failure or due to reliance by<br/> FSBF’s third party products or interdependencies including but not limited to electricity or telecommunications and for any<br/> consequences arising out of interruption of its business by Acts of God, riots, civil commotion, insurrections, wars or any<br/> other causes beyond its control or by any strikes or lockouts</p>
+        <p class="text">20. The Borrower acknowledges and agree that in the absence of manifest error, FSBF’s records (including, without<br/> limitation, account balances, transaction details/facility limits) shall be conclusive proof of the matters to which they relate and<br/> the borrower shall honour all their obligations to the satisfaction of FSBF.</p>
+        <p class="text">21. In the event of default,FSBFshall in its absolute discretion have the right to sell and dispose the security/property to<br/> be mortgaged / charged or already mortgaged / charged with FSBF in such manner as prescribed by FSBF and agreed<br/> to by you to secure the loan/credit facilities on “As is where is” basis without seeking the intervention of court of law<br/> and/or applying for foreclosure of the mortgage and / or initiating any other legal action. FSBF shall be deemed to have<br/> been authorized by you, to sell or dispose the security/property as your agent and attorney in the event of your default<br/> to repay the outstanding dues payable to FSBF as per terms and conditions of loan/credit facilities.In event of default <br/>, the company also reserves the right to advertise/provide or issue a public notice pertaining to the indebtedness of the<br/> borrower to the company or about the mortgage created in favour of the company</p>
+        <p class="text">22. You futher authorise the company and/or its associates/subsidiaries/affiliates/ to verify any information or otherwise at<br/> my office/residence and/or contact me and/or my family members and/or my employer/Banker/Credit Bureau/RBI and/or<br/> any third party's they deem necessary and/or to do any such acts as they deem necessary and/or disclose to Reserve<br/> bank of India or any other authority ,including but not limited to, Credit Bureau or any other third person, the name /identity<br/>
+            , credit information including but not limited to balance outstanding, repayment history , defaults , if any , etc along with<br/> demographic details.
+        </p>
+        <p class="text">23. A loan agreement as per terms prescribed by FSBF and other documents in relation thereof shall be executed by<br/> the Borrower. The terms in the loan Agreement shall supersede all pervious related communications in respect of the<br/> said finance Facility/loan.</p>
+        <p class="text">
+            24. For any clarifications, please contact FSBF Customer Care at +91 44 2346 0958 or send a mail<br/> customercare@fivestargroup.in.
+        </p>
+        <p class="text" >
+            The sanction letter is sent to you in duplicate. If the terms and conditions are acceptable to you, please return the same<br/> duly signed and call on us along with the guarantor/co applicant/s &amp; execute the required loan documents along with<br/> the relevant property documents.
+     
+        </p>
+    </apex:form>
+</apex:page>

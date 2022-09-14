@@ -1,0 +1,302 @@
+<apex:page readOnly="true" controller="ReceiptGenerationVFController" applyHtmlTag="false" sidebar="false" showHeader="false"   renderAs="pdf" contentType="text/html;charset=UTF-8">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <style type="text/css">
+            @page{
+            margin:0.2in;
+            margin-top:0.5in;
+            }
+            .data{
+            border: 1.5px solid black;
+            border-collapse: collapse;
+            }
+            #scissors {
+             /* image height */
+            width: 100%;
+            height:25px;
+            margin: auto auto;
+            background-image:url({!$Resource.ReceiptScissorLogo});
+            background-repeat: no-repeat;
+            background-position: right;
+            position: relative;
+            }
+            #scissors div {
+            position: relative;
+            top: 50%;
+            border-top: 1.5px dashed black;
+            margin-top: -3px;
+            }
+        </style>      
+    </head>
+    <apex:form >
+        <div>
+            <center><u>RECEIPT</u><p style="font-size:12px;">
+                (Customer Copy)
+                </p> </center>
+            <div  style="float:left;">
+                <img src="{!$Resource.FiveStarLogo}" width="150px" height="50px"    style="border:none;"/>  
+                <p style="font-size:10px ; margin-top:0px;">
+                    (Formerly known as Five Star Business Credits Ltd.,)  
+                </p> 
+            </div>
+            <div style="float:right;margin-top:20px;border-style: solid;border-color: green;padding-right:80px; ">
+                <table style="font-size:12px;" >         
+                    <tr>             
+                        <td><I>Receipt Ref No</I></td>   
+                        <td>:&nbsp;&nbsp;{!recObj.Receipt_Id__c}</td>                 
+                    </tr>  
+                    <tr>             
+                        <td><I>Date</I></td>   
+                        <td>:&nbsp;&nbsp;{!ReceiptDate}</td>                 
+                    </tr>  
+                </table>   
+            </div>
+        </div>
+        <br/><br/><br/>
+        <div style="float:right;">
+            
+            <table style="font-size:12px;" >         
+                <tr>             
+                    <td style="padding-right:62px;">CIN</td>   
+                    <td >:U65991TN1984PLC010844</td>                 
+                </tr>  
+                <tr>             
+                    <td>GSTIN</td>   
+                    <td>:29AAACF0419M1ZL</td>                 
+                </tr>
+                <tr>             
+                    <td>SAC Code</td>   
+                    <td>:997119</td>                 
+                </tr>  
+            </table>   </div>
+        
+        <div style="margin-left:-0.2em;">
+            <table style="font-size:12px;width:58%" >         
+                <tr>             
+                    <td >Corporate Office:</td>   
+                    <td > </td>                 
+                </tr>  
+                <tr>             
+                    <td>New No. 27, Old No. 4,Taylor's Road,</td>   
+                    <td> </td>                 
+                </tr>
+                <tr>             
+                    <td>Kilpauk, Chennai- 600 010. </td>   
+                    <td style="border-style: solid;border-color: green;text-align:center;padding :5px;" > Karnataka</td>                 
+                </tr> 
+                <tr>             
+                    <td>Phone : 044 - 4610 6200. </td>   
+                    <td> </td>                 
+                </tr>
+            </table>  
+        </div>
+        
+        <table style="margin-left:-0.2em;width:100%" >         
+            <tr>             
+                <td >Branch Name:</td>   
+                <td style="border-bottom: 1px dotted ;width:35%;  "> {!BranchName}</td> 
+                <td style="width:3%"></td>
+                <td  > Account Number:</td> 
+                <td style="border-bottom: 1px dotted ;width:30%;  ">{!appObj.Name} </td> 
+            </tr>  
+            
+            
+        </table>  
+        <br/><br/><br/> 
+        <div>
+            <table class="data" cellpadding="6" style="float:left; font-size:12px;  width:40%" >         
+                <tr>             
+                    <td class="data"><i>{!feeCode}</i></td>   
+                    <td class="data" style="text-align:right" width="40%"> <apex:image value="{!$Resource.RupeeSymbol}" width="9px" height="9px" style="border:none;" rendered="{!recObj.Amount__c!=null}"/>{!recObj.Amount__c}</td>  
+                </tr>  
+                <tr>             
+                    <td class="data"><i>Others(Incl. GST)</i></td>   
+                    <td class="data"></td>  
+                </tr>  
+                <tr>             
+                    <td class="data" style="text-align:right">Total:</td>   
+                    <td class="data" style="text-align:right;color:red"> <apex:image value="{!$Resource.RedReupeeSymbol}" width="7.5px" height="7.5px" style="border:none;"  rendered="{!recObj.Amount__c!=null}"/>{!recObj.Amount__C}</td>  
+                </tr>  
+                <tr  >             
+                    <td  class="data" colspan="2" ><sup>*</sup>Cheque/D.D. subject to realisation</td>   
+                    
+                </tr>  
+                
+            </table>
+            
+            <table        style="float:right; font-size:12px; margin-top:-0.5em; width:55%" >         
+                <tr>             
+                    <td><i>Received From</i></td>   
+                    <td style="border-bottom: 1px dotted ;width:63% ;font-weight:Bold">{!accountObj}</td>  
+                </tr>  
+                <tr>             
+                    <td><i>Rupees in words</i></td>   
+                    <td style="border-bottom: 1px dotted ;width:63%"> {!amountInWords}</td>  
+                </tr>  
+                <tr>             
+                    <td><i>By Cash / DD / Cheque No.<sup>*</sup></i></td>   
+                    <td style="border-bottom: 1px dotted ;width:63%"> </td>  
+                </tr>  
+                <tr>             
+                    
+                    <td colspan="2" style="text-align:right;font-size:10px;">for FIVE-STAR BUSINESS FINANCE LIMITED </td>  
+                </tr> 
+            </table> 
+            <table        style="float:right; font-size:12px; margin-top:3em; width:55%" >         
+                <tr >             
+                    <td style="font-weight:bold"><i>Customer Signature</i></td>   
+                    <td style="text-align:right;font-weight:bold"><i>Authorised Signatory</i></td>  
+                </tr>  
+                <tr>             
+                    
+                    <td colspan="2" >For confirmation / further clarification please contact Corporate Office </td>  
+                </tr>  
+            </table>
+        </div>
+        
+        <div style="float:left;margin-top:20px;border-style: solid;border-color: green;width:100% ">
+            <table style="font-size:12px;" >         
+                <tr>             
+                    <td colspan="2" ><font style="color:red;font-weight:bold;font-size:13px;">
+                        Note:
+                        </font><font style="font-family:Arial Unicode MS;font-size:13px;">ರಿಸೀಟ್ ಸ್ಪೀಕರಿಸುವಾಗ ದಯವಿಟ್ಟು ದಿನಾಂಕ, ಹೆಸರು, ರಸೀದಿ ಸಂಖ್ಯೆ ಮತ್ತು ಹಣದ ಮೊತ್ತವನ್ನು ಪರಿಶೀಲಿಸಿ. ಯಾವುದೇ ತಪ್ಪುಗಳು ಇದ್ದಲ್ಲಿ, ದೂರವಾಣಿ ಸಂಖ್ಯೆ 044-23460957 | 58 ನಲ್ಲಿ ಮುಖ್ಯ ಕಚೇರಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ</font> </td>   
+                    
+                </tr>  
+                <tr>             
+                    <td colspan="2" style="text-align:right;font-size:10px;" > Printed Date is-{!currDate}   </td>
+                    
+                </tr>  
+            </table>   
+        </div>
+        
+        <div id="scissors" style="float:left">
+            <div></div>
+        </div>
+         
+          <div style="margin-top:250px;">
+            
+                <center><u>RECEIPT</u><p style="font-size:12px;">
+                (Customer Copy)
+                </p> </center>
+               
+            <div  style="float:left">
+                <img src="{!$Resource.FiveStarLogo}" width="150px" height="50px"    style="border:none;"/>  
+                <p style="font-size:10px ; margin-top:0px;">
+                    (Formerly known as Five Star Business Credits Ltd.,) 
+                </p> 
+            </div>
+            <div style="float:right;margin-top:20px;border-style: solid;border-color: green;padding-right:80px; ">
+                <table style="font-size:12px;" >         
+                    <tr>             
+                        <td><I>Receipt Ref No</I></td>   
+                        <td>:&nbsp;&nbsp;{!recObj.Receipt_Id__c}</td>                 
+                    </tr>  
+                    <tr>             
+                        <td><I>Date</I></td>   
+                        <td>:&nbsp;&nbsp;{!ReceiptDate} </td>                 
+                    </tr>  
+                </table>   
+            </div>
+        </div>
+        <br/><br/><br/>
+        <div style="float:right;">
+            
+            <table style="font-size:12px;" >         
+                <tr>             
+                    <td style="padding-right:62px;">CIN</td>   
+                    <td >:U65991TN1984PLC010844</td>                 
+                </tr>  
+                <tr>             
+                    <td>GSTIN</td>   
+                    <td>:29AAACFO419FMZL</td>                 
+                </tr>
+                <tr>             
+                    <td>SAC Code</td>   
+                    <td>:997119</td>                 
+                </tr>  
+            </table>   </div>
+         <div style="margin-left:-0.2em;">
+            <table style="font-size:12px;width:58%" >         
+                <tr>             
+                    <td >Corporate Office:</td>   
+                    <td > </td>                 
+                </tr>  
+                <tr>             
+                    <td>New No. 27, Old No. 4,Taylor's Road,</td>   
+                    <td> </td>                 
+                </tr>
+                <tr>             
+                    <td>Kilpauk, Chennai- 600 010. </td>   
+                    <td style="border-style: solid;border-color: green;text-align:center;padding :5px;" > Karnataka</td>                 
+                </tr> 
+                <tr>             
+                    <td>Phone : 044 - 4610 6200. </td>   
+                    <td> </td>                 
+                </tr>
+            </table>  
+        </div>
+        <table style="margin-left:-0.2em;width:100%" >         
+            <tr>             
+                <td >Branch Name:</td>   
+                <td style="border-bottom: 1px dotted ;width:35%;  "> {!BranchName} </td> 
+                <td style="width:3%"></td>
+                <td  > Account Number:</td> 
+                <td style="border-bottom: 1px dotted ;width:30%;  "> {!appObj.Name} </td> 
+            </tr>  
+         </table>  
+        <br/><br/><br/>
+      
+        <div>
+            <table    class="data" cellpadding="6" style="float:left; font-size:12px;  width:40%" >         
+                <tr>             
+                    <td class="data"><i>{!feeCode}</i></td>   
+                    <td class="data" style="text-align:right" width="40%"><apex:image value="{!$Resource.RupeeSymbol}" width="9px" height="9px" style="border:none;" rendered="{!recObj.Amount__c!=null}"/>{!recObj.Amount__c}</td>  
+                </tr>  
+                <tr>             
+                    <td class="data"><i>Others(Incl. GST)</i></td>   
+                    <td class="data"></td>  
+                </tr>  
+                <tr>             
+                    <td class="data" style="text-align:right">Total:</td>   
+                    <td class="data" style="text-align:right;color:red;"><apex:image value="{!$Resource.RedReupeeSymbol}" width="7.5px" height="7.5px" rendered="{!recObj.Amount__c!=null}" />{!recObj.Amount__c}</td>  
+                </tr>  
+                <tr  >             
+                    <td  class="data" colspan="2" ><sup>*</sup>Cheque/D.D. subject to realisation</td>   
+                    
+                </tr>  
+                
+            </table>
+            
+            <table  style="float:right; font-size:12px; margin-top:-0.5em; width:55%" >         
+                <tr>             
+                    <td><i>Received From</i></td>   
+                    <td style="border-bottom: 1px dotted ;width:63% ;font-weight:Bold">{!accountObj} </td>  
+                </tr>  
+                <tr>             
+                    <td><i>Rupees in words</i></td>   
+                    <td style="border-bottom: 1px dotted ;width:63%">{!amountInWords}</td>  
+                </tr>  
+                <tr>             
+                    <td><i>By Cash / DD / Cheque No.<sup>*</sup></i></td>   
+                    <td style="border-bottom: 1px dotted ;width:63%"> </td>  
+                </tr>  
+                <tr>             
+                    <td colspan="2" style="text-align:right;font-size:10px;">for FIVE-STAR BUSINESS FINANCE LIMITED </td>  
+                </tr> 
+            </table> 
+            <table style="float:right; font-size:12px; margin-top:3em; width:55%" >         
+                <tr >             
+                    <td style="font-weight:bold"><i>Customer Signature</i></td>   
+                    <td style="text-align:right;font-weight:bold"><i>Authorised Signatory</i></td>  
+                </tr>  
+                <tr>             
+                    <td colspan="2" >For confirmation / further clarification please contact Corporate Office </td>  
+                </tr>  
+                 <tr>             
+                    <td colspan="2" style="text-align:right;font-size:10px;" > Printed Date is-{!currDate} </td>
+                    
+                </tr> 
+            </table>
+        </div>
+      </apex:form>  
+</apex:page>

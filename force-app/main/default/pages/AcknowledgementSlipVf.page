@@ -1,0 +1,99 @@
+<apex:page controller="AcknowledgementSlipController" readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true"  standardStylesheets="false" applyBodyTag="false"  contentType="text/html;charset=UTF-8" renderAs="pdf">
+    <head>
+         <!--meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /-->
+        <style type="text/css" media="print">
+            @page {
+            margin-top: 0.2in;
+            margin-right: 0.2in;
+            margin-left: 0.3in;
+            }
+            
+            .tabledata {
+            font-size: 15px;
+            border: 0.9px solid black;
+            border-collapse: collapse;
+            }
+            
+            table {
+            page-break-inside: auto
+            }
+            
+            tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+            }
+            
+            thead {
+            display: table-header-group
+            }
+            
+            tfoot {
+            display: table-footer-group
+            }
+        </style>
+        <h3 Style="text-align:center">
+            <u>DOCUMENT ACKNOWLEDGE SHEET</u>
+        </h3>
+    </head>
+    <body class="slds-scope">
+        <div Style="font-size:15px">
+            <apex:form >      
+                <div>
+                    <p><br/><br/>
+                        <b>Five-Star Business Finance Limited</b><br/>
+                        Regd Office <br/>
+                        New No. 27 Old No 4,Taylors road <br/><br/><br/><br/>
+                        <b>To,</b><span style="float:right;">No.  ________</span><br/>
+                        The Manager(DODDENI NAGARAJU),<br/>
+                        Kilpauk Chennai - 600010,<br/>
+                    </p>
+                    <p class="text"><b>Phone: 46106200</b><span style="float:right;">Date: ____________</span></p>
+                    <p class="text"></p>       
+                </div>
+                <div>
+                    <p style="text-align:center">
+                        <b>Ref/Application No: {!application} </b>
+                    </p>
+                    <p>
+                    We acknowledge reciept of the following documents in connection with the above.
+                    </p>
+                </div>
+                <div>
+                <table class="tabledata" width="100%" cellpadding="4">
+                    <tr>
+                        <th class="tabledata"> S. No.</th>
+                        <th class="tabledata"> Document Name</th>
+                        <th class="tabledata"> Document Number(if any)</th>
+                        <th class="tabledata"> No of Pages(if applicable)</th>
+                        <th class="tabledata"> Type(Circle any one)</th>
+                    </tr>
+                    <apex:repeat value="{!wrapperList}" var="doc" id="theRepeat1">
+                        <tr>
+                            <td class="tabledata"> {!doc.count}</td>
+                            <td class="tabledata"> {!doc.cv.Document_Name__c}</td>
+                            <td class="tabledata"> {!doc.cv.Document_Number__c}</td>
+                            <td class="tabledata"> {!doc.cv.Number_of_Pages__c}</td>
+                            <td class="tabledata"> {!doc.cv.Agreement_Document_Type__c}</td>
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+            </apex:form>
+            <p>
+                Note to Customer:-<br/>
+                <span>1. Only those original documents captured in this sheet will be returned at the time of closure of all your loans with us .</span>
+                <br/><span>2. We are under no obigation to return the xerox copy of documents metioned above or any other documents other than the ones mentioned in this sheet.</span>
+            </p>
+            <p>____________________________________________________________________________________________________</p>
+            <div >
+                <p class="text">Confirm that the list of documents are correct and complete<span style="float:right;"><b>FOR FIVE STAR BUSINESS FINANCE LIMITED</b></span></p><br/><br/>
+                    <p class="text"><span style="float:left; margin-right:18%">Customer Signature </span>Operator Officer Signature
+                        <span style="float:right;">Branch in Charge Signature </span></p><br/>
+                <p>
+                    This acknowledgement slip should be couriered to H.O along with the Documents mentioned in this sheet<br/>
+                    ____________________________________________________________________________________________________
+                </p>
+            </div>   
+        </div>
+    </body>
+</apex:page>

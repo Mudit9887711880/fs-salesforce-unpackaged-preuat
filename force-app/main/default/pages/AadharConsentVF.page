@@ -1,0 +1,45 @@
+<apex:page controller="ApplicantDocumentGeneratorController" readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true"  standardStylesheets="false" applyBodyTag="false"  contentType="text/html;charset=UTF-8" renderAs="pdf" >
+    <head>
+        <h3 Style="margin-left:25%">
+            <u>Aadhaar Consent Form -KYC Only</u>
+        </h3>
+    </head><br/><br/>
+     <body class="slds-scope">
+        <apex:form >
+            <div Style="font-size:17px">
+                <p>
+                    I hereby submit voluntarily at my own descretion ,the physical copy of Aadhar card/Physical e-Aadhaar/masked Aadhaar/Offilne
+                    electronic Aadhar xml as issued by UIDAI(Aadhaar), to Five Star Business Finance Limited ("FSBF") for the purpose of
+                    establishing my identity, address proof and voluntarily give my consent to open a loan account/process instructions for the
+                    said purpose with FSBF in my name and in individual capacity using my Aadhaar as an authorised signatory in my account.
+                </p>
+                <p>
+                    I hereby voluntarily give my consent to FSBF for verification of my Aadhaar to establish its genuineness through Quick Response (QR)
+                    code embedded in the Aadhaar card/e-verification/offline verification or through any such other acceptable manner asper UIDAI
+                    or under any Act or law from time to time.
+                </p>
+                 <p>
+                     The consent and purpose of collecting Aadhaar has been explained to me/us in local language.FSBF has informed me 
+                     that my Aadhaar submitted to the FSBF here with shall not be used for any purpose other than mentioned above, or as 
+                     requirements of law.
+                </p><br/>
+                <p>
+                 I here by declare that all the information voluntariliy furnished by me is true,correct and complete and will not hold FSBF
+                    or any of its officials responsible in case of any incorrect information provided by me/us.
+                   
+                </p>
+            </div>
+            <div>
+                  <p class="text" Style="margin-top:22%">Name<b>({!applicants.applicantName})</b><span style="float:right;margin-right:0.5in;">Signature:_____________</span></p>
+            </div>
+            
+            <div class="footer" style="margin-top:210px">
+            <div>
+                <p>
+                Date:____________
+                </p>
+            </div>
+            </div>
+         </apex:form>
+    </body>
+</apex:page>

@@ -1,0 +1,145 @@
+<apex:page readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true"  standardStylesheets="false" applyBodyTag="false"  contentType="text/html;charset=UTF-8" renderAs="pdf" controller="WelcomeLetterVfController">
+    <head>
+        <style>
+            #a,table, th, td {
+            border-style: solid;
+            border-collapse: collapse;
+            }
+            th,td{
+            text-align:left;font-size:13px;
+            }
+            #float{
+            display:flex;
+            flex:1;
+            width:40%;
+            float:right;
+            }
+            .data{
+            border: 1.5px solid black;
+            border-collapse: collapse;
+            }
+            tr{
+            height:18px;
+            }
+            .row{
+            width:4px;
+            }
+            
+        </style>
+        <h2 style="text-align:center; margin-top:20%; color:blue">
+            <img src="{!$Resource.FiveStarLogo}" width="180px" height="60px" style="border:none;"/></h2><br/>
+        <table style="width:100%;">
+            <tr>
+                <td style="width:80%; border:none;">
+                    <div style="text-align:left; font-size:13px">
+                        {!applicantName}<br/>
+                        {!plotno} {!address} {!district} <br/>
+                        {!State} - {!pinCode} <br/>
+                        Mob : {!mobile}
+                    </div>
+                </td>
+            <td style="width:20%;border:none;">
+                <div style="text-align:right; margin-top:-9%; font-size:13px" >
+                    <apex:outputText value="{0,date,dd-MM-yy}">
+                    <apex:param value="{!TODAY()}" />
+                    </apex:outputText>
+                </div>
+            </td>
+            
+        </tr>
+            
+        </table>
+        <body style="text-align:left; font-size:13px">
+            Dear Mr. {!applicantName}, &nbsp;&nbsp;<b>Subject:Five Star Business Finance Loan A/c Number {!loanAccNo} </b> <br/><br/>
+            
+            Welcome to Five Start Family! We are plaesed to inform you that your Business Loan has been disbursed. Please find the important features of the loanhere with. 
+        </body>
+        
+    </head>  
+    <div>
+        <table class="data" style="float:left; width:45%;" >         
+            <tr ><th colspan = "2" style="text-align:center">Loan Information</th></tr>   
+            <tr><td>Branch Name</td><td>&nbsp;&nbsp; {!branchName} </td></tr> 
+            <tr><td>Loan amount disbursed</td> <td> {!disbursalAmt} </td> </tr>
+            <tr><td>Final Annualised rate Of interest [Diminishing balance basis, including advance EMI]</td><td>{!fnlAnnlROI}</td></tr>
+            <tr><td>Type of interest</td><td>Fixed</td></tr>
+            <tr><td>Installment amount/EMI(PerMonth)</td><td>&nbsp;&nbsp;{!emi}</td></tr>
+            <tr><td>Loan tenure(in months)</td><td>&nbsp;&nbsp;{!tenureofloan}</td></tr> 
+            <tr><td>Date of commencement of installment[after advance EMI date]</td><td>{!firstEmiDate}</td></tr>
+            <tr><td>Due Date for Every Month</td><td>&nbsp;&nbsp;{!dueDate}</td></tr>
+            <tr ><th colspan = "2" style="text-align:center">CKYC Primary Applicant</th></tr>
+            <tr><td>Name</td><td>{!applicantName}</td></tr>
+            <tr><td>CKYC Number</td><td>{!ckycNo}</td></tr>
+        </table>
+        <table class="data" style="float:right; width:50%;" >         
+            <tr ><th colspan = "2" style="text-align:center">Loan Disbursal &amp; Charges Info</th></tr>   
+            <tr>
+                <th ><b>Loan santion(A)</b></th><td style="text-align:right">{!loanAMt}</td>
+            </tr> 
+            <tr ><th colspan = "2" style="text-align:center">Charges Collected at the time of Login</th></tr>
+            <apex:repeat value="{!wrpObj.feeDirectReceipt}" var="fdr">
+            <tr>
+                <td>Legal &amp; Inspection Charges</td> <td style="text-align:right"> {!fdr.Legalamt} </td>
+             </tr>
+             </apex:repeat>
+             <apex:repeat value="{!wrpObj.feeDeductfromDisbursement}" var="dfa">
+            <tr>
+                <td>Processing Fees</td><td style="text-align:right">{!dfa.processFee}</td>
+            </tr>
+            </apex:repeat>
+
+            <tr><th><b>Total Charges Collected(B)</b></th><td style="text-align:right">{!directReceiptCharges}</td></tr>
+            <tr ><th colspan = "2" style="text-align:center">Charges Deducted from Disbursal</th></tr>
+            <tr><td>Advance EMI</td><td style="text-align:right">{!advanceEmiAmt}</td></tr>
+            <apex:repeat value="{!wrpObj.proccamtdisbList}" var="disbproObj">
+            <tr>
+                <td>Processing Fee</td><td style="text-align:right">{!disbproObj.proccamtdisb}</td>
+            </tr>
+            </apex:repeat>
+            <apex:repeat value="{!wrpObj.legalamtdisbList}" var="disblegalObj">
+            <tr><td>Document Charges</td><td style="text-align:right">{!disblegalObj.legalamtdisb}</td></tr>
+            </apex:repeat>
+            
+            <tr><td>Insuance Premium</td><td style="text-align:right">{!insurancePrem}</td></tr>
+
+            <apex:repeat value="{!wrpObj.rtgsamtdisbList}" var="rtobj">
+
+            <tr><td>DD/RTGS Amount</td><td style="text-align:right">{!rtobj.rtgsamtdisb}</td></tr>
+            </apex:repeat>
+            <apex:repeat value="{!wrpObj.storageamtdisbList}" var="storobj">
+
+            <tr><td>Document Storage Charges</td><td style="text-align:right">{!storobj.storageamtdisb}</td></tr>
+            </apex:repeat>
+
+            <tr><td>Other Charges</td><td style="text-align:right">{!totalothercharges}</td></tr>
+            <tr><th>Total Deductions(C)</th><td style="text-align:right">{!totalCharges}</td></tr>
+            <tr ><th colspan = "2" style="text-align:center"><b>Disbursement Details</b></th></tr>
+            <tr><th><b>Amount Retained(D)</b></th><td style="text-align:right">{!retainedAmt}</td></tr>
+            <tr><th>Amount Disbursed(A-C-D)</th><th style="text-align:right">{!totalfinalcharge}</th></tr>
+        </table> 
+        <table style="float:right; font-size:13px; width:100%" >                     
+            <tr ><th colspan = "4" style="text-align:center">CKYC Co-Applicants</th></tr>  
+            <apex:repeat value="{!wrpObj.listOfLoanApp}" var="loanAppObj">
+            <tr>
+              <td style="width:50%" >{!loanAppObj.applicantName}</td><td>{!loanAppObj.ckycNo}</td>
+            </tr>
+            </apex:repeat>
+        </table>
+    </div>
+    <div style = "font-size:13px;float:left">
+        Kindly ensure that repayments are regular and made on the due date mentioned above we have attached the following documents along with
+        this Letter.<br/>
+        1.Loan Sanction Letter.<br/>
+        2.Loan Agreement Copy(English &amp; Vernacular).<br/>
+        3.Most important Terms &amp; Conditions(Vernacular).<br/>
+        4.Loan Repayment Schedule.<br/>
+        5.Other Loan Agreement related documents,as applicable.<br/><br/><br/>
+        If you have not received your loan passbook by now , please contact the Five Star branch in which you loan application was submitted.
+        <b><u>We ensure that a receipt is compulsorily issued for every  payment you make to us. If you do not get a receipt for you payment, please
+            ask for the same. We are not responsible for any payment done by you without collecting a receipt from us.</u></b><br/>
+        If you find any details to be incorrect, please contact us within 7 days of receipt of this letter at the nearby Five Star Branch.<br/><br/>
+        For any clarification, kindly contact our Customer Care on <u>044-23460957/8</u> or Email <u>customercare@fivestargroup.in.</u><br/><br/>
+        Your sincerely<br/><br/><br/><br/><br/><br/>
+        <b>For Five Star Business Finance Limited</b>
+    </div>
+</apex:page>

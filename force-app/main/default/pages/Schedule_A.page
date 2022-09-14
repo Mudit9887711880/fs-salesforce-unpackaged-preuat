@@ -1,0 +1,192 @@
+<apex:page controller="DocumentGenerationVFController" readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true"  standardStylesheets="false" applyBodyTag="false"  contentType="text/html;charset=UTF-8" renderAs="pdf">
+    <head>
+        <!--meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /-->
+        <style type="text/css" media="print">
+            @page {
+            margin-top: 0.2in;
+            margin-right: 0.2in;
+            margin-left: 0.3in;
+            }
+            
+            .tabledata {
+            font-size: 15px;
+            border: 0.9px solid black;
+            border-collapse: collapse;
+            }
+            
+            table {
+            page-break-inside: auto
+            }
+            
+            tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+            }
+            
+            thead {
+            display: table-header-group
+            }
+            
+            tfoot {
+            display: table-footer-group
+            }
+        </style>
+        <h3 Style="margin-left:40%">
+            <u>Schedule A</u>
+        </h3>
+        
+    </head>
+    <body class="slds-scope">
+        <apex:form >
+            <div>
+                <p>
+                    <b>Place and Date of Loan Agreement</b>
+                </p>
+                <p style="float:right;margin-right:0.2in;margin-top:-1.7%">
+                    <b>Application No : </b>{!application.Name}
+                </p>
+            </div>
+            <div>
+                <p>
+                    <b>Place : </b>  {!application.Sourcing_Branch__r.Name}
+                </p>
+                <p style="float:right;margin-right:0.2in;margin-top:-1.7%">
+                    <b>Date : </b> _______________
+                </p>
+            </div>
+            <div>
+                <p>
+                    <b>Product : </b> Business Finance
+                </p>
+            </div>
+            <div>
+                <p>
+                    <b>Borrower/Guarantor Details</b>
+                </p>
+            </div>
+            <div>
+                <table class="tabledata" width="100%" cellpadding="4">
+                    <tr>
+                        <th class="tabledata"> Type</th>
+                        <th class="tabledata"> Name</th>
+                        <th class="tabledata"> Age[Years]</th>
+                        <th class="tabledata"> Current Address</th>
+                    </tr>
+                    <apex:repeat value="{!applicants}" var="applicant" id="theRepeat1">
+                        <tr>
+                            <td class="tabledata"> {!applicant.applicantType}</td>
+                            <td class="tabledata"> {!applicant.applicantName}</td>
+                            <td class="tabledata"> {!applicant.applicantAge}</td>
+                            <td class="tabledata"> {!applicant.applicantAddress}</td>
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+            <br/>
+            <table style="border:none;" width="100%" cellpadding="4">
+                <tr>
+                    <td ><b>Loan Amount</b></td>
+                    <td >: Rs. {!application.Total_Amount_Recommended_PcAc__c}({!amountInWords})</td> 
+                </tr>
+                <tr>
+                    <td ><b>Rate of Inerest % pa(Including Advance EMI)</b></td>
+                    <td >: {!application.Customer_Communicated__c}</td> 
+                </tr>
+                <tr>
+                    <td style="font-style:13px;">The above is calculated on a reducing balance basis</td>
+                </tr>
+                <tr>
+                    <td ><b>EMI Tenure(Months)</b></td>
+                    <td >: {!application.Tenor_In_Months__c}</td> 
+                </tr>
+                <tr>
+                    <td ><b>EMI Amount</b></td>
+                    <td >: {!application.Emi_PcAc__c}</td> 
+                </tr>
+                <tr>
+                    <td ><b>Due Date</b></td>
+                    <td >: As Defined In The Most Important Terms And Condition Document</td> 
+                </tr>
+            </table>
+            <div>  
+                <p>
+                    <b>Amortization :</b>
+                    <br/>          
+                    <span>The entire loan along with interest shall be repayable in {!application.Tenor_In_Months__c}* months in consecutive Equated Monthly installments(EMIs) of rs {!application.Emi_PcAc__c}* each subject to the covenants agreed under the various articles under this agreement. </span>
+                </p>
+            </div>
+            <div>  
+                <p>
+                    <b>Overdue interest :
+                        <br/>          
+                        <span>The overdue payments loan alon with interest shall be repayable in {!application.Tenor_In_Months__c}* months in consecutive Equated Monthly installments(EMIs) of rs {!application.Emi_PcAc__c}* each subject to the covenants agreed under the various articles under this agreement. </span>
+                    </b></p>
+            </div>
+            <div>
+                <p>
+                    *subject to variation in terms of this agreement
+                </p>
+            </div>
+            
+        </apex:form>
+        <div class="footer">
+            <div>
+                <p>
+                    In withness whereof the parties here to have signed the day, momth and year first above written
+                </p>
+            </div>
+            <br/><br/><br/>
+            <table style="border-collapse:collapse; text-align:justify; width:100%;">
+                <tr>
+                    <td class="text">Authorized signatory</td>
+                    <apex:repeat value="{!applicants}" var="applicant" id="theRepeat1">
+                        <td class="text">Borrower(s)/Guarantor(s)</td>
+                    </apex:repeat>
+                </tr>
+            </table>
+        </div>
+        
+        <!--PageBreak-->
+        <div style="page-break-after:always;"></div>
+        <!--PageBreak-->
+        
+        <h3 Style="margin-left:40%">
+            <u>Schedule A</u>
+        </h3>
+        
+        <div>
+            <p>
+                <b>Description of the property or properties and/or intersets there in martagaged or intended to be mortagaged in favour of FIVE STAR Business Finance Limited</b>
+            </p>
+        </div>
+        <div style="margin-top:300px">
+            <p>signed and Deliverd by the with in-named</p>
+            <p><b>Five Star Business Finance Limited</b></p>
+            <p>by the hand of</p>
+            <p>Mr./Ms.___________________________</p>
+        </div>
+        <div>
+            <p>
+                its authorized signatory
+            </p>    
+        </div>
+        
+        <div class="footer" style="margin-top:300px">
+            <div>
+                <p>
+                    In withness whereof the parties here to have signed the day, momth and year first above written
+                </p>
+            </div>
+            <br/><br/>
+            <table style="border-collapse:collapse; text-align:justify; width:100%;">
+                <tr>
+                    <td class="text">Authorized signatory</td>
+                    <apex:repeat value="{!applicants}" var="applicant" id="theRepeat2">
+                        <td class="text">Borrower(s)/Guarantor(s)</td>
+                    </apex:repeat>
+                </tr>
+            </table>
+        </div>
+        
+    </body>
+</apex:page>

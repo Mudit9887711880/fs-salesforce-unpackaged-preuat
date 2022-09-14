@@ -1,0 +1,40 @@
+<apex:page controller="DocumentGenerationVFController"  readOnly="true" applyHtmlTag="false" sidebar="false" showHeader="false" cache="true"  standardStylesheets="false" applyBodyTag="false"  contentType="text/html;charset=UTF-8" renderAs="pdf" >
+    <head>
+        <h3 Style="margin-left:34%">
+            <u>PROMISSORY NOTE</u>
+        </h3>
+    </head>
+    <body class="slds-scope">
+        <apex:form >
+            <div Style="font-size:18px">
+                <div>
+                    <p>
+                        <b>Rs.{!application.Total_Amount_Recommended_PcAc__c}</b>
+                    </p>
+                </div>
+                <div>
+                    <b>ON DEMAND</b>,I/We
+                    <apex:repeat value="{!applicants}" var="applicant" id="theRepeat1">
+                    <p>
+                        <span>
+                            ({!applicant.counter}) <b>{!applicant.applicantName}</b> aged <b>{!applicant.applicantAge}</b> years residing at <b> {!applicant.applicantAddress}</b> and
+                        </span>
+                    </p>
+                    </apex:repeat>
+                    <br/>
+                    <br/>
+                </div>
+                <p>
+                    promise to pay M/s <b>Five Star Business Finance Limited</b> ,Old No 4,New No 27,Taylor's Road Kilpauk,Chennai-600010 or order,the sum of Rupees <b>{!amountInWords}</b>
+                    Together with interest aditional/panal  interest and other charges as levied from time to time as per the terms of the loan agreement excuted
+                    Between the company and the Borrower[s] for value recieved this day.
+                </p>
+                <p>
+                    Dated at : <b>{!application.Sourcing_Branch__r.Name}</b> this______________ day of_______________________
+                </p>
+                
+            </div>
+            
+        </apex:form>
+    </body>
+</apex:page>
