@@ -1,3 +1,4 @@
+//TEST
 public abstract class AbstractTriggerContext {
 
     public static void run(String objectName, System.TriggerOperation operationType, List<sobject> newList, List<sObject> oldList, Map<Id,sObject> newMap, Map<Id, sObject> oldMap){
