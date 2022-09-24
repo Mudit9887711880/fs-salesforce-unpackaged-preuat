@@ -18,6 +18,7 @@ export default class FsCustomerDetails extends LightningElement {
     @api accountId;
     @api loanAppIdList = [];
     @api loanData = [];
+    @api recTypeName;
 
     @track submitWrapper = { hasPrimaryApplicant: '', isMobileVerified: '', isKYCVerified: '', isIncomeConsidered: '', mobDefList: '', kycDefList: '' }
     @track isAccDataArrived = false;
@@ -85,6 +86,10 @@ export default class FsCustomerDetails extends LightningElement {
         console.log('fsCustomerDetailsCalled!!', this.applicationId);
         if (this.applicationId)
             this.getAccountData(this.applicationId);
+    }
+
+    @api getRecordType(recType){
+        this.recTypeName = recType;
     }
 
     @api getAccountData(applicationId) {
@@ -209,6 +214,7 @@ export default class FsCustomerDetails extends LightningElement {
                     this.customerTypeValue = recordData.Customer_Type__c;
                     this.loanAppWrapper.accountId = recordData.Customer_Information__c;
                     this.loanAppWrapper.loanAppId = recordData.Id;
+                    this.template.querySelector("c-fs-loan-applicant-information").getRecordType(this.recTypeName);
                     this.template.querySelector("c-fs-loan-applicant-information").getSectionPageContent(this.recordIds);
                     this.template.querySelector("c-fs-loan-applicant-information").getIdsOnEdit(this.loanAppWrapper);
                     this.template.querySelector("c-fs-loan-applicant-information").getCustomerTypeOndit(recordData.Customer_Type__c);

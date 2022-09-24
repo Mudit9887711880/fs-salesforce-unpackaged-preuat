@@ -1,133 +1,217 @@
 <!--
-  @author            : 
-  @group             : TechMatrix Consulting
-  @description       : 
-  @created on        : 
-  @last modified on  : 06-09-2022
-  @last modified by  : Karan Singh Soni
+@author            : 
+@group             : TechMatrix Consulting
+@description       : 
+@created on        : 
+@last modified on  : 06-09-2022
+@last modified by  : Karan Singh Soni
 -->
 <template>
     <template if:true={dataToDisplay}>
         <template for:each={dataToDisplay} for:item='item'>
-            <div data-id={item.uniqueKey} class="slds-section slds-is-open" key={item.sectionLabel}>
-                <h3 class="slds-section__title">
-                    <div class="slds-section__title-action">
-                        <lightning-button-icon data-target-id={item.sectionLabel} class="toggleBtnCls"
-                            icon-name={chevronIcon} value={item.uniqueKey} variant="bare" onclick={handleSectionToggle}>
-                        </lightning-button-icon>
-                        <span class="slds-truncate" title={item.sectionLabel}>{item.sectionLabel}</span>
-                    </div>
-                </h3>
-                <div class="slds-section__content">
-                    <lightning-layout multiple-rows="true">
-                        <slot name="additionalFieldFirst"></slot>
-                        <template for:each={item.fieldsContent} for:item="field">
-                            <lightning-layout-item key={field} padding="around-small" size="12"
-                                small-device-size={field.column_Width_Mobile}
-                                medium-device-size={field.column_Width_Tablet}
-                                large-device-size={field.column_Width_Desktop}>
-                                <template if:true={field.fieldAttribute.isShowField}>
-                                    <div class="slds-form-element">
-                                        <span class="slds-form-element__label" style="font-weight: bold !important;">
-                                            <template if:true={field.fieldAttribute.isRequired}>
-                                                <abbr class="slds-required" title="required">* </abbr>
-                                            </template>
-                                            {field.label}
-                                        </span>
-                                        <template if:true={field.isHelpText}>
-                                            <lightning-helptext content={field.helpMsg}></lightning-helptext>
-                                        </template>
-                                        <div class="slds-form-element__control">
-                                            <!--LOOKUP-->
-                                            <template if:true={field.isLookup}>
-                                                <c-generic-custom-lookup-l-w-c
-                                                    name={field.fieldAttribute.lookupFieldName}
-                                                    lookup-label={field.label}
-                                                    object-api-name={field.fieldAttribute.lookupObjectName}
-                                                    key-field-a-p-i="Id" search-field="Name"
-                                                    is-required={field.fieldAttribute.isRequired}
-                                                    predefined-id={field.lookupVal} selected-record-id={field.lookupVal}
-                                                    data-datatype={field.fieldAttribute.dataType}
-                                                    data-objectname={field.objectAPIName} class="editMode"
-                                                    onlookupselected={handleOnChange}
-                                                    onlookupvalueremoved={handleOnChange}>
-                                                </c-generic-custom-lookup-l-w-c>
-                                                <!--<c-custom-lookup name={field.fieldAttribute.lookupFieldName}
-                                                                obj-name={field.fieldAttribute.lookupObjectName}
-                                                                data-datatype={field.fieldAttribute.dataType}
-                                                                data-objectname={field.objectAPIName}
-                                                                onlookupselected={handleOnChange}>
-
-                                                </c-custom-lookup>-->
-                                            </template>
-                                            <!--LOOKUP-->
-                                            <!--PICKLIST-->
-                                            <template if:true={field.fieldAttribute.isPicklist}>
-                                                <c-custom-picklist-l-w-c name={field.fieldAPIName}
-                                                    object-name={field.objectAPIName} field-name={field.fieldAPIName}
-                                                    is-required={field.fieldAttribute.isRequired} record-id={recordId}
-                                                    selected-value={field.value}
-                                                    data-datatype={field.fieldAttribute.dataType}
-                                                    data-objectname={field.objectAPIName} class="editMode"
-                                                    is-disabled={field.disabled} onchange={handleOnChange}>
-                                                </c-custom-picklist-l-w-c>
-                                            </template>
-                                            <!--PICKLIST-->
-                                            <!--TEXTAREA-->
-                                            <template if:true={field.fieldAttribute.isTextArea}>
-                                                <lightning-textarea name={field.fieldAPIName} label={field.label}
-                                                    value={field.value} required={field.fieldAttribute.isRequired}
-                                                    data-datatype={field.fieldAttribute.dataType}
-                                                    data-objectname={field.objectAPIName} class="editMode"
-                                                    variant="label-hidden" onchange={handleOnChange}
-                                                    pattern={field.validationPattern}
-                                                    message-when-pattern-mismatch={field.validationPatternMismatched}
-                                                    maxlength={field.maxLength} minlength={field.minLength}
-                                                    disabled={field.disabled}>
-                                                </lightning-textarea>
-                                            </template>
-                                            <!--TEXTAREA-->
-                                            <!--CHECKBOX-->
-                                            <template if:true={field.isCheckbox}>
-                                                <template if:true={field.checkboxVal}>
-                                                    <lightning-input name={field.fieldAPIName} type="checkbox"
-                                                        label={field.label} checked
-                                                        data-datatype={field.fieldAttribute.dataType}
-                                                        data-objectname={field.objectAPIName} onchange={handleOnChange}
-                                                        variant="label-hidden"></lightning-input>
-                                                </template>
-                                                <template if:false={field.checkboxVal}>
-                                                    <lightning-input name={field.fieldAPIName} type="checkbox"
-                                                        label={field.label}
-                                                        data-datatype={field.fieldAttribute.dataType}
-                                                        data-objectname={field.objectAPIName} onchange={handleOnChange}
-                                                        variant="label-hidden"></lightning-input>
-                                                </template>
-                                            </template>
-                                            <!--CHECKBOX-->
-                                            <!--ALL OTHER FIELDS-->
-                                            <template if:true={field.fieldAttribute.allOtherField}>
-                                                <lightning-input name={field.fieldAPIName}
-                                                    type={field.fieldAttribute.dataType} label={field.label}
-                                                    value={field.value} data-datatype={field.fieldAttribute.dataType}
-                                                    data-objectname={field.objectAPIName}
-                                                    pattern={field.validationPattern}
-                                                    message-when-pattern-mismatch={field.validationPatternMismatched}
-                                                    required={field.fieldAttribute.isRequired}
-                                                    maxlength={field.maxLength} minlength={field.minLength}
-                                                    class="editMode" onchange={handleOnChange} variant="label-hidden"
-                                                    disabled={field.disabled} min={field.minDate} max={field.maxDate}>
-                                                </lightning-input>
-                                            </template>
-                                            <!--ALL OTHER FIELDS-->
-                                        </div>
-                                    </div>
+            <div class="slds-grid slds-wrap slds-gutters slds-m-horizontal_xxx-small" key={item.sectionLabel}>
+                <slot name="additionalFieldFirst"></slot>
+                <template for:each={item.fieldsContent} for:item="field">
+                    <template if:true={field.fieldAttribute.isShowField}>                        
+                        <div class={field.col_Class} key={field}>
+                            <div class="slds-form-element">                                
+                                <span class="slds-form-element__label" >
+                                    <template if:true={field.fieldAttribute.isRequired}>
+                                        <abbr class="slds-required" title="required">* </abbr>
+                                    </template>
+                                    {field.label}
+                                </span>
+                                <template if:true={field.isHelpText}>
+                                    <lightning-helptext content={field.helpMsg}></lightning-helptext>
                                 </template>
-                            </lightning-layout-item>
-                        </template>
-                    </lightning-layout>
-                </div>
+                                <div class="slds-form-element__control">
+                                    <!--LOOKUP-->
+                                    <template if:true={field.isLookup}>
+                                        <c-generic-custom-lookup-l-w-c
+                                            name={field.fieldAttribute.lookupFieldName}
+                                            lookup-label={field.label}
+                                            object-api-name={field.fieldAttribute.lookupObjectName}
+                                            key-field-a-p-i="Id" search-field="Name"
+                                            is-required={field.fieldAttribute.isRequired}
+                                            predefined-id={field.lookupVal} selected-record-id={field.lookupVal}
+                                            data-datatype={field.fieldAttribute.dataType}
+                                            data-objectname={field.objectAPIName} class="editMode"
+                                            onlookupselected={handleOnChange}
+                                            onlookupvalueremoved={handleOnChange}>
+                                        </c-generic-custom-lookup-l-w-c>                                    
+                                    </template>
+                                    <!--LOOKUP-->
+                                    <!--PICKLIST-->
+                                    <template if:true={field.fieldAttribute.isPicklist}>
+                                        <c-custom-picklist-l-w-c name={field.fieldAPIName}
+                                            object-name={field.objectAPIName} field-name={field.fieldAPIName}
+                                            is-required={field.fieldAttribute.isRequired} record-id={recordId}
+                                            selected-value={field.value}
+                                            data-datatype={field.fieldAttribute.dataType}
+                                            data-objectname={field.objectAPIName} class="editMode"
+                                            is-disabled={field.disabled} onchange={handleOnChange}>
+                                        </c-custom-picklist-l-w-c>
+                                    </template>
+                                    <!--PICKLIST-->
+                                    <!--TEXTAREA-->
+                                    <template if:true={field.fieldAttribute.isTextArea}>
+                                        <lightning-textarea name={field.fieldAPIName} label={field.label}
+                                            value={field.value} required={field.fieldAttribute.isRequired}
+                                            data-datatype={field.fieldAttribute.dataType}
+                                            data-objectname={field.objectAPIName} class="editMode"
+                                            variant="label-hidden" onchange={handleOnChange}
+                                            pattern={field.validationPattern}
+                                            message-when-pattern-mismatch={field.validationPatternMismatched}
+                                            maxlength={field.maxLength} minlength={field.minLength}
+                                            disabled={field.disabled}>
+                                        </lightning-textarea>
+                                    </template>
+                                    <!--TEXTAREA-->
+                                    <!--CHECKBOX-->
+                                    <template if:true={field.isCheckbox}>
+                                        <template if:true={field.checkboxVal}>
+                                            <lightning-input name={field.fieldAPIName} type="checkbox"
+                                                label={field.label} checked
+                                                data-datatype={field.fieldAttribute.dataType}
+                                                data-objectname={field.objectAPIName} onchange={handleOnChange}
+                                                variant="label-hidden"></lightning-input>
+                                        </template>
+                                        <template if:false={field.checkboxVal}>
+                                            <lightning-input name={field.fieldAPIName} type="checkbox"
+                                                label={field.label}
+                                                data-datatype={field.fieldAttribute.dataType}
+                                                data-objectname={field.objectAPIName} onchange={handleOnChange}
+                                                variant="label-hidden"></lightning-input>
+                                        </template>
+                                    </template>
+                                    <!--CHECKBOX-->
+                                    <!--ALL OTHER FIELDS-->
+                                    <template if:true={field.fieldAttribute.allOtherField}>
+                                        <lightning-input name={field.fieldAPIName}
+                                            type={field.fieldAttribute.dataType} label={field.label}
+                                            value={field.value} data-datatype={field.fieldAttribute.dataType}
+                                            data-objectname={field.objectAPIName}
+                                            pattern={field.validationPattern}
+                                            message-when-pattern-mismatch={field.validationPatternMismatched}
+                                            required={field.fieldAttribute.isRequired}
+                                            maxlength={field.maxLength} minlength={field.minLength}
+                                            class="editMode" onchange={handleOnChange} variant="label-hidden"
+                                            disabled={field.disabled} min={field.minDate} max={field.maxDate}>
+                                        </lightning-input>
+                                    </template>
+                                    <!--ALL OTHER FIELDS-->
+                                </div>
+                            </div>  
+                        </div>
+                    </template>
+                </template>
             </div>
+            
+            <!--
+            ********************* PREVIOUS CODE *********************
+            <lightning-layout multiple-rows="true" key={item.sectionLabel}>
+                <slot name="additionalFieldFirst"></slot>
+                <template for:each={item.fieldsContent} for:item="field">
+                    <template if:true={field.fieldAttribute.isShowField}>
+                        <lightning-layout-item key={field} size="12"
+                            small-device-size={field.column_Width_Mobile}
+                            medium-device-size={field.column_Width_Tablet}
+                            large-device-size={field.column_Width_Desktop}
+                            padding="around-small">
+                                <div class="slds-form-element">                                
+                                    <span class="slds-form-element__label" >
+                                        <template if:true={field.fieldAttribute.isRequired}>
+                                            <abbr class="slds-required" title="required">* </abbr>
+                                        </template>
+                                        {field.label}
+                                    </span>
+                                    <template if:true={field.isHelpText}>
+                                        <lightning-helptext content={field.helpMsg}></lightning-helptext>
+                                    </template>
+                                    <div class="slds-form-element__control">
+                                        ********************* LOOKUP *********************
+                                        <template if:true={field.isLookup}>
+                                            <c-generic-custom-lookup-l-w-c
+                                                name={field.fieldAttribute.lookupFieldName}
+                                                lookup-label={field.label}
+                                                object-api-name={field.fieldAttribute.lookupObjectName}
+                                                key-field-a-p-i="Id" search-field="Name"
+                                                is-required={field.fieldAttribute.isRequired}
+                                                predefined-id={field.lookupVal} selected-record-id={field.lookupVal}
+                                                data-datatype={field.fieldAttribute.dataType}
+                                                data-objectname={field.objectAPIName} class="editMode"
+                                                onlookupselected={handleOnChange}
+                                                onlookupvalueremoved={handleOnChange}>
+                                            </c-generic-custom-lookup-l-w-c>                                    
+                                        </template>
+                                        ********************* LOOKUP *********************
+                                        ********************* PICKLIST *********************
+                                        <template if:true={field.fieldAttribute.isPicklist}>
+                                            <c-custom-picklist-l-w-c name={field.fieldAPIName}
+                                                object-name={field.objectAPIName} field-name={field.fieldAPIName}
+                                                is-required={field.fieldAttribute.isRequired} record-id={recordId}
+                                                selected-value={field.value}
+                                                data-datatype={field.fieldAttribute.dataType}
+                                                data-objectname={field.objectAPIName} class="editMode"
+                                                is-disabled={field.disabled} onchange={handleOnChange}>
+                                            </c-custom-picklist-l-w-c>
+                                        </template>
+                                        ********************* PICKLIST *********************
+                                        ********************* TEXTAREA *********************
+                                        <template if:true={field.fieldAttribute.isTextArea}>
+                                            <lightning-textarea name={field.fieldAPIName} label={field.label}
+                                                value={field.value} required={field.fieldAttribute.isRequired}
+                                                data-datatype={field.fieldAttribute.dataType}
+                                                data-objectname={field.objectAPIName} class="editMode"
+                                                variant="label-hidden" onchange={handleOnChange}
+                                                pattern={field.validationPattern}
+                                                message-when-pattern-mismatch={field.validationPatternMismatched}
+                                                maxlength={field.maxLength} minlength={field.minLength}
+                                                disabled={field.disabled}>
+                                            </lightning-textarea>
+                                        </template>
+                                        ********************* TEXTAREA *********************
+                                        ********************* CHECKBOX *********************
+                                        <template if:true={field.isCheckbox}>
+                                            <template if:true={field.checkboxVal}>
+                                                <lightning-input name={field.fieldAPIName} type="checkbox"
+                                                    label={field.label} checked
+                                                    data-datatype={field.fieldAttribute.dataType}
+                                                    data-objectname={field.objectAPIName} onchange={handleOnChange}
+                                                    variant="label-hidden"></lightning-input>
+                                            </template>
+                                            <template if:false={field.checkboxVal}>
+                                                <lightning-input name={field.fieldAPIName} type="checkbox"
+                                                    label={field.label}
+                                                    data-datatype={field.fieldAttribute.dataType}
+                                                    data-objectname={field.objectAPIName} onchange={handleOnChange}
+                                                    variant="label-hidden"></lightning-input>
+                                            </template>
+                                        </template>
+                                        ********************* CHECKBOX *********************
+                                        ********************* ALL OTHER FIELDS *********************
+                                        <template if:true={field.fieldAttribute.allOtherField}>
+                                            <lightning-input name={field.fieldAPIName}
+                                                type={field.fieldAttribute.dataType} label={field.label}
+                                                value={field.value} data-datatype={field.fieldAttribute.dataType}
+                                                data-objectname={field.objectAPIName}
+                                                pattern={field.validationPattern}
+                                                message-when-pattern-mismatch={field.validationPatternMismatched}
+                                                required={field.fieldAttribute.isRequired}
+                                                maxlength={field.maxLength} minlength={field.minLength}
+                                                class="editMode" onchange={handleOnChange} variant="label-hidden"
+                                                disabled={field.disabled} min={field.minDate} max={field.maxDate}>
+                                            </lightning-input>
+                                        </template>
+                                        ********************* ALL OTHER FIELDS *********************
+                                    </div>
+                                </div>                            
+                        </lightning-layout-item>
+                </template>
+                </template>
+            </lightning-layout>
+            ********************* PREVIOUS CODE *********************
+            -->
         </template>
     </template>
 </template>

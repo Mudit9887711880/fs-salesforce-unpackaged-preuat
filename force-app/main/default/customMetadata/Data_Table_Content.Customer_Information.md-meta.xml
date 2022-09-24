@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Column_Width__c</field>
-        <value xsi:type="xsd:double">200.0</value>
+        <value xsi:type="xsd:double">230.0</value>
     </values>
     <values>
         <field>DataType__c</field>

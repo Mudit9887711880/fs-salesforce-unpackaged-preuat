@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Default_Fields__c</field>
-        <value xsi:type="xsd:string">Id,Loan_Applicant__c,Employment_Document_Proof__c,of_income_transacted_through_bank_acco__c,Monthly_Salary__c,Year_of_Business__c,Total_experience_in_this_business_yrs__c,Year_of_Service_With_Employer__c,Total_Work_Experience__c,Year_of_Occupation__c,Income_per_day__c,Number_of_days__c,Income_per_month__c,No_of_Units__c,Rental_Income__c</value>
+        <value xsi:type="xsd:string">Id,Loan_Applicant__c,Employment_Document_Proof__c,of_income_transacted_through_bank_acco__c,Monthly_Salary__c,Year_of_Business__c,Total_experience_in_this_business_yrs__c,Year_of_Service_With_Employer__c,Total_Work_Experience__c,Year_of_Occupation__c,Income_per_day__c,Number_of_days__c,Income_per_month__c,No_of_Units__c,Rental_Income__c,Name_of_the_Employer__c</value>
     </values>
     <values>
         <field>Default_Page_Size__c</field>

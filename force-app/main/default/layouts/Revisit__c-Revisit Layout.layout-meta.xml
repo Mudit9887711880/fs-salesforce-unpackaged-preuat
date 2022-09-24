@@ -62,10 +62,6 @@
                 <behavior>Edit</behavior>
                 <field>Remarks__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Employee_No_of_Person_Revisited__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

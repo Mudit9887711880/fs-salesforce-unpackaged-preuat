@@ -93,6 +93,7 @@ export default class FsFiv_B_Character extends LightningElement {
                     data[i].Customer_Information__c = this.selectedApplicant[0].Customer_Information__c;
                     data[i].Loan_Applicant__c = this.selectedApplicant[0].Id;
                     data[i].RecordTypeId = this.propertyRecordTypeId;
+                    data[i].Application__c = this.applicationId;
                 }
                 data[i].Is_Fiv_B_Completed__c = true;
                 console.log('data 2## ', JSON.stringify(data));

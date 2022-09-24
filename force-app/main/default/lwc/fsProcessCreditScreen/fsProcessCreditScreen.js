@@ -20,17 +20,23 @@ import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ID_FIELD from '@salesforce/schema/Application__c.Id';
 import STAGE_FIELD from '@salesforce/schema/Application__c.Stage__c';
-import SUBMISSION_DATE_FIELD from '@salesforce/schema/Application__c.PC_Submisson_Date__c';
+import SUBMISSION_DATE_FIELD from '@salesforce/schema/Application__c.PC_Submission_Date__c';
+import GROUP_VALUATION from '@salesforce/schema/Application__c.Group_Valuation__c';
+import MORTGAGE_VALUE from '@salesforce/schema/Application__c.Mortgage_property_Collateral_Value__c';
+import NET_INCOME from '@salesforce/schema/Application__c.Total_Net_Income__c';
 import { updateRecord } from 'lightning/uiRecordApi';
-import PROPERTY_OBJECT from '@salesforce/schema/Property__c';
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import getACUsers from '@salesforce/apex/fsPcAcController.getACUsers';
-import getRequiredDocuments from '@salesforce/apex/fsGenericUploadDocumentsController.getRequiredDocuments';
 
 export default class FsProcessCreditScreen extends NavigationMixin(LightningElement) {
 
     // buttons for add property/applicant and retrigger verifications
     @track btns = [
+        {
+            name: 'submit',
+            label: 'Submit',
+            variant: 'brand',
+            class: 'slds-m-left_x-small'
+        },
         {
             name: 'AddApplicant',
             label: 'Add/Modify Applicant',
@@ -199,24 +205,19 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
     @track primaryAppName;
     @track receiptWrapper = { hasReceipt: false, allApproved: false, pendingReceiptList: [], lengthOfDirectRec: 0, existingFeeCodeOption: [] };
     @track loadAll = false;
+    @track childTab = "Application_details";
 
-
-
-    @wire(getObjectInfo, { objectApiName: PROPERTY_OBJECT })
-    getRecordType({ data, error }) {
-        if (data) {
-            console.log(':: data :: ', JSON.stringify(data));
-            const rtis = data.recordTypeInfos;
-            this.propertyRecordTypeId = Object.keys(rtis).find(rti => rtis[rti].name === 'PC Property Detail');
-            console.log('property record type Id', this.propertyRecordTypeId);
-        } else if (error) {
-
-        }
+    handleChildTab(event) {
+        console.log('handleChildTab = ', event.detail);
+        this.childTab = event.detail;
     }
 
 
+
+
     connectedCallback() {
-        this.getRequiredDocuments();
+        // this.getRequiredDocuments();
+
     }
 
 
@@ -227,8 +228,23 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
             console.log(currentPageReference);
             this.recordId = currentPageReference.attributes.recordId || null;
             console.log('this.recordId' + this.recordId);
+
         }
+        this.getPropertyRecordTypeId();
         this.handlegetData(true);
+    }
+
+    // method used to get the Property Record Type Id for Document Upload
+    getPropertyRecordTypeId() {
+        getRecordTypeId({ sObjectName: 'Property__c', recordTypeName: 'PC Property Detail' })
+            .then(result => {
+                console.log('propertyRecordTypeId ### ', result);
+                if (result)
+                    this.propertyRecordTypeId = result;
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
 
@@ -247,13 +263,17 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
                     this.selectedACUser = element.Application__r.Recommended_AC_User__c;
                     this.decisionValue = element.Application__r.PC_Decision__c;
                 });
+
                 if (param == true)
                     this.fetchLastLoginDate();
+
+
             })
             .catch(error => {
                 console.log('errror', error);
             });
     }
+
 
 
     get showCharacterForm() {
@@ -262,8 +282,11 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
 
     // get the dedupe Details
     getdedupedetails(event) {
-        let dedupeDetails = event.detail;
-        console.log('Dedupe Details', dedupeDetails);
+        let result = event.detail;
+        this.dedupeDetails = JSON.parse(result);
+        console.log('Dedupe Details', this.dedupeDetails);
+        if (this.dedupeDetails.errorFlag)
+            this.errorMsg.push(this.dedupeDetails.message);
     }
 
 
@@ -287,21 +310,39 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
         }
         else if (event.target.value == 'Capability_Summary') {
             this.capabilitySpinner = true;
-            getCapabilitySummary({ applicationId: this.applicationId })
-                .then(res => {
-                    console.log('CAp Summary>>> ', res);
-                    this.IncomeSummary = JSON.parse(JSON.stringify(res));
-                    console.log('IncomeSummary>> ', this.IncomeSummary);
-                    this.capabilitySpinner = false;
-                })
-                .catch(
-                    err => {
-                        console.log('CAp Summary error >>> ', err);
-                        this.capabilitySpinner = false;
-                    }
-                )
+            this.handleCapbilitySummary();
         }
     }
+
+    handleCapbilitySummary() {
+        getCapabilitySummary({ applicationId: this.applicationId })
+            .then(res => {
+                console.log('CAp Summary>>> ', res);
+                this.IncomeSummary = JSON.parse(JSON.stringify(res));
+                console.log('IncomeSummary>> ', this.IncomeSummary);
+                if (this.IncomeSummary.pcnetMonthlyIncome) {
+                    const fields = {};
+                    fields[ID_FIELD.fieldApiName] = this.applicationId;
+                    fields[NET_INCOME.fieldApiName] = parseFloat(this.IncomeSummary.pcnetMonthlyIncome);
+                    const recordInput = { fields };
+                    updateRecord(recordInput)
+                        .then(() => {
+                            console.log('### NET INCOME Updated ###');
+                        })
+                        .catch(error => {
+                            console.log('Error in updating NET INCOME ###', error);
+                        });
+                }
+                this.capabilitySpinner = false;
+            })
+            .catch(
+                err => {
+                    console.log('CAp Summary error >>> ', err);
+                    this.capabilitySpinner = false;
+                }
+            )
+    }
+
 
     // handle tab Activations
     handleTabActivation(event) {
@@ -330,16 +371,11 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
         } else if (event.target.value == 'Financial_screen') {
             this.finSpinner = true;
             this.getcollateralSummaryTable();
+            this.childTab = 'Application_details';
             this.isFinancial = true;
         } else if (event.target.value == 'Capability_screen') {
 
-
         } else if (event.target.value == 'Insurance_Fee') {
-            setTimeout(() => {
-                this.template.querySelector('c-fee-insurance-parent-p-c-screen').getReceipt();
-            }, 3000);
-
-
 
         } else if (event.target.value == 'Sanction_Condition') {
 
@@ -357,18 +393,18 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
     }
 
     renderedCallback() {
-        if (!this.callOnce) {
-            const style = document.createElement('style');
-            style.innerText = `.slds-form-element__label{
-            font-weight: bold;}`;
-            this.template.querySelector('[data-id="pcTest"]').appendChild(style);
-            const label = this.template.querySelectorAll('label');
-            label.forEach(element => {
-                element.classList.add('bold');
-            });
-            console.log('renderedCallback()');
-            this.callOnce = true;
-        }
+        // if (!this.callOnce) {
+        //     const style = document.createElement('style');
+        //     style.innerText = `.slds-form-element__label{
+        //     font-weight: bold;}`;
+        //     this.template.querySelector('[data-id="pcTest"]').appendChild(style);
+        //     const label = this.template.querySelectorAll('label');
+        //     label.forEach(element => {
+        //         element.classList.add('bold');
+        //     });
+        //     console.log('renderedCallback()');
+        //     this.callOnce = true;
+        // }
         if (this.loadAll == false) {
             console.log('i am in check validity');
             let currentTab = this.tabName;
@@ -376,7 +412,7 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
             let tabs = this.template.querySelectorAll('lightning-tab');
             console.log('tabs ', tabs);
             tabs.forEach(element => {
-                if (element.value == 'Insurance_Fee')
+                if (element.value == 'Insurance_Fee' || element.value == 'Document_Upload')
                     element.loadContent();
             });
             console.log('currentTab= ', currentTab);
@@ -435,11 +471,7 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
             })
     }
 
-    // connected callback
-    connectedCallback() {
-        //code
 
-    }
 
 
     // header buttons selection Event-------------------
@@ -474,6 +506,10 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
         }
         if (detail === 'OwnerValidation') {
             this.openOwnerValidation = true;
+        }
+        if (detail === 'submit') {
+            this.tempsubmit();
+            //this.handlePCSubmit();
         }
     }
 
@@ -869,6 +905,7 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
                     this.usersList = JSON.parse(JSON.stringify(tempList));
                     console.log('after user list', JSON.stringify(this.usersList));
                 }
+
                 this.pcSpinner = false;
             })
             .catch(err => {
@@ -882,20 +919,10 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
     handleChange(event) {
         let value = event.target.value;
         console.log('value in handle change', value);
-
         if (event.target.name == 'Select_User') {
             this.selectedACUser = value;
         }
         console.log('this selected AC  User', this.selectedACUser);
-    }
-
-    // get the dedupe Details
-    getdedupedetails(event) {
-        let result = event.detail;
-        this.dedupeDetails = JSON.parse(result);
-        console.log('Dedupe Details', this.dedupeDetails);
-        if (this.dedupeDetails.errorFlag)
-            this.errorMsg.push(this.dedupeDetails.message);
     }
 
 
@@ -969,6 +996,20 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
                     });
                     this.propertySummaryObj.collateralGrandValue = grandcollateralvalue;
                 }
+                if (this.propertySummaryObj.collateralGrandValue) {
+                    const fields = {};
+                    fields[ID_FIELD.fieldApiName] = this.applicationId;
+                    fields[GROUP_VALUATION.fieldApiName] = parseFloat(this.propertySummaryObj.collateralGrandValue);
+                    fields[MORTGAGE_VALUE.fieldApiName] = parseFloat(this.propertySummaryObj.collateralGrandValue);
+                    const recordInput = { fields };
+                    updateRecord(recordInput)
+                        .then(() => {
+                            console.log('### Group Valuation Updated ###');
+                        })
+                        .catch(error => {
+                            console.log('Error in updating group Valuation ###', error);
+                        });
+                }
                 this.propertySpinner = false;
                 this.finSpinner = false;
             })
@@ -984,6 +1025,10 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
         console.log('check validation pc character', event.detail);
         if (event.detail == true)
             this.checkAllValidation();
+        if (this.showPropertyForm)
+            this.getcollateralSummaryTable();
+        if (this.showCapability)
+            this.handleCapbilitySummary();
     }
 
 
@@ -1004,19 +1049,41 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
             })
     }
 
-    handlePCSubmit(event) {
+    tempsubmit() {
+        this.pcSpinner = true;
+        this.errorMsg = [];
         let myCmp = this.template.querySelector('c-fee-insurance-parent-p-c-screen');
-        console.log('submit called myCmp', myCmp);
+
         if (myCmp)
             myCmp.getReceipt();
-        console.log('submit called', this.validationObj);
+
+
         // let dedupeResult = this.template.querySelector('c-fsdedupe-details-lwc');
         // console.log('dedupeResult ###', dedupeResult);
         // if (dedupeResult)
         //     dedupeResult.submitDedupeData();
+        // console.log('submit called', this.validationObj);
 
+        // try {
+        //     this.template.querySelector('c-fs-generic-upload-documents').checkAllRequiredDocument();
+        //     console.log('required docs List', this.requiredDocuments);
+        // } catch (error) {
+        //     console.log(error)
+        //}
+        // setTimeout(() => {
+        //     this.requiredDocumentValidation();
+        // }, 2000);
+
+        setTimeout(() => {
+            this.handlePCSubmit();
+        }, 3000);
+
+    }
+
+    handlePCSubmit(event) {
+        this.pcSpinner = false;
         console.log('Decision Value', this.decisionValue);
-        this.errorMsg = [];
+
         /* Character Validation Check */
         if (this.validationObj.charWrap.familyDetail) {
             this.errorMsg.push('Please Complete Entry In Family Details Sub Section In Character Section');
@@ -1064,7 +1131,7 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
             this.errorMsg.push('Please Complete Entry In Loan Amount Sub Section In Financial Section');
         }
         if (this.validationObj.finWrap.EligibilityDetail) {
-            this.errorMsg.push('Please Complete Entry In Eligibility Detail Sub Section In Financial Section');
+            this.errorMsg.push('Please Complete Entry In Eligibility Calculations Sub Section In Financial Section');
         }
         if (this.validationObj.finWrap.RiskDetail) {
             this.errorMsg.push('Please Complete Entry In Risk Rating Sub Section In Financial Section');
@@ -1142,8 +1209,6 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
             if (!this.errorMsg.includes('Online EC Verification is pending'))
                 this.errorMsg.push('Online EC Verification is pending');
         }
-
-
 
         console.log('receipt wrapper in PC Submit', this.receiptWrapper);
         // Fee and Insurance Validations
@@ -1254,26 +1319,26 @@ export default class FsProcessCreditScreen extends NavigationMixin(LightningElem
     handleRequiredDocument(event) {
         console.log('required doc list :: ', JSON.stringify(event.detail));
         this.requiredDocuments = event.detail;
-    }
+        this.requiredDocumentValidation();
 
 
-    getRequiredDocuments() {
-        this.requiredDocuments = [];
-        getRequiredDocuments({ stage: 'Process Credit', parentId: this.applicationId })
-            .then(result => {
-                console.log('::: result ::: ', JSON.stringify(result));
-                this.requiredDocuments = result;
-            })
-            .catch(error => {
-                console.log('error doc upload ', error);
-            })
     }
 
 
     requiredDocumentValidation() {
+        console.log('requiredDocuments ', JSON.stringify(this.requiredDocuments));
         if (this.requiredDocuments.length > 0) {
             this.requiredDocuments.forEach(element => {
-                this.errorMsgs.push('Upload Required Document ' + element + ' In Document Upload Tab');
+                console.log('element #### ', JSON.stringify(element));
+                if (element.documentType === 'Application') {
+                    this.errorMsg.push(' Upload Application Document ' + element.documentName + ' In Document Upload Tab');
+                }
+                if (element.documentType === 'Applicant') {
+                    this.errorMsg.push(' Upload Document ' + element.documentName + ' For ' + element.customerName + ' In Document Upload Tab');
+                }
+                if (element.documentType === 'Asset') {
+                    this.errorMsg.push(' Upload Document ' + element.documentName + ' For ' + element.propertyName + ' In Document Upload Tab');
+                }
             });
         }
     }

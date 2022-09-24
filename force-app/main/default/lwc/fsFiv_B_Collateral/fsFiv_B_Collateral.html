@@ -1,15 +1,43 @@
+<!--
+  @author            : 
+  @group             : TechMatrix Consulting
+  @description       : 
+  @created on        : 
+  @last modified on  : 14-09-2022
+  @last modified by  : Karan Singh Soni
+-->
 <template>
     <template if:true={isSpinnerActive}>
         <c-fs-spinner></c-fs-spinner>
     </template>
+	<template if:true={fieldsContent}>
+		<lightning-card variant="Narrow" title="Enter Property Details">
+			<c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}>
+			</c-generic-edit-pages-l-w-c>
+			<div class="slds-align_absolute-center slds-p-bottom_small" slot="footer">
+				<lightning-button variant="brand" label="Update" title="Update" onclick={handleSave}
+					disabled={verificationStatus}>
+				</lightning-button>
+				<lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
+				</lightning-button>
+			</div>
+		</lightning-card>
+	</template>
     <template if:true={tableData}>
-        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+        <div class="slds-m-top_small">
+		</div>
+        <lightning-card  variant="Narrow"  title="List Of Property">
+                <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={rowAction}
+                    onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
+        </lightning-card>
+        <!-- <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
             <div aria-hidden="false" class="slds-section__content slds-p-left_small">
                 <template if:true={fieldsContent}>
                     <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}>
-                    </c-generic-edit-pages-l-w-c><br />
-                    <div class="slds-align_absolute-center slds-m-around_x-small">
-                        <lightning-button variant="brand" label="Update" title="Update" onclick={handleSave} disabled={verificationStatus}>
+                    </c-generic-edit-pages-l-w-c>
+                    <div class="slds-align_absolute-center slds-p-bottom_small">
+                        <lightning-button variant="brand" label="Update" title="Update" onclick={handleSave}
+                            disabled={verificationStatus}>
                         </lightning-button>
                         <lightning-button label="Cancel" title="Cancel" onclick={handleCancel}
                             class="slds-m-left_x-small"></lightning-button>
@@ -19,7 +47,7 @@
                 <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={rowAction}
                     onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
             </div>
-        </div>
+        </div> -->
     </template>
     <template if:true={showDeleteModal}>
         <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01"

@@ -1,110 +1,101 @@
 <template>
-    <template if:false={isSave}>
-        <template if:true={showReceipt}>
-    <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-        <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
-            <span class="slds-truncate" title="Section Title">Enter Payment Details</span>
-        </h3>
-        <div aria-hidden="false" class="slds-section__content slds-p-left_small">
-            <lightning-record-edit-form object-api-name="Receipt__c" record-id={receiptId}
-                onsuccess={handleSuccessReceipt} onsubmit={handleSubmitReceipt}>
-                <lightning-layout multiple-rows="true">
-                    <lightning-input-field field-name="Pre_Login__c" variant="label-stacked" value={preLogInId}
-                        style="display: none;">
-                    </lightning-input-field>
-                    <lightning-layout-item size="12" small-device-size="6" medium-device-size="12" large-device-size="2"
-                        padding="around-small" style="display: none;">
-                        <lightning-input-field field-name="Application__c" variant="label-stacked"
-                            value={applicationId}>
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-input label="Loan Reference Number" value={appName} disabled="true">
-                        </lightning-input>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-input-field field-name="Customer_name__c" variant="label-stacked"
-                            value={primaryApplicantName} disabled="true">
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-input-field field-name="Receipt_Date__c" variant="label-stacked" data-name="resetReceipt"
-                            data-id="receiptDate" required="true" onchange={handleDateChange}>
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-input-field field-name="Amount__c" data-name="resetReceipt" variant="label-stacked" value={existingFeeCodeAmount}
-                            required="true" disabled="true">
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-input-field field-name="Loan_Purpose__c" data-name="resetReceipt" variant="label-stacked" required="true">
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-input-field field-name="Mode_of_payment__c" data-name="resetReceipt" variant="label-stacked" value="Cash"
-                            required="true">
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <lightning-input-field field-name="Cashier__c" variant="label-hidden" style="display: none;"
-                        value={cashierValue} required="true">
-                    </lightning-input-field>
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-combobox name="cashier" label="Receipt Details Author" value={cashierValue}
-                            options={cashierType} onchange={handleCashier} dropdown-alignment="auto" required="true" novalidate>
-                        </lightning-combobox>
-                    </lightning-layout-item>
+	<template if:false={isSave}>
+		<template if:true={showReceipt}>
+			<lightning-card variant="Narrow" title="Enter Payment Details">
+				<lightning-record-edit-form object-api-name="Receipt__c" record-id={receiptId}
+					onsuccess={handleSuccessReceipt} onsubmit={handleSubmitReceipt}>
+					<lightning-layout multiple-rows="true">
+						<lightning-input-field field-name="Pre_Login__c" variant="label-stacked" value={preLogInId}
+							style="display: none;">
+						</lightning-input-field>
+						<lightning-layout-item size="12" small-device-size="6" medium-device-size="12"
+							large-device-size="2" padding="around-small" style="display: none;">
+							<lightning-input-field field-name="Application__c" variant="label-stacked"
+								value={applicationId}>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-input label="Loan Reference Number" value={appName} disabled="true">
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-input-field field-name="Customer_name__c" variant="label-stacked"
+								value={primaryApplicantName} disabled="true">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-input-field field-name="Receipt_Date__c" variant="label-stacked"
+							data-name="resetReceipt" style="display: none;" value={receiptDateValue}
+							data-id="receiptDate" required="true">
+						</lightning-input-field>
 
-                    <!-- Added By Navin on 30-July-22-->
-                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
-                        padding="around-small">
-                        <lightning-combobox name="Fee Code" label="Fee Code" value={feeCodeValue} dropdown-alignment="auto"
-                            options={existingFeeCodeOption} onchange={feeCodeChanged} required="true">
-                        </lightning-combobox>
-                    </lightning-layout-item>
-                    <!-- Added By Navin on 30-July-22-->
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-input name="receiptDate" label="Receipt Date" value={receiptDateValue}
+								type="date" max={todayDateValue} onchange={handleReceiptDate} required="true">
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-input-field field-name="Amount__c" data-name="resetReceipt"
+								variant="label-stacked" value={existingFeeCodeAmount} required="true" disabled="true">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-input-field field-name="Loan_Purpose__c" data-name="resetReceipt"
+								variant="label-stacked" required="true">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-input-field field-name="Mode_of_payment__c" data-name="resetReceipt"
+								variant="label-stacked" value="Cash" required="true">
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-input-field field-name="Cashier__c" variant="label-hidden" style="display: none;"
+							value={cashierValue} required="true">
+						</lightning-input-field>
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-combobox name="cashier" label="Receipt Details Author" value={cashierValue}
+								options={cashierType} onchange={handleCashier} dropdown-alignment="auto" required="true"
+								novalidate>
+							</lightning-combobox>
+						</lightning-layout-item>
 
-                    <lightning-input-field field-name="Approval_Status__c" variant="label-hidden" style="display: none;"
-                        value="Submitted">
-                    </lightning-input-field>
-                </lightning-layout>
-                <div class="slds-var-m-top_medium slds-align_absolute-center">
-                    <lightning-button variant="brand" type="submit" label="Save" onclick={buttonClick}>
-                    </lightning-button>
-                </div>
-                <br /><br /><br />
-            </lightning-record-edit-form>
-        </div>
-    </div>
-        </template>
-    </template>
-    <template if:true={isReceiptDataArrived}>
-        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-            <div class="slds-theme_shade" style="border-radius: 0.25rem;">
-                <lightning-layout>
-                    <lightning-layout-item class="slds-size_11-of-12" padding="around-small">
-                        <span class="slds-truncate" title="Section Title" style="font-size: 1rem;">Receipt List</span>
-                    </lightning-layout-item>
-                    <lightning-layout-item sclass="slds-size_1-of-12" padding="around-small">
-                        <lightning-button-icon icon-name="utility:refresh" variant="border-filled"
-                            alternative-text="Refresh List" title="Refresh List" onclick={handleRefresh}>
-                        </lightning-button-icon>
+						<!-- Added By Navin on 30-July-22-->
+						<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
+							large-device-size="2" padding="around-small">
+							<lightning-combobox name="Fee Code" label="Fee Code" value={feeCodeValue}
+								dropdown-alignment="auto" options={existingFeeCodeOption} onchange={feeCodeChanged}
+								required="true">
+							</lightning-combobox>
+						</lightning-layout-item>
+						<!-- Added By Navin on 30-July-22-->
 
-                    </lightning-layout-item>
-                </lightning-layout>
-            </div>
-            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
-                <c-generic-data-table-l-w-c data-id="receipt" result={dataReceipt}>
-                </c-generic-data-table-l-w-c>
-            </div>
-        </div>
-    </template>
-    
+						<lightning-input-field field-name="Approval_Status__c" variant="label-hidden"
+							style="display: none;" value="Submitted">
+						</lightning-input-field>
+					</lightning-layout>
+					<div class="slds-var-m-top_medium slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" onclick={buttonClick}>
+						</lightning-button>
+					</div>
+                    </lightning-record-edit-form>
+			</lightning-card>
+		</template>
+	</template>
+	<template if:true={isReceiptDataArrived}>
+		<div class="slds-m-top_small">
+		</div>
+		<lightning-card variant="Narrow" title="Receipt List">
+			<lightning-button-icon icon-name="utility:refresh" variant="border-filled" alternative-text="Refresh List"
+				title="Refresh List" onclick={handleRefresh} slot="actions">
+			</lightning-button-icon>
+			<c-generic-data-table-l-w-c data-id="receipt" result={dataReceipt}>
+			</c-generic-data-table-l-w-c>
+		</lightning-card>
+	</template>
 </template>

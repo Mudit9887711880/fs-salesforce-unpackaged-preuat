@@ -258,6 +258,11 @@ export default class PcCapability extends LightningElement {
     }
 
 
+
+
+
+
+
     // to get the Capability Table Records for PC -----
     getCapabilityTableRecords() {
         console.log('loan applicant data in pc capanbility>>>> ', this.loanApplicantId);

@@ -22,6 +22,9 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ID_FIELD from '@salesforce/schema/Application__c.Id';
 import STAGE_FIELD from '@salesforce/schema/Application__c.Stage__c';
 import SUBMISSION_DATE_FIELD from '@salesforce/schema/Application__c.AC_Submission_Date__c';
+import GROUP_VALUATION from '@salesforce/schema/Application__c.Group_Valuation__c';
+import MORTGAGE_VALUE from '@salesforce/schema/Application__c.Mortgage_property_Collateral_Value__c';
+import NET_INCOME from '@salesforce/schema/Application__c.Total_Net_Income__c';
 import { updateRecord } from 'lightning/uiRecordApi';
 import getACUsers from '@salesforce/apex/fsPcAcController.getACUsers';
 
@@ -29,6 +32,12 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
 
     // buttons for add property/applicant and retrigger verifications
     @track btns = [
+        {
+            name: 'submit',
+            label: 'Submit',
+            variant: 'brand',
+            class: 'slds-m-left_x-small'
+        },
         {
             name: 'AddApplicant',
             label: 'Add/Modify Applicant',
@@ -102,6 +111,9 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
     @track sourcingBranch;
     @track decisionValue;
     @track dedupeDetails;
+    @track requiredDocuments;
+    @track pendingdeviationWrapper;
+
 
 
     //for template Rendering and layout classes
@@ -204,48 +216,31 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
     @track tabName = 'Dedupe_Check';
     @track receiptWrapper = { hasReceipt: false, allApproved: false, pendingReceiptList: [], lengthOfDirectRec: 0, existingFeeCodeOption: [] };
     @track loadAll = false;
+    @track childTab = "Application_details";
+
+    handleChildTab(event) {
+        console.log('handleChildTab = ', event.detail);
+        this.childTab = event.detail;
+    }
 
     // for Decision Tab
     @track isRemarkRequired = false;
 
-
-    ///// connected Callback------------------------
-    connectedCallback() {
-
-
-    }
-
     ///// rendered callback--------------------------
     renderedCallback() {
-        if (!this.callOnce) {
-            const style = document.createElement('style');
-            style.innerText = `.slds-form-element__label{
-        font-weight: bold;
-    }`;
-            this.template.querySelector('[data-id="acTest"]').appendChild(style);
-            const label = this.template.querySelectorAll('label');
-            label.forEach(element => {
-                element.classList.add('bold');
-            });
-            console.log('renderedCallback()');
-            this.callOnce = true;
-        }
-        if (this.loadAll == false) {
-            console.log('i am in check validity');
-            let currentTab = this.tabName;
-            console.log('currentTab= ', currentTab);
-            let tabs = this.template.querySelectorAll('lightning-tab');
-            console.log('tabs ', tabs);
-            tabs.forEach(element => {
-                if (element.value == 'Insurance_Fee')
-                    element.loadContent();
-            });
-            console.log('currentTab= ', currentTab);
-            this.tabName = currentTab;
-            if (tabs && tabs.length) {
-                this.loadAll = true;
-            }
-        }
+        //     if (!this.callOnce) {
+        //         const style = document.createElement('style');
+        //         style.innerText = `.slds-form-element__label{
+        //     font-weight: bold;
+        // }`;
+        //         this.template.querySelector('[data-id="acTest"]').appendChild(style);
+        //         const label = this.template.querySelectorAll('label');
+        //         label.forEach(element => {
+        //             element.classList.add('bold');
+        //         });
+        //         console.log('renderedCallback()');
+        //         this.callOnce = true;
+        //     }
     }
 
     //check PC Validation
@@ -294,6 +289,7 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
         } else if (event.target.value == 'Financial_screen') {
             this.finSpinner = true;
             this.getcollateralSummaryTable();
+            this.childTab = 'Application_details';
             this.isFinancial = true;
         } else if (event.target.value == 'Capability_screen') {
 
@@ -329,29 +325,43 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
         }
         else if (event.target.value == 'Capability_Summary') {
             this.capabilitySpinner = true;
-            getacCapabilitySummary({ applicationId: this.applicationId })
-                .then(res => {
-                    console.log('CAp Summary>>> ', res);
-                    this.IncomeSummary = JSON.parse(JSON.stringify(res));
-                    console.log('IncomeSummary>> ', this.IncomeSummary);
-                    this.capabilitySpinner = false;
-                })
-                .catch(
-                    err => {
-                        console.log('CAp Summary error >>> ', err);
-                        this.capabilitySpinner = false;
-                    }
-                )
+            this.handleCapbilitySummary();
         }
     }
 
-    // get the dedupe Details
-    getdedupedetails(event) {
-        let result = event.detail;
-        this.dedupeDetails = JSON.parse(result);
-        console.log('Dedupe Details', this.dedupeDetails);
-        if (this.dedupeDetails.errorFlag)
-            this.errorMsg.push(this.dedupeDetails.message);
+
+    handleCapbilitySummary() {
+        getacCapabilitySummary({ applicationId: this.applicationId })
+            .then(res => {
+                console.log('CAp Summary>>> ', res);
+                this.IncomeSummary = JSON.parse(JSON.stringify(res));
+                console.log('IncomeSummary>> ', this.IncomeSummary);
+                if (this.IncomeSummary.pcnetMonthlyIncome) {
+                    const fields = {};
+                    fields[ID_FIELD.fieldApiName] = this.applicationId;
+                    fields[NET_INCOME.fieldApiName] = parseFloat(this.IncomeSummary.pcnetMonthlyIncome);
+                    const recordInput = { fields };
+                    updateRecord(recordInput)
+                        .then(() => {
+                            console.log('### NET INCOME Updated ###');
+                        })
+                        .catch(error => {
+                            console.log('Error in updating NET INCOME ###', error);
+                        });
+                }
+                this.capabilitySpinner = false;
+            })
+            .catch(
+                err => {
+                    console.log('CAp Summary error >>> ', err);
+                    this.capabilitySpinner = false;
+                }
+            )
+    }
+
+    connectedCallback() {
+        //code
+        this.getPropertyRecordTypeId();
     }
 
 
@@ -368,6 +378,19 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
         this.handlegetData(true);
     }
 
+    // method used to get the Property Record Type Id for Document Upload
+    getPropertyRecordTypeId() {
+        getRecordTypeId({ sObjectName: 'Property__c', recordTypeName: 'PC Property Detail' })
+            .then(result => {
+                console.log('propertyRecordTypeId ### ', result);
+                if (result)
+                    this.propertyRecordTypeId = result;
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     // method used to get Verification Data
     handlegetData(param) {
         getData({ CustomerId: this.recordId, ObjName: 'Verification__c' })
@@ -382,6 +405,7 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
                     this.sourcingBranch = element.Application__r.Sourcing_Branch__c;
                     this.selectedACUser = element.Application__r.AC_User__c;
                     this.decisionValue = element.Application__r.AC_Decision__c;
+
                     if (this.decisionValue == 'Approve') {
                         this.isRemarkRequired = false;
                         this.isRecommend = false;
@@ -398,13 +422,25 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
                         this.isRecommend = false;
                     }
                 });
+
                 if (param == true)
                     this.fetchLastLoginDate();
+
             })
             .catch(error => {
                 console.log('errror', error);
 
             });
+    }
+
+    // get the dedupe Details
+    getdedupedetails(event) {
+        let result = event.detail;
+        this.dedupeDetails = JSON.parse(result);
+        console.log('Dedupe Details', this.dedupeDetails);
+        if (this.dedupeDetails.errorFlag)
+            this.errorMsg.push(this.dedupeDetails.message);
+
     }
 
 
@@ -413,6 +449,10 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
     rowselectionevent(event) {
         var detail = event.detail;
         console.log('detail ### ', JSON.stringify(detail));
+        if (detail === 'submit') {
+            // this.handleACSubmit();
+            this.tempSubmit();
+        }
         if (detail === 'AddApplicant') {
             this.applicanttobeCheck = true;
             this.isAddApplicant = true;
@@ -469,6 +509,10 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
         console.log('check validation pc character', event.detail);
         if (event.detail == true)
             this.checkAllValidation();
+        if (this.showPropertyForm)
+            this.getcollateralSummaryTable();
+        if (this.showCapability)
+            this.handleCapbilitySummary();
     }
 
     // add applicant close Event--------
@@ -845,7 +889,22 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
 
                     });
 
+
                     this.propertySummaryObj.collateralGrandValue = grandcollateralvalue;
+                    if (this.propertySummaryObj.collateralGrandValue) {
+                        const fields = {};
+                        fields[ID_FIELD.fieldApiName] = this.applicationId;
+                        fields[GROUP_VALUATION.fieldApiName] = parseFloat(this.propertySummaryObj.collateralGrandValue);
+                        fields[MORTGAGE_VALUE.fieldApiName] = parseFloat(this.propertySummaryObj.collateralGrandValue);
+                        const recordInput = { fields };
+                        updateRecord(recordInput)
+                            .then(() => {
+                                console.log('### Group Valuation Updated ###');
+                            })
+                            .catch(error => {
+                                console.log('Error in updating group Valuation ###', error);
+                            });
+                    }
                 }
                 this.propertySpinner = false;
                 this.finSpinner = false;
@@ -884,6 +943,22 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
     fetchLastLoginDate() {
         getLastLoginDate().then(result => {
             console.log('login date ', result);
+            if (this.loadAll == false) {
+                console.log('i am in check validity');
+                let currentTab = this.tabName;
+                console.log('currentTab= ', currentTab);
+                let tabs = this.template.querySelectorAll('lightning-tab');
+                console.log('tabs ', tabs);
+                tabs.forEach(element => {
+                    if (element.value == 'Insurance_Fee' || element.value == 'Document_Upload' || element.value == 'Deviation')
+                        element.loadContent();
+                });
+                console.log('currentTab= ', currentTab);
+                this.tabName = currentTab;
+                if (tabs && tabs.length) {
+                    this.loadAll = true;
+                }
+            }
             this.lastLoginDate = result;
             this.getAllApplicants();
         })
@@ -928,6 +1003,7 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
     // for getting the property table records-------
     handleGetCollateralGeneralDetails(metaName) {
         this.propertyTableData = undefined;
+        console.log('metaName - ' + metaName);
         getCollateralTableRecords({ appId: this.applicationId, metadataName: metaName }).then((result) => {
             console.log('handleGetCollateralGeneralDetails= ', JSON.parse(JSON.stringify(result)));
             this.propertyTableData = JSON.parse(JSON.stringify(result));
@@ -1022,16 +1098,59 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
             })
     }
 
+    handlePendingDeviation(event) {
+        if (event.detail != null)
+            this.pendingdeviationWrapper = event.detail;
+        if (this.pendingdeviationWrapper && this.pendingdeviationWrapper.PendingDeviationsExist) {
+            if (this.pendingdeviationWrapper.pendingDeviationsList.length) {
+                // this.pendingdeviationWrapper.pendingDeviationsList.forEach(dev => {
+                this.errorMsg.push('All Deviations are not approved');
+                // })
+            }
+        }
+
+    }
+
+    tempSubmit() {
+        this.acspinner = true;
+        this.errorMsg = [];
+        // let dedupeResult = this.template.querySelector('c-fsdedupe-details-lwc').submitDedupeData();
+        // console.log('dedupeResult ###', dedupeResult);
+
+        let PendingDeviation = this.template.querySelector('c-pc-deviation');
+        if (PendingDeviation)
+            PendingDeviation.checkPendingDeviations();
+
+        console.log('Pending Deviations ###', this.pendingdeviationWrapper);
+        // try {
+        //     this.template.querySelector('c-fs-generic-upload-documents').checkAllRequiredDocument();
+        //     console.log('required docs List', this.requiredDocuments);
+        // } catch (error) {
+        //     console.log(error)
+        // }
+        // setTimeout(() => {
+        //this.requiredDocumentValidation();
+        // }, 3000);
+
+        setTimeout(() => {
+            this.handleACSubmit();
+        }, 3000);
+
+    }
+
+
+
     handleACSubmit(event) {
+
+        this.acspinner = false;
         let myCmp = this.template.querySelector('c-fee-insurance-parent-p-c-screen');
         console.log('submit called myCmp', myCmp);
         if (myCmp)
             myCmp.getReceipt();
         console.log('Decision Value', this.decisionValue);
-        // let dedupeResult = this.template.querySelector('c-fsdedupe-details-lwc').submitDedupeData();
-        // console.log('dedupeResult ###', dedupeResult);
+
         console.log('submit called', this.validationObj);
-        this.errorMsg = [];
+        //this.errorMsg = [];
         /* Character Validation Check */
         if (this.validationObj.charWrap.familyDetail) {
             this.errorMsg.push('Please Complete Entry In Family Details Sub Section In Character Section');
@@ -1079,7 +1198,7 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
             this.errorMsg.push('Please Complete Entry In Loan Amount Sub Section In Financial Section');
         }
         if (this.validationObj.finWrap.EligibilityDetail) {
-            this.errorMsg.push('Please Complete Entry In Eligibility Detail Sub Section In Financial Section');
+            this.errorMsg.push('Please Complete Entry In Eligibility Calculations Sub Section In Financial Section');
         }
         if (this.validationObj.finWrap.RiskDetail) {
             this.errorMsg.push('Please Complete Entry In Risk Rating Sub Section In Financial Section');
@@ -1182,6 +1301,8 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
         if (this.decisionValue == null && this.decisionValue == undefined) {
             this.errorMsg.push('Please Complete Entry In Decision Section');
         }
+
+        console.log('dedupedetails', this.dedupeDetails);
 
         console.log('showErrorTab errorMsg = ', this.errorMsg);
         if (this.errorMsg && this.errorMsg.length) {
@@ -1297,6 +1418,35 @@ export default class AC_LWC extends NavigationMixin(LightningElement) {
                 message: message,
             })
         );
+    }
+
+    // document upload Validation Methods
+    handleRequiredDocument(event) {
+        console.log('required doc list :: ', JSON.stringify(event.detail));
+        this.requiredDocuments = event.detail;
+
+        this.requiredDocumentValidation();
+
+
+    }
+
+
+    requiredDocumentValidation() {
+        console.log('requiredDocuments ', JSON.stringify(this.requiredDocuments));
+        if (this.requiredDocuments.length > 0) {
+            this.requiredDocuments.forEach(element => {
+                console.log('element #### ', JSON.stringify(element));
+                if (element.documentType === 'Application') {
+                    this.errorMsg.push(' Upload Application Document ' + element.documentName + ' In Document Upload Tab');
+                }
+                if (element.documentType === 'Applicant') {
+                    this.errorMsg.push(' Upload Document ' + element.documentName + ' For ' + element.customerName + ' In Document Upload Tab');
+                }
+                if (element.documentType === 'Asset') {
+                    this.errorMsg.push(' Upload Document ' + element.documentName + ' For ' + element.propertyName + ' In Document Upload Tab');
+                }
+            });
+        }
     }
 
 

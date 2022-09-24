@@ -1,0 +1,444 @@
+<template>
+    <lightning-spinner alternative-text="Loading" size="small" if:true={deviationSpinner}></lightning-spinner>
+    <template if:false={isRaise}>
+
+        <div class="c-container ">
+            <lightning-card class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large">
+                <template if:true={isDisplay}>
+                    <div class="slds-scrollable">
+                        <span class="slds-text-heading_small slds-truncate"
+                            style="font-size: var(--slds-c-card-heading-font-size, var(--sds-c-card-heading-font-size, var(--lwc-varFontSize5,1rem))); font-weight: var(--slds-c-card-heading-font-weight, var(--sds-c-card-heading-font-weight, var(--lwc-cardFontWeight,700))); line-height: var(--lwc-lineHeightHeading,1.25);">Deviations
+                            List</span>
+                        
+                        <lightning-button variant="brand" label="Raise Devaition" title="Raise Devaition"
+                            onclick={handleDeviationClick} class="slds-float_right slds-m-left_xx-small"></lightning-button>
+                            <button class="addbutton slds-button slds-button_icon slds-button_icon-brand slds-float_right slds-m-left_xx-small" name='add'
+                            onclick={createDeviationRecordRow} title="Add New Row">
+                            <!--for multiple rows to be active-->
+                            <!-- disabled={item.isNewRow}>-->
+                            <svg class="slds-button__icon" focusable="false" data-key="add" aria-hidden="true"
+                                viewBox="0 0 52 52">
+                                <g>
+                                    <path
+                                        d="M30 29h16.5c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5H30c-.6 0-1-.4-1-1V5.5c0-.8-.7-1.5-1.5-1.5h-3c-.8 0-1.5.7-1.5 1.5V22c0 .6-.4 1-1 1H5.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5H22c.6 0 1 .4 1 1v16.5c0 .8.7 1.5 1.5 1.5h3c.8 0 1.5-.7 1.5-1.5V30c0-.6.4-1 1-1z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </button>
+                    </div>
+                    </br>
+                </template>
+                <template if:false={isDisplay}>
+                    <div class="slds-scrollable">
+                        <span class="slds-text-heading_small slds-truncate"
+                            style="font-size: var(--slds-c-card-heading-font-size, var(--sds-c-card-heading-font-size, var(--lwc-varFontSize5,1rem))); font-weight: var(--slds-c-card-heading-font-weight, var(--sds-c-card-heading-font-weight, var(--lwc-cardFontWeight,700))); line-height: var(--lwc-lineHeightHeading,1.25);">Deviations
+                            List</span>
+                        <button class="addbutton slds-button slds-button_icon slds-button_icon-brand slds-float_right" name='add'
+                            onclick={createDeviationRecordRow} title="Add New Row">
+                            <!--for multiple rows to be active-->
+                            <!-- disabled={item.isNewRow}>-->
+                            <svg class="slds-button__icon" focusable="false" data-key="add" aria-hidden="true"
+                                viewBox="0 0 52 52">
+                                <g>
+                                    <path
+                                        d="M30 29h16.5c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5H30c-.6 0-1-.4-1-1V5.5c0-.8-.7-1.5-1.5-1.5h-3c-.8 0-1.5.7-1.5 1.5V22c0 .6-.4 1-1 1H5.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5H22c.6 0 1 .4 1 1v16.5c0 .8.7 1.5 1.5 1.5h3c.8 0 1.5-.7 1.5-1.5V30c0-.6.4-1 1-1z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </button>
+
+                    </div>
+                    </br>
+                </template>
+                <div class="slds-scrollable" style="height:200%; padding-bottom: 10px">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+                        <thead>
+                            <tr class="th">
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Sr No">Sr No.</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Deviation Code">Deviation Name</div>
+                                </th>
+
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Applicable For">Applicable For</div>
+                                </th>
+
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Applicant/Property">Applicant/Property</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Applicant/Property">Approval Level</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Decision">Decision</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Remarks">Remarks</div>
+                                </th>
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Mitigants">Mitigants</div>
+                                </th>
+
+                                <!--      <th class="slds-size_1-of-10" scope="col">
+                                        <div class="slds-truncate" title="Approval Authority">Approval Authority</div>
+                                    </th>-->
+                                <!--                  <th class="slds-size_1-of-10" scope="col">
+                            <div class="slds-truncate" title="Mitigants"> Mitigants</div>
+                        </th>-->
+                                <th class="slds-size_1-of-10" scope="col">
+                                    <div class="slds-truncate" title="Deviation Type"> Deviation Type</div>
+                                </th>
+                                <template if:true={isDisplay}>
+                                    <th class="slds-size_1-of-10" scope="col">
+                                        <div class="slds-truncate" title="Approval Authority">Approval Authority</div>
+                                    </th>
+                                </template>
+                                <!--       <th class="slds-size_1-of-10" scope="col">
+                                <div class="slds-truncate" title="Action">Action</div>
+                            </th>-->
+                                <th class="slds-size_1-of-10" scope="col"></th>
+                                <template if:true={sendMailShow}>
+                                    <th class="slds-size_1-of-10" scope="col"> Send Email</th>
+                                </template>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template if:true={isData}>
+                                <template for:each={data} for:item="item" for:index="indexVar">
+                                    <tr key={item.key} id={item.Id} class="slds-hint-parent">
+                                        <td class="slds-size_3-of-10" data-id="1">
+                                            <div class="slds-truncate">{item.rowNumber}</div>
+                                        </td>
+                                        <td class="slds-size_3-of-10" scope="col">
+                                            <template if:false={item.isNewRow}>
+                                                <div class="td-currency" title={item.devList.MS_Deviation__r.Deviation_Description__c}>
+                                                    {item.devList.MS_Deviation__r.Deviation_Description__c}
+                                                </div>
+                                            </template>
+                                            <template if:true={item.isNewRow}>
+                                                <div class="td-currency">
+                                                    <select class="slds-select" id={indexVar} data-row-index={indexVar}
+                                                        onchange={updateDevCodeValue}>
+
+                                                        <option value=none selected disabled hidden>Select an option
+                                                        </option>
+
+                                                        <template for:each={existingdevOption} for:item="listViewItem">
+                                                            <option key={listViewItem.label} value={listViewItem.value}>
+                                                                {listViewItem.label}
+                                                            </option>
+                                                        </template>
+                                                    </select>
+                                                </div>
+                                            </template>
+                                        </td>
+
+                                        <td class="slds-size_3-of-10" data-id="5">
+
+                                            <div class="td-currency">
+                                                <template if:false={item.isNewRow}>
+                                                    {item.devList.Applicable_for__c}
+                                                </template>
+                                                <!--      <template if:true={item.isNewRow}>-->
+                                                <template
+                                                    if:true={item.isNewRow}>{item.devList.Applicable_for__c}</template>
+                                                <!--          <select class="slds-select" id={indexVar} data-row-index={indexVar}
+                                                        onchange={applicableForChange}
+                                                        disabled={item.devList.Applicable_for__c}>
+
+                                                        <template if:false={item.devList.Applicable_for__c}>
+                                                            <option value=none selected disabled hidden>Select an option
+                                                            </option>
+                                                        </template>
+                                                        <template for:each={applicableFor} for:item="listViewItem">
+                                                            <option key={listViewItem.key} value={listViewItem.key}>
+                                                                {listViewItem.value}
+                                                            </option>
+                                                        </template>
+                                                    </select> 
+                                                </template>-->
+                                            </div>
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-id="6">
+                                            <div class="td-currency">
+                                                <template if:false={item.isNewRow}>
+                                                    <template if:true={item.devList.Loan_Applicant__c}>
+                                                        <template if:true={item.applicantOrAssetName}>
+                                                            {item.applicantOrAssetName}
+                                                        </template>
+                                                    </template>
+                                                    <template if:true={item.devList.Property__c}>
+                                                        <template if:true={item.applicantOrAssetName}>
+                                                            {item.applicantOrAssetName}
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={item.devList.Loan_Applicant__c}>
+                                                        <template if:true={item.applicantAsset}>
+                                                            <select class="slds-select" id={indexVar}
+                                                                data-row-index={indexVar}
+                                                                onchange={applicableForSelectChange}>
+
+                                                                <option value=none selected disabled hidden>Select an
+                                                                    option
+                                                                </option>
+                                                                <template for:each={applicantOption}
+                                                                    for:item="listViewItem">
+                                                                    <option key={listViewItem.label}
+                                                                        value={listViewItem.value}>
+                                                                        {listViewItem.label}
+                                                                    </option>
+                                                                </template>
+                                                            </select>
+
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={item.devList.Property__c}>
+                                                        <template if:false={item.applicantAsset}>
+                                                            <template if:false={item.isApplication}>
+                                                                <select class="slds-select" id={indexVar}
+                                                                    data-row-index={indexVar}
+                                                                    onchange={applicableForSelectChange}
+                                                                    disabled={isApplication}>
+
+                                                                    <option value=none selected disabled hidden>Select
+                                                                        an Option
+                                                                    </option>
+
+                                                                    <template for:each={assetOption}
+                                                                        for:item="listViewItem">
+                                                                        <option key={listViewItem.label}
+                                                                            value={listViewItem.value}>
+                                                                            {listViewItem.label}
+                                                                        </option>
+                                                                    </template>
+
+                                                                </select>
+
+                                                            </template>
+                                                            <template if:true={item.isApplication}>
+
+                                                            </template>
+                                                        </template>
+                                                    </template>
+                                                </template>
+                                                <template if:true={item.isNewRow}>
+
+                                                    <select class="slds-select" id={indexVar} data-row-index={indexVar}
+                                                        onchange={applicableForSelectChange} disabled={isApplication}>
+
+                                                        <option value=none selected disabled hidden>Select an option
+                                                        </option>
+                                                        <!--         <template if:false={applicant}>
+                                                            <template if:false={asset}>
+
+                                                            </template>
+                                                        </template>-->
+
+                                                        <template if:true={applicant}>
+                                                            <template for:each={applicantOption}
+                                                                for:item="listViewItem">
+                                                                <option key={listViewItem.label}
+                                                                    value={listViewItem.value}>
+                                                                    {listViewItem.label}
+                                                                </option>
+                                                            </template>
+                                                        </template>
+                                                        <template if:true={asset}>
+                                                            <template for:each={assetOption} for:item="listViewItem">
+                                                                <option key={listViewItem.label}
+                                                                    value={listViewItem.value}>
+                                                                    {listViewItem.label}
+                                                                </option>
+                                                            </template>
+                                                        </template>
+
+                                                    </select>
+
+                                                </template>
+                                            </div>
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-id="1">
+                                            <template if:false={item.isNewRow}>
+                                                <div class="td-currency">{item.devList.Approval_Level__c}</div>
+                                            </template>
+                                            <template if:true={item.isNewRow}>
+                                                <div class="td-currency">{item.devList.Approval_Level__c}</div>
+                                            </template>
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-id="1">
+                                            <div class="td-currency">{item.devList.Decistion__c}</div>
+                                        </td>
+                                        <!--   <td class="slds-size_3-of-10" data-id="1">
+                                            <template if:false={item.isNewRow}>
+                                            <div class="td-currency">{item.devList.Remark__c}</div>
+                                        </template>
+                                        <template if:true={item.isNewRow}><div class="td-currency">{newRemark}</div></template>
+                                        </td>-->
+                                        <td class="slds-size_3-of-10" data-id="1">
+                                            <div class="td-currency">
+
+                                                <input class="slds-select" type="text" value={item.devList.Remark__c}
+                                                    name="Remark" onchange={updateRemark} data-row-index={indexVar}
+                                                    placeholder="Enter Remark"></input>
+                                            </div>
+                                        </td>
+                                        <td class="slds-size_3-of-10" data-id="1">
+                                            <div class="td-currency">
+                                                <!--{item.devList.Mitigants__c}-->
+                                                <input class="slds-select" type="text" value={item.devList.Mitigants__c}
+                                                    name="Mitigants" onchange={updateMitigant} data-row-index={indexVar}
+                                                    placeholder="Enter Mitigants"></input>
+                                            </div>
+                                        </td>
+
+                                        <!--           <td class="slds-size_3-of-10" data-id="5">
+                                            <div class="td-currency">
+                                                <template if:true={item.devList.Approval_Authority__c}>
+                                                    {item.devList.Approval_Authority__r.Name}
+                                                </template>
+                                                <template if:false={item.devList.Approval_Authority__c}>
+
+                                                    <select class="slds-select" id={indexVar} data-row-index={indexVar}
+                                                        onchange={approvalAuthChange}
+                                                        disabled={item.devList.Approval_Authority__c}>
+
+                                                        <template if:false={item.devList.Approval_Authority__c}>
+                                                            <option value=none selected disabled hidden>Select an option
+                                                            </option>
+                                                        </template>
+                                                        <template for:each={approvalUser} for:item="listViewItem">
+                                                            <option key={listViewItem.label} value={listViewItem.value}>
+                                                                {listViewItem.label}
+                                                            </option>
+                                                        </template>
+                                                    </select>
+                                                </template>
+                                            </div>
+                                        </td> -->
+                                        <!--                           <td class="slds-size_3-of-10 " data-id="7">
+                                <div class="td-currency">
+                                    <div class="slds-form-element">
+                                        <div class="slds-truncate">
+                                            <template if:true={item.isNewRow}>
+                                                {item.devList.Mitigants__c}
+                                            </template>
+                                <template if:false={item.isNewRow}>
+                                    <input class="slds-select" type="text" value={item.devList.Mitigants__c}
+                                        name="Mitigants" onchange={updateMitigant}
+                                        placeholder="Enter Mitigants"></input>
+                                    </template>
+                                </div></div>
+                                </div>
+                            </td>
+                            -->
+                                        <td class="slds-size_3-of-10" data-id="1">
+                                            <div class="td-currency">{item.devList.Deviation_Type__c}</div>
+                                        </td>
+                                        <template if:true={isDisplay}>
+                                            <td class="slds-size_3-of-10" data-id="5">
+                                                <div class="td-currency">
+                                                    <!--   <template if:true={item.devList.Approval_Authority__c}>
+                                                    {item.devList.Approval_Authority__r.Name}
+                                                </template>
+                                                <template if:false={item.devList.Approval_Authority__c}>-->
+                                                    <template if:true={item.userName}>
+                                                        {item.userName}
+                                                    </template>
+                                                    <template if:false={item.userName}>
+                                                        <template if:false={item.isNewRow}>
+                                                            <select class="slds-select" id={indexVar}
+                                                                data-row-index={indexVar} onchange={approvalAuthChange}>
+                                                                <!--for vs 2-->
+                                                                <!-- disabled={item.devList.Approval_Authority__c}>-->
+
+
+                                                                <template if:false={item.devList.Approval_Authority__c}>
+                                                                    <option value=none selected disabled hidden>Select
+                                                                        an option
+                                                                    </option>
+                                                                </template>
+                                                                <template for:each={item.userDetail}
+                                                                    for:item="listViewItem">
+                                                                    <option key={listViewItem.label}
+                                                                        value={listViewItem.value}>
+                                                                        {listViewItem.label}
+                                                                    </option>
+                                                                </template>
+                                                            </select>
+                                                        </template>
+                                                        <template if:true={item.isNewRow}>
+                                                            <select class="slds-select" id={indexVar}
+                                                                data-row-index={indexVar} onchange={approvalAuthChange}>
+                                                                <!--for vs 2-->
+                                                                <!-- disabled={item.devList.Approval_Authority__c}>-->
+
+                                                                <template if:false={item.devList.Approval_Authority__c}>
+                                                                    <option value=none selected disabled hidden>Select
+                                                                        an option
+                                                                    </option>
+                                                                </template>
+                                                                <template for:each={item.userDetail}
+                                                                    for:item="listViewItem">
+                                                                    <option key={listViewItem.label}
+                                                                        value={listViewItem.value}>
+                                                                        {listViewItem.label}
+                                                                    </option>
+                                                                </template>
+                                                            </select>
+                                                        </template>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                        </template>
+                                        <!--   <td class="slds-size_1-of-10" data-id="12">
+                                    <button class="fetch-btn" data-row-index={indexVar} onclick={handleClick}>Raise
+                                        Deviation</button>
+                                </td>-->
+                                        <!--commented this td to move add row button on the top-->
+                                        <!--       <td class="slds-size_1-of-10" data-id="9" if:true={data.length}>
+                                            <button
+                                                class="addbutton slds-button slds-button_icon slds-button_icon-brand"
+                                                name='add' data-row-index={indexVar} onclick={createDeviationRecordRow}> -->
+                                        <!--for multiple rows to be active-->
+                                        <!-- disabled={item.isNewRow}>-->
+                                        <!--              <svg class="slds-button__icon" focusable="false" data-key="add"
+                                                    aria-hidden="true" viewBox="0 0 52 52">
+                                                    <g>
+                                                        <path
+                                                            d="M30 29h16.5c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5H30c-.6 0-1-.4-1-1V5.5c0-.8-.7-1.5-1.5-1.5h-3c-.8 0-1.5.7-1.5 1.5V22c0 .6-.4 1-1 1H5.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5H22c.6 0 1 .4 1 1v16.5c0 .8.7 1.5 1.5 1.5h3c.8 0 1.5-.7 1.5-1.5V30c0-.6.4-1 1-1z">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </td> -->
+                                        <template if:true={item.sendEmail}>
+                                            <td class="slds-size_1-of-10" data-id="12">
+                                                <button class="fetch-btn" data-row-index={indexVar}
+                                                    onclick={handleEmailClick}>Send email</button>
+                                            </td>
+                                        </template>
+                                    </tr>
+                                </template>
+                            </template>
+                            <template if:false={isData}>
+                                <tr>
+                                    <td colspan="10">
+                                        <div align="center">No Deviation to display</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    </br>
+                    <div class="feeCreationFooter">
+                        <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+                    </div>
+
+                </div>
+            </lightning-card>
+        </div>
+
+    </template>
+</template>

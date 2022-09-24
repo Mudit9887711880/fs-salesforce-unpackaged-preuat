@@ -1,5 +1,5 @@
 <template>
-	<lightning-spinner alternative-text="Loading" size="small" if:true={deviationSpinner}></lightning-spinner>
+	<!--lightning-spinner alternative-text="Loading" size="small" if:true={deviationSpinner}></lightning-spinner>
 	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
 		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
 			<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; System Deviations </span>
@@ -24,7 +24,7 @@
 				</lightning-layout-item>
 				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
 					large-device-size="2">
-					<lightning-input-field field-name="Applicable_for__c" variant="label-stacked">
+					<lightning-input-field field-name="Applicable_for__c" variant="label-stacked" disabled="true">
 					</lightning-input-field>
 				</lightning-layout-item>
 				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
@@ -46,9 +46,9 @@
 					large-device-size="2">
 					<lightning-input-field field-name="Mitigants__c" variant="label-stacked">
 					</lightning-input-field>
-				</lightning-layout-item>
+				</lightning-layout-item> -->
 				<!-- Save Button-->
-				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+				<!--lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 					medium-device-size="12" large-device-size="12">
 					<div class="slds-var-m-top_medium slds-align_absolute-center">
 						<lightning-button variant="brand" type="submit" label="Update" id="deviation-btn">
@@ -89,6 +89,11 @@
 						disabled="true">
 					</lightning-input-field>
 				</lightning-layout-item>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
+					large-device-size="2">
+					<lightning-input-field field-name="Approval_Level__c" variant="label-stacked" value={approvalLevel}>
+					</lightning-input-field>
+				</lightning-layout-item>
 				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
 					large-device-size="2" style="display:none">
 					<lightning-input-field field-name="Application__c" variant="label-stacked" value={applicationId}>
@@ -111,16 +116,16 @@
 				</lightning-layout-item>
 				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
 					large-device-size="2" >
-					<lightning-input-field field-name="Remark__c" variant="label-stacked" class="deviation">
+					<lightning-input-field field-name="Remark__c" variant="label-stacked" class="deviation"  data-id="remarks" required>
 					</lightning-input-field>
 				</lightning-layout-item>
 				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2" medium-device-size="2"
 					large-device-size="2">
 					<lightning-input-field field-name="Mitigants__c" variant="label-stacked" class="deviation">
 					</lightning-input-field>
-				</lightning-layout-item>
+				</lightning-layout-item>-->
 				<!-- Save Button-->
-				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+			<!--	<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 					medium-device-size="12" large-device-size="12">
 					<div class="slds-var-m-top_medium slds-align_absolute-center">
 						<lightning-button variant="brand" type="submit" label="Save" id="deviation1-btn">
@@ -146,13 +151,21 @@
 				</c-generic-data-table-l-w-c>
 			</template>
 		</div>
-	</div>
+	</div>-->
 
 	<!-- Delete Popup -->
-	<template if:true={showDeleteModal}>
+	<!--<template if:true={showDeleteModal}>
 		<c-fs-delete-l-w-c delete-from="Process Credit" object-api-name="TR_Deviation__c" rec-id={recordIdtoDelete}
 			show-modal={showDeleteModal} onmodaldelete={handlemodalactions} onmodalcancel={handlemodalactions}>
 		</c-fs-delete-l-w-c>
-	</template>
+	</template>-->
+	<c-pc-deviation-table application-id={applicationId} stage-name={stageName}></c-pc-deviation-table>
+		<!--Decisioned Deviations section-->
+	<c-pc-decisioned-deviation-table application-id={applicationId}></c-pc-decisioned-deviation-table>
+	<!-- Pending for Decision
+	<c-pc-deviation-user-table application-id={applicationId}></c-pc-deviation-user-table> -->
 
+	<!--Pending for Decision 2-->
+	
+	<c-dviation-approval-screen application-id={applicationId} onrefreshdecisiondeviations={handleRefreshDeviations}></c-dviation-approval-screen>
 </template>

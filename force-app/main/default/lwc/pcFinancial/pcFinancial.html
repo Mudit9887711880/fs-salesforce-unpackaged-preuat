@@ -1,8 +1,8 @@
 <template>
 	<lightning-spinner alternative-text="Loading" size="small" if:true={financialSpinner}></lightning-spinner>
-	<lightning-tabset variant="scoped">
-		<template if:true={topUpSection}>
-			<lightning-tab label="Topup Details" value="Topup Details" onactive={handleTabActivation}>
+	<lightning-tabset variant="scoped" active-tab-value={tabName}>
+		<template if:true={topUpSection} >
+			<lightning-tab label="Topup Details" value="Topup Details"  onactive={handleTabActivation}>
 
 				<lightning-record-edit-form object-api-name="Topup__c" onsuccess={handleTopupSuccess}
 					if:true={isTopupDetails} onsubmit={handleTopupSubmit} id="Topup_Details" class="Topup_Details">
@@ -73,7 +73,7 @@
 
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 							medium-device-size="12" large-device-size="12">
-							<div class="slds-var-m-top_medium slds-align_absolute-center">
+							<div class="slds-align_absolute-center">
 								<lightning-button variant="brand" type="submit" label="Save" id="topup-btn">
 								</lightning-button>
 								<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
@@ -124,9 +124,9 @@
 
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 							medium-device-size="12" large-device-size="12">
-							<div class="slds-var-m-top_medium slds-float_right">
-								<lightning-button variant="brand" type="submit" label="Save" id="collateral-btn1">
-								</lightning-button>
+
+							<lightning-button variant="brand" type="submit" label="Save" id="collateral-btn1">
+							</lightning-button>
 							</div>
 						</lightning-layout-item>
 					</lightning-layout>
@@ -178,9 +178,9 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 							medium-device-size="12" large-device-size="12">
-							<div class="slds-var-m-top_medium slds-float_right">
-								<lightning-button variant="brand" type="submit" label="Save" id="neighbour-btn2">
-								</lightning-button>
+
+							<lightning-button variant="brand" type="submit" label="Save" id="neighbour-btn2">
+							</lightning-button>
 							</div>
 						</lightning-layout-item>
 					</lightning-layout>
@@ -189,9 +189,8 @@
 
 			</lightning-tab>
 		</template>
-		<lightning-tab label="Application details" title="2nd tab extended title" value="Application details"
-			onactive={handleTabActivation}>
-
+		<lightning-tab label="Application details" title="2nd tab extended title" value="Application_details"
+			onactive={handleTabActivation} >
 			<lightning-record-edit-form object-api-name="Application__c" record-id={applicationId}
 				onsuccess={handleApplicationSuccess} if:true={isApplicationdetails} onsubmit={handleApplicationSubmit}
 				id="appdetail">
@@ -237,9 +236,9 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="appdetail-btn3">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="appdetail-btn3">
+						</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
@@ -307,7 +306,7 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 						medium-device-size="4" large-device-size="2">
-						<lightning-input-field field-name="Risk_Document__c" variant="label-stacked">
+						<lightning-input-field field-name="Risk_Document__c" variant="label-stacked" required>
 						</lightning-input-field>
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
@@ -318,9 +317,9 @@
 
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="loandetail-btn">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="loandetail-btn">
+						</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
@@ -401,9 +400,9 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 							medium-device-size="12" large-device-size="12">
-							<div class="slds-var-m-top_medium slds-float_right">
-								<lightning-button variant="brand" type="submit" label="Save" id="Tranche-btn">
-								</lightning-button>
+							<div class="slds-align_absolute-center">
+							<lightning-button variant="brand" type="submit" label="Save" id="Tranche-btn">
+							</lightning-button>
 							</div>
 						</lightning-layout-item>
 					</lightning-layout>
@@ -426,7 +425,7 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 						medium-device-size="4" large-device-size="2">
-						<lightning-input-field field-name="Insurance_Premium__c" variant="label-stacked" 
+						<lightning-input-field field-name="Insurance_Premium__c" variant="label-stacked"
 							value={insuranceamount} onchange={handleChange}>
 						</lightning-input-field>
 					</lightning-layout-item>
@@ -449,9 +448,9 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="loanamt-btn8">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="loanamt-btn8">
+						</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
@@ -509,9 +508,9 @@
 					</template>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="neighbour-btn6">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="neighbour-btn6">
+						</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
@@ -577,9 +576,9 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="Disbursement-btn7">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="Disbursement-btn7">
+						</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
@@ -631,12 +630,14 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 						medium-device-size="4" large-device-size="3">
-						<lightning-input-field field-name="Transaction_DBR__c" variant="label-stacked" value={transcDBR} disabled="true">
+						<lightning-input-field field-name="Transaction_DBR__c" variant="label-stacked" value={transcDBR}
+							disabled="true">
 						</lightning-input-field>
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 						medium-device-size="4" large-device-size="3">
-						<lightning-input-field field-name="Combined_DBR__c" variant="label-stacked" value={combinedDBR} disabled="true">
+						<lightning-input-field field-name="Combined_DBR__c" variant="label-stacked" value={combinedDBR}
+							disabled="true">
 						</lightning-input-field>
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
@@ -647,9 +648,9 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="eligibility-btn9">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="eligibility-btn9">
+             			</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
@@ -675,7 +676,7 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 						medium-device-size="4" large-device-size="2">
-						<lightning-input-field field-name="DBR_PC__c" variant="label-stacked"  value={dbrScore}>
+						<lightning-input-field field-name="DBR_PC__c" variant="label-stacked" value={dbrScore}>
 						</lightning-input-field>
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
@@ -701,9 +702,9 @@
 
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="riskRating-btn10">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="riskRating-btn10">
+						</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>
@@ -722,10 +723,10 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="other-btn">
-							</lightning-button>
-						</div>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="other-btn">
+						</lightning-button>
+						</div>					
 					</lightning-layout-item>
 				</lightning-layout>
 			</lightning-record-edit-form>
@@ -745,9 +746,9 @@
 					</lightning-layout-item>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-float_right">
-							<lightning-button variant="brand" type="submit" label="Save" id="ExSummary-btn12">
-							</lightning-button>
+						<div class="slds-align_absolute-center">
+						<lightning-button variant="brand" type="submit" label="Save" id="ExSummary-btn12">
+						</lightning-button>
 						</div>
 					</lightning-layout-item>
 				</lightning-layout>

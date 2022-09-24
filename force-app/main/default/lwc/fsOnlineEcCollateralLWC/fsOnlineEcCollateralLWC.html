@@ -1,32 +1,47 @@
 <template>
-    <template if:true={isSpinnerActive}>
-        <c-fs-spinner></c-fs-spinner>
-    </template>
-    <div class="slds-scrollable_y" style="max-height:400px;">
-        <template if:true={showEditPage}>
-            <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+	<template if:true={isSpinnerActive}>
+		<c-fs-spinner></c-fs-spinner>
+	</template>
+	<div>
+		<!-- <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
+            if:true={isApplicantDataArrived}>
+            <c-fs-title-section title="Select Applicant"></c-fs-title-section>
+            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
+                <c-generic-data-table-l-w-c data-id="cashflow" result={allApplicantData}
+                    onrowselectionevent={handleRadtioButton}>
+                </c-generic-data-table-l-w-c>
+            </div>
+        </div> -->
+		<template if:true={showEditPage}>
+            <lightning-card  variant="Narrow"  title="Details">
                 <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}>
-                </c-generic-edit-pages-l-w-c><br />
-                <div class="slds-align_absolute-center slds-m-around_x-small">
-                    <lightning-button variant="brand" label="Update" title="save" onclick={handleSave}>
-                    </lightning-button>
-                    <lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
-                    </lightning-button>
-                </div>
-            </div>
-        </template>
-        <template if:true={isPropDataArrived}>
-            <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-                <c-fs-title-section title="List Of Property"></c-fs-title-section>
+			</c-generic-edit-pages-l-w-c><br />
+			<div class="slds-align_absolute-center" slot="footer">
+				<lightning-button variant="brand" label="Update" title="save" onclick={handleSave}>
+				</lightning-button>
+				<lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
+				</lightning-button>
+			</div>
+            </lightning-card>
+		</template>
+        <div class="slds-m-top_small">
+        </div>
+		<template if:true={isPropDataArrived}>
+            <lightning-card  variant="Narrow"  title="List Of Property">
                 <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={rowAction}
-                    onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
-            </div>
-        </template>
-        <!-- Delete Popup -->
-        <template if:true={showDeletePopup}>
-            <c-fs-delete-l-w-c delete-from="Collateral Screen" object-api-name="Property__c"
-                show-modal={showDeletePopup} rec-id={recordIds}>
-            </c-fs-delete-l-w-c>
-        </template>
-    </div>
+					onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
+            </lightning-card>
+            <!-- <c-fs-title-section title="List Of Property"></c-fs-title-section> -->
+				
+			<!-- <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+				
+			</div> -->
+		</template>
+		<!-- Delete Popup -->
+		<template if:true={showDeletePopup}>
+			<c-fs-delete-l-w-c delete-from="Collateral Screen" object-api-name="Property__c"
+				show-modal={showDeletePopup} rec-id={recordIds}>
+			</c-fs-delete-l-w-c>
+		</template>
+	</div>
 </template>

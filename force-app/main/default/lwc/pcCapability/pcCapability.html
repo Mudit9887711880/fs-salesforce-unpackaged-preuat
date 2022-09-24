@@ -1,7 +1,7 @@
 <template>
 
 	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open "
-		style="padding-bottom:20px;" if:true={showAcCharacterForm}>
+		if:true={showAcCharacterForm}>
 		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
 			<span class="slds-truncate" title="Section Title"> &nbsp;&nbsp; {sectiontitle}</span>
 		</h3>
@@ -90,7 +90,7 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 							medium-device-size="6" large-device-size="6">
-							<label class="slds-form-element__label" for="form-element-01">% of income transacted through bank account</label>
+							<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>% of income transacted through bank account</label>
 							<lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
 								disabled={isDisabled} variant="label-hidden" class="capable" required>
 							</lightning-input-field>
@@ -128,7 +128,9 @@
 								</lightning-textarea>
 							</template>
 							<template if:false={isDisabled}>
-								<lightning-input-field field-name="Other_Confirmations__c" variant="label-stacked"
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Other Confirmations</label>
+
+								<lightning-input-field field-name="Other_Confirmations__c" variant="label-hidden"
 									class="capable" required>
 								</lightning-input-field>
 							</template>
@@ -155,7 +157,7 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 							medium-device-size="4" large-device-size="4">
-							<label class="slds-form-element__label" for="form-element-01">% of income transacted through bank account</label>
+							<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>% of income transacted through bank account</label>
 							<lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
 								disabled={isDisabled} variant="label-hidden" class="capable" required>
 							</lightning-input-field>
@@ -190,12 +192,13 @@
 							medium-device-size="4" large-device-size="4">
 							<template if:true={isDisabled}>
 								<lightning-textarea label="Proof of Ownership" name="Proof_of_Ownership__c"
-									value={ownershipProof} disabled="true" variant="label-stacked">
+									value={ownershipProof} disabled="true" variant="label-hidden">
 								</lightning-textarea>
 							</template>
 							<template if:false={isDisabled}>
-								<lightning-input-field field-name="Proof_of_Ownership__c" variant="label-stacked"
-									disabled={isDisabled} class="capable" required>
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Proof of Ownership</label>
+								<lightning-input-field field-name="Proof_of_Ownership__c" variant="label-hidden"
+									disabled={isDisabled} class="capable" style="font-weight:unset" required>
 								</lightning-input-field>
 							</template>
 						</lightning-layout-item>
@@ -207,7 +210,8 @@
 								</lightning-textarea>
 							</template>
 							<template if:false={isDisabled}>
-								<lightning-input-field field-name="FC_Enquiry_with__c" variant="label-stacked"
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>FC Enquiry with</label>
+								<lightning-input-field field-name="FC_Enquiry_with__c" variant="label-hidden"
 									disabled={isDisabled} class="capable" required>
 								</lightning-input-field>
 							</template>
@@ -226,7 +230,7 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 							medium-device-size="4" large-device-size="4">
-							<label class="slds-form-element__label" for="form-element-01">% of income transacted through bank account</label>
+							<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>% of income transacted through bank account</label>
 							<lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
 								disabled={isDisabled} variant="label-hidden" class="capable" required>
 							</lightning-input-field>
@@ -259,7 +263,8 @@
 								</lightning-textarea>
 							</template>
 							<template if:false={isDisabled}>
-								<lightning-input-field field-name="Proof_Remarks__c" variant="label-stacked"
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Proof Remarks</label>
+								<lightning-input-field field-name="Proof_Remarks__c" variant="label-hidden"
 									class="capable" required>
 								</lightning-input-field>
 							</template>
@@ -273,8 +278,10 @@
 								</lightning-textarea>
 							</template>
 							<template if:false={isDisabled}>
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Other Confirmations</label>
+
 								<lightning-input-field field-name="Other_Confirmations_Daily_Wages__c"
-									variant="label-stacked" class="capable" required>
+									variant="label-hidden" class="capable" required>
 								</lightning-input-field>
 							</template>
 						</lightning-layout-item>
@@ -358,7 +365,8 @@
 						</lightning-layout-item>
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 							medium-device-size="4" large-device-size="3">
-							<label class="slds-form-element__label" for="form-element-01">% of income transacted through bank account</label>
+							<label class="slds-form-element__label" for="form-element-01">
+								 <abbr class="slds-required" title="required">* </abbr>% of income transacted through bank account</label>
 							<lightning-input-field field-name="of_income_transacted_through_bank_acco__c"
 								disabled={isDisabled} class="capable" variant="label-hidden" required>
 							</lightning-input-field>
@@ -399,7 +407,10 @@
 								</lightning-textarea>
 							</template>
 							<template if:false={isDisabled}>
-								<lightning-input-field field-name="Proof_Remarks__c" variant="label-stacked"
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Proof Remarks
+									</label>
+
+								<lightning-input-field field-name="Proof_Remarks__c" variant="label-hidden"
 									class="capable" required>
 								</lightning-input-field>
 							</template>
@@ -413,8 +424,10 @@
 								</lightning-textarea>
 							</template>
 							<template if:false={isDisabled}>
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Other Confirmations</label>
+	
 								<lightning-input-field field-name="Other_Confirmations_Daily_Wages__c"
-									variant="label-stacked" class="capable" required>
+									variant="label-hidden" class="capable" required>
 								</lightning-input-field>
 							</template>
 						</lightning-layout-item>
@@ -503,7 +516,9 @@
 									</lightning-textarea>
 								</template>
 								<template if:false={isDisabled}>
-									<lightning-input-field field-name="Other_Confirmations__c" variant="label-stacked"
+									<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Other Confirmations</label>
+
+									<lightning-input-field field-name="Other_Confirmations__c" variant="label-hidden"
 										class="capable" required>
 									</lightning-input-field>
 								</template>
@@ -828,7 +843,7 @@
 					</template>
 					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 						medium-device-size="12" large-device-size="12">
-						<div class="slds-var-m-top_medium slds-align_absolute-center" if:false={isDisabled}>
+						<div class="slds-align_absolute-center" if:false={isDisabled}>
 							<lightning-button variant="brand" type="submit" label={labelSave} id="capability-btn">
 							</lightning-button>
 							<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
@@ -848,8 +863,7 @@
 	<template if:false={isDisabled}>
 		<!-- Capability Table for PC--->
 		<template if:true={capabilitypcTableData}>
-			<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open "
-				style="padding-bottom:20px;">
+			<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open ">
 				<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
 					<span class="slds-truncate" title="Section Title">&nbsp;&nbsp;  {sectiontitle} - List of Capabilities</span>
 				</h3>

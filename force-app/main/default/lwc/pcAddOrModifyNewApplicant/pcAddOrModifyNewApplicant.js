@@ -41,6 +41,7 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
     @track newappIds;
     @track bureauDocId;
     @track bureauPendingList = [];
+    @track isBureauInitiatedMap = new Map();
     @track accRowAction = [
         {
             type: 'button-icon',
@@ -113,10 +114,11 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
     connectedCallback() {
         console.log('fsCustomerDetailsCalled!!', this.applicationId);
         if (this.applicationId)
-            this.getAccountData(this.applicationId);
+            this.getAccountData(this.applicationId , true);
+        console.log('Bureau Map ####', this.isBureauInitiatedMap);
     }
 
-    @api getAccountData(applicationId) {
+    @api getAccountData(applicationId,param) {
         console.log('get Acc data called!!', applicationId);
         this.isAccDataArrived = false;
         this.bureauPendingList = [];
@@ -142,6 +144,8 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
                     this.template.querySelector('c-fs-loan-applicant-information').getDataTableInfo(JSON.parse(result.strDataTableData));
                 for (var i in temp) {
                     var dataResult = temp[i];
+                    if(param == true)
+                    this.isBureauInitiatedMap.set( dataResult['Id'],false);
                     console.log('Loan App Id ', dataResult['Id']);
                     if (!this.loanAppIdList.includes(dataResult['Id'])) {
                         this.loanAppIdList.push(dataResult['Id']);
@@ -265,13 +269,14 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
             }
         }
         else if (event.detail.ActionName === 'validate') {
-            if (isKYCVerified == 'false') {
+            if (isKYCVerified == false) {
                 this.isSpinnerActive = true;
                 kycAPICallout({ loanAppId: this.loanAppId })
                     .then(result => {
                         if (result != undefined && result != '' && result != null) {
                             if (result === 'Success') {
                                 this.showToast('Success', 'Success', 'KYC Validate Sucessfully!!');
+                                this.getAccountData(this.applicationId,false);
                             }
                             else {
                                 this.showToast('Error', 'Error', 'KYC Validate Failed!!');
@@ -292,21 +297,33 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
             }
         }
         else if (event.detail.ActionName === 'bureau_initiate') {
-            if (isBureauVerified === 'false') {
+            console.log('isBureau Verified', isBureauVerified);
+            if (isBureauVerified == 'false') {
+                console.log('Before ###', this.isBureauInitiatedMap);
                 this.isSpinnerActive = true;
                 console.log('this.loan app Id', this.loanAppId);
-
-                let loanAppList = [];
-                loanAppList.push(this.loanAppId);
-                doHighmarkCallout({ listOfLoanApp: loanAppList }).then(result => {
-                    console.log('bureau highmark Result>>>>> ', result);
-                    this.showToast('Success', 'success', 'Bureau Initiated Successfully!!');
-                    this.isSpinnerActive = false;
-                })
-                    .catch(err => {
-                        console.log('bureau highmark error>>>>> ', err);
-                        this.isSpinnerActive = false;
+                if (this.isBureauInitiatedMap.get(this.loanAppId) == false) {
+                    let loanAppList = [];
+                    loanAppList.push(this.loanAppId);
+                    doHighmarkCallout({ listOfLoanApp: loanAppList }).then(result => {
+                        console.log('bureau highmark Result>>>>> ', result);
+                        this.showToast('Success', 'success', 'Bureau Initiated Successfully!!');
+                        this.getAccountData(this.applicationId,false);
+                        setTimeout(() => {
+                            this.isSpinnerActive = false;
+                        }, 900);
+                        this.isBureauInitiatedMap.set(this.loanAppId, true);
+                        console.log('AFter ###', this.isBureauInitiatedMap);
                     })
+                        .catch(err => {
+                            console.log('bureau highmark error>>>>> ', err);
+                            this.isSpinnerActive = false;
+                        })
+                }
+                else {
+                    this.getAccountData(this.applicationId,false);
+                    this.isSpinnerActive = false;
+                }
             }
             else {
                 this.showToast('Error', 'error', 'Bureau Already Verified');
@@ -338,7 +355,7 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
     handlemodalactions(event) {
         this.showDeletePopup = false;
         if (event.detail === true)
-            this.getAccountData(this.applicationId);
+            this.getAccountData(this.applicationId,false);
     }
 
     /* Child Custom Event Handler */
@@ -354,7 +371,7 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
     handleApplicationId(event) {
         console.log('App Id Get EVENT ', event.detail);
         this.applicationId = event.detail;
-        this.getAccountData(this.applicationId);
+        this.getAccountData(this.applicationId,false);
         var sendAppId = new CustomEvent('getapplicationid', {
             detail: this.applicationId
         });
@@ -416,7 +433,7 @@ export default class FsCustomerDetails extends NavigationMixin(LightningElement)
     reloadDataTable(event) {
         if (event.detail) {
             this.isSpinnerActive = false;
-            this.getAccountData(this.applicationId);
+            this.getAccountData(this.applicationId,false);
         }
     }
 

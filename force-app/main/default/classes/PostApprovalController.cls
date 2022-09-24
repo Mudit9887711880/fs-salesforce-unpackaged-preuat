@@ -17,7 +17,7 @@ public class PostApprovalController {
             List<Verification__c> verList = [SELECT 
                                              Id, Application__c, Status__c, Application__r.Stage__c, Owner.Name, RecordType.Name,Submission_Date__c,
                                              Application__r.Total_Amount_Recommended_PcAc__c, LastModifiedDate,  Application__r.AC_Decision__c,  Application__r.PC_Decision__c, 
-                                             Application__r.PC_Remarks__c, Application__r.AC_Remarks__c, Application__r.PC_Submisson_Date__c, Application__r.AC_Submission_Date__c
+                                             Application__r.PC_Remarks__c, Application__r.AC_Remarks__c, Application__r.PC_Submission_Date__c, Application__r.AC_Submission_Date__c
                                              FROM 
                                              Verification__c 
                                              WHERE Application__c =: applicationId 
@@ -36,7 +36,7 @@ public class PostApprovalController {
                         wrapper.stage = 'Process Credit';
                         wrapper.decision = verObj.Application__r.PC_Decision__c;
                         wrapper.remarks = verObj.Application__r.PC_Remarks__c;
-                        wrapper.recDate = verObj.Application__r.PC_Submisson_Date__c;
+                        wrapper.recDate = verObj.Application__r.PC_Submission_Date__c;
                     }else if(verObj.RecordType.Name == 'AC'){
                         wrapper.stage = 'Approval Credit';
                         wrapper.decision = verObj.Application__r.AC_Decision__c;

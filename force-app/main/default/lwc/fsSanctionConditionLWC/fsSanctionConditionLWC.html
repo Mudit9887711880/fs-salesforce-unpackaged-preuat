@@ -1,0 +1,105 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="small" if:true={sanctionSpinner}></lightning-spinner>
+	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+		<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+			<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; Sanction Condition</span>
+		</h3>
+		<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+		</div>
+
+		<!-- Add Row Action Button---->
+		<lightning-button variant="brand" label="Add Row" id="Add-Action-btn" onclick={handleAddow}
+			class="slds-m-left_x-small slds-m-bottom_large">
+		</lightning-button>
+
+		<div class="slds-m-around_x-small slds-table--header-fixed_container" style="overflow:initial">			
+				<table
+					class="slds-table slds-table_cell-buffer slds-table_striped slds-p-around_large slds-table--header-fixed slds-table_fixed-layout"
+					aria-labelledby="element-with-table-label other-element-with-table-label ">
+					<thead>
+						<tr style="font-size:inherit;">
+							<th class="slds-size_1-of-12 " scope="col">
+								<div class="slds-cell-fixed slds-m-right_small" title="Serial Number">
+									<b>Sr No.</b>
+								</div>
+							</th>
+							<th class="slds-size_3-of-12 " scope="col">
+								<div class="slds-cell-fixed slds-m-left_x-small" title="Sanction Condition">
+									<b>Sanction Condition</b>
+								</div>
+							</th>
+							<th class="slds-size_3-of-12 " scope="col">
+								<div class="slds-cell-fixed slds-m-left_x-small" title="Print In Sanction Letter">
+									<b>Print In Sanction Letter</b>
+								</div>
+							</th>
+							<th class="slds-size_3-of-12 " scope="col">
+								<div class="slds-cell-fixed slds-m-left_x-small" title="Remarks">
+									<b>Remarks</b>
+								</div>
+							</th>
+							<th class="slds-size_2-of-12 " scope="col">
+								<div class="slds-cell-fixed slds-m-left_small" title="Action">
+									<b>Action</b>
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template iterator:sanction={sanctionConditionData}>
+							<tr key={sanction.value.Id} class="slds-hint-parent">
+								<td>
+									{sanction.value.SrNo}
+								</td>
+								<td>
+									<lightning-combobox variant="label-hidden" name="Sanction Condition"
+										class="Sanction" label="Sanction COndition" style="overflow:initial"
+										value={sanction.value.sanctionCondition} dropdown-alignment="auto"
+										data-index={sanction.index} options={sanctionOptions} onchange={handleChange}
+										required="true">
+									</lightning-combobox>
+								</td>
+								<td>
+									<lightning-combobox variant="label-hidden" name="Print_In_Sanction_Letter"
+										dropdown-alignment="auto" label="Print In Sanction Letter"  style="overflow:initial"
+										value={sanction.value.printInSanctionLetter} data-index={sanction.index}
+										options={printInSanctionValues} onchange={handleChange} required="true">
+									</lightning-combobox>
+								</td>
+								<td>
+									<lightning-textarea label="Remarks" name="remarks" variant="label-hidden"
+										data-index={sanction.index} value={sanction.value.remarks}
+										onchange={handleChange} max-length="1000" required="true">
+									</lightning-textarea>
+								</td>
+								<td> 
+									<template if:true={sanction.value.isPCSanction}>
+										<lightning-button-icon icon-name="utility:delete" variant="border-filled"
+											size="large" alternative-text="delete" onclick={handleDeleteRow}
+											data-id={sanction.value.Id} class="slds-m-left_small"
+											data-srno={sanction.value.SrNo}  data-index={sanction.index}>
+										</lightning-button-icon>
+									</template>
+									<template if:true={isACUser}>
+										<template if:false={sanction.value.isPCSanction}>
+											<lightning-button-icon icon-name="utility:delete" variant="border-filled"
+												size="large" alternative-text="delete" onclick={handleDeleteRow}
+												data-id={sanction.value.Id} class="slds-m-left_small"
+												data-srno={sanction.value.SrNo} data-index={sanction.index}>
+											</lightning-button-icon>
+										</template>
+									</template>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+		</div>
+
+		<div class="slds-var-m-top_medium slds-align_absolute-center ">
+			<lightning-button variant="brand" type="submit" label="Save" id="Sanction-btn" onclick={handleSanction}
+				disabled={isDisabled}>
+			</lightning-button>
+		</div>
+	</div>
+</template>

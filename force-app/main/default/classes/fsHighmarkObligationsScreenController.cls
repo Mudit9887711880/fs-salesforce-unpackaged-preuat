@@ -52,7 +52,7 @@ public with sharing class fsHighmarkObligationsScreenController {
 
 		Boolean flag = false;
 		if (bureauHighmarkIdSet.size() > 0) {
-			for (Bureau_Highmark__c bureauObj: [SELECT Id, Loan_Applicant__r.Customer_Information__r.Name, Highmark_Score__c, Loan_Applicant__c, (SELECT Id, Type_of_Loan__c, Loan_Amt__c, O_S__c, Overdue_Amt__c, Obligations__c, Type__c, Ownership__c,
+			for (Bureau_Highmark__c bureauObj: [SELECT Id, Loan_Applicant__r.Customer_Information__r.Name, Highmark_Score__c, Loan_Applicant__c, (SELECT Id, Type_of_Loan__c,Account_Status__c,Repayment_Tenure__c,Credit_Guarantor__c, Loan_Amt__c, O_S__c, Overdue_Amt__c, Obligations__c, Type__c, Ownership__c,
 					Current_DPD__c, Max_DPD__c, To_be_considerd_for_DBR__c, Remarks__c, Loan_Applicant__c, Bureau_Highmark__c FROM AccountsSummaries__r WHERE RecordTypeId =:loanDetailRecordTypeId) FROM Bureau_Highmark__c WHERE Id IN: bureauHighmarkIdSet]) {
 				if (bureauObj.Loan_Applicant__c != null) {
 					bureauMap.put(bureauObj.Loan_Applicant__c, bureauObj);
@@ -74,13 +74,33 @@ public with sharing class fsHighmarkObligationsScreenController {
 						wrapObj.ownership = loanObj.Ownership__c;
 						wrapObj.currentDPD = loanObj.Current_DPD__c;
 						wrapObj.maxdpd = loanObj.Max_DPD__c;
-						wrapObj.tobeconsiderValue = (loanObj.To_be_considerd_for_DBR__c != null) ? loanObj.To_be_considerd_for_DBR__c : '';
 						wrapObj.remarks = loanObj.Remarks__c;
 						wrapObj.type = loanObj.Type__c;
-						if (loanObj.Type__c == 'Self')
+						if (loanObj.Type__c == 'Self' )
 							wrapObj.IsSelfType = true;
 						else
 							wrapObj.IsSelfType = false;
+                        if(loanObj.To_be_considerd_for_DBR__c != null)
+                        { wrapObj.tobeconsiderValue = loanObj.To_be_considerd_for_DBR__c;}
+						else
+                        {
+                        if(loanObj.Account_Status__c != null && loanObj.Ownership__c!= null && loanObj.Type_of_Loan__c != null)
+                        { if (loanObj.Account_Status__c!= 'Closed' &&  loanObj.Ownership__c != 'Guarantor'  &&
+                              loanObj.Type_of_Loan__c.toUpperCase()  != 'GOLD LOAN' && loanObj.Type_of_Loan__c.toUpperCase()  != 'LOAN AGAINST BANK DEPOSITS' &&
+                              loanObj.Type_of_Loan__c.toUpperCase()  != 'OVERDRAFT'  && loanObj.Type_of_Loan__c.toUpperCase()  != 'FIVE STAR BUSINESS FINANCE LIMITED' &&
+                              loanObj.Credit_Guarantor__c.toUpperCase()  != 'FIVE STAR BUSINESS FINANCE LIMITED'  &&
+                              loanObj.Type_of_Loan__c.toUpperCase()  != 'EDUCATION LOAN' && loanObj.Type_of_Loan__c.toUpperCase()  != 'CREDIT CARD' 
+                              &&  loanObj.Type_of_Loan__c.toUpperCase()  != 'OVERDRAFT' && ( loanObj.Type_of_Loan__c.toUpperCase()  != 'SHARES' || loanObj.Type_of_Loan__c.toUpperCase()  != 'SECURITIES') &&
+                              loanObj.Type_of_Loan__c.toUpperCase()  != 'BUSINESS LOAN PRIORITY SECTOR  AGRICULTURE' && loanObj.Repayment_Tenure__c != null)
+                        {
+                            wrapObj.tobeconsiderValue = 'Yes';
+                        }
+                         else
+                         {
+                             wrapObj.tobeconsiderValue = 'No';
+                         }}}
+                        
+                        system.debug('to be consider Value ###'+wrapObj.tobeconsiderValue);
 						index++;
 						wrapperList.add(wrapObj);
 						wrapperList[0].HighmarkMap = bureauMap;
@@ -133,7 +153,7 @@ public with sharing class fsHighmarkObligationsScreenController {
 		}
 		List<Bureau_Highmark__c > bureautobeCreate = new List<Bureau_Highmark__c > ();
 		Map<Id, Id> bureauLoanMap = new Map<Id, Id> ();
-		List<Bureau_Highmark__c > bureauList = [SELECT Id, Highmark_Score__c FROM Bureau_Highmark__c WHERE Loan_Applicant__c IN: loanAppSet];
+		List<Bureau_Highmark__c > bureauList = [SELECT Id, Highmark_Score__c,Loan_Applicant__c FROM Bureau_Highmark__c WHERE Loan_Applicant__c IN: loanAppSet];
 		system.debug('bureauList' + bureauList);
 		if (bureauList.size() == 0) {
 			for (String loanObj: loanAppSet) {
@@ -163,9 +183,9 @@ public with sharing class fsHighmarkObligationsScreenController {
 				Loan_Details__c loanObj = new Loan_Details__c();
 				if (wrapObj.IsSelfType) {
                     loanObj.RecordTypeId = loanDetailRecordTypeId;
-					loanObj.Loan_Applicant__c = wrapObj.applicantName;
+					loanObj.Loan_Applicant__c = wrapObj.loanApplicantId;
 					loanObj.Type_of_Loan__c = wrapObj.typeofloan;
-					loanObj.Bureau_Highmark__c = wrapObj.bureauId != null ? wrapObj.bureauId : (bureauLoanMap.containsKey(wrapObj.loanApplicantId) ? bureauLoanMap.get(wrapObj.loanApplicantId) : null);
+					loanObj.Bureau_Highmark__c = (wrapObj.bureauId != null && wrapObj.bureauId != '') ? wrapObj.bureauId : (bureauLoanMap.containsKey(wrapObj.loanApplicantId) ? bureauLoanMap.get(wrapObj.loanApplicantId) : '');
 					loanObj.Type__c = wrapObj.type;
 					loanObj.Ownership__c = wrapObj.ownership;
 					loanObj.Loan_Amt__c = wrapObj.loanAmt;

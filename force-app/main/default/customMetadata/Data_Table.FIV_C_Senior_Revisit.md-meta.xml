@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Default_Fields__c</field>
-        <value xsi:type="xsd:string">Id</value>
+        <value xsi:type="xsd:string">Id,Employee_No_Of_Person_Revisited__c</value>
     </values>
     <values>
         <field>Default_Page_Size__c</field>

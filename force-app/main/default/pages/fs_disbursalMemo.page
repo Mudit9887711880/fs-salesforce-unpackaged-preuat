@@ -25,19 +25,19 @@
             }
 
             .blueColor {
-            	background-color:#8EB4E3;
+                background-color:#8EB4E3;
             }
 
             .grayColor {
-            	background-color:#AEAAAA;
+                background-color:#AEAAAA;
             }
 
             .greenColor {
-            	background-color:#D7E4BD;
+                background-color:#D7E4BD;
             }
 
             .whiteColor {
-            	background-color:white!impotant;
+                background-color:white!impotant;
             }
         </style>
     </head>

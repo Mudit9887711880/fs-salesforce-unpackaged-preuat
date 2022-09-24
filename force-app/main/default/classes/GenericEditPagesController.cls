@@ -24,6 +24,23 @@ public virtual with sharing class GenericEditPagesController {
                     SCW.column_Width_Desktop = Integer.valueOf(child.Column_Width_desktop__c);
                     SCW.column_Width_Mobile = Integer.valueOf(child.Column_Width_mobile__c);
                     SCW.column_Width_Tablet = Integer.valueOf(child.Column_Width_tablet__c);
+
+                    SCW.column_Width_Desktop_Class = 'slds-large-size_'+child.Column_Width_desktop__c+'-of-12';        
+                    SCW.column_Width_Tablet_Class = 'slds-medium-size_'+child.Column_Width_tablet__c+'-of-12';
+                    SCW.column_Width_Mobile_Class = 'slds-small-size_'+child.Column_Width_mobile__c+'-of-12';
+                    SCW.col_Class = 'slds-col slds-size_12-of-12';
+                    if(String.isNotEmpty(SCW.column_Width_Desktop_Class)){
+                        SCW.col_Class += ' '+SCW.column_Width_Desktop_Class;
+                    }
+
+                    if(String.isNotEmpty(SCW.column_Width_Tablet_Class)){
+                        SCW.col_Class += ' '+SCW.column_Width_Tablet_Class;
+                    }
+
+                    if(String.isNotEmpty(SCW.column_Width_Mobile_Class)){
+                        SCW.col_Class += ' '+SCW.column_Width_Mobile_Class;
+                    }
+
                     SCW.field_Sequence = child.Field_Sequence__c;
                     SCW.disabled = child.Disabled__c;
                     SCW.required = child.Required__c;
@@ -182,6 +199,13 @@ public virtual with sharing class GenericEditPagesController {
         @AuraEnabled public Integer column_Width_Desktop;
         @AuraEnabled public Integer column_Width_Mobile;
         @AuraEnabled public Integer column_Width_Tablet;
+
+        @AuraEnabled public String column_Width_Desktop_Class;
+        @AuraEnabled public String column_Width_Mobile_Class;
+        @AuraEnabled public String column_Width_Tablet_Class;
+
+        @AuraEnabled public String col_Class;        
+
         @AuraEnabled public Decimal field_Sequence;
         @AuraEnabled public Boolean disabled;
         @AuraEnabled public Boolean required;

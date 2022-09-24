@@ -1,24 +1,27 @@
 <template>
-    <template if:true={isSpinnerActive}>
-        <c-fs-spinner></c-fs-spinner>
-    </template>
+	<template if:true={isSpinnerActive}>
+		<c-fs-spinner></c-fs-spinner>
+	</template>
 
-    <template if:true={fieldsContent}>
-        <div class="slds-box slds-box_xx-small">
-            <lightning-accordion allow-multiple-sections-open active-section-name="Enter Customer Details">
+	<template if:true={fieldsContent}>
+		<lightning-card variant="Narrow" title="Enter Customer Details">
+			<c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={handleFormValueChange}>
+			</c-generic-edit-pages-l-w-c>
+			<div class="slds-align_absolute-center" if:false={isButtonsHide} slot="footer">
+				<lightning-button variant="brand" label={labelSave} title="Save" onclick={handleSave} disabled={saveDisable}>
+				</lightning-button>
+				<lightning-button label="Cancel" title="Cancel" class=" slds-m-left_x-small" onclick={handleCancel}>
+				</lightning-button>
+			</div>
+		</lightning-card>
+		<!-- <lightning-accordion allow-multiple-sections-open active-section-name="Enter Customer Details">
                 <lightning-accordion-section name="Enter Customer Details" label="Enter Customer Details">
-                    <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={handleFormValueChange}>
-                    </c-generic-edit-pages-l-w-c>
-                    <div class="slds-align_absolute-center slds-m-around_x-small" if:false={isButtonsHide}>
-                        <lightning-button variant="brand" label={labelSave} title="Save" onclick={handleSave}>
-                        </lightning-button>
-                        <lightning-button label="Cancel" title="Cancel" class=" slds-m-left_x-small"
-                            onclick={handleCancel}>
-                        </lightning-button>
-                    </div>
+                    
                 </lightning-accordion-section>
-            </lightning-accordion>
-        </div>
-    </template>
+            </lightning-accordion> -->
+		<!-- <div class="slds-box slds-box_xx-small">
+            
+        </div> -->
+	</template>
 
 </template>

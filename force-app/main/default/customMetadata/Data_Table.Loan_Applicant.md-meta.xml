@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Default_Fields__c</field>
-        <value xsi:type="xsd:string">Id,Constitution__c,Customer_Information__c,Application__c,Income_Considered__c,KYC_ID_Type_1__c,KYC_ID_Type_2__c,KYC_Id_1__c,KYC_Id_2__c,Applicant_Type__c,Customer_Information__r.Gender__c,Customer_Information__r.Father_s_Name__c,Customer_Information__r.Mother_s_Name__c,Married__c,Verification_Type__c,Marital_Status__c,Husband_Wife_s_Name__c,Residence_District__c,Residence_Address_Line_1__c,Residence_Pincode__c,Residence_City__c,Residence_State__c,Customer_Information__r.Salutation</value>
+        <value xsi:type="xsd:string">Id,Constitution__c,Customer_Information__c,Application__c,Income_Considered__c,KYC_ID_Type_1__c,KYC_ID_Type_2__c,KYC_Id_1__c,KYC_Id_2__c,Applicant_Type__c,Customer_Information__r.Gender__c,Customer_Information__r.Father_s_Name__c,Customer_Information__r.Mother_s_Name__c,Married__c,Verification_Type__c,Marital_Status__c,Husband_Wife_s_Name__c,Residence_District__c,Residence_Address_Line_1__c,Residence_Pincode__c,Residence_City__c,Residence_State__c,Customer_Information__r.Salutation,Is_Bureau_Verified__c</value>
     </values>
     <values>
         <field>Default_Page_Size__c</field>

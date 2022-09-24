@@ -225,8 +225,9 @@ export default class PcProperty extends LightningElement {
             }
         }
         else if (this.isBuildingAreaAndValuation && this.sectiontitle == 'PC') {
-            if (this.typeofProperty == 'Vacant Land') {
                 this.updateBuildingValues(this.recordId);
+            if (this.typeofProperty == 'Vacant Land') {
+            
                 this.disabledAll = true;
             }
             else

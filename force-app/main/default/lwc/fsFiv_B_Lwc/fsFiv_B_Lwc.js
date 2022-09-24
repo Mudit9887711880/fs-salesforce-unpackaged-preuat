@@ -16,7 +16,7 @@ import getCashflowData from '@salesforce/apex/FSFivBLwcController.getCashflowDat
 import getCharacterData from '@salesforce/apex/FSFivBLwcController.getCharacterData';
 import generateFIVBPdf from '@salesforce/apex/FSFIVBReportVfController.generateFIVBPdf';
 import getVerificationRecord from '@salesforce/apex/FSFivBLwcController.getVerificationRecord';
-import getRequiredDocuments from '@salesforce/apex/fsGenericUploadDocumentsController.getRequiredDocuments';
+//import getRequiredDocuments from '@salesforce/apex/fsGenericUploadDocumentsController.getRequiredDocuments';
 
 export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
     @api recordId;
@@ -41,6 +41,9 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
     @track localTNI = 0;
     @track localTPV = 0;
     @track propertyData;
+    @track DBR;
+    @track callOnce = true;
+    @api fivBReportGenereated;
     @track rowAction = [
         {
             //label: 'Edit',
@@ -68,6 +71,12 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
         },
     ]
     @track btns = [
+        {
+            name: 'Submit',
+            label: 'Submit',
+            variant: 'brand',
+            class: 'slds-m-left_x-small'
+        },
         {
             name: 'FIV-B Report',
             label: 'FIV-B Report',
@@ -97,17 +106,31 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
         }
     }
     connectedCallback() {
+        this.disablePullToRefresh();
         this.handleGetLastLoginDate();
         console.log('verificationStatus ### ', JSON.stringify(this.verificationStatus));
         this.verificationStatus = this.verificationStatus === 'Completed' ? true : false;
-        console.log('allLoanApplicant #### ', this.listOfApplicants);
-        this.getRequiredDocuments();
-        let tabs = this.template.querySelectorAll('lightning-tab');
+        
+        /*let tabs = this.template.querySelectorAll('lightning-tab');
         console.log('tablength ', tabs.length);
         tabs.forEach(element => {
             element.loadContent();
-        });
+        });*/
     }
+    renderedCallback() {
+    }
+
+    disablePullToRefresh() {
+        const disableRefresh = new CustomEvent("updateScrollSettings", {
+            detail: {
+                isPullToRefreshEnabled: false
+            },
+            bubbles: true,
+            composed: true
+        });
+        this.dispatchEvent(disableRefresh);
+    }
+
     getRequiredDocuments() {
         this.requiredDocuments = [];
         getRequiredDocuments({ stage: 'FIV - B', parentId: this.applicationId })
@@ -123,6 +146,12 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
     handleGetLastLoginDate() {
         getLastLoginDate().then((result) => {
             this.lastLoginDate = result
+            let tabs = this.template.querySelectorAll('lightning-tab');
+            console.log('tablength ', tabs.length);
+            tabs.forEach(element => {
+                element.loadContent();
+            });
+            this.tabName = "Cashflow";
         }).catch((err) => {
             console.log('Error in getLastLoginDate= ', err);
         });
@@ -136,11 +165,11 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
                 var data = JSON.parse(result.strDataTableData);
                 console.log('data #### ', data.length);
                 if (!data.length > 0) {
-                    this.errorMsgs.push('* Create Atleast One Record On Cashflow.');
+                    this.errorMsgs.push('Create Atleast One Record On Cashflow.');
                 } else {
                     data.forEach(element => {
                         if (element.Is_Fiv_B_Completed__c === 'false') {
-                            this.errorMsgs.push('* Fill Required Data On ' + element.Name_LABEL + ' In Cashflow Tab');
+                            this.errorMsgs.push('Fill Required Data On ' + element.Name_LABEL + ' In Cashflow Tab');
                         }
                     });
                 }
@@ -150,11 +179,22 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
             })
     }
     requiredDocumentValidation() {
+        console.log('requiredDocuments ',JSON.stringify(this.requiredDocuments));
         if (this.requiredDocuments.length > 0) {
             this.requiredDocuments.forEach(element => {
-                this.errorMsgs.push('Upload Required Document ' + element + ' In Document Upload Tab');
+                console.log('element #### ',JSON.stringify(element));
+                if(element.documentType === 'Application'){
+                    this.errorMsgs.push('Upload Application Document ' + element.documentName + ' In Document Upload Tab');
+                }
+                if(element.documentType === 'Applicant'){
+                    this.errorMsgs.push('Upload Document ' + element.documentName + ' For '+ element.customerName + ' In Document Upload Tab');
+                }
+                if(element.documentType === 'Asset'){
+                    this.errorMsgs.push('Upload Document ' + element.documentName + ' For '+ element.propertyName + ' In Document Upload Tab');
+                }
+                //this.errorMsgs.push('Upload Required Document ' + element + ' In Document Upload Tab');
             });
-        }
+        } 
     }
 
     getPropertyData() {
@@ -163,11 +203,11 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
                 var data = JSON.parse(result.strDataTableData);
                 this.propertyData = data;
                 if (!data.length > 0) {
-                    this.errorMsgs.push('* Create Atleast One Record On Collateral.');
+                    this.errorMsgs.push('Create Atleast One Record On Collateral.');
                 } else {
                     data.forEach(element => {
                         if (element.Is_Fiv_B_Completed__c === 'false') {
-                            this.errorMsgs.push('* Fill Required Data On ' + element.Name_LABEL + ' In Collateral Tab');
+                            this.errorMsgs.push('Fill Required Data On ' + element.Name_LABEL + ' In Collateral Tab');
                         }
                     });
                 }
@@ -177,6 +217,8 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
             })
     }
     getOnLoadPropertyData() {
+        let netObligation = 0;
+        let grossIncome = 0;
         getPropertyData({ applicationId: this.applicationId })
             .then(result => {
                 console.log('### ', result);
@@ -184,6 +226,9 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
                 tableDT.forEach(element => {
                     if (element.Total_Value__c !== undefined) {
                         this.localTPV += Number(element.Total_Value__c);
+                    }
+                    if(element.Net_Income__c!=undefined){
+                        this.netObligation+=Number(element.Net_Income__c);
                     }
                 });
                 console.log('localTPV Result #### ', this.localTPV);
@@ -197,11 +242,11 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
             .then(result => {
                 var data = JSON.parse(result.strDataTableData);
                 if (!data.length > 0) {
-                    this.errorMsgs.push('* Create Atleast One Record On Character.');
+                    this.errorMsgs.push('Create Atleast One Record On Character.');
                 } else {
                     data.forEach(element => {
                         if (element.Is_Fiv_B_Completed__c === 'false') {
-                            this.errorMsgs.push('* Fill Required Data On ' + element.Name_LABEL + ' In Character Tab');
+                            this.errorMsgs.push('Fill Required Data On ' + element.Name_LABEL + ' In Character Tab');
                         }
                     });
                 }
@@ -216,7 +261,7 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
             .then(result => {
                 console.log('verification #### ', result.BM_Recommended_Amount__c);
                 if (result.BM_Recommended_Amount__c === undefined) {
-                    this.errorMsgs.push('* Fill Required Fields On Summary Tab');
+                    this.errorMsgs.push('Fill Required Fields On Summary Tab');
                 }
             })
             .catch(error => {
@@ -230,6 +275,7 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
             .then(result => {
                 console.log('$$report', result);
                 // this.isSpinnerActive=true;
+                this.fivBReportGenereated = true;
                 this.showToast('Success', 'Success', result);
                 this.isSpinnerActive = false;
             })
@@ -249,20 +295,30 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
             this.generateFIVBPdf();
 
         }
-
+        if (detail === 'Submit') {
+            this.handleSubmit()
+        }
     }
 
     handleSubmit() {
+        // try{
+        //     this.template.querySelector('c-fs-generic-upload-documents').checkAllRequiredDocument();   
+        // }catch(error){
+        //     console.log(error)
+        // }
         this.isSpinnerActive = true;
         this.errorMsgs = [];
         this.getCashflowData();
         this.getPropertyData();
         this.getCharacterData();
-        this.requiredDocumentValidation();
+        //this.requiredDocumentValidation();
         this.getVerificationRecord();
-
+        // setTimeout(() => {
+        //     this.requiredDocumentValidation();
+        // }, 3000);
         setTimeout(() => {
             console.log('this.errorMsgs. #### ', JSON.stringify(this.errorMsgs));
+            if(this.fivBReportGenereated == true){
             if (this.errorMsgs.length > 0) {
                 this.showToast('Error', 'Error', 'Remove All Error');
                 this.isSpinnerActive = false;
@@ -272,6 +328,7 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
                     ref.tabName = 'Error';
                 }, 800);
             } else {
+                
                 const fields = {};
                 fields[ID_FIELD.fieldApiName] = this.recordId;
                 fields[STATUS_FIELD.fieldApiName] = 'Completed'
@@ -291,7 +348,12 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
                     .catch(error => {
                         console.log(error);
                     });
-
+                }
+            }
+                else{
+                    this.showToast('Error', 'Error', 'Please Generate FIV-B Report');
+                    this.isSpinnerActive = false;
+                }
                 /*  generateFIVBPdf({ verificationId: this.recordId, applicationId: this.applicationId })
                     .then(result => {
     
@@ -299,7 +361,7 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
                     .catch(error => {
     
                     })*/
-            }
+            
         }, 3000);
     }
     handleMoveToNextStage() {
@@ -345,7 +407,14 @@ export default class fsFiv_B_Lwc extends NavigationMixin(LightningElement) {
 
             this.getOnLoadPropertyData();
         }
-    }
+        // if (this.tabName === 'Document Upload') {
+        //     try{
+        //     this.template.querySelector('c-fs-generic-upload-documents').getAllRequiredData()
+        //     }catch(error){
+        //         console.log('error :: ',error);
+        //     }
+        // }
+    }   
 
     showToast(title, variant, message) {
         this.dispatchEvent(

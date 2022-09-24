@@ -47,6 +47,8 @@
     <tabs>Custody__c</tabs>
     <tabs>IFSC_Code_Master__c</tabs>
     <tabs>Document_Master__c</tabs>
+    <tabs>Access_Master__c</tabs>
+    <tabs>Allocation__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Sales_UtilityBar</utilityBar>
 </CustomApplication>

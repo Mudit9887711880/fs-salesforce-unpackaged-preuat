@@ -20,7 +20,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ID_FIELD from '@salesforce/schema/Application__c.Id';
 import STAGE_FIELD from '@salesforce/schema/Application__c.Stage__c';
-import SUBMISSION_DATE_FIELD from '@salesforce/schema/Application__c.PC_Submisson_Date__c';
+import SUBMISSION_DATE_FIELD from '@salesforce/schema/Application__c.PC_Submission_Date__c';
 import { updateRecord } from 'lightning/uiRecordApi';
 import PROPERTY_OBJECT from '@salesforce/schema/Property__c';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';

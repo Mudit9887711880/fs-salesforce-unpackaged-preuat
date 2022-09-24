@@ -72,21 +72,20 @@ export default class fsFiv_B_Collateral extends LightningElement {
         })
     }
     getSectionPageContent(recId) {
-        var todayDate = this.todayDate();
         this.isSpinnerActive = true;
         getSectionContent({ recordIds: recId, metaDetaName: 'Fs_FIV_B_Collateral' })
         .then(result => {
             this.fieldsContent = result.data;
             console.log('this.fieldsContent #### ',this.fieldsContent);
-            setTimeout(() => {
+            /*setTimeout(() => {
                 var _tempVar = JSON.parse(this.fieldsContent);
                 for (var i = 0; i < _tempVar[0].fieldsContent.length; i++) {
                     if (_tempVar[0].fieldsContent[i].fieldAPIName === 'Title_Deed_Date__c') {
-                        this.template.querySelector('c-generic-edit-pages-l-w-c').refreshData(JSON.stringify(this.setValues('Title_Deed_Date__c',todayDate))); 
+                        this.template.querySelector('c-generic-edit-pages-l-w-c').refreshData(JSON.stringify(this.setValues('Title_Deed_Date__c',''))); 
                     }
                 }    
             }, 500);
-            
+            */
             this.isSpinnerActive = false;
         })
         .catch(error => {
@@ -123,15 +122,11 @@ export default class fsFiv_B_Collateral extends LightningElement {
             var totalAreaValuation = (Number(tempFieldsContent.previousData['Property__c-Land_Area_Sq_Ft__c']) * Number(tempFieldsContent.previousData['Property__c-Value_per_sq_ft__c'])) + (Number(tempFieldsContent.previousData['Property__c-Building_Area_Sq_Ft__c']) * Number(tempFieldsContent.previousData['Property__c-Building_Value_per_Sq_ft__c']));
             this.template.querySelector('c-generic-edit-pages-l-w-c').refreshData(JSON.stringify(this.setValues('Total_Value__c',totalAreaValuation)));
         }
-        /*if(tempFieldsContent.CurrentFieldAPIName === 'Property__c-Title_Deed_Date__c'){
-            var todayDate = new Date();
-            var titleDeedDate = new Date(tempFieldsContent.previousData['Property__c-Title_Deed_Date__c']);
-            console.log('titleDeedDate.getTime() ',titleDeedDate.getTime());
-            console.log('todayDate.getTime() ',todayDate.getTime());
-            var isValidDate = titleDeedDate.getTime() > todayDate.getTime() ? false : true;
-            console.log('isValidDate ',isValidDate);
-            this.template.querySelector('c-generic-edit-pages-l-w-c').refreshData(JSON.stringify(this.setValues('Title_Deed_Date__c',(isValidDate == true ? tempFieldsContent.previousData['Property__c-Title_Deed_Date__c'] : null)))); 
-        }*/
+        if(tempFieldsContent.CurrentFieldAPIName === 'Property__c-Title_Deed_Date__c'){
+            var _val = tempFieldsContent.CurrentFieldValue;
+            console.log(' _val #### ',_val);
+            this.template.querySelector('c-generic-edit-pages-l-w-c').refreshData(JSON.stringify(this.setValues('Title_Deed_Date__c',_val))); 
+        }
     }
     handleSave() {
         var data = this.template.querySelector("c-generic-edit-pages-l-w-c").handleOnSave();
@@ -145,6 +140,7 @@ export default class fsFiv_B_Collateral extends LightningElement {
                     data[i].Customer_Information__c = this.selectedApplicant[0].Customer_Information__c;
                     data[i].Loan_Applicant__c = this.selectedApplicant[0].Id;
                     data[i].RecordTypeId = this.propertyRecordTypeId;
+                    data[i].Application__c = this.applicationId;
                 }
                 data[i].Is_Fiv_B_Completed__c = true;
                 //delete data[i].Total_Area__c;
@@ -223,10 +219,11 @@ export default class fsFiv_B_Collateral extends LightningElement {
     setValues(_fieldAPIName,_val){
         var _tempVar = JSON.parse(this.fieldsContent);
         for(var i=0; i<_tempVar[0].fieldsContent.length; i++){
-            if(_tempVar[0].fieldsContent[i].fieldAPIName === 'Title_Deed_Date__c'){
-                _tempVar[0].fieldsContent[i].maxDate = _val;
+            if(_tempVar[0].fieldsContent[i].fieldAPIName ===  _fieldAPIName && _tempVar[0].fieldsContent[i].fieldAPIName === 'Title_Deed_Date__c'){
+                _tempVar[0].fieldsContent[i].maxDate = this.todayDate();
+                _tempVar[0].fieldsContent[i].value = _val;
             }
-            else if(_tempVar[0].fieldsContent[i].fieldAPIName === _fieldAPIName){
+            else if(_tempVar[0].fieldsContent[i].fieldAPIName === _fieldAPIName && _tempVar[0].fieldsContent[i].fieldAPIName !== 'Title_Deed_Date__c'){
                 if(_val == 'isRequired-Yes' || _val == 'isRequired-No'){
                     _tempVar[0].fieldsContent[i].fieldAttribute.isRequired = _val == 'isRequired-No' ? true : false;    
                 }else{
@@ -243,5 +240,13 @@ export default class fsFiv_B_Collateral extends LightningElement {
         this.fieldsContent = JSON.stringify(_tempVar);
         return _tempVar;
     }
-    
+    todayDate() {
+        var today = new Date();
+        var dd = today.getDate() - 1;
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var todayDate = yyyy + '-' + mm + '-' + dd;
+        console.log('todayDate ### ', todayDate);
+        return todayDate;
+    }
 }

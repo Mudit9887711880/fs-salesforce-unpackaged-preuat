@@ -23,6 +23,7 @@ export default class FsLoanApplicantInformation extends LightningElement {
     @api loanData;
     @api isButtonsHide;
     @api stageName;
+    @api recTypeName;
 
     @track fieldsContent;
     @track isSpinnerActive = false;
@@ -43,6 +44,7 @@ export default class FsLoanApplicantInformation extends LightningElement {
     @track kycOCRId;
     @track isKYCChanged = false;
     @track pincode;
+    @track saveDisable = false;
 
     connectedCallback() {
         this.isSpinnerActive = true;
@@ -74,6 +76,10 @@ export default class FsLoanApplicantInformation extends LightningElement {
     @api getDataTableInfo(accData) {
         console.log('getDataTableInfo ', accData);
         this.accData = accData;
+    }
+
+    @api getRecordType(recType){
+        this.recTypeName = recType;
     }
 
     @api getOCRTableInfo(ocrTable) {
@@ -144,6 +150,8 @@ export default class FsLoanApplicantInformation extends LightningElement {
             await getMetadtaInfoForm({ recordIds: recId, metaDetaName: 'fs_Prelogin_Customer_Details' })
                 .then(result => {
                     // this.fieldsContent = undefined;
+                    this.saveDisable = false;
+                    console.log('RECTYPE ',this.recTypeName);
                     console.log('1 ', result.data)
                     var rs = JSON.parse(result.data);
                     if (this.ocrTable && !this.isRecordEdit) {
@@ -220,6 +228,11 @@ export default class FsLoanApplicantInformation extends LightningElement {
                             }
                             if (element.fieldAPIName === 'Constitution__c') {
                                 constitution = element.value;
+                            }
+                            if (element.fieldAPIName === 'First_Name__c' && this.recTypeName == '4. Tranche loan') {
+                                setTimeout(() => {
+                                this.disableField(this.fieldcontent);
+                                }, 200);
                             }
                         });
                         setTimeout(() => {
@@ -425,6 +438,18 @@ export default class FsLoanApplicantInformation extends LightningElement {
         genericedit.refreshData((this.fieldsContent));
     }
 
+    disableField(fieldcontent) {
+        var field = JSON.parse(fieldcontent);
+        for (var i = 0; i < field[0].fieldsContent.length; i++) {
+            if (field[0].fieldsContent[i].fieldAPIName === 'First_Name__c') {
+                field[0].fieldsContent[i].disabled = true;
+            }
+        }
+        this.fieldsContent = JSON.stringify(field);
+        let genericedit = this.template.querySelector('c-generic-edit-pages-l-w-c');
+        genericedit.refreshData((this.fieldsContent));
+    }
+
     getAllPincodeDetails(pinId) {
         getPincodeDetails({ pinId: pinId })
             .then(result => {
@@ -489,12 +514,14 @@ export default class FsLoanApplicantInformation extends LightningElement {
                 }
             }
             this.isSpinnerActive = true;
+            this.saveDisable = true;
             if (this.applicationId) {
                 getApplicationName({ applicationId: this.applicationId }).then(result => {
                     this.appName = result;
                 })
                     .catch(error => {
                         console.log(error);
+                        this.saveDisable = false;
                     })
             }
             if (!this.preloginId && !this.isRecordEdit) {
@@ -507,6 +534,7 @@ export default class FsLoanApplicantInformation extends LightningElement {
                     })
                     .catch(error => {
                         console.log('error in inserting prelogin ', error);
+                        this.saveDisable = false;
                     })
                 await insertApplications({ preLogInId: this.preloginId })
                     .then(result => {
@@ -518,6 +546,7 @@ export default class FsLoanApplicantInformation extends LightningElement {
                     })
                     .catch(error => {
                         console.log('error in inserting application ', error);
+                        this.saveDisable = false;
                     })
             }
             var data1 = this.template.querySelector("c-generic-edit-pages-l-w-c").handleOnSave();
@@ -642,11 +671,13 @@ export default class FsLoanApplicantInformation extends LightningElement {
                             console.log(error);
                             this.isSpinnerActive = false;
                             this.showToast('Error', 'Error', JSON.stringify(error));
+                            this.saveDisable = false;
                         });
                 }
             } else {
                 this.isSpinnerActive = false;
                 this.showToast('Error', 'Error', 'Complete Required Field(s).');
+                this.saveDisable = false;
             }
         }
         catch (exe) {
@@ -685,6 +716,7 @@ export default class FsLoanApplicantInformation extends LightningElement {
         }
         this.isRecordEdit = false;
         this.isKYCChanged = false;
+        window.scrollTo(0,0);
     }
 
     showtoastmessage(title, variant, message) {

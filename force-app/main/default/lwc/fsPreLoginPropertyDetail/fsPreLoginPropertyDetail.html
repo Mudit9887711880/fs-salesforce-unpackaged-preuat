@@ -2,34 +2,27 @@
 	<template if:true={isSpinnerActive}>
 		<c-fs-spinner></c-fs-spinner>
 	</template>
-	<!-- <template if:true={isOwnerArrived}>
-		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
-				<span class="slds-truncate" title="Section Title">Select Applicant</span>
-			</h3>
-			<div aria-hidden="false" class="slds-section__content slds-p-left_small">
-				<c-generic-data-table-l-w-c data-id="propOwner" result={loanOwner}
-					onrowselectionevent={handleSelectedApplicant}>
-				</c-generic-data-table-l-w-c>
-			</div>
-		</div>
-	</template> -->
 	<template if:true={showPropEditForm}>
-		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+		<lightning-card  variant="Narrow"  title="Enter Property Details">
 			<c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={handleFormValueChange}>
-				<lightning-layout-item slot="additionalFieldFirst" padding="around-small" size="12"
+				<!-- <lightning-layout-item slot="additionalFieldFirst" padding="around-small" size="12"
 					small-device-size="12" medium-device-size="12" large-device-size="2">
 					<c-fs-multi-select-picklist-l-w-c options={ownerTypeOption} onvaluechange={handleOwnerChange}
 						label="Select Owners">
 					</c-fs-multi-select-picklist-l-w-c>
-				</lightning-layout-item>
-			</c-generic-edit-pages-l-w-c><br />
-			<div class="slds-align_absolute-center slds-m-around_x-small">
+				</lightning-layout-item> -->
+				<div slot="additionalFieldFirst"  class="slds-col slds-size_12-of-12 slds-large-size_2-of-12 slds-medium-size_12-of-12 slds-small-size_12-of-12">
+					<c-fs-multi-select-picklist-l-w-c options={ownerTypeOption} onvaluechange={handleOwnerChange}
+						label="Select Owners">
+					</c-fs-multi-select-picklist-l-w-c>
+				</div>
+			</c-generic-edit-pages-l-w-c>
+			<div class="slds-align_absolute-center slds-m-around_x-small" slot="footer">
 				<lightning-button variant="brand" label={labelSave} title="Save" onclick={handleSave}>
 				</lightning-button>
 				<lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
 				</lightning-button>
 			</div>
-		</div>
+		</lightning-card>
 	</template>
 </template>

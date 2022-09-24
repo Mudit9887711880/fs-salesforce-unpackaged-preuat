@@ -56,6 +56,12 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Account_Summary__c.Bureau_Highmark__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Type__c</fields>
         <fields>Type_of_Loan__c</fields>
         <fields>O_S__c</fields>
@@ -72,6 +78,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
         <relatedList>Personal_Info_Variation__c.Bureau_Highmark__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

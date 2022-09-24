@@ -76,8 +76,14 @@
                 <template if:true={isSalaried}>
                     <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
                         medium-device-size="4" large-device-size="3">
-                        <lightning-input-field field-name="Name_of_the_Employer__c" variant="label-stacked" required>
+                        <lightning-input-field field-name="Name_of_the_Employer__c" variant="label-stacked" required 
+                            style="display: none;" value={employerName}>
                         </lightning-input-field>
+                        <lightning-input type="text" variant="standard" name="Name_of_the_Employer__c"
+                            label="Name Of The Employer" required max-length="100" value={employerName}
+                            pattern="^[a-z  A-Z]*$" onchange={handleFormValue} 
+                            message-when-pattern-mismatch="Only alphabets are allowed.">
+                        </lightning-input>
                     </lightning-layout-item>
                     <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
                         medium-device-size="4" large-device-size="3">
@@ -99,7 +105,7 @@
                     <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
                         medium-device-size="4" large-device-size="3">
                         <lightning-input-field field-name="Total_Work_Experience__c" variant="label-stacked" required
-                            style="display: done;" value={totalWorkExp}>
+                            style="display: none;" value={totalWorkExp}>
                         </lightning-input-field>
                         <lightning-input type="number" step="0.01" value={totalWorkExp} variant="standard"
                             name="Total_Work_Experience__c" onchange={handleFormValue}

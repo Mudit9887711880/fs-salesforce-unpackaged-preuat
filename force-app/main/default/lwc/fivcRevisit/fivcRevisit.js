@@ -11,6 +11,7 @@
 import { LightningElement, api, track } from 'lwc';
 import getRevisitData from '@salesforce/apex/FIV_C_Controller.getRevisitData';
 import deleteRecord from '@salesforce/apex/Utility.deleteRecord';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class FivcRevisit extends LightningElement {
     @api verificationId;
     @api isSeniorVisit = false;
@@ -23,6 +24,10 @@ export default class FivcRevisit extends LightningElement {
     @track showDeleteModal = false;
     @track showOther = false;
     @track comment;
+    @track todayDate;
+    @track revisitDate;
+    @track revisitedPersonId;
+    @track revisitedPersonName;
     @track rowAction = [{
         //label: 'Edit',
         type: 'button-icon',
@@ -54,6 +59,8 @@ export default class FivcRevisit extends LightningElement {
 
     // This Method Is Used To Get All Data At Initial Level(Loading).
     connectedCallback() {
+        console.log('REVIST COMPONENT LOADED');
+        this.todayDate = new Date().toISOString();
         if (this.isSeniorVisit) {
             this.revisitType = 'Senior Revisit';
             this.handleGetRevisitData('FIV_C_Senior_Revisit');
@@ -79,6 +86,22 @@ export default class FivcRevisit extends LightningElement {
             }
         } else if (event.target.fieldName == 'Senior_Person_Comments__c') {
             this.comment = event.target.value;
+        } else if (event.target.name == 'Revisit_date__c') {
+            this.revisitDate = event.target.value;
+        }
+    }
+
+    handleSelect(event) {
+        console.log('User Selected = ', event.detail)
+        if (event.detail.length > 0) {
+            this.revisitedPersonId = event.detail[0].id;
+            this.revisitedPersonName = event.detail[0].subtitle;
+            console.log('this.revisitedPersonId =', this.revisitedPersonId);
+        } else {
+            this.revisitedPersonName = undefined;
+            this.revisitedPersonId = undefined;
+            console.log('input',this.template.querySelector('[data-id="Employee_Name_Of_Person_Revisited__c"]'));
+            this.template.querySelector('[data-id="Employee_Name_Of_Person_Revisited__c"]').reset();
         }
     }
 
@@ -94,8 +117,13 @@ export default class FivcRevisit extends LightningElement {
                 } else if (data.recordData.Senior_Auditor_Confirmation_Visit__c == 'No') {
                     this.showOther = false;
                 }
+                this.revisitedPersonId = data.recordData.Employee_No_Of_Person_Revisited__c;
                 this.comment = data.recordData.Senior_Person_Comments__c;
             } else {
+
+                if (data.recordData.Revisit_date__c) {
+                    this.revisitDate = data.recordData.Revisit_date__c.substring(0, 10);
+                }
                 if (data.recordData.Revisit_done__c == 'Yes') {
                     this.showOther = true;
                 } else if (data.recordData.Revisit_done__c == 'No') {
@@ -105,6 +133,21 @@ export default class FivcRevisit extends LightningElement {
         } else if (data && data.ActionName == 'delete') {
             this.revisitRecordId = data.recordData.Id;
             this.showDeleteModal = true;
+        }
+    }
+
+    onCancel() {
+        this.revisitDate = undefined;
+        this.comment = undefined;
+        this.showOther = false;
+        this.revisitRecordId = undefined;
+        const inputFields = this.template.querySelectorAll(
+            'lightning-input-field'
+        );
+        if (inputFields) {
+            inputFields.forEach(field => {
+                field.reset();
+            });
         }
     }
 
@@ -123,8 +166,18 @@ export default class FivcRevisit extends LightningElement {
 
     // This Method Is Used To Handle Post Submit Actions.
     handleRevisitSubmit(evt) {
-        console.log('handleRevisitSubmit called');
-        this.showTemporaryLoader();
+        console.log('handleRevisitSubmit called= ', this.isSeniorVisit);
+        if (this.isSeniorVisit) {
+            this.showTemporaryLoader();
+        } else {
+            let checkValidity = this.checkInputValidity()
+            console.log('checkValidity =', checkValidity);
+            if (!this.checkInputValidity()) {
+                evt.preventDefault();
+                return;
+            }
+            this.showTemporaryLoader();
+        }
     }
 
     // This Method Is Used To Handle Post Success Actions.
@@ -132,13 +185,17 @@ export default class FivcRevisit extends LightningElement {
         console.log('handleRevisitSuccess');
         this.revisitRecordId = undefined;
         this.revisitTableData = undefined;
+        this.onCancel();
         setTimeout(() => {
+            this.revisitRecordId = undefined;
             this.revisitTableData = undefined;
         }, 200);
         if (this.isSeniorVisit) {
             this.handleGetRevisitData('FIV_C_Senior_Revisit');
+            this.showNotifications('', 'Senior Revisit record is saved successfully', 'success');
         } else {
             this.handleGetRevisitData('FIV_C_Revisit');
+            this.showNotifications('', 'Revisit record is saved successfully', 'success');
         }
     }
 
@@ -155,6 +212,26 @@ export default class FivcRevisit extends LightningElement {
     sendValidationData() {
         this.dispatchEvent(new CustomEvent('revisitvalidation', {
             detail: this.revisitValidation
+        }));
+    }
+
+    // This Method Is Used To Handle Check Validations For Form
+    checkInputValidity() {
+        const allValid = [
+            ...this.template.querySelectorAll('lightning-input'),
+        ].reduce((validSoFar, inputCmp) => {
+            inputCmp.reportValidity();
+            return validSoFar && inputCmp.checkValidity();
+        }, true);
+        return allValid;
+    }
+
+    // This Method Is Used To Show Toast Notification
+    showNotifications(title, msg, variant) {
+        this.dispatchEvent(new ShowToastEvent({
+            title: title,
+            message: msg,
+            variant: variant
         }));
     }
 

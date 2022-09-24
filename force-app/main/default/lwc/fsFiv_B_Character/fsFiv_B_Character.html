@@ -3,16 +3,41 @@
         <c-fs-spinner></c-fs-spinner>
     </template>
     <template if:true={isApplicantEdit}>
-        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+        <lightning-card  variant="Narrow"  title="Select Applicant" >
+            <c-generic-data-table-l-w-c if:true={allApplicantData} data-id="cashflow" result={allApplicantData}
+                    onrowselectionevent={handleRadtioButton}></c-generic-data-table-l-w-c>
+        </lightning-card>
+        <!-- <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
             <c-fs-title-section title="Select Applicant"></c-fs-title-section>
             <div aria-hidden="false" class="slds-section__content slds-p-left_small">
                 <c-generic-data-table-l-w-c if:true={allApplicantData} data-id="cashflow" result={allApplicantData}
                     onrowselectionevent={handleRadtioButton}></c-generic-data-table-l-w-c>
             </div>
-        </div>
+        </div> -->
     </template>
+	<template if:true={fieldsContent}>
+		<div class="slds-m-top_small">
+		</div>
+		<lightning-card variant="Narrow" title="Enter Character Details">
+			<c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}>
+			</c-generic-edit-pages-l-w-c><br />
+			<div class="slds-align_absolute-center slds-m-around_x-small" slot="footer">
+				<lightning-button variant="brand" label="Save" title="Sace" onclick={handleSave}
+					disabled={verificationStatus}>
+				</lightning-button>
+				<lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
+				</lightning-button>
+			</div>
+		</lightning-card>
+	</template>
     <template if:true={tableData}>
-        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+        <div class="slds-m-top_small">
+		</div>
+        <lightning-card  variant="Narrow"  title="List Of Character">
+            <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={rowAction}
+                    onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
+        </lightning-card>
+        <!-- <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
             <div aria-hidden="false" class="slds-section__content slds-p-left_small">
                 <template if:true={fieldsContent}>
                     <c-generic-edit-pages-l-w-c fields-content={fieldsContent} onchanged={changedFromChild}>
@@ -28,7 +53,7 @@
                 <c-generic-data-table-l-w-c data-id="cashflow" result={tableData} btns={rowAction}
                     onselected={handleSelectedApplication}></c-generic-data-table-l-w-c>
             </div>
-        </div>
+        </div> -->
     </template>
     <!-- <template if:true={showDeleteModal}>
         <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01"

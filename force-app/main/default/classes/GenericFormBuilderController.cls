@@ -6,7 +6,7 @@ public virtual with sharing class GenericFormBuilderController {
     public String WHERE_CLAUSE{get;set;}
     public String RECORD_LIMIT{get;set;}    
     public Set<String> IDS_SET{get;set;}
-
+    
     @TestVisible private static final String METADATA_QUERY = 'SELECT Id, DeveloperName, MasterLabel,Extra_Large_Label__c, Column_Width_desktop__c, Column_Width_mobile__c, Column_Width_tablet__c, DataType__c, Disabled__c, Field_API_Name__c, Field_Sequence__c, Generic_Detail_page__c, HelpText__c, Lookup_Object_API_Name__c, Max_Length__c, Min_Length__c, Object_API_Name__c, Pattern_Mismatch_Message__c, Required__c, Section_Label__c, Section_Order__c, Show_On_UI__c, URL_Target_Field_API_Name__c, Validation_Pattern__c FROM Generic_Detail_Page_Content__mdt';
     public static Map<String,List<sObject>> customMetadataRecordsMap = new Map<String,List<sObject>>();
     
@@ -61,6 +61,23 @@ public virtual with sharing class GenericFormBuilderController {
         SCW.column_Width_Desktop = Integer.valueOf(mdt.Column_Width_desktop__c);
         SCW.column_Width_Mobile = Integer.valueOf(mdt.Column_Width_mobile__c);
         SCW.column_Width_Tablet = Integer.valueOf(mdt.Column_Width_tablet__c);
+
+        SCW.column_Width_Desktop_Class = 'slds-large-size_'+mdt.Column_Width_desktop__c+'-of-12';        
+        SCW.column_Width_Tablet_Class = 'slds-medium-size_'+mdt.Column_Width_tablet__c+'-of-12';
+        SCW.column_Width_Mobile_Class = 'slds-small-size_'+mdt.Column_Width_mobile__c+'-of-12';
+        SCW.col_Class = 'slds-col slds-size_12-of-12';
+        if(String.isNotEmpty(SCW.column_Width_Desktop_Class)){
+            SCW.col_Class += ' '+SCW.column_Width_Desktop_Class;
+        }
+
+        if(String.isNotEmpty(SCW.column_Width_Tablet_Class)){
+            SCW.col_Class += ' '+SCW.column_Width_Tablet_Class;
+        }
+
+        if(String.isNotEmpty(SCW.column_Width_Mobile_Class)){
+            SCW.col_Class += ' '+SCW.column_Width_Mobile_Class;
+        }
+
         SCW.objectAPIName = mdt.Object_API_Name__c;
         SCW.validationPattern = mdt.Validation_Pattern__c;
         SCW.validationPatternMismatched = mdt.Pattern_Mismatch_Message__c;
@@ -221,6 +238,13 @@ public virtual with sharing class GenericFormBuilderController {
         @AuraEnabled public Integer column_Width_Desktop;
         @AuraEnabled public Integer column_Width_Mobile;
         @AuraEnabled public Integer column_Width_Tablet;
+
+        @AuraEnabled public String column_Width_Desktop_Class;
+        @AuraEnabled public String column_Width_Mobile_Class;
+        @AuraEnabled public String column_Width_Tablet_Class;
+
+        @AuraEnabled public String col_Class;
+
         @AuraEnabled public String objectAPIName;
         @AuraEnabled public String validationPattern;
 

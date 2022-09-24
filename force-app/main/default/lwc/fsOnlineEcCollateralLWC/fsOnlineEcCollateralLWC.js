@@ -11,6 +11,7 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
 
     @api rowAction;
     @api applicationId;
+
     @track tableData;
     @track isRecordEdited = false;
     @api recordIds;
@@ -114,12 +115,27 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
         }
     }
 
-   changedFromChild(event) {
+    changedFromChild(event) {
         console.log('event details #### ', JSON.stringify(event.detail));
         var tempFieldsContent = event.detail;
         if (tempFieldsContent.CurrentFieldAPIName === 'Property__c-Title_Deed_Date__c') {
-            this.template.querySelector('c-generic-edit-pages-l-w-c').refreshData(JSON.stringify(this.setTitleDeedDateValues('Title_Deed_Date__c')));   
-        
+             var _val = tempFieldsContent.CurrentFieldValue;
+                console.log(' _val #### ',_val);
+            this.template.querySelector('c-generic-edit-pages-l-w-c').refreshData(JSON.stringify(this.setTitleDeedDateValues('Title_Deed_Date__c',_val)));   
+            // var d1 = new Date().toISOString().substr(0, 10)
+            // var d2 = new Date(tempFieldsContent.CurrentFieldValue).toISOString().substr(0, 10);
+            // console.log('date1 ', d1 + ' :: ' + d2);
+            // if (d2 >= d1) {
+            //     console.log('date2 ', d2);
+            //     this.showtoastmessage('Error', 'error', 'Invalid Date, Future Dates Are Not Allowed!!');
+            //     this.closeAction();
+            //     //var dateVal = null;
+            //     let genericedit = this.template.querySelector('c-generic-edit-pages-l-w-c');
+            //     this.fieldsContent = (JSON.stringify(this.setValues('Title_Deed_Date__c', undefined)));
+            //     console.log('this.fieldsContent  ', JSON.parse(this.fieldsContent));
+            //     genericedit.refreshData((this.fieldsContent));
+            //     //
+            // }
         }
         else if (tempFieldsContent.CurrentFieldAPIName === 'Property__c-MS_Pincode__c') {
             console.log('tempFieldsContent.CurrentFieldAPIName ', tempFieldsContent.CurrentFieldValue);
@@ -136,7 +152,6 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
         }
 
     }
-
 
     async handleSave() {
         var data = this.template.querySelector("c-generic-edit-pages-l-w-c").handleOnSave();
@@ -176,6 +191,11 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
                             this.showEditPage = false;
                             this.getAllApplicantMetaData();
                             this.getCollateralDetails();
+                            /* const checkAllRequired = new CustomEvent("checkrequired", {
+                                 detail: true
+                             });
+                             console.log('dispatch event ', checkAllRequired);
+                             this.dispatchEvent(checkAllRequired);*/
                         }
                     })
 
@@ -206,15 +226,7 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
         });
         this.dispatchEvent(selectedEvent);
     }
-    showToast(title, variant, message) {
-        this.dispatchEvent(
-            new ShowToastEvent({
-                title: title,
-                variant: variant,
-                message: message,
-            })
-        );
-    }
+
 
     closeAction() {
         this.dispatchEvent(new CloseActionScreenEvent());
@@ -225,6 +237,11 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
         console.log('::: allLoanApplicant ::: ', JSON.stringify(this.applicationId));
         getCollateralDetails({ applicationId: this.applicationId })
             .then(result => {
+                // if (isRefresh){
+                //     setTimeout(() => {
+                //         this.template.querySelector('c-generic-data-table-l-w-c').init(result);
+                //     }, 200);
+                // }
                 this.tableData = result;
                 this.isPropDataArrived = true;
                 console.log('Tabledata', JSON.stringify(this.tableData));
@@ -256,20 +273,6 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
                 console.log(error);
             })
     }
-
-    setValues(_fieldAPIName, _val) {
-        var _tempVar = JSON.parse(this.fieldsContent);
-        for (var i = 0; i < _tempVar[0].fieldsContent.length; i++) {
-            if (_tempVar[0].fieldsContent[i].fieldAPIName === _fieldAPIName) {
-                if (_tempVar[0].fieldsContent[i].isCheckbox) {
-                    _tempVar[0].fieldsContent[i].checkboxVal = Boolean(_val);
-                } else {
-                    _tempVar[0].fieldsContent[i].value = _val;
-                }
-            }
-        }
-        return _tempVar;
-    }
     todayDate() {
         var today = new Date();
         var dd = today.getDate() - 1;
@@ -279,14 +282,33 @@ export default class FsOnlineEcCollateralLWC extends LightningElement {
         console.log('todayDate ### ', todayDate);
         return todayDate;
     }
-     setTitleDeedDateValues(_fieldAPIName) {
+
+    setValues(_fieldAPIName, _val) {
+        var _tempVar = JSON.parse(this.fieldsContent);
+        for (var i = 0; i < _tempVar[0].fieldsContent.length; i++) {
+
+            if (_tempVar[0].fieldsContent[i].fieldAPIName === _fieldAPIName) {
+                if (_tempVar[0].fieldsContent[i].isCheckbox) {
+                    _tempVar[0].fieldsContent[i].checkboxVal = Boolean(_val);
+                } else {
+                    _tempVar[0].fieldsContent[i].value = _val;
+                }
+            }
+        }
+          this.fieldsContent = JSON.stringify(_tempVar);
+        return _tempVar;
+
+    }
+    setTitleDeedDateValues(_fieldAPIName,_val) {
         var _tempVar = JSON.parse(this.fieldsContent);
         for (var i = 0; i < _tempVar[0].fieldsContent.length; i++) {
             if (_tempVar[0].fieldsContent[i].fieldAPIName === 'Title_Deed_Date__c') {
                 _tempVar[0].fieldsContent[i].maxDate = this.todayDate();
+                 _tempVar[0].fieldsContent[i].value = _val;
 
             }
         }
+        this.fieldsContent = JSON.stringify(_tempVar);
         return _tempVar;
     }
 }

@@ -61,7 +61,7 @@ export default class LegalOpinionLWC extends NavigationMixin(LightningElement) {
         Name: undefined,
         Title_Deed_Date__c: undefined,
         Title_Deed_Number__c: undefined,
-        External_Lawyer__c : undefined
+        External_Lawyer__c: undefined
     }];
 
     @wire(getRecord, { recordId: '$recordId', fields: [NAME, LegalOpinionDate, ExternalLawyer] })
@@ -73,8 +73,8 @@ export default class LegalOpinionLWC extends NavigationMixin(LightningElement) {
                 this.legalOpValidation.dataEntryDone = true;
             }
             if (data.fields.External_Lawyer__c && data.fields.External_Lawyer__c.value) {
-                this.legalOpValidation.isLawyerSelected = true;
-                this.lawyerId = data.fields.External_Lawyer__c.value;
+                // this.legalOpValidation.isLawyerSelected = true;
+                // this.lawyerId = data.fields.External_Lawyer__c.value;
             }
         } else if (error) {
             console.log('error in getting applicationDetails = ', error);
@@ -115,26 +115,34 @@ export default class LegalOpinionLWC extends NavigationMixin(LightningElement) {
     }
 
     handleLegalOpinionSubmit() {
+        console.log('handleLegalOpinionSubmit', this.legalOpValidation.isLawyerSelected, this.legalOpValidation.isLawyerSelected, this.legalOpValidation.dataEntryDone)
         this.errorMsgs = [];
-        if (this.legalOpValidation.isLawyerSelected && this.legalOpValidation.allDocUploaded && this.legalOpValidation.dataEntryDone) {
+        if (this.legalOpValidation.isLawyerSelected && this.legalOpValidation.dataEntryDone) {
+            console.log('move to next stage')
             this.showErrorTab = false;
             this.handleMoveToNextStage();
         } else {
+            console.log('Error part')
             if (!this.legalOpValidation.isLawyerSelected) {
+                console.log('LAWYER MISSING')
                 this.properties.forEach(currentItem => {
-                   if(!currentItem.External_Lawyer__c){
-                       this.errorMsgs.push('No Lawyer is selected for Property '+currentItem.Name+', please select any lawyer.');
-                   }
+                    console.log('PROPERTY LAWYER =',currentItem.External_Lawyer__c)
+                    if (!currentItem.External_Lawyer__c) {
+                        this.errorMsgs.push('No Lawyer is selected for Property ' + currentItem.Name + ', please select any lawyer.');
+                    }
                 });
             }
             if (!this.legalOpValidation.allDocUploaded) {
+                console.log('DOC MISSING')
                 this.errorMsgs.push(REQUIRED_DOC_ERROR_MSG);
             }
             if (!this.legalOpValidation.dataEntryDone) {
+                console.log('dataEntryDone MISSING')
                 this.errorMsgs.push(REQUIRED_FIELD_ERROR_MSG);
             }
             this.showErrorTab = true;
             let ref = this;
+            console.log('this.errorMsgs = ',this.errorMsgs)
             setTimeout(() => {
                 ref.tabName = 'Error';
             }, 300);
@@ -246,7 +254,7 @@ export default class LegalOpinionLWC extends NavigationMixin(LightningElement) {
             console.log('Error in getLastLoginDate= ', err);
         });
     }
-    handleFromValue(event){
+    handleFromValue(event) {
         let foundelement = this.properties.find(ele => ele.Id == event.target.dataset.id);
         foundelement.External_Lawyer__c = event.target.value
         console.log(foundelement.External_Lawyer__c);
@@ -254,16 +262,18 @@ export default class LegalOpinionLWC extends NavigationMixin(LightningElement) {
     }
     getApplicationProperty() {
         this.isSpinner = false;
+        this.legalOpValidation.isLawyerSelected = true;
         getProperties({ appId: this.recordId })
             .then(result => {
                 this.properties = JSON.parse(JSON.stringify(result));
                 this.isSpinner = true;
                 this.properties.forEach(currentItem => {
-                    if(!currentItem.External_Lawyer__c){
+                    console.log('currentItem.External_Lawyer__c= ',currentItem.External_Lawyer__c)
+                    if (!currentItem.External_Lawyer__c) {
                         this.legalOpValidation.isLawyerSelected = false;
                     }
                 });
-                if(this.properties.length>0){
+                if (this.properties.length > 0) {
                     this.isVisible = true;
                 }
             })
@@ -285,25 +295,25 @@ export default class LegalOpinionLWC extends NavigationMixin(LightningElement) {
             .catch(error => {
             });
     }
-    saveProperty(){
+    saveProperty() {
         var isInputsCorrect = [...this.template.querySelectorAll('lightning-combobox')]
             .reduce((validSoFar, inputField) => {
                 inputField.reportValidity();
                 return validSoFar && inputField.checkValidity();
             }, true);
-        if(isInputsCorrect){
+        if (isInputsCorrect) {
             this.legalOpValidation.isLawyerSelected = true;
             this.updateAllProperties();
         }
     }
-    updateAllProperties(){
-        updateProperties({propertyList : JSON.stringify(this.properties)})
-        .then(result => {
-            console.log('Property Updated Succcessfully');
-            this.showNotifications('Success', 'Property updated successfully', 'success');
-        })
-        .catch(error => {
+    updateAllProperties() {
+        updateProperties({ propertyList: JSON.stringify(this.properties) })
+            .then(result => {
+                console.log('Property Updated Succcessfully');
+                this.showNotifications('Success', 'Property updated successfully', 'success');
+            })
+            .catch(error => {
 
-        })
+            })
     }
 }

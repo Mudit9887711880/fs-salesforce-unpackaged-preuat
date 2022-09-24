@@ -3,7 +3,7 @@
   @group             : TechMatrix Consulting
   @description       : 
   @created on        : 12-07-2022
-  @last modified on  : 05-09-2022
+  @last modified on  : 15-09-2022
   @last modified by  : Karan Singh Soni
 -->
 <template>
@@ -90,18 +90,26 @@
                     oncheckbeforesubmit={handleBeforeSubmitCustmEvt} onreloadapplicationdata={reloadApplicationData}>
                 </c-fiv_-disb_-user-details>
             </lightning-tab>
-            <!-- Karan : 12-09-2022 : Commented as this comp is not ready as per Yogendra
             <lightning-tab label="Document" value="Document" onactive={handleTabActivation}>
-                <div class="slds-scrollable_y" style="max-height:400px;">
-                    <c-fs-generic-upload-documents parent-id={objApptWrapperData.objAppt.Id} stage-name={stageName}
+                <div class="slds-scrollable_y" style="max-height:400px;" if:true={objApptWrapperData}>
+
+                    <!-- deprecated from 14-09-2022 
+                        c-fs-generic-upload-documents parent-id={objApptWrapperData.objAppt.Id} stage-name={stageName}
                         is-agreement-execution=false onrequireddocument={handleRequiredDocument}>
+                    </c-fs-generic-upload-documents -->
+
+                    <c-fs-generic-upload-documents stage-name={stageName} record-type-id={acRecordId}
+                        application-id={objApptWrapperData.objAppt.Id} onrequireddocument={handleRequiredDocument}>
                     </c-fs-generic-upload-documents>
+
                 </div>
+
             </lightning-tab>
-            -->
+
             <lightning-tab label="Deviation Details" value="Deviation Details" onactive={handleTabActivation}>
                 <div class="slds-box slds-box_xx-small">
-                    <c-pc-deviation application-id={objApptWrapperData.objAppt.Id}></c-pc-deviation>
+                    <c-pc-deviation application-id={objApptWrapperData.objAppt.Id} stage-name={stageName}>
+                    </c-pc-deviation>
                 </div>
             </lightning-tab>
             <lightning-tab label="Amort schedule" value="Amort schedule" onactive={handleTabActivation}>

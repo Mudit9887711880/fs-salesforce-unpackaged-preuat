@@ -8,14 +8,14 @@
     
     <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" 
                       targetFields="{!v.verificationRecord}" targetError="{!v.recordError}" 
-                      recordUpdated="{!c.getVerificationRecord}" fields="Id, RecordTypeId, Status__c, RecordType.Name, Application__c, Application__r.Staff_Loan__c, Application__r.Risk_Document__c, Application__r.Pre_Login__r.Owner.Name" />
+                      recordUpdated="{!c.getVerificationRecord}" fields="Id, RecordTypeId, Status__c, RecordType.Name, Application__c,If_FIVB_Report_Generated__c, Application__r.Staff_Loan__c, Application__r.Risk_Document__c, Application__r.Pre_Login__r.Owner.Name" />
     <aura:if isTrue="{!and(v.recordTypeDetails.Name == 'FIV - B', v.allApplicantData, v.allLoanApplicant)}">
-        <c:fsFiv_B_Lwc recordId="{!v.recordId}" allApplicantData="{!v.allApplicantData}" allLoanApplicant="{!v.allLoanApplicant}" applicationId="{!v.verificationRecord.Application__c}" staffLoan="{!v.verificationRecord.Application__r.Staff_Loan__c}" riskDocument="{!v.verificationRecord.Application__r.Risk_Document__c}" preLoginOwnerName="{!v.verificationRecord.Application__r.Pre_Login__r.Owner.Name}" verificationStatus="{!v.verificationRecord.Status__c}"></c:fsFiv_B_Lwc>
+        <c:fsFiv_B_Lwc recordId="{!v.recordId}" allApplicantData="{!v.allApplicantData}" allLoanApplicant="{!v.allLoanApplicant}" applicationId="{!v.verificationRecord.Application__c}" staffLoan="{!v.verificationRecord.Application__r.Staff_Loan__c}" riskDocument="{!v.verificationRecord.Application__r.Risk_Document__c}" fivBReportGenereated="{!v.verificationRecord.If_FIVB_Report_Generated__c}" preLoginOwnerName="{!v.verificationRecord.Application__r.Pre_Login__r.Owner.Name}" verificationStatus="{!v.verificationRecord.Status__c}"></c:fsFiv_B_Lwc>
     </aura:if>
     <aura:if isTrue="{!v.recordTypeDetails.Name == 'FIV - C'}">
-        <c:fiv_c_LWC recordId="{!v.recordId}"></c:fiv_c_LWC>
+        <c:fiv_c_LWC recordId="{!v.recordId}" applicationId="{!v.verificationRecord.Application__c}"></c:fiv_c_LWC>
     </aura:if> 
     <aura:if isTrue="{!v.recordTypeDetails.Name == 'Online EC'}">
-        <c:fsOnlineEcLWC recordId="{!v.recordId}" applicationId="{!v.verificationRecord.Application__c}"></c:fsOnlineEcLWC>
+        <c:fsOnlineEcLWC recordId="{!v.recordId}" applicationId="{!v.verificationRecord.Application__c}" recordTypeId="{!v.verificationRecord.RecordTypeId}"></c:fsOnlineEcLWC>
     </aura:if> 
 </aura:component>

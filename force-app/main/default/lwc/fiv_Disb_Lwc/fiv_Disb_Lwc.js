@@ -7,6 +7,7 @@ import getLastLoginDate from '@salesforce/apex/DatabaseUtililty.getLastLoginDate
 import getParentAndRelatedData from '@salesforce/apex/Fiv_Disb_LwcController.getParentAndRelatedData';
 import allocateUser from '@salesforce/apex/Fiv_Disb_LwcController.allocateUser';
 import updateApptStageFromDA from '@salesforce/apex/Fiv_Disb_LwcController.updateApptStageFromDA';
+import chechExistDeviaitons from '@salesforce/apex/Fiv_Disb_LwcController.chechExistDeviaitons';
 //import getRequiredDocuments from '@salesforce/apex/fsGenericUploadDocumentsController.getRequiredDocuments'; CH01
 //------------------------------------------------------------------------------
 import ID_FIELD from '@salesforce/schema/Application__c.Id';
@@ -41,6 +42,7 @@ export default class Fiv_Disb_Lwc extends NavigationMixin(LightningElement) {
     showapprovalRemarks = false;
     @track btns = [];
     @track arrReqDocNames = [];
+    acRecordId = '';
     //--------------------------------------------------------------------------
     connectedCallback() {
 
@@ -52,6 +54,7 @@ export default class Fiv_Disb_Lwc extends NavigationMixin(LightningElement) {
         this.slcdApprvalOpt = '';
         this.approvalRemarks = '';
         this.arrReqDocNames = [];
+        this.acRecordId = '';
         this.showapprovalRemarks = false;
         this.getParentAndRelatedData(true);
         this.handleGetLastLoginDate();
@@ -90,6 +93,12 @@ export default class Fiv_Disb_Lwc extends NavigationMixin(LightningElement) {
                 if (this.objApptWrapperData.mapExtraParams.hasOwnProperty('apptPrimaryApplicantName')) {
                     this.apptPrimaryApplicantName = this.objApptWrapperData.mapExtraParams.apptPrimaryApplicantName;
                 }
+
+                if (this.objApptWrapperData.mapExtraParams.hasOwnProperty('acRecordId')) {
+
+                    this.acRecordId = this.objApptWrapperData.mapExtraParams.acRecordId;
+                }
+
                 //this.apptPrimaryApplicantName = this.objApptWrapperData.
                 //if (isTabFuncInvoke) { //once the data is load it should reload current data 
                 //  this['get' + this.currentTabName]();//this will call method dynamically as per tabName
@@ -297,12 +306,53 @@ export default class Fiv_Disb_Lwc extends NavigationMixin(LightningElement) {
             })
     }
 
-    handleCheckRequiredDocs() {
+    /*handleCheckRequiredDocs() {
         if (this.arrReqDocNames.length > 0) {
             this.arrReqDocNames.forEach(element => {
                 this.arrValidateErrorMsgs.push('Upload Required Document ' + element + ' In Document Upload Tab');
             });
         }
+    }*/
+
+    requiredDocumentValidation() {
+        console.log('arrReqDocNames', JSON.stringify(this.arrReqDocNames));
+        if (this.arrReqDocNames.length > 0) {
+            this.arrReqDocNames.forEach(element => {
+                console.log('element #### ', JSON.stringify(element));
+                if (element.documentType === 'Application') {
+                    this.arrValidateErrorMsgs.push('Upload Application Document ' + element.documentName + ' In Document Upload Tab');
+                }
+                if (element.documentType === 'Applicant') {
+                    this.arrValidateErrorMsgs.push('Upload Document ' + element.documentName + ' For ' + element.customerName + ' In Document Upload Tab');
+                }
+                if (element.documentType === 'Asset') {
+                    this.arrValidateErrorMsgs.push('Upload Document ' + element.documentName + ' For ' + element.propertyName + ' In Document Upload Tab');
+                }
+            });
+        }
+    }
+    //Karan Singh : Added : 17-09-2022 : Deviation validation only for DA
+    checkExistDeviation() {
+
+        if (this.stageName !== 'Disbursal Author') {
+            return;
+        }
+        console.log('chechExistDeviaitons Stage - this.stageName ' + this.objApptWrapperData.objAppt.Id);
+        chechExistDeviaitons({ apptId: this.objApptWrapperData.objAppt.Id })
+            .then(result => {
+                console.log('::: chechExistDeviaitons result ::: ', JSON.stringify(result));
+
+                if (result.statusCode !== 200) {
+
+                    this.objValidateChildComps['allApprvDeviaiton'] = false;
+                    this.arrValidateErrorMsgs.push(result.message);
+                }
+            })
+            .catch(error => {
+                this.showNotification('Error', error.body.message, 'error');
+                console.log('error on checkExistDeviation save -> ' + JSON.stringify(error.body.message));
+            })
+
     }
     handleRequiredDocument(event) {
         console.log('required doc list :: ', JSON.stringify(event.detail));
@@ -335,6 +385,15 @@ export default class Fiv_Disb_Lwc extends NavigationMixin(LightningElement) {
                     //this.handleCheckRequiredDocs(); //CH01
 
                 }
+                try {
+                    this.template.querySelector('c-fs-generic-upload-documents').checkAllRequiredDocument();
+                    this.checkExistDeviation();
+                } catch (error) {
+                    console.log(error)
+                }
+                setTimeout(() => {
+                    this.requiredDocumentValidation();
+                }, 3000);
             } catch (error) {
 
                 console.log('error handleDisbSubmit - > ', error);

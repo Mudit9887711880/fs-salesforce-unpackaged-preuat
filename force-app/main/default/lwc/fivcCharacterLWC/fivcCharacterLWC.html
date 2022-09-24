@@ -451,12 +451,9 @@
 			</template>
 		</lightning-tab>
 		<lightning-tab label="Repayment Behavior" value="repayment" onactive={handleTabActivation}>
-			<!-- <c-fs-highmark-obligations-screen if:true={customerList} application-id={applicationId}
+			<c-fs-highmark-obligations-screen if:true={customerList} application-id={applicationId}
 				customer-options={customerList} verification-id={verificationId} stage-name="FIV - C">
-			</c-fs-highmark-obligations-screen> -->
-			<c-character-record-create if:true={customerList} application-id={applicationId}
-				customer-options={customerList} stage-name="FIV-C">
-			</c-character-record-create>
+			</c-fs-highmark-obligations-screen>
 		</lightning-tab>
 	</lightning-tabset>
 </template>

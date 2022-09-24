@@ -1,14 +1,20 @@
 import { api, LightningElement, track, wire} from 'lwc';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import PROPERTY_OBJECT from '@salesforce/schema/Property__c';
+import BusinessDate from '@salesforce/label/c.Business_Date';
+import getLastLoginDate from '@salesforce/apex/DatabaseUtililty.getLastLoginDate';
+//import { getRecord } from 'lightning/uiRecordApi';
 import clonePropertyNew from '@salesforce/apex/FsPreloginController.clonePropertyNew';
 import createVerificationRecords from '@salesforce/apex/VerificationRecordCreator.createVerificationRecords';
 import getRecordTypeName from '@salesforce/apex/FsPreloginController.getRecordTypeName';
+//import getApplicationId from '@salesforce/apex/FsPreloginController.getApplicationId';
+//import getRecordTypeId from '@salesforce/apex/DatabaseUtililty.getRecordTypeId';
 import doHighmarkCallout from '@salesforce/apex/BureauHighmartAPICalloutController.doHighmarkCallout';
-import getRecordTypeId from '@salesforce/apex/DatabaseUtililty.getRecordTypeId';
 import { NavigationMixin } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { CurrentPageReference } from 'lightning/navigation';
-import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
+//import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
 
 export default class FsPreLogin extends NavigationMixin(LightningElement) {
 
@@ -25,6 +31,8 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
     @api isKYCVerified = false;
     @api isIncomeConsidered = false;
 
+    @track todaysDate = BusinessDate;
+    @track lastLoginDate;
     @track showErrorTab = false;
     @track errorMsgs = [];
     @track activeError = 'step-1';
@@ -43,46 +51,43 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
     @track isLoading = false;
     @track buttonClick = false;
     @track propRecTypeId;
+    @track dedupeDetails;
+    @track requiredDocuments = [];
+    @track button = [
+        {
+            name: 'Submit',
+            label: 'Submit',
+            variant: 'brand',
+            class: 'slds-m-left_x-small'
+        }
+    ];
     loadAll = false;
 
     @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
         if (currentPageReference) {
             console.log('pageReferenece @@ ',currentPageReference.state.recordTypeId);
-            getRecordTypeName({recTypeId : currentPageReference.state.recordTypeId})
-            .then(result =>{
-                if(result){
-                    this.recTypeName = result;
-                    console.log('recName ',this.recTypeName);
-                    if(result === '2. Re-login'){
-                        this.isRelogin = true;
-                        this.isNewlogin = false;
-                    }
-                    else if(result === '3. Top-up loan'){
-                        this.isTopup = true;
-                        this.isNewlogin = false;
-                    }
-                    else if(result === '1. New login')
-                        this.isNewlogin = true;
-                    else
-                        this.isTranche = true;
-                }
-            })
-            .catch(error =>{
-                console.log('error getting recTypeName ',error);
-            })
+            if(currentPageReference.state.recordTypeId){
+                console.log('getRecTypeName');
+                this.getRecTypeName(currentPageReference.state.recordTypeId);
+            }
+        }
+    }
+
+    @wire(getObjectInfo, { objectApiName: PROPERTY_OBJECT })
+    getRecordType({ data, error }) {
+        if (data) {
+            console.log(':: data :: ',JSON.stringify(data));
+            const rtis = data.recordTypeInfos;
+            this.propRecTypeId = Object.keys(rtis).find(rti => rtis[rti].name === 'Pre Login Property Detail');
+        } else if (error) {
+            
         }
     }
 
     connectedCallback() {
-        getRecordTypeId({sObjectName : 'Property__c',recordTypeName : 'Pre Login Property Detail'})
-        .then(result =>{
-            if(result)
-            this.propRecTypeId = result;
-        })
-        .catch(error=>{
-            console.log(error);
-        })
+        this.disablePullToRefresh();
+        this.handleGetLastLoginDate();
         console.log('Values ', this.applicationId, this.recordId, this.recordTypeId, this.preAppId, this.preAppName);
         this.applicationId = this.preAppId;
         if(this.recordId)
@@ -101,14 +106,80 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
             });
             console.log('currentTab= ', currentTab);
             this.activeError = currentTab;
-            if(tabs && tabs.length == 5){
+            if(this.recTypeName === '1. New login'){
+                if(tabs && tabs.length == 6){
                 this.loadAll = true;
+            }
+            }
+            else{
+                if(tabs && tabs.length == 7){
+                this.loadAll = true;
+            }
             }
         }
     }
 
+    disablePullToRefresh() {
+        const disableRefresh = new CustomEvent("updateScrollSettings", {
+            detail: {
+                isPullToRefreshEnabled: false
+            },
+            bubbles: true,
+            composed: true
+        });
+        this.dispatchEvent(disableRefresh);
+    }
+
+    handleGetLastLoginDate() {
+        getLastLoginDate().then((result) => {
+            console.log('getLastLoginDate= ', result);
+            this.lastLoginDate = result
+        }).catch((err) => {
+            console.log('Error in getLastLoginDate= ', err);
+        });
+    }
+
+    getdedupedetails(event) {
+        let result = event.detail;
+        console.log('dedupe result ',JSON.parse(result));
+        var dedupeResult = JSON.parse(result);
+        if(dedupeResult.message != null)
+            this.dedupeDetails = JSON.parse(result);
+        console.log('dedupeDetails= ',this.dedupeDetails);
+        setTimeout(() => {
+            this.handlePreloginSubmit();
+        }, 3000);
+    }
+
+    getRecTypeName(recTypeId){
+         getRecordTypeName({recTypeId : recTypeId})
+            .then(result =>{
+                if(result){
+                    this.recTypeName = result;
+                    console.log('recName ',this.recTypeName);
+                    if(result === '2. Re-login'){
+                        this.isRelogin = true;
+                        this.isNewlogin = false;
+                    }
+                    else if(result === '3. Top-up loan'){
+                        this.isTopup = true;
+                        this.isNewlogin = false;
+                    }
+                    else if(result === '1. New login')
+                        this.isNewlogin = true;
+                    else{
+                        this.isTranche = true;
+                        this.isNewlogin = false;
+                    }
+                }
+            })
+            .catch(error =>{
+                console.log('error getting recTypeName ',error);
+            })
+    }
+
     showNewLogin(event){
-        console.log('shownewlogin ',event.detail);
+        console.log('shownewlogin prelogin screen ',event.detail);
         this.isNewlogin = event.detail.isNewLogin;
         this.applicationId = event.detail.newAppId;
         this.preloginId = event.detail.preloginId;
@@ -157,6 +228,13 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
                     //     this.template.querySelector('c-fs-pre-login-application-detail').getSectionPageContent('');
                 }
             }, 300);
+        }
+        if (tab === 'DocumentUpload') {
+            // try{
+            // this.template.querySelector('c-fs-generic-upload-documents').getAllRequiredData()
+            // }catch(error){
+            //     console.log('error :: ',error);
+            // }
         }
     }
 
@@ -232,15 +310,78 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
         });
     }
 
-     async handlePreloginSubmit() {
+    tempsubmit() {
+        this.errorMsgs = [];
+        this.isLoading = true;
+        this.dedupeDetails = undefined;
+        if (this.applicationId) {
+            try {
+                //remove after doc upload deployment
+                this.isLoading = false;
+                this.handlePreloginSubmit();
+                //var dedupeResult = this.template.querySelector('c-fsdedupe-details-lwc').submitDedupeData();
+                //this.template.querySelector('c-fs-generic-upload-documents').checkAllRequiredDocument();
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        else {
+            this.isLoading = false;
+            this.handlePreloginSubmit();
+        }
+    }
+
+    handleRequiredDocument(event){
+        console.log('required doc list :: ',JSON.stringify(event.detail));
+        this.requiredDocuments = event.detail;
+        this.requiredDocumentValidation();
+    }
+
+    requiredDocumentValidation() {
+        console.log('requiredDocuments ',JSON.stringify(this.requiredDocuments));
+        if (this.requiredDocuments.length > 0) {
+            this.requiredDocuments.forEach(element => {
+                console.log('element #### ',JSON.stringify(element));
+                if(element.documentType === 'Application'){
+                    this.errorMsgs.push('Upload Application Document ' + element.documentName + ' In Document Upload Tab');
+                }
+                if(element.documentType === 'Applicant'){
+                    this.errorMsgs.push('Upload Document ' + element.documentName + ' For '+ element.customerName + ' In Document Upload Tab');
+                }
+                if(element.documentType === 'Asset'){
+                    this.errorMsgs.push('Upload Document ' + element.documentName + ' For '+ element.propertyName + ' In Document Upload Tab');
+                }
+            });
+        } 
+        //remove after dedupe deploy
+        setTimeout(() => {
+            this.handlePreloginSubmit();
+        }, 3000);
+    }
+
+    rowselectionevent(event){
+        this.tempsubmit();
+    }
+
+    async handlePreloginSubmit() {
+        this.isLoading = false;
         if(this.buttonClick){
             return;
         }
+        // try{
+        //     this.template.querySelector('c-fs-generic-upload-documents').checkAllRequiredDocument();   
+        // }catch(error){
+        //     console.log(error)
+        // }
+        // setTimeout(() => {
+        //     this.requiredDocumentValidation();
+        // }, 3000);
         this.buttonClick = true;
         let reference = this;
-        reference.errorMsgs = [];
+        //reference.errorMsgs = [];
         console.log('this.hasPrimaryApplicant', reference.hasPrimaryApplicant, reference.hasPrimaryOwner, reference.isMobileVerified, reference.isKYCVerified, reference.isIncomeConsidered, reference.applicationId && reference.hasAllFields);
         console.log('this.receiptWrapper.lengthOfDirectRec',this.receiptWrapper.lengthOfDirectRec);
+        //&& !this.dedupeDetails && this.requiredDocuments.length == 0  && 
         if (reference.hasPrimaryApplicant && reference.hasPrimaryOwner && reference.isMobileVerified && reference.isKYCVerified && reference.isIncomeConsidered && reference.applicationId && (this.receiptWrapper.pendingReceiptList.length == 0 && (this.receiptWrapper.hasReceipt == true || this.receiptWrapper.lengthOfDirectRec == 0)) && this.receiptWrapper.existingFeeCodeOption.length == 0) {
             reference.showErrorTab = false;
             this.isLoading = true;
@@ -259,7 +400,8 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
                     this.isLoading = false;
                     console.log('result ', error);
                 })
-            await createVerificationRecords({ applicationId: reference.applicationId })
+            console.log('Create Verfication Record');
+                await createVerificationRecords({ applicationId: reference.applicationId })
                 .then(result => {
                     this.isLoading = false;
                     console.log(result + 'from verification');
@@ -268,6 +410,20 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
                     this.isLoading = false;
                     console.log(error + 'from verification');
                 })
+            //alert(this.recTypeName);
+            // ! uncomment after deploying relogin-trance
+            // if(this.recTypeName == '1. New login'){
+            //     console.log('Create Verfication Record');
+            //     await createVerificationRecords({ applicationId: reference.applicationId })
+            //     .then(result => {
+            //         this.isLoading = false;
+            //         console.log(result + 'from verification');
+            //     })
+            //     .catch(error => {
+            //         this.isLoading = false;
+            //         console.log(error + 'from verification');
+            //     })
+            // }
             reference.showToast('Success', 'Success', 'Loan Submitted Successfully from Pre-Login to Verification Stage!!');
             reference.closeAction();
             reference.redirectApplication();
@@ -279,6 +435,15 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
                 reference.errorMsgs.push('Application ID does not exist, Add Customer in "Customer Detail" tab');
             }
             else{
+
+                console.log('dedupe is >>',this.dedupeDetails);
+                 if (this.dedupeDetails) {
+                     if(this.dedupeDetails.errorFlag)
+                     console.log('dedupe message is >>',this.dedupeDetails.message);
+                    reference.errorMsgs.push(this.dedupeDetails.message);
+                }
+                
+
                 if (!reference.hasPrimaryApplicant) {
                     reference.errorMsgs.push('Add An Primary Applicant In Customer Details Tab');
                 }
@@ -306,7 +471,8 @@ export default class FsPreLogin extends NavigationMixin(LightningElement) {
                         reference.receiptWrapper.pendingReceiptList.forEach(element => {
                             if(element.RecStatus != 'Rejected'){
                           //  reference.errorMsgs.push('Approve Receipts ' + reference.receiptWrapper.pendingReceiptList.join() + ' In Fee Details Tab');
-                          reference.errorMsgs.push('Get Approve ' + element.RecStatus + ' Receipts ' +  element.name + ' In Fee Details Tab');
+                          //reference.errorMsgs.push('Get Approve ' + element.RecStatus + ' Receipts ' +  element.name + ' In Fee Details Tab');
+                          reference.errorMsgs.push(element.name + '- Kindly Approve/Reject the submitted receipt in Fee Details');
                             }
                     });
                         

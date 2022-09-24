@@ -1,8 +1,7 @@
 <template>
 	<lightning-spinner alternative-text="Loading" size="small" if:true={childSpinner}></lightning-spinner>
 	<template if:true={showFIVCCharacter}>
-		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
-			style="padding-bottom:20px;">
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
 			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
 				<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; FIV-C</span>
 			</h3>
@@ -18,8 +17,7 @@
 
 
 	<template if:true={showCharacter}>
-		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
-			style="padding-bottom:20px;">
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
 			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
 				<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; {calledFrom}</span>
 			</h3>
@@ -38,7 +36,7 @@
 								medium-device-size="2" large-device-size="2">
 								<lightning-combobox name="Customer Info" label="Select Applicant"
 									placeholder="Select an Option" options={customerOptions} value={customerName}
-									onchange={handleCustomerChange} class="familycombopc">
+									onchange={handleCustomerChange} class="familycombopc" required="true">
 								</lightning-combobox>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
@@ -103,7 +101,7 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
+								<div class="slds-align_absolute-center">
 									<lightning-button variant="brand" type="submit" label={labelSave} id="Family-btn">
 									</lightning-button>
 									<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
@@ -111,12 +109,11 @@
 									</lightning-button>
 								</div>
 							</lightning-layout-item>
-
 						</lightning-layout>
 					</lightning-record-edit-form>
 				</template>
 				<template if:true={ispcNeighbour}>
-					<lightning-record-edit-form object-api-name="Character__c"  record-id={charRecordId}
+					<lightning-record-edit-form object-api-name="Character__c" record-id={charRecordId}
 						record-type-id={characterRecordTypeId} onsuccess={handleFamilySuccess}
 						onsubmit={handleCharacterSubmit}>
 						<lightning-layout multiple-rows>
@@ -128,15 +125,14 @@
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="4"
 								medium-device-size="4" large-device-size="4">
 								<lightning-combobox name="Customer Info" label="Select Applicant"
-									placeholder="Select an Option" options={customerOptions}
-									onchange={handleCustomerChange} value={customerName}
-									class="neighbourcombopc">
+									placeholder="Select an Option" options={customerOptions} required="true"
+									onchange={handleCustomerChange} value={customerName} class="neighbourcombopc">
 								</lightning-combobox>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 								medium-device-size="6" large-device-size="6" style="display:none;">
 								<lightning-input-field field-name="Loan_Applicant__c" variant="label-stacked"
-									value={neighbourautoData.Applicant_Name} disabled={isDisabled}>
+									value={loanApplicantId} disabled={isDisabled}>
 								</lightning-input-field>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
@@ -172,20 +168,20 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
-									<lightning-button variant="brand" type="submit" label={labelSave} id="neighbour-btn">
+								<div class="slds-align_absolute-center">
+									<lightning-button variant="brand" type="submit" label={labelSave}
+										id="neighbour-btn">
 									</lightning-button>
 									<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
 										onclick={handleReset}>
 									</lightning-button>
 								</div>
 							</lightning-layout-item>
-
 						</lightning-layout>
 					</lightning-record-edit-form>
 				</template>
 				<template if:true={ispcAffiliation}>
-					<lightning-record-edit-form object-api-name="Character__c"  record-id={charRecordId}
+					<lightning-record-edit-form object-api-name="Character__c" record-id={charRecordId}
 						record-type-id={characterRecordTypeId} onsuccess={handleFamilySuccess}
 						onsubmit={handleCharacterSubmit}>
 						<div style="display:none;">
@@ -194,19 +190,18 @@
 							</lightning-input-field>
 						</div>
 						<lightning-layout multiple-rows>
-
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3">
 								<lightning-combobox name="Customer Info" label="Select Applicant"
-									placeholder="Select an Option" options={customerOptions}
-									onchange={handleCustomerChange} data-id="applicantCombo"
-									value={customerName} class="affcombopc">
+									placeholder="Select an Option" options={customerOptions} required="true"
+									onchange={handleCustomerChange} data-id="applicantCombo" value={customerName}
+									class="affcombopc">
 								</lightning-combobox>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 								medium-device-size="6" large-device-size="6" style="display:none;">
 								<lightning-input-field field-name="Loan_Applicant__c" variant="label-stacked"
-									value={affautoData.Applicant_Name} disabled={isDisabled}>
+									value={loanApplicantId} disabled={isDisabled}>
 								</lightning-input-field>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
@@ -235,8 +230,9 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
-									<lightning-button variant="brand" type="submit" label={labelSave} id="affiliation-btn">
+								<div class="slds-align_absolute-center">
+									<lightning-button variant="brand" type="submit" label={labelSave}
+										id="affiliation-btn">
 									</lightning-button>
 									<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
 										onclick={handleReset}>
@@ -249,7 +245,7 @@
 				</template>
 
 				<template if:true={ispcLivingStandard}>
-					<lightning-record-edit-form object-api-name="Character__c"  record-id={charRecordId}
+					<lightning-record-edit-form object-api-name="Character__c" record-id={charRecordId}
 						record-type-id={characterRecordTypeId} onsuccess={handleFamilySuccess}
 						onsubmit={handleCharacterSubmit}>
 						<div style="display:none;">
@@ -258,19 +254,18 @@
 							</lightning-input-field>
 						</div>
 						<lightning-layout multiple-rows>
-
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3">
 								<lightning-combobox name="Customer Info" label="Select Applicant"
-									placeholder="Select an Option" options={customerOptions}
-									onchange={handleCustomerChange} data-id="applicantCombo"
-									value={customerName} class="livingcombopc">
+									placeholder="Select an Option" options={customerOptions} required="true"
+									onchange={handleCustomerChange} data-id="applicantCombo" value={customerName}
+									class="livingcombopc">
 								</lightning-combobox>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
 								medium-device-size="6" large-device-size="6" style="display:none;">
 								<lightning-input-field field-name="Loan_Applicant__c" variant="label-stacked"
-									value={livingAutoData.Applicant_Name} disabled={isDisabled}>
+									value={loanApplicantId} disabled={isDisabled}>
 								</lightning-input-field>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
@@ -291,7 +286,6 @@
 									value="Living Standard Detail">
 								</lightning-input-field>
 							</lightning-layout-item>
-
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3">
 								<lightning-input-field field-name="Lifestyle__c" variant="label-stacked"
@@ -301,26 +295,31 @@
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3" if:true={showSecondLifestyle}>
 								<lightning-input-field field-name="Lifestyle_Loan_Amount_2L_to_4_Lakhs__c"
-									variant="label-stacked" value={livingAutoData.SecondLifestyle}  class="character" required>
+									variant="label-stacked" value={livingAutoData.SecondLifestyle} class="character"
+									required>
 								</lightning-input-field>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3" if:true={showThirdLifestyle}>
 								<lightning-input-field field-name="Lifestyle_Loan_Amount_4L_to_8_Lakhs__c"
-									variant="label-stacked" value={livingAutoData.ThirdLifeStyle}  class="character" required>
+									variant="label-stacked" value={livingAutoData.ThirdLifeStyle} class="character"
+									required>
 								</lightning-input-field>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3" if:true={showFourthLifestyle}>
 								<lightning-input-field field-name="Lifestyle_Loan_Amount_8Lakhs__c"
-									variant="label-stacked" value={livingAutoData.FourthLifeStyle}  class="character" required>
+									variant="label-stacked" value={livingAutoData.FourthLifeStyle} class="character"
+									required>
 								</lightning-input-field>
 							</lightning-layout-item>
-
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3">
-								<lightning-input-field field-name="Consumer_Durables__c" variant="label-stacked"
-									disabled={isDisabled} value={livingAutoData.Consumer_Durables} required class="character">
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Consumer Durables</label>
+
+								<lightning-input-field field-name="Consumer_Durables__c" variant="label-hidden"
+									disabled={isDisabled} value={livingAutoData.Consumer_Durables} required
+									class="character">
 								</lightning-input-field>
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
@@ -331,7 +330,7 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
+								<div class="slds-align_absolute-center">
 									<lightning-button variant="brand" type="submit" label={labelSave} id="living-btn">
 									</lightning-button>
 									<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
@@ -349,8 +348,7 @@
 
 	<!---FOR AC ------->
 	<template if:true={showacCharacter}>
-		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open"
-			style="padding-bottom:20px;">
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
 			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
 				<span class="slds-truncate" title="Section Title">&nbsp;&nbsp; {calledFrom}</span>
 			</h3>
@@ -359,12 +357,10 @@
 					<lightning-record-edit-form object-api-name="Character__c" record-id={charRecordId}
 						record-type-id={characterRecordTypeId} onsuccess={handleacFamilySuccess}
 						onsubmit={handleacCharacterSubmit}>
-
 						<lightning-layout multiple-rows>
-
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="2"
 								medium-device-size="2" large-device-size="2">
-								<lightning-combobox name="Customer Info" label="Select Applicant"
+								<lightning-combobox name="Customer Info" label="Select Applicant" required="true"
 									placeholder="Select an Option" options={customerOptions} value={customerName}
 									onchange={handleCustomerChange} class="familycomboac">
 								</lightning-combobox>
@@ -425,7 +421,7 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
+								<div class="slds-align_absolute-center">
 									<lightning-button variant="brand" type="submit" label="Update" id="Family-ac-btn">
 									</lightning-button>
 									<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
@@ -433,7 +429,6 @@
 									</lightning-button>
 								</div>
 							</lightning-layout-item>
-
 						</lightning-layout>
 					</lightning-record-edit-form>
 				</template>
@@ -443,10 +438,9 @@
 						record-type-id={characterRecordTypeId} onsuccess={handleacFamilySuccess}
 						onsubmit={handleacCharacterSubmit}>
 						<lightning-layout multiple-rows>
-
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="4"
 								medium-device-size="4" large-device-size="4">
-								<lightning-combobox name="Customer Info" label="Select Applicant"
+								<lightning-combobox name="Customer Info" label="Select Applicant" required="true"
 									placeholder="Select an Option" options={customerOptions}
 									onchange={handleCustomerChange} class="neighbourcomboac" value={customerName}>
 								</lightning-combobox>
@@ -484,7 +478,7 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
+								<div class="slds-align_absolute-center">
 									<lightning-button variant="brand" type="submit" label="Update"
 										id="neighbour-ac-btn">
 									</lightning-button>
@@ -493,7 +487,6 @@
 									</lightning-button>
 								</div>
 							</lightning-layout-item>
-
 						</lightning-layout>
 					</lightning-record-edit-form>
 				</template>
@@ -503,11 +496,10 @@
 						record-type-id={characterRecordTypeId} onsuccess={handleacFamilySuccess}
 						onsubmit={handleacCharacterSubmit}>
 						<lightning-layout multiple-rows>
-
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3">
 								<lightning-combobox name="Customer Info" label="Select Applicant"
-									placeholder="Select an Option" options={customerOptions}
+									placeholder="Select an Option" options={customerOptions} required="true"
 									onchange={handleCustomerChange} class="affcomboac" value={customerName}>
 								</lightning-combobox>
 							</lightning-layout-item>
@@ -537,7 +529,7 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
+								<div class="slds-align_absolute-center">
 									<lightning-button variant="brand" type="submit" label="Update"
 										id="affiliation-ac-btn">
 									</lightning-button>
@@ -560,7 +552,7 @@
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3">
 								<lightning-combobox name="Customer Info" label="Select Applicant"
-									placeholder="Select an Option" options={customerOptions}
+									placeholder="Select an Option" options={customerOptions} required="true"
 									onchange={handleCustomerChange} class="livingcomboac" value={customerName}>
 								</lightning-combobox>
 							</lightning-layout-item>
@@ -609,7 +601,9 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="3"
 								medium-device-size="3" large-device-size="3">
-								<lightning-input-field field-name="Consumer_Durables__c" variant="label-stacked"
+								<label class="slds-form-element__label" for="form-element-01"> <abbr class="slds-required" title="required">* </abbr>Consumer Durables</label>
+
+								<lightning-input-field field-name="Consumer_Durables__c" variant="label-hidden"
 									value={livingAutoData.Consumer_Durables} required class="character">
 								</lightning-input-field>
 							</lightning-layout-item>
@@ -621,7 +615,7 @@
 							</lightning-layout-item>
 							<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 								medium-device-size="12" large-device-size="12">
-								<div class="slds-var-m-top_medium slds-align_absolute-center">
+								<div class="slds-align_absolute-center">
 									<lightning-button variant="brand" type="submit" label="Update" id="living-ac-btn">
 									</lightning-button>
 									<lightning-button class="slds-m-left_small" variant="neutral" label="Cancel"
@@ -638,7 +632,7 @@
 	</template>
 	<!-- Delete Popup -->
 	<template if:true={showDeleteModal}>
-		<c-fs-delete-l-w-c delete-from="Process Credit" object-api-name="Character__c" rec-id={charRecordId}
+		<c-fs-delete-l-w-c delete-from="Process Credit" object-api-name="Character__c" rec-id={idtobedeleted}
 			show-modal={showDeleteModal} onmodaldelete={handlemodalactions} onmodalcancel={handlemodalactions}>
 		</c-fs-delete-l-w-c>
 	</template>

@@ -155,8 +155,9 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Loan Details</label>
     <nameField>
+        <displayFormat>LD-{0000}</displayFormat>
         <label>Accounts Summary Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Loan Details</pluralLabel>
     <searchLayouts></searchLayouts>

@@ -11,19 +11,37 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Application</fullName>
+                <default>false</default>
+                <label>Application</label>
+            </value>
+            <value>
+                <fullName>Applicant</fullName>
+                <default>false</default>
+                <label>Applicant</label>
+            </value>
+            <value>
+                <fullName>Asset</fullName>
+                <default>false</default>
+                <label>Asset</label>
+            </value>
+            <value>
+                <fullName>Bureao Report</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bureao Report</label>
+            </value>
+            <value>
                 <fullName>FIV-B Report</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>FIV-B Report</label>
             </value>
             <value>
                 <fullName>FIV-C Report</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>FIV-C Report</label>
-            </value>
-            <value>
-                <fullName>Bureao Report</fullName>
-                <default>false</default>
-                <label>Bureao Report</label>
             </value>
         </valueSetDefinition>
     </valueSet>

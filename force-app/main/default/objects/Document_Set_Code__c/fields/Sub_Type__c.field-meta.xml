@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>All</fullName>
+                <default>false</default>
+                <label>All</label>
+            </value>
+            <value>
                 <fullName>Flat</fullName>
                 <default>false</default>
                 <label>Flat</label>

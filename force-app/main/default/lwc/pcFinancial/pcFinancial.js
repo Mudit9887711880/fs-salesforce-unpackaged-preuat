@@ -154,6 +154,7 @@ export default class PcFinancial extends LightningElement {
     @track lTVScore;
     @track dbrScore;
     @track hmScore;
+    @api tabName = 'Application_details';
 
 
     @wire(getRecord, { recordId: '$applicationId', fields: APPLICATION_FIELDS })
@@ -251,8 +252,11 @@ export default class PcFinancial extends LightningElement {
             //     this.insuranceamount = data.fields.Insurance_Premium__c.value;
             // else
             //     this.insuranceamount = 0;
-            if (data.fields.Group_Valuation__c.value != null && data.fields.Group_Valuation__c.value != undefined)
-                this.groupValuationValue = data.fields.Group_Valuation__c.value;
+            if (data.fields.Group_Valuation__c.value != null && data.fields.Group_Valuation__c.value != undefined) {
+                console.log('IN GRP Val');
+                this.grpValuation = data.fields.Group_Valuation__c.value;
+            }
+
             if (data.fields.Transaction_LTV__c.value != null && data.fields.Transaction_LTV__c.value != undefined)
                 this.tarnscLTV = data.fields.Transaction_LTV__c.value;
             if (data.fields.Combined_LTV__c.value != null && data.fields.Combined_LTV__c.value != undefined)
@@ -292,7 +296,7 @@ export default class PcFinancial extends LightningElement {
                 this.combinedLTV = ((this.amountrecomended / this.groupValuationValue) * 100).toFixed(2);
             }
             if (this.amountrecomended && this.insuranceamount)
-                this.totalamountValue = this.amountrecomended + Math.ceil(this.insuranceamount/10000)*10000;
+                this.totalamountValue = this.amountrecomended + Math.ceil(this.insuranceamount / 10000) * 10000;
             console.log('roi value', this.roiRate);
             console.log('combinedLTV value', this.combinedLTV);
             console.log('totalamountValue value', this.totalamountValue);
@@ -327,10 +331,10 @@ export default class PcFinancial extends LightningElement {
                     })
             }
 
-            // if (this.tarnscLTV && this.combinedLTV)
-            //     this.lTVScore = Math.max(this.tarnscLTV, this.combinedLTV);
-            // if (this.transcDBR && this.combinedDBR)
-            //     this.dbrScore = Math.max(this.transcDBR, this.combinedDBR);
+            if (this.tarnscLTV && this.combinedLTV)
+                this.lTVScore = Math.max(this.tarnscLTV, this.combinedLTV);
+            if (this.transcDBR && this.combinedDBR)
+                this.dbrScore = Math.max(this.transcDBR, this.combinedDBR);
         }
         else if (error) {
             this.error = error;
@@ -359,18 +363,19 @@ export default class PcFinancial extends LightningElement {
 
     }
 
-    handleInsurancePremium()
-    {
-        getInsurancePremium({applicationId:this.applicationId})
-        .then(result=>{
-          console.log('Insurance Premium result ###',result);
-          if(result)
-            this.insuranceamount = Math.round(result);
-            console.log('Insurance Amount',this.insuranceamount);
-        })
-        .catch(err=>{
-          console.log('Error in Insurance Premium ###',err);
-        })
+    handleInsurancePremium() {
+        getInsurancePremium({ applicationId: this.applicationId })
+            .then(result => {
+                console.log('Insurance Premium result ###', result);
+                if (result)
+                    this.insuranceamount = Math.round(result);
+                else
+                    this.insuranceamount = 0;
+                console.log('Insurance Amount', this.insuranceamount);
+            })
+            .catch(err => {
+                console.log('Error in Insurance Premium ###', err);
+            })
     }
 
     handlegetHMScore() {
@@ -389,23 +394,22 @@ export default class PcFinancial extends LightningElement {
             console.log('highestIncome', highestIncome);
             if (highestIncome.index)
                 loanAppList.forEach((Element, index, arr) => {
-                    loanParam = (arr[highestIncome.index].applicantId != undefined)?arr[highestIncome.index].applicantId:null;
+                    loanParam = (arr[highestIncome.index].applicantId != undefined) ? arr[highestIncome.index].applicantId : null;
                 })
             console.log('loan app Id', loanParam);
 
 
         }
-        if(loanParam)
-        {
+        if (loanParam) {
             getHMScore({ loanAppId: loanParam })
-            .then(res => {
-                console.log('HM Score', res);
-                if(res)
-                this.hmScore = res;
-            })
-            .catch(err => {
-                console.log('err in HM Score', err);
-            })
+                .then(res => {
+                    console.log('HM Score', res);
+                    if (res)
+                        this.hmScore = res;
+                })
+                .catch(err => {
+                    console.log('err in HM Score', err);
+                })
         }
     }
 
@@ -426,6 +430,8 @@ export default class PcFinancial extends LightningElement {
 
     handleTabActivation(event) {
         console.log('handleTabActivation= ', event.target.value);
+        this.tabName = event.target.value;
+        this.dispatchEvent(new CustomEvent('tabchange', { detail: event.target.value }));
         this.isTopupDetails = false;
         this.isCollateraldetails = false;
         this.isOldloandetails = false;
@@ -447,56 +453,11 @@ export default class PcFinancial extends LightningElement {
             this.isCollateraldetails = true;
         } else if (event.target.value == 'Old loan details') {
             this.isOldloandetails = true;
-        } else if (event.target.value == 'Application details') {
+        } else if (event.target.value == 'Application_details') {
             this.financialSpinner = true;
-            let capType, verfType;
-            if (this.sectiontitle == 'PC') {
-                capType = 'PC Capability';
-                verfType = 'PC';
-            }
-            else if (this.sectiontitle == 'AC') {
-                capType = 'AC Capability';
-                verfType = 'AC';
-            }
-
-            getIncomeSummary({ applicationId: this.applicationId, caprecordtypeName: capType, VerfRecordTypeName: verfType }).then((result) => {
-                console.log('handleGetIncomeSummary= ', result);
-                this.incomeSummaryObj = JSON.parse(JSON.stringify(result));
-                ///////////////////////////////////////////
-                if (this.recordTypeName == '3. Top-up loan') {
-                    this.isTopupDetails = true;
-                    let value = this.template.querySelectorAll('.consider');
-                    console.log('conisder>>>> ', value);
-                    if (value == 'Yes') {
-                        this.customerType = 'Existing';
-                        this.loanType = 'topup related scheme';
-                    }
-                    else if (value == 'No') {
-                        this.customerType = 'Repeat';
-                    }
-                }
-                else {
-                    this.customerType = 'New';
-                    if (this.incomeSummaryObj.totalbusMonthlyIncome != null && this.incomeSummaryObj.totalMonthlyIncome != null) {
-                        if (parseInt(this.incomeSummaryObj.totalbusMonthlyIncome) > (parseInt(this.incomeSummaryObj.totalMonthlyIncome) * (25 / 100)))
-                            this.loanType = 'business related scheme';
-                        else
-                            this.loanType = 'mortgage related scheme';
-
-                        if (this.loanType == 'business related scheme')
-                            this.loanPuropse = 'Business loan';
-                        else
-                            this.loanPuropse = 'Personal use';
-                    }
-                }
-                //////////////////////////////////////////////////////////////////////
-                this.financialSpinner = false;
-            }).catch((err) => {
-                console.log('Error in handleGetIncomeSummary= ', err);
-                this.financialSpinner = false;
-            });
+            this.handlegetIncomeSummary('Application Details');
+            this.tabName = 'Application_details';
             this.isApplicationdetails = true;
-
         } else if (event.target.value == 'Loan details') {
             this.isLoandetails = true;
             /// to get ROI
@@ -548,20 +509,23 @@ export default class PcFinancial extends LightningElement {
 
         } else if (event.target.value == 'Eligibility Calculations') {
             console.log('Eligibility Calculations>>> ', this.isEligibilityCalculations);
+            this.financialSpinner = true;
+
+            this.handlegetIncomeSummary('Eligibility Calculations');
             if (this.incomeSummaryObj.netMonthlyIncomeConsidered != null && this.incomeSummaryObj.netMonthlyIncomeConsidered != undefined && this.incomeSummaryObj.netMonthlyIncomeConsidered != '') {
                 console.log('Emi Value', this.emiValue, 'this.incomeSummaryObj.netMonthlyIncomeConsidered', this.incomeSummaryObj.netMonthlyIncomeConsidered, 'highmarkemiamt', this.highmarkEmiAmount);
 
                 if (this.emiValue && this.incomeSummaryObj.netMonthlyIncomeConsidered) {
-                    this.transcDBR = (this.emiValue / (this.incomeSummaryObj.totalMonthlyIncome < 0)?this.incomeSummaryObj.totalMonthlyIncome *-1:this.incomeSummaryObj.totalMonthlyIncome).toFixed(2);
+                    this.transcDBR = ((this.emiValue / this.incomeSummaryObj.netMonthlyIncomeConsidered) * 100).toFixed(2);
                     if (this.highmarkEmiAmount != null) {
-                        this.combinedDBR = ((this.emiValue + parseFloat(this.highmarkEmiAmount)) /(this.incomeSummaryObj.totalMonthlyIncome < 0)?this.incomeSummaryObj.totalMonthlyIncome *-1:this.incomeSummaryObj.totalMonthlyIncome).toFixed(2);
+                        this.combinedDBR = (((this.emiValue + parseFloat(this.highmarkEmiAmount)) / this.incomeSummaryObj.netMonthlyIncomeConsidered) * 100).toFixed(2);
                     }
                 }
                 console.log('this.transcDBR ', this.transcDBR);
                 console.log('this.combinedDBR ', this.combinedDBR);
             }
             if (this.incomeSummaryObj.totalMonthlyIncome != null && this.incomeSummaryObj.totalMonthlyIncome != undefined && this.incomeSummaryObj.totalMonthlyIncome != '')
-                this.netIncome = (this.incomeSummaryObj.totalMonthlyIncome < 0)?this.incomeSummaryObj.totalMonthlyIncome *-1:this.incomeSummaryObj.totalMonthlyIncome;
+                this.netIncome = this.incomeSummaryObj.totalMonthlyIncome;
             if (this.propertySummary.collateralGrandValue != null && this.propertySummary.collateralGrandValue != undefined && this.propertySummary.collateralGrandValue != '')
                 this.collateralValue = this.propertySummary.collateralGrandValue;
             if (this.showEmi) {
@@ -585,6 +549,61 @@ export default class PcFinancial extends LightningElement {
             this.isExecutiveSummary = true;
         }
     }
+
+
+    handlegetIncomeSummary(stage) {
+        let capType, verfType;
+        if (this.sectiontitle == 'PC') {
+            capType = 'PC Capability';
+            verfType = 'PC';
+        }
+        else if (this.sectiontitle == 'AC') {
+            capType = 'AC Capability';
+            verfType = 'AC';
+        }
+        getIncomeSummary({ applicationId: this.applicationId, caprecordtypeName: capType, VerfRecordTypeName: verfType }).then((result) => {
+            console.log('handleGetIncomeSummary= ', result);
+            this.incomeSummaryObj = JSON.parse(JSON.stringify(result));
+            if (stage == 'Application Details') {
+                if (this.recordTypeName == '3. Top-up loan') {
+                    this.isTopupDetails = true;
+                    let value = this.template.querySelectorAll('.consider');
+                    console.log('conisder>>>> ', value);
+                    if (value == 'Yes') {
+                        this.customerType = 'Existing';
+                        this.loanType = 'topup related scheme';
+                    }
+                    else if (value == 'No') {
+                        this.customerType = 'Repeat';
+                    }
+                }
+                else {
+                    this.customerType = 'New';
+                    if (this.incomeSummaryObj.totalbusMonthlyIncome != null && this.incomeSummaryObj.totalMonthlyIncome != null) {
+                        if (parseInt(this.incomeSummaryObj.totalbusMonthlyIncome) > (parseInt(this.incomeSummaryObj.totalMonthlyIncome) * (25 / 100)))
+                            this.loanType = 'business related scheme';
+                        else
+                            this.loanType = 'mortgage related scheme';
+
+                        if (this.loanType == 'business related scheme')
+                            this.loanPuropse = 'Business loan';
+                        else
+                            this.loanPuropse = 'Personal use';
+                    }
+                }
+
+
+            }//////////////////////////////////////////////////////////////////////
+            this.financialSpinner = false;
+        }).catch((err) => {
+            console.log('Error in handleGetIncomeSummary= ', err);
+            this.financialSpinner = false;
+        });
+    }
+
+
+
+
 
     checkCustomValidation(className) {
         let inputFields = this.template.querySelectorAll(className);
@@ -639,7 +658,7 @@ export default class PcFinancial extends LightningElement {
             new ShowToastEvent({
                 title: 'Sucess',
                 variant: 'success',
-                message: 'Record Created Successfully'
+                message: 'Record Saved Successfully'
             })
         );
         const validationEvent = new CustomEvent('checkfinancialvalidation', {
@@ -722,7 +741,7 @@ export default class PcFinancial extends LightningElement {
             this.insuranceamount = evt.target.value;
         }
         else if (evt.target.fieldName == 'Group_Valuation__c') {
-            this.groupValuationValue = evt.target.value;
+            this.grpValuation = evt.target.value;
         }
         else if (evt.target.fieldName == 'Tranche_Disbursal__c') {
             if (evt.target.value == 'I') {
@@ -751,7 +770,7 @@ export default class PcFinancial extends LightningElement {
 
         console.log('amt recommended', this.amountrecomended, 'insurance amt >>>>>', this.insuranceamount);
 
-        this.totalamountValue = parseFloat(this.amountrecomended) + Math.ceil(this.insuranceamount/10000)*10000;
+        this.totalamountValue = parseFloat(this.amountrecomended) + Math.ceil(this.insuranceamount / 10000) * 10000;
         console.log('total amount recommended', this.totalamountValue);
         console.log('in handlechange', this.totalamountValue);
         if (this.totalamountValue && this.roiRate && this.tenorValue)

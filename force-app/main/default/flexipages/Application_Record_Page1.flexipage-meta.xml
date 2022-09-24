@@ -29,20 +29,32 @@
                         <valueListItems>
                             <value>Application__c.Initiate_Process_Credit</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Stage__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Process Credit</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Is_Deviation_Approval_User__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Application__c.Initiate_Approval_Credit</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Stage__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Approval Credit</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Is_Deviation_Approval_User__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -129,6 +141,16 @@
                                     <leftValue>{!Record.Stage__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Custody</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Application__c.Deviation_Approval</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Is_Deviation_Approval_User__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

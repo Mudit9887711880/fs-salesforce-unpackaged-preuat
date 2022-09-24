@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Deviation_Type__c</columns>
+    <columns>MS_Deviation__c</columns>
+    <columns>Application__c</columns>
+    <columns>Approval_Authority__c</columns>
+    <columns>Approval_Level__c</columns>
+    <columns>Applicable_for__c</columns>
+    <columns>Is_Deviation_Raised__c</columns>
+    <columns>Decistion__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

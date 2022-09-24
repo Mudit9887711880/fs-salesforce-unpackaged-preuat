@@ -4,25 +4,6 @@ public class FsPreloginController extends GenericFormBuilderController{
     public static String getRecordTypeName(String recTypeId){
         return Schema.getGlobalDescribe().get('Pre_Login__c').getDescribe().getRecordTypeInfosById().get(recTypeId).getName();
     }
-    
-    @AuraEnabled
-    public static AppWrapper getApplicationId(String recordId){
-        System.debug('prelogin Id '+recordId);
-        if(String.isNotBlank(recordId) && String.isNotEmpty(recordId)){
-            String appId = '';
-            Application__c objApp = [SELECT Id,Name,Pre_Login__r.RecordTypeId,Pre_Login__r.RecordType.Name FROM Application__c WHERE Pre_Login__c  = : recordId AND Pre_Login__c  != null];
-                appId = objApp.Id;
-                AppWrapper appWrap = new AppWrapper();
-                appWrap.appId = objApp.Id;
-                appWrap.appName = objApp.Name;
-            	appWrap.recTypeId = objApp.Pre_Login__r.RecordTypeId;
-                appWrap.recTypeName = objApp.Pre_Login__r.RecordType.Name;
-                System.debug('Application Wrapper '+appWrap);
-                return appWrap;  
-        }
-        else
-            return null;
-    }
    
     //Getting Input Fields From Metadata
     @AuraEnabled
@@ -198,7 +179,8 @@ public class FsPreloginController extends GenericFormBuilderController{
                             newProperty.Title_Deed_Number__c = null;
                             newProperty.Title_Deed_Date__c = null;
                             newProperty.Title_Deed_Type__c = null;
-                            newProperty.Property_Type__c = null;
+                            if(rcName == 'FIV-B Property Detail')
+                            	newProperty.Property_Type__c = null;
                             newProperty.Property_Address__c = null;
                         }
                         newPropList.add(newProperty);
@@ -240,7 +222,7 @@ public class FsPreloginController extends GenericFormBuilderController{
         pinId = [SELECT Id FROM Ms_Pincode__c WHERE Name =: pin OR Pincode__c =: pin LIMIT 1].Id;
         return pinId;
     }
-
+    
     @AuraEnabled
     public static String getApplicationName(String applicationId){
         return [SELECT Name FROM Application__c WHERE Id = :applicationId].Name;
@@ -266,8 +248,6 @@ public class FsPreloginController extends GenericFormBuilderController{
     public class AppWrapper{
         @AuraEnabled public String appId;
         @AuraEnabled public String appName;
-        @AuraEnabled public String recTypeId;
-        @AuraEnabled public String recTypeName;
     }
     
 }

@@ -186,11 +186,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Consent Deed</fullName>
+            <fullName>Gift Deed</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gift Deed</fullName>
+            <fullName>Others</fullName>
             <default>false</default>
         </values>
         <values>

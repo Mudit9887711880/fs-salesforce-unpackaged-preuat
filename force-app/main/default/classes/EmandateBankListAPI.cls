@@ -125,20 +125,20 @@ public class EmandateBankListAPI{
     public class cls_response{
         public cls_liveBankListRes liveBankListRes;
     }
-	class cls_liveBankListRes {
-		public String status;	//1
-		public cls_bankList bankList;
-	}
-	class cls_bankList {
-		public cls_bankdata[] bankdata;
-	}
-	class cls_bankdata {
-		public String bankId;	//ANDB
-		public String bankName;	//ANDHRA BANK
-	}
-	public static cls_response parse(String json){
-		return (cls_response) System.JSON.deserialize(json, cls_response.class);
-	}
+    class cls_liveBankListRes {
+        public String status;   //1
+        public cls_bankList bankList;
+    }
+    class cls_bankList {
+        public cls_bankdata[] bankdata;
+    }
+    class cls_bankdata {
+        public String bankId;   //ANDB
+        public String bankName; //ANDHRA BANK
+    }
+    public static cls_response parse(String json){
+        return (cls_response) System.JSON.deserialize(json, cls_response.class);
+    }
 
     public class RequestHeader{
         public String Authorization;    //Basic YWRtaW46YWRtaW4=

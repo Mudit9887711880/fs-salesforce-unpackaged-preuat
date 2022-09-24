@@ -1,4 +1,18 @@
-.cursorStyle{
+.scrollTable {
+    overflow-x: scroll;
+    height: 500px;
+}
+
+.slds-medium-show {
+    display: none !important;
+}
+.td-currency{
+    
+    white-space: normal;
+    min-width: 180px; max-width: 480px; width:auto;
+  }
+
+/*.cursorStyle{
     cursor: pointer;
 }
 
@@ -8,7 +22,7 @@
 }
 
 .tdStyle{
-    /* display: inline-block; */
+  
     width: 100%;
     white-space: nowrap;
     overflow: hidden !important;
@@ -40,9 +54,7 @@
 } 
 
 .curreny-sum-insured {
-    /*position: absolute;
-    left: .6em;
-    z-index: 2;*/
+    
     position: absolute;
     left: 0.6em;
     z-index: 2;
@@ -50,10 +62,7 @@
     padding-top: 6px;
 }
 .sum-insured-field {
-    /*padding-left: 1.4em;
-    border: none;
-    border-radius: 4px;
-    min-width: 80px; max-width: 480px; width:auto;*/
+    
     padding-left: 1.4em;
     height: 30px;
     border-radius: 4px;
@@ -116,7 +125,7 @@ input[type=number]::-webkit-outer-spin-button {
     right: 0;
     font-size: 15px;
     font-weight: 900;
-    z-index: -1; /* this will set it in background so when user click onit you will get cell-click event as if user would normally click on cell */
+    z-index: -1; 
 
 }
 .editable-grid-cell2::before {
@@ -127,8 +136,9 @@ input[type=number]::-webkit-outer-spin-button {
     right: 0;
     font-size: 15px;
     font-weight: 1500;
-    z-index: -1; /* this will set it in background so when user click onit you will get cell-click event as if user would normally click on cell */
+    z-index: -1; 
 }
 
 .table-insurance-detail .addbutton{display: none;}
 .table-insurance-detail tbody tr:last-child .addbutton{display: block;}
+*/

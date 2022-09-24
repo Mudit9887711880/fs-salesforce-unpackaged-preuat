@@ -26,14 +26,69 @@
                 <label>FIV - C</label>
             </value>
             <value>
+                <fullName>Online EC</fullName>
+                <default>false</default>
+                <label>Online EC</label>
+            </value>
+            <value>
                 <fullName>Lead Detail</fullName>
                 <default>false</default>
                 <label>Lead Detail</label>
             </value>
             <value>
-                <fullName>Online EC</fullName>
+                <fullName>In Principle Sanction</fullName>
                 <default>false</default>
-                <label>Online EC</label>
+                <label>In Principle Sanction</label>
+            </value>
+            <value>
+                <fullName>Process Credit</fullName>
+                <default>false</default>
+                <label>Process Credit</label>
+            </value>
+            <value>
+                <fullName>Approval Credit</fullName>
+                <default>false</default>
+                <label>Approval Credit</label>
+            </value>
+            <value>
+                <fullName>Final Sanction</fullName>
+                <default>false</default>
+                <label>Final Sanction</label>
+            </value>
+            <value>
+                <fullName>Post Approval</fullName>
+                <default>false</default>
+                <label>Post Approval</label>
+            </value>
+            <value>
+                <fullName>MOD Registration</fullName>
+                <default>false</default>
+                <label>MOD Registration</label>
+            </value>
+            <value>
+                <fullName>Agreement Execution</fullName>
+                <default>false</default>
+                <label>Agreement Execution</label>
+            </value>
+            <value>
+                <fullName>Dispatch Pending</fullName>
+                <default>false</default>
+                <label>Dispatch Pending</label>
+            </value>
+            <value>
+                <fullName>Document Receipt</fullName>
+                <default>false</default>
+                <label>Document Receipt</label>
+            </value>
+            <value>
+                <fullName>Disbursal Maker</fullName>
+                <default>false</default>
+                <label>Disbursal Maker</label>
+            </value>
+            <value>
+                <fullName>Disbursal Author</fullName>
+                <default>false</default>
+                <label>Disbursal Author</label>
             </value>
             <value>
                 <fullName>DOS</fullName>
@@ -51,29 +106,9 @@
                 <label>Legal Approval</label>
             </value>
             <value>
-                <fullName>MOD Registration</fullName>
+                <fullName>Post Disbursement</fullName>
                 <default>false</default>
-                <label>MOD Registration</label>
-            </value>
-            <value>
-                <fullName>Post Approval</fullName>
-                <default>false</default>
-                <label>Post Approval</label>
-            </value>
-            <value>
-                <fullName>Disbursal Maker</fullName>
-                <default>false</default>
-                <label>Disbursal Maker</label>
-            </value>
-            <value>
-                <fullName>Disbursal Author</fullName>
-                <default>false</default>
-                <label>Disbursal Author</label>
-            </value>
-            <value>
-                <fullName>Agreement Execution</fullName>
-                <default>false</default>
-                <label>Agreement Execution</label>
+                <label>Post Disbursement</label>
             </value>
         </valueSetDefinition>
     </valueSet>

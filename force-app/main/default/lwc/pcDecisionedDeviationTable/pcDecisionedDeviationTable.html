@@ -1,0 +1,125 @@
+<template>
+	  <div class="c-container ">
+            <lightning-card class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large" title="Decisioned Deviations">
+
+	
+	<div class="slds-scrollable" style="height:200%; padding-bottom: 10px">
+		<template if:true={decisionedDeviation}>
+
+			 <table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+				<thead>
+					<tr class="th">
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Sr No">Sr No.</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Deviation Code">Deviation Name</div>
+						</th>
+
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Deviation Level">Applciable For </div>
+						</th>
+
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Applicant/Property">Applicant/Property</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Applicant/Property">Approval Level</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Approval Authority">Approval Authority</div>
+						</th>
+
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Approval Authority"> Decision </div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Remarks">Remarks</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Mitigants"> Mitigants</div>
+						</th>
+						<th class="slds-size_1-of-10" scope="col">
+							<div class="slds-truncate" title="Deviation Type"> Deviation Type</div>
+						</th>
+
+					</tr>
+				</thead>
+
+				
+				<tbody>
+					<template for:each={decisionedDeviation} for:item="item" for:index="indexVar">
+                       
+						<tr key={item.key} id={item.Id} class="slds-hint-parent">
+							<td class="slds-size_3-of-10" data-id="1">
+								<div class="slds-truncate">{item.srNo}</div>
+							</td>
+							<td class="slds-size_3-of-10" scope="col">
+								<div class="td-currency" title="Deviation Code">
+									{item.msDeviationName}</div>
+							</td>
+							<td class="slds-size_3-of-10" data-id="5">
+
+								<div class="td-currency">
+
+									{item.applicableFor}
+								</div>
+							</td>
+							<td class="slds-size_3-of-10" data-id="6">
+								<div class="td-currency">
+
+									<template if:true={item.applicant}>
+										{item.applicant}
+									</template>
+							<template if:true={item.property}>
+										{item.property}
+									</template>
+
+								</div>
+							</td>
+							<td class="slds-size_3-of-10" data-id="6">
+								<div class="td-currency">
+
+									<template if:true={item.approvalLevel}>
+										{item.approvalLevel}
+									</template>
+								</div>
+							</td>
+							<td class="slds-size_3-of-10" data-id="1">
+								<div class="td-currency">{item.approvalAuthority}</div>
+							</td>
+
+
+							<td class="slds-size_3-of-10" data-id="1">
+								<div class="td-currency">{item.decision}</div>
+							</td>
+							<td class="slds-size_3-of-10" data-id="1">
+								<div class="td-currency">{item.remarks}</div>
+							</td>
+							<td class="slds-size_3-of-10" data-id="1">
+								<div class="td-currency">{item.mitigants}</div>
+							</td>
+
+							<td class="slds-size_3-of-10" data-id="1">
+								<div class="td-currency">{item.decisionType}</div>
+							</td>
+						</tr>
+					</template>
+					<template if:true={empty}>
+							<tr>
+								<td colspan="10">
+									<div align="center">
+										No Records Found.
+									</div>
+								</td>
+							</tr>
+						</template>
+				</tbody>
+			</table> 
+		</template>
+        
+       
+	</div>
+            </lightning-card>
+	  </div>
+</template>

@@ -15,7 +15,7 @@
 				<template if:true={isSpinnerActive}>
 					<c-fs-spinner></c-fs-spinner>
 				</template>
-				<div class="slds-scrollable_y" style="max-height:800px;">
+				
 					<!-- OCR -->
 					<c-fs-o-c-r onocrevent={handleOCREvent} onchangecustomertype={handleCustomerType}
 						onverificationevent={handleVerificationValue} ongetocrtable={handleOCRTable}
@@ -62,7 +62,6 @@
 						</c-fs-mobile-verification-l-w-c>
 					</template>
 				</div>
-			</div>
 			<div class="slds-modal__footer">
 				<lightning-button label="Cancel" title="Cancel" onclick={handleCancel} class="slds-m-left_x-small">
 				</lightning-button>

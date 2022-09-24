@@ -152,23 +152,23 @@ insert objErrorLog;
         public cls_signature signature;
     }
     class cls_header {
-        public String transId;	//20017
-        public String corpId;	//MC001
-        public String makerId;	//M001
-        public String checkerId;	//C001
-        public String approverId;	//A001
+        public String transId;  //20017
+        public String corpId;   //MC001
+        public String makerId;  //M001
+        public String checkerId;    //C001
+        public String approverId;   //A001
     }
     
     
     
     class cls_body {
-        public String status;	//Success
-        public String accountNumber;	//109566016496
-        public String ifscCode;	//DNSB0000021
-        public String beneficiaryName;	//VARSHA
-        public String remarks;	//Transaction is successful and customer is successfully validated
-        public String bankRefNo;	//629114449955
-        public String npciResponseCode;	//00
+        public String status;   //Success
+        public String accountNumber;    //109566016496
+        public String ifscCode; //DNSB0000021
+        public String beneficiaryName;  //VARSHA
+        public String remarks;  //Transaction is successful and customer is successfully validated
+        public String bankRefNo;    //629114449955
+        public String npciResponseCode; //00
     }
     
     class cls_request {
@@ -185,7 +185,7 @@ insert objErrorLog;
     
     
     class cls_signature {
-        public String signature;	//Signature
+        public String signature;    //Signature
     }
     public static ResponseJSON parse(String json){
         return (ResponseJSON) System.JSON.deserialize(json, ResponseJSON.class);

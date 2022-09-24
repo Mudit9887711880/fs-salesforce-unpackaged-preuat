@@ -146,7 +146,7 @@ export default class FsPreLoginApplicationDetail extends LightningElement {
         console.log('event onchange ',this.dataValues);
         console.log(this.dataValues);
         var tempFieldsContent = event.detail;
-        console.log(this.fieldsContent);
+        console.log('before saving ',this.fieldsContent);
         if(tempFieldsContent.CurrentFieldAPIName === 'Application__c-Customer_Visit_date__c'){
             var _val = tempFieldsContent.CurrentFieldValue;
             console.log(' _val #### ',_val);
@@ -170,6 +170,7 @@ export default class FsPreLoginApplicationDetail extends LightningElement {
                 this.toggleSpouseField(this.fieldsContent,true,false);
             }
         }
+        console.log('before saving sourcing branch  ',this.fieldsContent);
     }
 
     toggleSpouseField(fieldcontent,disabled,required){

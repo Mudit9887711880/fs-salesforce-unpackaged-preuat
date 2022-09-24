@@ -155,7 +155,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Document Set Code</label>
     <nameField>
-        <label>Name</label>
+        <label>Document Name</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Document Set Codes</pluralLabel>

@@ -1,34 +1,33 @@
 <template>
-    <template if:true={applicationId}>
-        <div class="slds-scrollable_y" style="max-height:400px;">
-            <!-- Property Form -->
-            <c-fs-pre-login-property-detail ongetpropertydata={callGetPropertyData} record-type-name={recordTypeName}
-                application-id={applicationId} loan-app-id-list={loanAppIdList} owner-type-option={ownerTypeOption}>
-            </c-fs-pre-login-property-detail>
-            <!-- List Of Applicants -->
-            <template if:true={isPropDataArrived}>
-                <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-                    <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
-                        <span class="slds-truncate" title="Section Title">List Of Properties</span>
-                    </h3>
-                    <div aria-hidden="false" class="slds-section__content slds-p-left_small">
-                        <c-generic-data-table-l-w-c data-id="prop" result={propData} btns={propRowAction}
-                            onselected={handleSelectedProperty}>
-                        </c-generic-data-table-l-w-c>
-                    </div>
-                </div>
-            </template>
-            <!-- Delete Popup -->
-            <template if:true={showDeletePopup}>
-                <c-fs-delete-l-w-c delete-from="Prelogin" object-api-name="Property__c" rec-id={recordId}
-                    show-modal={showDeletePopup} onmodaldelete={handlemodalactions} onmodalcancel={handlemodalactions}>
-                </c-fs-delete-l-w-c>
-            </template>
-        </div>
-    </template>
-    <template if:false={applicationId}>
-        <div class="slds-align_absolute-center">
-            No Applicant Exist.
-        </div>
-    </template>
+	<template if:true={applicationId}>
+		<div>
+			<!-- Property Form -->
+			<c-fs-pre-login-property-detail ongetpropertydata={callGetPropertyData} record-type-name={recordTypeName}
+				application-id={applicationId} loan-app-id-list={loanAppIdList} owner-type-option={ownerTypeOption}>
+			</c-fs-pre-login-property-detail>
+
+			<div class="slds-m-top_small">
+			</div>
+
+			<!-- List Of Applicants -->
+			<template if:true={isPropDataArrived}>
+				<lightning-card variant="Narrow" title="List Of Properties">
+					<c-generic-data-table-l-w-c data-id="prop" result={propData} btns={propRowAction}
+						onselected={handleSelectedProperty}>
+					</c-generic-data-table-l-w-c>
+				</lightning-card>
+			</template>
+			<!-- Delete Popup -->
+			<template if:true={showDeletePopup}>
+				<c-fs-delete-l-w-c delete-from="Prelogin" object-api-name="Property__c" rec-id={recordId}
+					show-modal={showDeletePopup} onmodaldelete={handlemodalactions} onmodalcancel={handlemodalactions}>
+				</c-fs-delete-l-w-c>
+			</template>
+		</div>
+	</template>
+	<template if:false={applicationId}>
+		<div class="slds-align_absolute-center">
+			No Applicant Exist.
+		</div>
+	</template>
 </template>

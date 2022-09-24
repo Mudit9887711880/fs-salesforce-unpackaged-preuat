@@ -1,140 +1,163 @@
 <template>
-    <lightning-spinner alternative-text="Loading" size="medium" if:true={showSpinner}></lightning-spinner>
-    <template if:true={showDeleteModal}>
-        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="modal-heading-01"
-            aria-modal="true">
-            <div class="slds-modal__container" style="width:8rem;">
-                <div class="slds-modal__header">
-                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Delete Record</h1>
-                </div>
-                <div class="slds-modal__content slds-p-around_medium slds-text-align--center" id="modal-content-id-2">
-                    Are you sure you want to delete this record?
-                </div>
-                <div class="slds-modal__footer">
-                    <lightning-button variant="brand" label="Yes" title="Yes" onclick={handleDelete}>
-                    </lightning-button>
-                    <lightning-button label="No" class="slds-m-left--medium" title="No" onclick={handleDelete}>
-                    </lightning-button>
-                </div>
-            </div>
-        </section>
-        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-    </template>
-    <div class="slds-box slds-box_xx-smal slds-scrollable_y" style="max-height:400px;overflow: initial;">
-        <lightning-record-edit-form object-api-name="Revisit__c" record-id={revisitRecordId}
-            onsuccess={handleRevisitSuccess} onsubmit={handleRevisitSubmit}>
-            <lightning-layout multiple-rows>
-                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
-                    large-device-size="2" style="display:none;">
-                    <lightning-input-field field-name="Verification__c" value={verificationId} variant="label-stacked">
-                    </lightning-input-field>
-                </lightning-layout-item>
-                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
-                    large-device-size="2" style="display:none;">
-                    <lightning-input-field field-name="Revisit_Type__c" value={revisitType} variant="label-stacked">
-                    </lightning-input-field>
-                </lightning-layout-item>
-                <template if:false={isSeniorVisit}>
-                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                        medium-device-size="4" large-device-size="4">
-                        <lightning-input-field field-name="Revisit_done__c" onchange={handleFormValues}
-                            variant="label-stacked" required>
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <template if:true={showOther}>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Revisit_date__c" variant="label-stacked" required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Reason_for_revist__c" variant="label-stacked" required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Applicant_is_owner_of_the_property__c"
-                                variant="label-stacked" required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Years_of_possession_of_the_property__c"
-                                variant="label-stacked" required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <label class="slds-form-element__label" for="form-element-01">Does Property
+	<lightning-spinner alternative-text="Loading" size="medium" if:true={showSpinner}></lightning-spinner>
+	<template if:true={showDeleteModal}>
+		<section role="dialog" tabindex="-1" class="slds-align--absolute-center slds-modal slds-fade-in-open"
+			aria-labelledby="modal-heading-01" aria-modal="true">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header">
+					<h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Delete Record</h1>
+				</div>
+				<div class="slds-modal__content slds-p-around_medium slds-text-align--center" id="modal-content-id-2">
+					Are you sure you want to delete this record?
+				</div>
+				<div class="slds-modal__footer">
+					<lightning-button variant="brand" label="Yes" title="Yes" onclick={handleDelete}>
+					</lightning-button>
+					<lightning-button label="No" class="slds-m-left--medium" title="No" onclick={handleDelete}>
+					</lightning-button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+	</template>
+	<div class="slds-box slds-box_xx-smal slds-scrollable_y" style="overflow: initial;">
+		<!--max-height:400px;-->
+		<lightning-record-edit-form object-api-name="Revisit__c" record-id={revisitRecordId}
+			onsuccess={handleRevisitSuccess} onsubmit={handleRevisitSubmit}>
+			<lightning-layout multiple-rows>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+					large-device-size="2" style="display:none;">
+					<lightning-input-field field-name="Verification__c" value={verificationId} variant="label-stacked">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6" medium-device-size="4"
+					large-device-size="2" style="display:none;">
+					<lightning-input-field field-name="Revisit_Type__c" value={revisitType} variant="label-stacked">
+					</lightning-input-field>
+				</lightning-layout-item>
+				<template if:false={isSeniorVisit}>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+						medium-device-size="4" large-device-size="4">
+						<lightning-input-field field-name="Revisit_done__c" onchange={handleFormValues}
+							variant="label-stacked" required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<template if:true={showOther}>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Revisit_date__c" variant="label-stacked" required
+								style="display:none;" value={revisitDate}>
+							</lightning-input-field>
+							<lightning-input type="date" variant="standard" name="Revisit_date__c" label="Revisit Date"
+								max={todayDate} message-when-range-overflow="Revisit Date can not be in future."
+								onchange={handleFormValues} value={revisitDate} required>
+							</lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Reason_for_revist__c" variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Applicant_is_owner_of_the_property__c"
+								variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Years_of_possession_of_the_property__c"
+								variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<label class="slds-form-element__label" for="form-element-01">Does Property
                                 Mortgaged With Any Financial Institution/Individual</label>
-                            <lightning-input-field field-name="Does_property_mortgaged_with_any_financi__c"
-                                variant="label-hidden" required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Mortgage_details_of_property__c" variant="label-stacked"
-                                required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                    </template>
-                </template>
-                <template if:true={isSeniorVisit}>
-                    <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                        medium-device-size="4" large-device-size="4">
-                        <lightning-input-field field-name="Senior_Auditor_Confirmation_Visit__c" variant="label-stacked"
-                            onchange={handleFormValues} required>
-                        </lightning-input-field>
-                    </lightning-layout-item>
-                    <template if:true={showOther}>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Reason_For_Visit__c" variant="label-stacked" required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Employee_No_of_Person_Revisited__c"
-                                variant="label-stacked" required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="4">
-                            <lightning-input-field field-name="Senior_Person_Comments__c" variant="label-stacked"
-                                onchange={handleFormValues} required>
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
-                            medium-device-size="4" large-device-size="8">
-                            <lightning-input-field required={isRemarkRequired} field-name="Remarks__c"
-                                variant="label-stacked">
-                            </lightning-input-field>
-                        </lightning-layout-item>
-                    </template>
-                </template>
-                <lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
-                    medium-device-size="12" large-device-size="12">
-                    <div class="slds-var-m-top_medium slds-float_right">
-                        <lightning-button class="slds-m-right--small" variant="neutral" type="submit" label='Cancel'
-                            onclick={onCancel}>
-                        </lightning-button>
-                        <lightning-button variant="brand" type="submit" label="Save" id="revisit-btn">
-                        </lightning-button>
-                    </div>
-                </lightning-layout-item>
-            </lightning-layout>
-        </lightning-record-edit-form>
-    </div>
-    <template if:true={revisitTableData}>
-        <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-            <h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
-                <span class="slds-truncate" title="Section Title">Revisits</span>
-            </h3>
-            <div aria-hidden="false" class="slds-section__content slds-p-left_small">
-                <c-generic-data-table-l-w-c result={revisitTableData} btns={rowAction}
-                    onselected={handleSelectedRevisit}></c-generic-data-table-l-w-c>
-            </div>
-        </div>
-    </template>
+							<lightning-input-field field-name="Does_property_mortgaged_with_any_financi__c"
+								variant="label-hidden" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Mortgage_details_of_property__c" variant="label-stacked"
+								required>
+							</lightning-input-field>
+						</lightning-layout-item>
+					</template>
+				</template>
+				<template if:true={isSeniorVisit}>
+					<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+						medium-device-size="4" large-device-size="4">
+						<lightning-input-field field-name="Senior_Auditor_Confirmation_Visit__c" variant="label-stacked"
+							onchange={handleFormValues} required>
+						</lightning-input-field>
+					</lightning-layout-item>
+					<template if:true={showOther}>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Reason_For_Visit__c" variant="label-stacked" required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Employee_No_Of_Person_Revisited__c"
+								variant="label-stacked" value={revisitedPersonId} required style="display:none;">
+							</lightning-input-field>
+							<c-l-w-c-lookup object-api-name="User" field-api-name="EmployeeNumber"
+								sub-field-api-name="Name" object-label="User" label="Employee No Of Person Revisited"
+								required onselect={handleSelect} seleted-record-id={revisitedPersonId} criteria="">
+							</c-l-w-c-lookup>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Employee_Name_Of_Person_Revisited__c"
+								variant="label-stacked" data-id="Employee_Name_Of_Person_Revisited__c"
+								value={revisitedPersonName} required disabled>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field field-name="Senior_Person_Comments__c" variant="label-stacked"
+								onchange={handleFormValues} required>
+							</lightning-input-field>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="6"
+							medium-device-size="4" large-device-size="4">
+							<lightning-input-field required={isRemarkRequired} field-name="Remarks__c"
+								variant="label-stacked">
+							</lightning-input-field>
+						</lightning-layout-item>
+					</template>
+				</template>
+				<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
+					medium-device-size="12" large-device-size="12">
+					<div class="slds-text-align--right">
+						<lightning-button class="slds-m-right--small" variant="neutral" type="button" label='Cancel'
+							onclick={onCancel}>
+						</lightning-button>
+						<template if:true={revisitRecordId}>
+							<lightning-button variant="brand" type="submit" label="Update">
+							</lightning-button>
+						</template>
+						<template if:false={revisitRecordId}>
+							<lightning-button variant="brand" type="submit" label="Save">
+							</lightning-button>
+						</template>
+					</div>
+				</lightning-layout-item>
+			</lightning-layout>
+		</lightning-record-edit-form>
+	</div>
+	<template if:true={revisitTableData}>
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
+			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
+				<span class="slds-truncate" title="Section Title">Revisits</span>
+			</h3>
+			<div aria-hidden="false" class="slds-section__content slds-p-left_small">
+				<c-generic-data-table-l-w-c result={revisitTableData} btns={rowAction}
+					onselected={handleSelectedRevisit}></c-generic-data-table-l-w-c>
+			</div>
+		</div>
+	</template>
 </template>

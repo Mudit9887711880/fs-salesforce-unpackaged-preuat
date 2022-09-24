@@ -208,7 +208,7 @@ System.debug('attach1 insertred ' + attach1);
         if( Test.isRunningTest() ){
             b = Blob.valueOf('o');
         }else{
-        	b = PDf.getContent();    
+            b = PDf.getContent();    
         }
         
         attach.Body = b;

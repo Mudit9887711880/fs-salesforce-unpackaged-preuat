@@ -1,7 +1,6 @@
 <template>
 	<template if:true={showCollateralForm}>
-		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open "
-			style="padding-bottom:20px;">
+		<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open ">
 			<h3 class="slds-section__title slds-p-left_x-small slds-theme_shade">
 				<span class="slds-truncate" title="Section Title"> &nbsp;&nbsp; {sectiontitle}</span>
 			</h3>
@@ -348,7 +347,7 @@
 						</template>
 						<lightning-layout-item size="12" padding="horizontal-small" small-device-size="12"
 							medium-device-size="12" large-device-size="12">
-							<div class="slds-var-m-top_medium slds-align_absolute-center">
+							<div class="slds-align_absolute-center">
 								<template if:false={disabledAll}>
 									<lightning-button variant="brand" type="submit" label="Update" id="property-btn">
 									</lightning-button> &nbsp;
@@ -359,7 +358,6 @@
 									</lightning-button>
 								</template>
 							</div>
-
 						</lightning-layout-item>
 					</lightning-layout>
 				</lightning-record-edit-form>
@@ -367,7 +365,7 @@
 		</div>
 	</template>
 	<div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open "
-		style="padding-bottom:20px;" if:true={isCollateralData}>
+		if:true={isCollateralData}>
 		<c-generic-data-table-l-w-c if:true={collateralTable} result={collateralTable} btns={rowAction}
 			onselected={handleSelectedPropertyRow}>
 		</c-generic-data-table-l-w-c>

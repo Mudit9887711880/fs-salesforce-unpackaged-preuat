@@ -50,6 +50,12 @@
                 <default>false</default>
                 <label>Credit committee</label>
             </value>
+            <value>
+                <fullName>L!</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>L!</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

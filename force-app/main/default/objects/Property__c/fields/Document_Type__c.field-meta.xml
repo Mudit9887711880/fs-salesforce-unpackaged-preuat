@@ -41,9 +41,9 @@
                 <label>Gift Deed</label>
             </value>
             <value>
-                <fullName>Consent Deed</fullName>
+                <fullName>Others</fullName>
                 <default>false</default>
-                <label>Consent Deed</label>
+                <label>Others</label>
             </value>
             <value>
                 <fullName>Co-ownership deed</fullName>

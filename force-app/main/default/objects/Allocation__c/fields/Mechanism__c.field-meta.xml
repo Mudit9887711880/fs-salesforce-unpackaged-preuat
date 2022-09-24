@@ -11,14 +11,15 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Capacity</fullName>
-                <default>false</default>
-                <label>Capacity</label>
-            </value>
-            <value>
                 <fullName>Round Robin</fullName>
                 <default>false</default>
                 <label>Round Robin</label>
+            </value>
+            <value>
+                <fullName>Capacity</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Capacity</label>
             </value>
         </valueSetDefinition>
     </valueSet>

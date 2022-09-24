@@ -1,99 +1,80 @@
 <template>
-    <template if:true={isLoading}>
-        <lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
-    </template>
+	<template if:true={isLoading}>
+		<lightning-spinner alternative-text="Loading" size="medium" variant="brand"></lightning-spinner>
+	</template>
 
-    <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+	<!-- Verify OCR -->
+	<lightning-card variant="Narrow" title="Verify OCR">
+		<template if:true={dataLoaded}>
+			<lightning-layout multiple-rows="true">
+				<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
+					padding="around-small">
+					<lightning-combobox label="Customer Type" placeholder="Select Customer Type"
+						options={allData.applicantTypePicklist} required="true" class="validate"
+						value="Primary Applicant" onchange={handleCustomerType}>
+					</lightning-combobox>
+				</lightning-layout-item>
+				<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
+					padding="around-small">
+					<lightning-combobox name="KYC_Document_Type" label="KYC Document Type" placeholder="Select KYC Type"
+						options={allData.kycTypePicklist} onchange={handleChange} class="validate" value="Aadhaar Card">
+					</lightning-combobox>
+				</lightning-layout-item>
+				<!--FILE UPLOAD-->
+				<template for:each={fileUploadsUI} for:item="fl" for:index="index">
+					<lightning-layout-item key={fl.Id} size="12" small-device-size="12" medium-device-size="12"
+						large-device-size="3" padding="around-small">
+						<lightning-input type="file" label={fl.MasterLabel} onchange={handleUploadImage}
+							data-target-id={fl.DeveloperName} accept="image/png, image/jpg" required="true"
+							data-target-orientation={fl.Orientation__c} data-id={fl.Orientation__c} class="validate">
+						</lightning-input>
+						<template if:true={fl.fileName}>
+							<div class="slds-form-element__label">
+								{fl.fileName}
+							</div>
+							&nbsp;<lightning-icon icon-name="utility:preview" size="small" alternative-text="Preview"
+								title="Preview" onclick={previewImage} data-file={index} style="cursor: pointer;">
+							</lightning-icon>
+						</template>
+						<template if:true={openImg}>
+							<div class="slds-modal slds-fade-in-open slds-backdrop" aria-hidden="true">
+								<div class="slds-modal__container">
+									<div class="slds-modal__header slds-modal__header_empty">
+										<lightning-button-icon icon-name="utility:close"
+											alternative-text="Close this window" size="large" variant="border-inverse"
+											onclick={closeModal} class="slds-modal__close" aria-hidden="true">
+										</lightning-button-icon>
+									</div>
+									<div class="slds-modal__content slds-align_absolute-center">
+										<img if:true={isImg} src={selectedFile.fileURL}>
+										<iframe if:true={isPdf} src={pdfUrl} style="height:40vh;width:35vw;"></iframe>
+									</div>
+								</div>
+							</div>
+						</template>
+					</lightning-layout-item>
+				</template>
 
-        <!-- Verify OCR -->
-        <div class="slds-box slds-box_xx-small" style="height:fit-250px;">
-            <!---->
-            <lightning-accordion-section name="Verify_OCR" label="Verify OCR">
-                <template if:true={dataLoaded}>
-                    <lightning-layout multiple-rows="true">
-                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
-                            large-device-size="2" padding="around-small">
-                            <label><span style="color: red;">*&nbsp;</span>Customer Type</label>
-                            <lightning-combobox label="Customer Type" variant="label-hidden"
-                                placeholder="Select Customer Type" options={allData.applicantTypePicklist}
-                                required="true" class="validate" value="Primary Applicant"
-                                onchange={handleCustomerType}>
-                            </lightning-combobox>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
-                            large-device-size="2" padding="around-small">
-                            <label><span style="color: red;">*&nbsp;</span>KYC Document Type</label>
-                            <lightning-combobox name="KYC_Document_Type" label="KYC Document Type"
-                                variant="label-hidden" placeholder="Select KYC Type" options={allData.kycTypePicklist}
-                                onchange={handleChange} class="validate" value="Aadhaar Card">
-                            </lightning-combobox>
-                        </lightning-layout-item>
-                        <!--FILE UPLOAD-->
-                        <template for:each={fileUploadsUI} for:item="fl" for:index="index">
-                            <lightning-layout-item key={fl.Id} size="12" small-device-size="12" medium-device-size="12"
-                                large-device-size="3" padding="around-small">
-                                <label><span style="color: red;">*&nbsp;</span>{fl.MasterLabel}</label>
-                                <lightning-input type="file" label={fl.MasterLabel} variant="label-hidden"
-                                    onchange={handleUploadImage} data-target-id={fl.DeveloperName}
-                                    accept="image/png, image/jpg" required="true"
-                                    data-target-orientation={fl.Orientation__c} data-id={fl.Orientation__c}
-                                    class="validate"></lightning-input>
-                                <template if:true={fl.fileName}>
-                                    <div class="slds-form-element__label">
-                                        {fl.fileName}
-                                    </div>
-                                    &nbsp;<lightning-icon icon-name="utility:preview" size="small"
-                                        alternative-text="Preview" title="Preview" onclick={previewImage}
-                                        data-file={index} style="cursor: pointer;">
-                                    </lightning-icon>
-                                </template>
-                                <template if:true={openImg}>
-                                    <div class="slds-modal slds-fade-in-open slds-backdrop" aria-hidden="true">
-                                        <div class="slds-modal__container">
-                                            <div class="slds-modal__header slds-modal__header_empty">
-                                                <lightning-button-icon icon-name="utility:close"
-                                                    alternative-text="Close this window" size="large"
-                                                    variant="border-inverse" onclick={closeModal}
-                                                    class="slds-modal__close" aria-hidden="true">
-                                                </lightning-button-icon>
-                                            </div>
-                                            <div class="slds-modal__content slds-align_absolute-center">
-                                                <img if:true={isImg} src={selectedFile.fileURL}>
-                                                <iframe if:true={isPdf} src={pdfUrl} style="height:40vh;width:35vw;"></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                            </lightning-layout-item>
-                        </template>
+				<!--OCR Submit-->
+				<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="2"
+					padding="around-small" style="margin-top: 15px;">
+					<lightning-button variant="brand" label="Submit For OCR" title="Submit For OCR" onclick={handleClick}>
+					</lightning-button>
+				</lightning-layout-item>
 
-                        <!--OCR Submit-->
-                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
-                            large-device-size="1" padding="around-small" style="margin-top: 15px;">
-                            <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleClick}>
-                            </lightning-button>
-                        </lightning-layout-item>
+			</lightning-layout>
+		</template>
+	</lightning-card>
+	<!-- Verify OCR -->
 
-                    </lightning-layout>
-                </template>
-            </lightning-accordion-section>
-        </div>
-        <!-- List Of OCR -->
-        <div class="slds-box slds-box_xx-small" if:true={isOCRDataArrived}>
-            <lightning-accordion-section name="Select_OCR_Record" label="Select OCR Record">
-
-                <template if:true={isOCRDataArrived}>
-                    <div
-                        class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-                        <div aria-hidden="false" class="slds-section__content slds-p-left_small">
-                            <c-generic-data-table-l-w-c data-id="ocr" result={ocrData}
-                                onrowselectionevent={handleSelectedOCR}>
-                            </c-generic-data-table-l-w-c>
-                        </div>
-                    </div>
-                </template>
-            </lightning-accordion-section>
-        </div>
-
-    </lightning-accordion>
+	<!-- List Of OCR -->
+	<template if:true={isOCRDataArrived}>
+		<div class="slds-m-top_small">
+		</div>
+		<lightning-card variant="Narrow" title="Select OCR Record">
+			<c-generic-data-table-l-w-c data-id="ocr" result={ocrData} onrowselectionevent={handleSelectedOCR}>
+			</c-generic-data-table-l-w-c>
+		</lightning-card>
+	</template>
+	<!-- List Of OCR -->
 </template>

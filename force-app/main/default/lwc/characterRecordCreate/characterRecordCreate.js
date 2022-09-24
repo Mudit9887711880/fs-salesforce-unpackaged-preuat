@@ -1,7 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
-import getHighmarkData from '@salesforce/apex/fsHighmarkObligationsScreenController.getHighmarkData';
+//import getHighmarkData from '@salesforce/apex/fsHighmarkObligationsScreenController.getHighmarkData';
 import getRecordTypeId from '@salesforce/apex/fsHighmarkObligationsScreenController.getRecordTypeId';
 import getcharacterRepayment from '@salesforce/apex/fsHighmarkObligationsScreenController.getcharacterRepayment';
 const rowAction = [{
@@ -222,7 +222,8 @@ export default class CharacterRecordCreate extends NavigationMixin(LightningElem
     // to get the loan details Table Records-----
     getHighmarkTableRecords() {
         this.highmarkpcTableData = undefined;
-        getHighmarkData({ appId: 'a029D00000Hb4YvQAJ', metadataName: 'Repayment_Behaviour_Table' }).then((result) => {
+        //commented by parag on 15/9
+        /*getHighmarkData({ appId: 'a029D00000Hb4YvQAJ', metadataName: 'Repayment_Behaviour_Table' }).then((result) => {
             console.log('highmarkTableData = ', result);
            
                 let temp = JSON.parse(result.strDataTableData);
@@ -237,7 +238,7 @@ export default class CharacterRecordCreate extends NavigationMixin(LightningElem
             console.log('highmarkTableData err = ', err);
             this.highmarkSpinner = false;
 
-        });
+        });*/
     }
 
      // get the character recordTypeId

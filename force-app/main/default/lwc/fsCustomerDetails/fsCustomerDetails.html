@@ -1,48 +1,48 @@
 <template>
-    <template if:true={isSpinnerActive}>
-        <c-fs-spinner></c-fs-spinner>
-    </template>
-    <div class="slds-scrollable_y" style="max-height:800px;">
-        <!-- OCR -->
-        <c-fs-o-c-r onocrevent={handleOCREvent} onchangecustomertype={handleCustomerType}
-            onverificationevent={handleVerificationValue} ongetocrtable={handleOCRTable} ongetocrdoc={getOCRDocs}>
-        </c-fs-o-c-r>
+	<template if:true={isSpinnerActive}>
+		<c-fs-spinner></c-fs-spinner>
+	</template>
 
-        <!-- Form -->
-        <div if:true={showCustomerInfoForm}>
-            <c-fs-loan-applicant-information ongetapplicationid={handleApplicationId} ongetpreloginid={handlePreloginId}
-                onhideocrtable={hideOCRTable} ongetappname={getAppName} oncallocrtable={refreshOCR} application-id={applicationId} prelogin-id={preloginId}
-                loan-data={loanData} customer-type-value={customerTypeValue}
-                verification-type-value={verificationTypeValue}>
-            </c-fs-loan-applicant-information>
-        </div>
+	<!-- OCR -->
+	<c-fs-o-c-r onocrevent={handleOCREvent} onchangecustomertype={handleCustomerType}
+		onverificationevent={handleVerificationValue} ongetocrtable={handleOCRTable} ongetocrdoc={getOCRDocs}>
+	</c-fs-o-c-r>
 
-        <!-- List Of Applicants -->
-        <template if:true={isAccDataArrived}>
-            <div class="slds-box slds-box_xx-small slds-section slds-border_right slds-border_left slds-is-open">
-                <lightning-accordion allow-multiple-sections-open active-section-name="List_Of_Applicants">
-                    <lightning-accordion-section name="List_Of_Applicants" label="List Of Applicants">
-                        <div aria-hidden="false" class="slds-section__content slds-p-left_small">
-                            <c-generic-data-table-l-w-c data-id="acc" result={accData} btns={accRowAction}
-                                onselected={handleSelectedApplicant}>
-                            </c-generic-data-table-l-w-c>
-                        </div>
-                    </lightning-accordion-section>
-                </lightning-accordion>
-            </div>
-        </template>
+	<div class="slds-m-top_small">
+	</div>
 
-        <!-- Delete Popup -->
-        <template if:true={showDeletePopup}>
-            <c-fs-delete-l-w-c delete-from="Loan Applicant Screen" object-api-name="Loan_Applicant__c"
-                show-modal={showDeletePopup} rec-id={loanAppId} onmodaldelete={handlemodalactions}
-                onmodalcancel={handlemodalactions}>
-            </c-fs-delete-l-w-c>
-        </template>
+	<!-- Form -->
+	<div if:true={showCustomerInfoForm}>
+		<c-fs-loan-applicant-information ongetapplicationid={handleApplicationId} ongetpreloginid={handlePreloginId}
+			onhideocrtable={hideOCRTable} ongetappname={getAppName} oncallocrtable={refreshOCR}
+			application-id={applicationId} prelogin-id={preloginId} loan-data={loanData}
+			customer-type-value={customerTypeValue} verification-type-value={verificationTypeValue}>
+		</c-fs-loan-applicant-information>
+	</div>
 
-        <!--Mobile Verification -->
-        <template if:true={showMobileVerification}>
-            <c-fs-mobile-verification-l-w-c onreloaddatatable={reloadDataTable}></c-fs-mobile-verification-l-w-c>
-        </template>
-    </div>
+	<div class="slds-m-top_small">
+	</div>
+
+	<!-- List Of Applicants -->
+	<template if:true={isAccDataArrived}>
+		<lightning-card variant="Narrow" title="List Of Applicants">
+			<c-generic-data-table-l-w-c data-id="acc" result={accData} btns={accRowAction}
+				onselected={handleSelectedApplicant}>
+			</c-generic-data-table-l-w-c>
+		</lightning-card>
+	</template>
+
+	<!-- Delete Popup -->
+	<template if:true={showDeletePopup}>
+		<c-fs-delete-l-w-c delete-from="Loan Applicant Screen" object-api-name="Loan_Applicant__c"
+			show-modal={showDeletePopup} rec-id={loanAppId} onmodaldelete={handlemodalactions}
+			onmodalcancel={handlemodalactions}>
+		</c-fs-delete-l-w-c>
+	</template>
+
+	<!--Mobile Verification -->
+	<template if:true={showMobileVerification}>
+		<c-fs-mobile-verification-l-w-c onreloaddatatable={reloadDataTable}></c-fs-mobile-verification-l-w-c>
+	</template>
+
 </template>

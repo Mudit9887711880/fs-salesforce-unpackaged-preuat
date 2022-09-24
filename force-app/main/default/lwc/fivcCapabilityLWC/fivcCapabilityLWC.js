@@ -85,7 +85,7 @@ export default class FivcCapabilityLWC extends LightningElement {
     @track incomePerMonth; // done
     @track numberOfUnits; // done
     @track rentalIncome; // done
-
+    @track employerName; // done
 
     get DocProofRequired() {
         return (this.empDocProof == 'Yes');
@@ -171,6 +171,8 @@ export default class FivcCapabilityLWC extends LightningElement {
             this.numberOfUnits = evt.target.value;
         } else if (evt.target.name == 'Rental_Income__c') {
             this.rentalIncome = evt.target.value;
+        } else if (evt.target.name == 'Name_of_the_Employer__c') {
+            this.employerName = evt.target.value;
         }
     }
 
@@ -287,6 +289,7 @@ export default class FivcCapabilityLWC extends LightningElement {
             this.incomePerMonth = data.recordData.Income_per_month__c;
             this.numberOfUnits = data.recordData.No_of_Units__c;
             this.rentalIncome = data.recordData.Rental_Income__c;
+            this.employerName = data.recordData.Name_of_the_Employer__c; 
 
             this.makeAllFalse();
 

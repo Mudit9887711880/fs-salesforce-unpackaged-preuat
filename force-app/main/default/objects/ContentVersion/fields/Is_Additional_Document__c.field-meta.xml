@@ -3,7 +3,7 @@
     <fullName>Is_Additional_Document__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Is Additional Document_</label>
+    <label>Is Additional Document</label>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

@@ -71,7 +71,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PC_Submisson_Date__c</field>
+                <field>PC_Submission_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -104,6 +104,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Field_Officer_Emp_Id__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Transaction_LTV__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Combined_LTV__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -268,6 +276,9 @@
             <quickActionName>FeedItem.ContentNote</quickActionName>
         </quickActionListItems>
     </quickActionList>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>

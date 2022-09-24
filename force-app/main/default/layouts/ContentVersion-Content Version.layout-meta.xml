@@ -89,6 +89,10 @@
                 <behavior>Edit</behavior>
                 <field>Deferal_Stage__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>File_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

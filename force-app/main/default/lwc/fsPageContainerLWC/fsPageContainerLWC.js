@@ -1,4 +1,5 @@
 import { LightningElement, api, wire, track } from 'lwc';
+import isDeviationApprovalStage from '@salesforce/apex/pcDeviationController.isDeviationApprovalStage';
 
 export default class FsPageContainerLWC extends LightningElement {
     @api headericon = 'standard:channel_program_members';
@@ -24,6 +25,9 @@ export default class FsPageContainerLWC extends LightningElement {
             this.actualBtn = tempBtns;         
         }
         this.helpText = 'Business Date : ' + this.businessdate +' | Last Login Date : '+ this.lastlogindate;
+        if(this.stagename != undefined && (this.stagename == 'AC' || this.stagename == 'PC')){
+            this.fetchDeviationApprovalStage();
+        }
     }
 
     handleOnselect(event){
@@ -32,5 +36,24 @@ export default class FsPageContainerLWC extends LightningElement {
 
     handleBtnClick(event){
         this.dispatchEvent(new CustomEvent('rowselectionevent', { detail: event.target.value }));
+    }
+
+    fetchDeviationApprovalStage(){
+        //this.stagename = 'Deviation Approval';
+        console.log('@@## stagename '+this.stagename);
+        var urlData = JSON.stringify(location);
+        //console.log('@@## urlData '+JSON.stringify(urlData));
+        var recordid = urlData.slice(42,60);
+        console.log('@@## recordid '+recordid);
+
+        isDeviationApprovalStage({verificationId : recordid}).then(result =>{
+            console.log('Current Record Id ',result);
+            if(result){
+                this.stagename = 'Deviation Approval';
+            }
+        })
+        .catch(error =>{
+            console.log('error',error);
+        })
     }
 }

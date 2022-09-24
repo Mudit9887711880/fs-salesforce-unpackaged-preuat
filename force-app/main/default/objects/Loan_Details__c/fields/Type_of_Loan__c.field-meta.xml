@@ -3,7 +3,7 @@
     <fullName>Type_of_Loan__c</fullName>
     <externalId>false</externalId>
     <label>Type of Loan</label>
-    <length>15</length>
+    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

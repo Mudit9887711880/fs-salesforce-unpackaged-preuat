@@ -1,0 +1,153 @@
+<template>
+	<div class="c-container ">
+		<lightning-card style="height:30rem" class="slds-card__body slds-card__body_inner slds-m-bottom--xx-large" title="Pending Deviation">
+			<div class="slds-scrollable" style="height:150px; padding-bottom: 10px;">
+
+				<table class="slds-table slds-table_cell-buffer slds-table_bordered table-insurance-detail">
+					<thead>
+						<tr class="fixed-content">
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Sr No">Sr No.</div>
+							</th>
+								<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Applicant/Property">Deviation Name</div>
+							</th>
+							<!-- <th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Deviation Code">MS Deviation Name</div>
+							</th> -->
+
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Deviation Level">Applciable For </div>
+							</th>
+
+						
+
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Applicant/Property">Applicant/Property</div>
+							</th>
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Approval Authority"> Decision </div>
+							</th>
+							<!-- <th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Applicant/Property">Approval Level</div>
+							</th>
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Approval Authority">Approval Authority</div>
+							</th> -->
+
+
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Remarks">Remarks</div>
+							</th>
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Mitigants"> Mitigants</div>
+							</th>
+							<th class="slds-size_1-of-10" scope="col">
+								<div class="slds-truncate" title="Deviation Type"> Deviation Type</div>
+							</th>
+						</tr>
+
+					</thead>
+
+					<tbody>
+
+						<template for:each={trdeviationList} for:item="it" for:index="index">
+							<tr key={it.index} id={it.devId} class="slds-hint-parent">
+								<td class="slds-size_3-of-10" data-id="1">
+									<div class="slds-truncate">{it.srNo}</div>
+								</td>
+								<td class="slds-size_2-of-10" data-id="2">
+									<div class="slds-truncate">{it.deviationDescriptionName}</div>
+								</td>
+								<!-- <td class="slds-size_3-of-10" data-id="1">
+									<div class="slds-truncate">{it.msDeviationName}</div>
+								</td> -->
+
+								<td class="slds-size_2-of-10" data-id="2">
+									<div class="slds-truncate">{it.applicableFor}</div>
+								</td>
+								
+								<td class="slds-size_2-of-10" data-id="6">
+									<div class="td-currency">
+
+										<template if:true={it.applicant}>
+											{it.applicant}
+										</template>
+										<template if:true={it.property}>
+											{it.property}
+										</template>
+
+									</div>
+								</td>
+
+								<td class="slds-size_2-of-10" data-id="6">
+									<lightning-combobox name="approvalStatuscombo" placeholder="Select Status"
+										options={it.ConditionallyDecisionWrapList} onchange={handleChange} variant="label-hidden"
+										data-index={index} class="decision" required  disabled={isDisabledField}>
+									</lightning-combobox>
+
+								</td>
+<!-- 
+								<td class="slds-size_2-of-10" data-id="4">
+									<lightning-combobox name="level" placeholder="Select Authority Level"
+										options={it.currentApprovalLevelList} onchange={handleChange} variant="label-hidden"
+										data-index={index}  disabled={isDisabledField}>
+									</lightning-combobox>
+
+								</td>
+								<td class="slds-size_2-of-10" data-id="5">
+									<lightning-combobox name="usercombo" placeholder="Select User" options={useroptions}
+										onchange={handleChange} data-index={index} variant="label-hidden" disabled={isDisabledField}></lightning-combobox>
+
+								</td> -->
+
+								<td class="slds-size_2-of-10" data-id="6">
+									<lightning-input type="text" name="remarksInput" onchange={handleChange} class ="remarkValidation"
+										data-index={index} style="width:100px"  variant="label-hidden" disabled={isDisabledField}>
+									</lightning-input>
+
+									<!-- <lightning-combobox name="remarksInput" placeholder="Input Remarks"
+							options={approvalStatusOptions} onchange={handleChange} data-index={index}>
+						</lightning-combobox> -->
+
+								</td>
+								<td class="slds-size_2-of-10" data-id="6">
+									<lightning-input type="text" name="mitigantsInput" onchange={handleChange}
+										data-index={index} style="width:100px"  variant="label-hidden" disabled={isDisabledField}>
+									</lightning-input>
+									<!-- <lightning-combobox name="mitigantsInout" placeholder="Input Mitigants"
+							options={approvalStatusOptions} onchange={handleChange} data-index={index}>
+						</lightning-combobox> -->
+
+								</td>
+
+								<td class="slds-size_3-of-10" data-id="1">
+									<div class="td-currency" >{it.deviationType}</div>
+								</td>
+							</tr>
+
+						</template>
+						<template if:true={empty}>
+							<tr>
+								<td colspan="10">
+									<div align="center">
+										No Records Found.
+									</div>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+
+
+			<div slot="footer" class="slds-align_absolute-center">
+				<!-- <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button> -->
+				
+				<lightning-button variant="brand" label="Submit" class="slds-align_absolute-center"
+					onclick={handleSave} disabled={isDisabled}></lightning-button>
+			</div>
+
+		</lightning-card>
+	</div>
+</template>

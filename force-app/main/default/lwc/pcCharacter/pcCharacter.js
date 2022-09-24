@@ -50,6 +50,7 @@ export default class PcCharacter extends LightningElement {
     @track isAc = false;
     @track customerData;
     @track customerTypeVal;
+    @track idtobedeleted;
 
 
     @track rowAction = [
@@ -188,6 +189,12 @@ export default class PcCharacter extends LightningElement {
 
     // form submit method for Process Credit Character Form
     handleCharacterSubmit(event) {
+
+        if(!this.customerName)
+        {
+            event.preventDefault();
+              this.showToast('Missing values', 'error','You haven\'t selected any customer');
+        }
         console.log('handle PC character called');
     }
 
@@ -196,7 +203,7 @@ export default class PcCharacter extends LightningElement {
     // pc family detail handle success method
     handleFamilySuccess(event) {
         console.log('handleCharacterSubmit called');
-        console.log(event.detail.value);
+        console.log('hello ID ####',event.detail.id);
         if (this.labelSave == 'Save')
             this.showToast('Success', 'success', 'Record Created Successfully');
         else if (this.labelSave == 'Update')
@@ -415,12 +422,14 @@ export default class PcCharacter extends LightningElement {
     // data table row selection Action Method
     handleSelectedFamilyMember(event) {
         var data = event.detail;
-        this.charRecordId = data.recordData.Id;
+       
         if (data && data.ActionName == 'delete') {
             console.log('char id', this.charRecordId);
+            this.idtobedeleted = data.recordData.Id;;
             this.showDeleteModal = true;
         }
         if (data && data.ActionName == 'edit') {
+             this.charRecordId = data.recordData.Id;
             this.labelSave = 'Update';
             console.log('labelSave', this.labelSave);
             console.log('data.recordData ', data.recordData);

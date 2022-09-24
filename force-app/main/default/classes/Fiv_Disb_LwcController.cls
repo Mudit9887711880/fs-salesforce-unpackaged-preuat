@@ -3,7 +3,7 @@
  * @group             : TechMatrix Consulting
  * @description       : This is an main class for the Disbursal Maker and Disbursal Author Components -
  * @created on        : 12-07-2022
- * @last modified on  : 10-09-2022
+ * @last modified on  : 17-09-2022
  * @last modified by  : Karan Singh Soni
 **/
 public without sharing class Fiv_Disb_LwcController extends GenericFormBuilderController{
@@ -248,6 +248,14 @@ public without sharing class Fiv_Disb_LwcController extends GenericFormBuilderCo
                         objDisbursalCompWrap.mapExtraParams.put('Disbursal_Author_ID__c', objUser.EmployeeNumber);
                     }
                 }
+                for( Verification__c objVerif : [ SELECT Id
+                                                    FROM Verification__c
+                                                    WHERE recordtype.name = 'AC' ORDER BY CreatedDate DESC
+                                                    LIMIT 1 ])
+                {
+                    objDisbursalCompWrap.mapExtraParams.put('acRecordId', objVerif.Id);
+                }
+                //
                 objDisbursalCompWrap.statusCode = 200;
                 objDisbursalCompWrap.message = 'Data fetched successfully.';
             }
@@ -547,6 +555,38 @@ public without sharing class Fiv_Disb_LwcController extends GenericFormBuilderCo
             msg = e.getMessage();
         }
         return msg;
+    }
+
+
+    /**
+    * @description : Will be used in DA, check if any pending deviaiton is there or not.
+    * @author Karan Singh Soni | 17-09-2022
+    * @param apptId
+    * @return DisbursalCompWrap
+    **/
+    @AuraEnabled
+    public static DisbursalCompWrap chechExistDeviaitons( String apptId ){
+
+        DisbursalCompWrap objDisbursalCompWrap = new DisbursalCompWrap();
+
+        if( apptId == Null ){
+
+            objDisbursalCompWrap.statusCode = 400;
+            objDisbursalCompWrap.message = 'Invalid application Id';
+            return objDisbursalCompWrap;
+        }
+        List < TR_Deviation__c > listDeviation = [ SELECT Id FROM  TR_Deviation__c
+                                                    WHERE Application__c =: apptId AND Is_Deviation_Active__c = TRUE
+                                                    AND Decistion__c != 'Approved'
+                                                    LIMIT 1];
+
+        if( listDeviation.isEmpty() ){
+            objDisbursalCompWrap.statusCode = 200;
+        }else{
+            objDisbursalCompWrap.statusCode = 400;
+            objDisbursalCompWrap.message = 'All Deviations are not approved.';
+        }
+        return objDisbursalCompWrap;
     }
     //objDisbursal will be any type of object
     //base64, filename,prntRecordId will be used to create file under the prntRecordId. if prntRecordId is blank then it means the parent will be objDisbursal object
